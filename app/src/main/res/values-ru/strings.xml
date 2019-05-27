@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Author: andrey167 <andrey_167@bk.ru>-->
+<resources>
+
+    <string name="about">О приложении</string>
+    <string name="cancel">Отмена</string>
+    <string name="change_logs">История изменений</string>
+    <string name="change_logs_summary">Посмотреть историю изменений</string>
+    <string name="credits">Кредиты</string>
+    <string name="donate_me">Пожертвовать мне</string>
+    <string name="donate_me_summary">Хотите оценить мою работу с пожертвованием? кликните сюда</string>
+    <string name="donate_nope">Я не попадусь на эту аферу!</string>
+    <string name="executing">Выполнение</string>
+    <string name="file_size_limit">Обратите внимание: по соображениям безопасности файлы восстановления размером более 100 МБ не могут быть прошиты</string>
+    <string name="flasher">Прошивальшик</string>
+    <string name="flasher_message">Прошить сейчас</string>
+    <string name="flasher_options">Настройки прошивальшика</string>
+    <string name="flasher_summary">Нажмите кнопку прошивки, чтобы выбрать и прошить файл восстановления ZIP без перезагрузки в пользовательское восстановление. Изменения вступят в силу после перезагрузки.</string>
+    <string name="flashing">Прошивка в процессе</string>
+    <string name="kernel">Ядро</string>
+    <string name="more">Больше</string>
+    <string name="not_in_range">Не в диапазоне</string>
+    <string name="no_root_access">Данная функция не работает на устройстве без рут прав</string>
+    <string name="normal_reboot_message">\nВаше устройство будет перезагружено.\n</string>
+    <string name="ok">Ок</string>
+    <string name="open_settings">Открыть настройки</string>
+    <string name="options">Опции</string>
+    <string name="permission_denied_write_storage">Отказано в разрешении на запись в память устройства!</string>
+    <string name="purchase_app">Приложение для пожертвований</string>
+    <string name="paypal_donation">PayPal</string>
+    <string name="playstore">PlayStore</string>
+    <string name="playstore_summary">Посетить страницу Smart Flasher в PlayStore</string>
+    <string name="reboot">Перезагрузить</string>
+    <string name="reboot_bootloader">Перезагрузить в загрузчик</string>
+    <string name="reboot_bootloader_summary">Перезагрузить в режим загрузки</string>
+    <string name="reboot_recovery">Перезагрузить в рекавери</string>
+    <string name="reboot_recovery_summary">Ваше устройство будет перезагружено в режим рекавери</string>
+    <string name="reboot_summary">Перезагрузить устройство</string>
+    <string name="reboot_recovery_message">\nВаше устройство будет перезагружено в режим Рековери.\n</string>
+    <string name="select_question">Выбрать %s?</string>
+    <string name="settings">Настройки</string>
+    <string name="source_code">Исходный код</string>
+    <string name="source_code_summary">Посмотреть исзодный код на GitHub</string>
+    <string name="sure_question">Вы уверены?</string>
+    <string name="turn_off">Выключен</string>
+    <string name="turn_off_message">\nУстройство будет выключено.\n</string>
+    <string name="turn_off_summary">Выключить устройство</string>
+    <string name="version">Версия</string>
+    <string name="wipe_cache">Стереть кэш</string>
+    <string name="wipe_cache_summary">Очистить раздел кеша</string>
+    <string name="wipe_data">Очистить раздел Data</string>
+    <string name="wipe_data_summary">Очистить раздел Data</string>
+    <string name="wrong_extension">Пожалуйста, выберите файл с расширением %s.</string>
+    <string name="wipe_cache_message">\nРазделы кэша / Dalvik Cache вашего устройства будут удалены. \ N \ nВнимание Устройство будет перезагружено.\n</string>
+    <string name="wipe_data_message">\nРаздел данных вашего устройства будет полностью удален. \ N \ nВнимание! Вы потеряете все пользовательские данные, включая приложения. \ N \ nВнимание! Устройство будет перезагружено.\n</string>
+</resources>
