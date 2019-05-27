@@ -1,0 +1,62 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name" translatable="false">Smart Flasher</string>
+
+    <string name="about">About</string>
+    <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
+    <string name="cancel">Cancel</string>
+    <string name="change_logs">Change-logs</string>
+    <string name="change_logs_summary">View Change-logs</string>
+    <string name="credits">Credits</string>
+    <string name="donate_me">Donate to Me</string>
+    <string name="donate_me_message">\nIf you like to appreciate my work, please consider donating to me as it is helpful to continue my projects more active, although it is not at all necessary.\n</string>
+    <string name="donate_me_playstore">\nPlease note: I can accept donations either via PayPal, or through SmartPack Donation Package in PlayStore.\n</string>
+    <string name="donate_me_summary">Want to appreciate my work with a Donation? Click here</string>
+    <string name="donate_nope">Not Now</string>
+    <string name="executing">Executing</string>
+    <string name="file_size_limit">Please note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.</string>
+    <string name="flasher">Flasher</string>
+    <string name="flasher_message">Flash Now</string>
+    <string name="flasher_options">Flasher Options</string>
+    <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes were applied after a reboot.</string>
+    <string name="flashing">Flashing</string>
+    <string name="kernel">Kernel</string>
+    <string name="licence">License</string>
+    <string name="licence_summary">Click to read more about GPL-3.0</string>
+    <string name="more">More</string>
+    <string name="no_root_access">This feature won\'t work without Root Access</string>
+    <string name="not_in_range">Not in range</string>
+    <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
+    <string name="ok">OK</string>
+    <string name="options">Options</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="paypal_donation">PayPal</string>
+    <string name="permission_denied_write_storage">Permission denied for writing to storage!</string>
+    <string name="playstore">PlayStore</string>
+    <string name="playstore_summary">Visit Smart Flasher page on PlayStore</string>
+    <string name="purchase_app">Donation App</string>
+    <string name="reboot">Reboot</string>
+    <string name="reboot_bootloader">Reboot Bootloader</string>
+    <string name="reboot_bootloader_message">\nYour device will be rebooted into Download Mode.\n</string>
+    <string name="reboot_bootloader_summary">Reboot device into Download Mode</string>
+    <string name="reboot_recovery">Reboot Recovery</string>
+    <string name="reboot_recovery_message">\nYour device will be rebooted into Recovery mode.\n</string>
+    <string name="reboot_recovery_summary">Reboot device into Recovery Mode</string>
+    <string name="reboot_summary">Reboot your device</string>
+    <string name="select_question">Select %s?</string>
+    <string name="settings">Settings</string>
+    <string name="source_code">Source Code</string>
+    <string name="source_code_summary">View source code at GitHub</string>
+    <string name="sure_question">Are you sure?</string>
+    <string name="turn_off">Turn Off</string>
+    <string name="turn_off_message">\nYour device will be Turned Off.\n</string>
+    <string name="turn_off_summary">Turn Off your device</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="version">Version</string>
+    <string name="wipe_cache">Wipe Cache</string>
+    <string name="wipe_cache_message">\nCache/Dalvik Cache partitions of your device will be erased.\n\nAttention! The device will be Rebooted.\n</string>
+    <string name="wipe_cache_summary">Wipe Cache Partition</string>
+    <string name="wipe_data">Wipe Data</string>
+    <string name="wipe_data_message">\nData partition of your device will be completely erased.\n\nWarning! You will lose all the user data including apps.\n\nAttention! The device will be Rebooted.\n</string>
+    <string name="wipe_data_summary">Wipe Data Partition</string>
+    <string name="wrong_extension">Please select a file with %s extension.</string>
+</resources>
