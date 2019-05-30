@@ -41,6 +41,8 @@
     <string name="settings">Настройки</string>
     <string name="source_code">Исходный код</string>
     <string name="source_code_summary">Посмотреть исзодный код на GitHub</string>
+    <string name="support">Поддержка</string>
+    <string name="support_summary">Посетить страницу поддержки на xda-developers.com</string>
     <string name="sure_question">Вы уверены?</string>
     <string name="turn_off">Выключен</string>
     <string name="turn_off_message">\nУстройство будет выключено.\n</string>

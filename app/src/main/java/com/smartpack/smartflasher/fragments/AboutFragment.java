@@ -89,6 +89,18 @@ public class AboutFragment extends RecyclerViewFragment {
 
         about.addItem(licence);
 
+        DescriptionView support = new DescriptionView();
+        support.setTitle(getString(R.string.support));
+        support.setSummary(getString(R.string.support_summary));
+        support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                Utils.launchUrl("https://forum.xda-developers.com/android/apps-games/app-smart-flasher-t3934438", getActivity());
+            }
+        });
+
+        about.addItem(support);
+
         DescriptionView sourcecode = new DescriptionView();
         sourcecode.setTitle(getString(R.string.source_code));
         sourcecode.setSummary(getString(R.string.source_code_summary));
