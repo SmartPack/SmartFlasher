@@ -52,7 +52,6 @@ public class BorderCircleView extends FrameLayout {
     }
 
     private final Drawable mCheck;
-    private boolean mChecked;
     private final Paint mPaint;
     private final Paint mPaintBorder;
 
@@ -90,11 +89,6 @@ public class BorderCircleView extends FrameLayout {
         invalidate();
     }
 
-    public void setChecked(boolean checked) {
-        mChecked = checked;
-        invalidate();
-    }
-
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -106,11 +100,6 @@ public class BorderCircleView extends FrameLayout {
 
         canvas.drawCircle(width / 2, height / 2, radius, mPaint);
         canvas.drawCircle(width / 2, height / 2, radius, mPaintBorder);
-
-        if (mChecked) {
-            mCheck.setBounds(Math.round(width / 2 - radius), 0, Math.round(width / 2 + radius), height);
-            mCheck.draw(canvas);
-        }
     }
 
     @Override

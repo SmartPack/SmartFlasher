@@ -30,7 +30,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -71,14 +70,6 @@ public class Utils {
     public static boolean isTv(Context context) {
         return ((UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE))
                 .getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
-    }
-
-    public static CharSequence htmlFrom(String text) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            return Html.fromHtml(text);
-        }
     }
 
     public static String getInternalDataStorage() {
@@ -185,5 +176,4 @@ public class Utils {
     public static boolean existFile(String file, RootUtils.SU su) {
         return su == null ? new File(file).exists() : new RootFile(file, su).exists();
     }
-
 }

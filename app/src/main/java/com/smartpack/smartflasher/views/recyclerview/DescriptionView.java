@@ -19,9 +19,7 @@
  */
 package com.smartpack.smartflasher.views.recyclerview;
 
-import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.text.method.MovementMethod;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -42,7 +40,6 @@ public class DescriptionView extends RecyclerViewItem {
     private Drawable mImage;
     private CharSequence mTitle;
     private CharSequence mSummary;
-    private MovementMethod mLinkMovementMethod;
 
     private boolean mGrxIsInitSelected = false;
     private int mGrxColor = 0;
@@ -84,10 +81,6 @@ public class DescriptionView extends RecyclerViewItem {
         super.onCreateView(view);
     }
 
-    public void setBackgroundColor (int color){
-        mRootView.setBackgroundColor(color);
-    }
-
     public void setDrawable(Drawable drawable) {
         mImage = drawable;
         refresh();
@@ -103,34 +96,12 @@ public class DescriptionView extends RecyclerViewItem {
         refresh();
     }
 
-    public void GrxSetInitSelection(boolean isInitSelected, int color ){
-        mGrxIsInitSelected = isInitSelected;
-        mGrxColor = color;
-    }
-
     public void setTextColor(int color) {
         mSummaryView.setTextColor(color);
     }
 
-    public void setTextColor(ColorStateList color) {
-        mSummaryView.setTextColor(color);
-    }
-
-    public ColorStateList getTextColors(){
-        return mSummaryView.getTextColors();
-    }
-
-    public void setMovementMethod(MovementMethod movementMethod) {
-        mLinkMovementMethod = movementMethod;
-        refresh();
-    }
-
     public CharSequence getTitle() {
         return mTitle;
-    }
-
-    public CharSequence getSummary() {
-        return mSummary;
     }
 
     @Override
@@ -150,9 +121,6 @@ public class DescriptionView extends RecyclerViewItem {
         }
         if (mSummaryView != null && mSummary != null) {
             mSummaryView.setText(mSummary);
-            if (mLinkMovementMethod != null) {
-                mSummaryView.setMovementMethod(mLinkMovementMethod);
-            }
         }
         if (mRootView != null && getOnItemClickListener() != null && mTitleView != null
                 && mSummaryView != null) {

@@ -32,8 +32,6 @@ public class Flasher {
 
     private static final String ZIPFILE_EXTRACTED = Utils.getInternalDataStorage() + "/flash/META-INF/com/google/android/update-binary";
 
-    private static final String FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash";
-
     private static final String RECOVERY = "/cache/recovery/";
 
     public enum FLASHMENU {
@@ -42,10 +40,6 @@ public class Flasher {
 
     public static boolean isZIPFileExtracted() {
         return Utils.existFile(ZIPFILE_EXTRACTED);
-    }
-
-    public static boolean hasFlashFolder() {
-        return Utils.existFile(FLASH_FOLDER);
     }
 
     public static boolean hasRecovery() {
@@ -58,19 +52,6 @@ public class Flasher {
             file.delete();
         }
         file.mkdirs();
-    }
-
-    public static void makeFlashFolder() {
-        RootUtils.runCommand("mkdir " + FLASH_FOLDER);
-    }
-
-    public static void cleanFlashFolder() {
-        RootUtils.runCommand("rm -r " + FLASH_FOLDER + "/*");
-    }
-
-    public static void fileSize (File file) {
-        float size = file.length();
-        return;
     }
 
     public static void manualFlash(File file) {

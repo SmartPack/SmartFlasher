@@ -29,7 +29,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.smartpack.smartflasher.utils.ViewUtils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -66,13 +65,4 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
-
-    protected boolean setStatusBarColor() {
-        return true;
-    }
-
-    protected int statusBarColor() {
-        return ViewUtils.getColorPrimaryDarkColor(this);
-    }
-
 }

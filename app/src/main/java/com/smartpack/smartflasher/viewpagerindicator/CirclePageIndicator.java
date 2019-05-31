@@ -119,34 +119,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 
-
-    public void setCentered(boolean centered) {
-        mCentered = centered;
-        invalidate();
-    }
-
-    public boolean isCentered() {
-        return mCentered;
-    }
-
-    public void setPageColor(int pageColor) {
-        mPaintPageFill.setColor(pageColor);
-        invalidate();
-    }
-
-    public int getPageColor() {
-        return mPaintPageFill.getColor();
-    }
-
-    public void setFillColor(int fillColor) {
-        mPaintFill.setColor(fillColor);
-        invalidate();
-    }
-
-    public int getFillColor() {
-        return mPaintFill.getColor();
-    }
-
     public void setOrientation(int orientation) {
         switch (orientation) {
             case HORIZONTAL:
@@ -162,46 +134,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     public int getOrientation() {
         return mOrientation;
-    }
-
-    public void setStrokeColor(int strokeColor) {
-        mPaintStroke.setColor(strokeColor);
-        invalidate();
-    }
-
-    public int getStrokeColor() {
-        return mPaintStroke.getColor();
-    }
-
-    public void setStrokeWidth(float strokeWidth) {
-        mPaintStroke.setStrokeWidth(strokeWidth);
-        invalidate();
-    }
-
-    public float getStrokeWidth() {
-        return mPaintStroke.getStrokeWidth();
-    }
-
-    public void setRadius(float radius) {
-        mRadius = radius;
-        invalidate();
-    }
-
-    public float getRadius() {
-        return mRadius;
-    }
-
-    public void setSnap(boolean snap) {
-        mSnap = snap;
-        invalidate();
-    }
-
-    public boolean isSnap() {
-        return mSnap;
-    }
-
-    public void setExtraSpacing(float extraSpacing) {
-        mExtraSpacing = extraSpacing;
     }
 
     @Override

@@ -26,16 +26,12 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.widget.AppCompatEditText;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.views.dialog.Dialog;
@@ -91,20 +87,10 @@ public class ViewUtils {
         return value.data;
     }
 
-    public static int getColorPrimaryDarkColor(Context context) {
-        TypedValue value = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorPrimaryDark, value, true);
-        return value.data;
-    }
-
     public static int getThemeAccentColor(Context context) {
         TypedValue value = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
         return value.data;
-    }
-
-    public interface OnDialogEditTextListener {
-        void onClick(String text);
     }
 
     public static Dialog dialogBuilder(CharSequence message, DialogInterface.OnClickListener negativeListener,

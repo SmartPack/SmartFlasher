@@ -86,11 +86,6 @@ public class DescriptionFragment extends BaseFragment {
         refresh();
     }
 
-    public void setSummary(CharSequence summary) {
-        mSummary = summary;
-        refresh();
-    }
-
     private void refresh() {
         if (mTitleView != null) {
             if (mTitle != null) {

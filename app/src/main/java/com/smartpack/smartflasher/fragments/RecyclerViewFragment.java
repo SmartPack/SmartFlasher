@@ -635,39 +635,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return null;
     }
 
-    public void setForegroundText(CharSequence text) {
-        mForegroundStrText = text;
-    }
-
-    public void showForeground() {
-        if (mForegroundStrText != null) {
-            mForegroundText.setText(mForegroundStrText);
-        }
-        if (mForegroundAnimator != null) mForegroundAnimator.cancel();
-        mForegroundAnimator = ValueAnimator.ofFloat(mForegroundHeight, 0f);
-        mForegroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mForegroundParent.setTranslationY((float) animation.getAnimatedValue());
-            }
-        });
-        mForegroundAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                mForegroundParent.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mForegroundVisible = true;
-                mForegroundAnimator = null;
-            }
-        });
-        mForegroundAnimator.start();
-    }
-
     public void dismissForeground() {
         float translation = mForegroundParent.getTranslationY();
         mForegroundAnimator = ValueAnimator.ofFloat(translation, mForegroundHeight);
@@ -759,14 +726,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     protected FloatingActionButton getBottomFab() {
         return mBottomFab;
-    }
-
-    protected View getRootView() {
-        return mRootView;
-    }
-
-    protected Fragment getViewPagerFragment(int position) {
-        return getChildFragmentManager().getFragments().get(position);
     }
 
     @Override
