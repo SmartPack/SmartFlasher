@@ -26,7 +26,7 @@ If you like to appreciate my work, please consider donating to me (either via [P
 [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.smartpack.donate)
 
 ## Credits
-* [Grarak](https://github.com/Grarak/), Adiutor, from where I tool a lot of code
+* [Grarak](https://github.com/Grarak/), Kernel Adiutor, from where I tool a lot of code
 * [osm0sis](https://github.com/osm0sis/), for helping me with Auto-Flashing
 * [jason5545](https://github.com/jason5545/), Chinese (Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations
