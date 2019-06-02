@@ -51,6 +51,7 @@ public class AboutFragment extends RecyclerViewFragment {
         sCredits.put("Auto Flashing,osm0sis", "https://github.com/osm0sis");
         sCredits.put("Chinese Traditional Translations,jason5545", "https://github.com/jason5545");
         sCredits.put("Russian Translations,andrey167", "https://github.com/andrey167");
+        sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
     }
 
     @Override

@@ -30,6 +30,7 @@ If you like to appreciate my work, please consider donating to me (either via [P
 * [osm0sis](https://github.com/osm0sis/), for helping me with Auto-Flashing
 * [jason5545](https://github.com/jason5545/), Chinese (Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations
+* [tom4tot](https://github.com/tom4tot/), French Translations
 
 ## Report a bug or request a feature
 
