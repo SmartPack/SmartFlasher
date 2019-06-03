@@ -20,18 +20,20 @@
 
 package com.smartpack.smartflasher.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.activities.FilePickerActivity;
 import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.ViewUtils;
@@ -288,9 +290,8 @@ public class FlasherFragment extends RecyclerViewFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (RootUtils.rootAccess()) {
                     Utils.toast(R.string.file_size_limit, getActivity());
-                    Intent manualflash = new Intent(getActivity(), FilePickerActivity.class);
-                    manualflash.putExtra(FilePickerActivity.PATH_INTENT, "/sdcard");
-                    manualflash.putExtra(FilePickerActivity.EXTENSION_INTENT, ".zip");
+                    Intent manualflash  = new Intent(Intent.ACTION_GET_CONTENT);
+                    manualflash.setType("application/zip");
                     startActivityForResult(manualflash, 0);
                 } else {
                     Utils.toast(R.string.no_root_access, getActivity());
@@ -390,8 +391,20 @@ public class FlasherFragment extends RecyclerViewFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 0 && data != null) {
-            showFlashingDialog(new File(data.getStringExtra(FilePickerActivity.RESULT_INTENT)));
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            File file = new File(uri.getPath());
+            if (file.getAbsolutePath().contains("/document/raw:")) {
+                showFlashingDialog(new File(file.getAbsolutePath().replace("/document/raw:", "")));
+            } else if (file.getAbsolutePath().contains("/document/primary:")) {
+                showFlashingDialog(new File(Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", "")));
+            } else if (file.getAbsolutePath().contains("/document/")) {
+                showFlashingDialog(new File(file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/")));
+            } else {
+                showFlashingDialog(new File(file.getAbsolutePath()));
+                // Store absolute path format in app data folder
+                RootUtils.runCommand("echo " + file.getAbsolutePath() + " > " + Utils.getInternalDataStorage() + "/flasher_log.txt");
+            }
         }
     }
 }
