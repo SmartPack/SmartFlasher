@@ -47,6 +47,7 @@
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>
     <string name="support_summary">Visit support page at xda-developers.com</string>
+    <string name="sure_message">Are you sure to flash</string>
     <string name="sure_question">Are you sure?</string>
     <string name="turn_off">Turn Off</string>
     <string name="turn_off_message">\nYour device will be Turned Off.\n</string>
