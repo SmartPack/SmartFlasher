@@ -21,14 +21,10 @@
 package com.smartpack.smartflasher;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-
-import com.google.android.material.appbar.AppBarLayout;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -42,27 +38,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         super.onCreate(savedInstanceState);
-    }
-
-    public AppBarLayout getAppBarLayout() {
-        return (AppBarLayout) findViewById(R.id.appbarlayout);
-    }
-
-    public Toolbar getToolBar() {
-        return (Toolbar) findViewById(R.id.toolbar);
-    }
-
-    public void initToolBar() {
-        Toolbar toolbar = getToolBar();
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 }

@@ -45,7 +45,6 @@
     <string name="reboot_summary">重新啟動</string>
     <string name="source_code">原始程式碼</string>
     <string name="source_code_summary">在 GitHub 上檢視原始碼</string>
-    <string name="select_question">選擇 %s 嗎？</string>
     <string name="settings">設定</string>
     <string name="support">支援</string>
     <string name="support_summary">造訪 xda-developers.com 的支援頁面</string>
@@ -54,7 +53,6 @@
     <string name="turn_off_message">\n將裝置關機\n</string>
     <string name="turn_off_summary">關機</string>
     <string name="version">版本</string>
-    <string name="wrong_extension">請選擇一個副檔名為 %s 的檔案</string>
     <string name="wipe_data">清除資料</string>
     <string name="wipe_cache">清除快取</string>
     <string name="wipe_cache_summary">擦除快取分割區</string>

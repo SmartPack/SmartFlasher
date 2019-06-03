@@ -152,9 +152,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
         mProgress = mRootView.findViewById(R.id.progress);
 
-        mAppBarLayout = ((BaseActivity) requireActivity()).getAppBarLayout();
-        mToolBar = ((BaseActivity) requireActivity()).getToolBar();
-
         if (mAppBarLayout != null && !isForeground()) {
             mAppBarLayout.postDelayed(new Runnable() {
                 @Override

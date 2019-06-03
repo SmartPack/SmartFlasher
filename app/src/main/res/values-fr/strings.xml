@@ -41,7 +41,6 @@
     <string name="reboot_recovery_message">\nVotre appareil va redémarrer dans le Recovery.\n</string>
     <string name="reboot_recovery_summary">Redémarrer votre appareil dans le Recovery.</string>
     <string name="reboot_summary">Redémarrer votre appareil</string>
-    <string name="select_question">Sélectionner %s?</string>
     <string name="settings">Réglages</string>
     <string name="source_code">Code source</string>
     <string name="source_code_summary">Voir le code source sur GitHub</string>
@@ -59,5 +58,4 @@
     <string name="wipe_data">Effacer la partition Data</string>
     <string name="wipe_data_message">\n La partition Data de votre appareil va être complètement supprimée ! Vous allez perdre toutes vos données utilisateurs, y compris vos applications. \n\ Attention ! L\'appareil va redémarrer.\n</string>
     <string name="wipe_data_summary">Effacer la parition Data</string>
-    <string name="wrong_extension">Veuiller sélectionner un fichier avec l\'extension %s.</string>
 </resources>

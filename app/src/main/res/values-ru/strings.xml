@@ -37,7 +37,6 @@
     <string name="reboot_recovery_summary">Ваше устройство будет перезагружено в режим рекавери</string>
     <string name="reboot_summary">Перезагрузить устройство</string>
     <string name="reboot_recovery_message">\nВаше устройство будет перезагружено в режим Рековери.\n</string>
-    <string name="select_question">Выбрать %s?</string>
     <string name="settings">Настройки</string>
     <string name="source_code">Исходный код</string>
     <string name="source_code_summary">Посмотреть исзодный код на GitHub</string>
@@ -52,7 +51,6 @@
     <string name="wipe_cache_summary">Очистить раздел кеша</string>
     <string name="wipe_data">Очистить раздел Data</string>
     <string name="wipe_data_summary">Очистить раздел Data</string>
-    <string name="wrong_extension">Пожалуйста, выберите файл с расширением %s.</string>
     <string name="wipe_cache_message">\nРазделы кэша / Dalvik Cache вашего устройства будут удалены. \ N \ nВнимание Устройство будет перезагружено.\n</string>
     <string name="wipe_data_message">\nРаздел данных вашего устройства будет полностью удален. \ N \ nВнимание! Вы потеряете все пользовательские данные, включая приложения. \ N \ nВнимание! Устройство будет перезагружено.\n</string>
 </resources>
