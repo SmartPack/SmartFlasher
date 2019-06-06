@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 
 import androidx.core.content.ContextCompat;
@@ -89,6 +90,11 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     private void SmartPackInit(List<RecyclerViewItem> items) {
+
+        // Request write access to internal storage
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
 
         String RebootCommand = "am broadcast android.intent.action.ACTION_SHUTDOWN && sync && echo 3 > /proc/sys/vm/drop_caches && sync && sleep 3 && reboot";
 
