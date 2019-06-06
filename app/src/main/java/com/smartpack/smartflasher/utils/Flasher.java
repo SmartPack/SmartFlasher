@@ -23,6 +23,7 @@ package com.smartpack.smartflasher.utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 
 import java.io.File;
+import java.io.FileDescriptor;
 
 /**
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 29, 2018
@@ -55,6 +56,7 @@ public class Flasher {
     }
 
     public static void manualFlash(File file) {
+        FileDescriptor fd = new FileDescriptor();
         String path = file.toString();
         String flashFolder = Utils.getInternalDataStorage() + "/flash";
         String RECOVERY_API = "3";
@@ -74,7 +76,7 @@ public class Flasher {
             if (isZIPFileExtracted()) {
                 RootUtils.runCommand("cd '" + flashFolder + "' && mount -o remount,rw / && mkdir /tmp");
                 RootUtils.runCommand("mke2fs -F tmp.ext4 250000 && mount -o loop tmp.ext4 /tmp/");
-                RootUtils.runCommand("sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' 1 '" + path + "'");
+                RootUtils.runCommand("sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' " + fd + " '" + path + "'");
                 RootUtils.runCommand(CleanUpCommand);
             }
         }
