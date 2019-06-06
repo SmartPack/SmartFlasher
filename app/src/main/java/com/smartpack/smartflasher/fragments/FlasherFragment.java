@@ -92,7 +92,7 @@ public class FlasherFragment extends RecyclerViewFragment {
     private void SmartPackInit(List<RecyclerViewItem> items) {
 
         // Request write access to internal storage
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (RootUtils.rootAccess() && Build.VERSION.SDK_INT >= 23) {
             requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
