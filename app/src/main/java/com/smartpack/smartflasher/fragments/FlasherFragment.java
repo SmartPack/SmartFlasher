@@ -333,7 +333,7 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     private void manualFlash(final Flasher.FLASHMENU flashmenu, final File file, final boolean flashing) {
-        mFlashDialog = ViewUtils.dialogBuilder(getString(R.string.sure_message) + (" ") + file.getName() + ("?\n\n") +
+        mFlashDialog = ViewUtils.dialogBuilder(getString(R.string.sure_message, file.getName()) + ("\n\n") +
                 getString(R.string.file_size_limit), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
