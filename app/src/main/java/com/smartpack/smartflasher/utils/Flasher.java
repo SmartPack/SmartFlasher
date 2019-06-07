@@ -35,6 +35,10 @@ public class Flasher {
 
     private static final String RECOVERY = "/cache/recovery/";
 
+    private static final String FLASHFILE = Utils.getInternalDataStorage() + "/last_flash.txt";
+
+    private static final String PATHFILE = Utils.getInternalDataStorage() + "/last_flash.txt";
+
     public enum FLASHMENU {
         FLASH
     }
@@ -45,6 +49,28 @@ public class Flasher {
 
     public static boolean hasRecovery() {
         return Utils.existFile(RECOVERY);
+    }
+
+    public static boolean isFlashLog() {
+        return Utils.existFile(FLASHFILE);
+    }
+
+    public static void cleanFLashLog() {
+        File file = new File(FLASHFILE);
+        if (isFlashLog()) {
+            file.delete();
+        }
+    }
+
+    public static boolean isPathLog() {
+        return Utils.existFile(PATHFILE);
+    }
+
+    public static void cleanPathLog() {
+        File file = new File(PATHFILE);
+        if (isPathLog()) {
+            file.delete();
+        }
     }
 
     public static void makeInternalStorageFolder() {
@@ -66,6 +92,8 @@ public class Flasher {
          * Credits to osm0sis @ xda-developers.com
          */
         makeInternalStorageFolder();
+        cleanFLashLog();
+        cleanPathLog();
         if (Utils.existFile(flashFolder)) {
             RootUtils.runCommand(CleanUpCommand);
         } else {
@@ -77,6 +105,7 @@ public class Flasher {
                 RootUtils.runCommand("cd '" + flashFolder + "' && mount -o remount,rw / && mkdir /tmp");
                 RootUtils.runCommand("mke2fs -F tmp.ext4 250000 && mount -o loop tmp.ext4 /tmp/");
                 RootUtils.runCommand("sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' " + fd + " '" + path + "'| tee '" + Utils.getInternalDataStorage() + "'/flasher_log.txt");
+                RootUtils.runCommand("echo '" + path + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
                 RootUtils.runCommand(CleanUpCommand);
             }
         }

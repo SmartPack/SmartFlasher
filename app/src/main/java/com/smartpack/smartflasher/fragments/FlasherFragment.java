@@ -113,6 +113,35 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         flasherCard.addItem(kernelinfo);
 
+        DescriptionView lastflash = new DescriptionView();
+        lastflash.setTitle(getString(R.string.last_flash));
+        lastflash.setSummary(getString(R.string.last_flash_summary));
+        lastflash.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                if (RootUtils.rootAccess()) {
+                    if (Flasher.isPathLog()) {
+                        lastflash.setSummary(Utils.readFile(Utils.getInternalDataStorage() + "/last_flash.txt"));
+                    } else {
+                        lastflash.setSummary(getString(R.string.nothing_show));
+                    }
+                    if (Flasher.isFlashLog()) {
+                        Dialog flashLog = new Dialog(getActivity());
+                        flashLog.setIcon(R.mipmap.ic_launcher);
+                        flashLog.setTitle(getString(R.string.last_flash));
+                        flashLog.setMessage(Utils.readFile(Utils.getInternalDataStorage() + "/flasher_log.txt"));
+                        flashLog.setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
+                        });
+                        flashLog.show();
+                    }
+                } else {
+                    Utils.toast(R.string.no_root_access, getActivity());
+                }
+            }
+        });
+
+        flasherCard.addItem(lastflash);
+
         // Show wipe (Cache/Data) functions only if we recognize recovery...
         if (Flasher.hasRecovery()) {
             DescriptionView wipe_cache = new DescriptionView();
@@ -413,7 +442,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                 mPath = file.getAbsolutePath();
             }
             showFlashingDialog(new File(mPath));
-            RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
         }
     }
 }

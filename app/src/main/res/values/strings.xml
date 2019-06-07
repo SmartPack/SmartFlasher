@@ -20,11 +20,14 @@
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
     <string name="kernel">Kernel</string>
+    <string name="last_flash">Flasher Log</string>
+    <string name="last_flash_summary">Click to get the details of last flashing</string>
     <string name="licence">License</string>
     <string name="licence_summary">Click to read more about GPL-3.0</string>
     <string name="more">More</string>
     <string name="no_root_access">This feature won\'t work without Root Access</string>
     <string name="not_in_range">Not in range</string>
+    <string name="nothing_show">Nothing to Show. Click again to recheck</string>
     <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>
