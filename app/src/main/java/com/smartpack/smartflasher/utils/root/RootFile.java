@@ -91,6 +91,10 @@ public class RootFile {
         return new RootFile(mSU.runCommand("realpath \"" + mFile + "\""), mSU);
     }
 
+    public String readFile() {
+        return mSU.runCommand("cat '" + mFile + "'");
+    }
+
     public boolean exists() {
         String output = mSU.runCommand("[ -e " + mFile + " ] && echo true");
         return output != null && output.equals("true");
