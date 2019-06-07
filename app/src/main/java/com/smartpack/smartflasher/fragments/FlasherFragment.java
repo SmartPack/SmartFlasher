@@ -59,6 +59,8 @@ public class FlasherFragment extends RecyclerViewFragment {
     private Dialog mFlashingDialog;
     private Dialog mFlashDialog;
 
+    private String mPath;
+
     @Override
     protected boolean showTopFab() {
         return true;
@@ -96,7 +98,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        String RebootCommand = "am broadcast android.intent.action.ACTION_SHUTDOWN && sync && echo 3 > /proc/sys/vm/drop_caches && sync && sleep 3 && reboot";
+	String RebootCommand = "am broadcast android.intent.action.ACTION_SHUTDOWN && sync && echo 3 > /proc/sys/vm/drop_caches && sync && sleep 3 && reboot";
 
         CardView flasherCard = new CardView(getActivity());
         flasherCard.setTitle(getString(R.string.flasher_options));
@@ -402,16 +404,16 @@ public class FlasherFragment extends RecyclerViewFragment {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
             if (file.getAbsolutePath().contains("/document/raw:")) {
-                showFlashingDialog(new File(file.getAbsolutePath().replace("/document/raw:", "")));
+                mPath  = file.getAbsolutePath().replace("/document/raw:", "");
             } else if (file.getAbsolutePath().contains("/document/primary:")) {
-                showFlashingDialog(new File(Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", "")));
+                mPath = (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", ""));
             } else if (file.getAbsolutePath().contains("/document/")) {
-                showFlashingDialog(new File(file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/")));
+                mPath = file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/");
             } else {
-                showFlashingDialog(new File(file.getAbsolutePath()));
-                // Store absolute path format in app data folder
-                RootUtils.runCommand("echo " + file.getAbsolutePath() + " > " + Utils.getInternalDataStorage() + "/flasher_log.txt");
+                mPath = file.getAbsolutePath();
             }
+            showFlashingDialog(new File(mPath));
+            RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
         }
     }
 }
