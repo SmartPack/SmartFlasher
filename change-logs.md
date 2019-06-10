@@ -1,5 +1,9 @@
 # Change-logs
 
+## 4. June 10, 2019
+*Release-tag: v1.3*<br>
+Flasher: Translations: Import Portuguese (Brazilian) translations. Flasher: Updates to work with some file managers. Flasher: Update permission handling.
+
 ## 3. June 07, 2019
 *Release-tag: v1.2*<br>
 Flasher: Updated permission request. Flasher: Added an option to view last flasher log. Misc changes, please check my GitHub page.
