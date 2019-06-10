@@ -120,7 +120,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             @Override
             public void onClick(RecyclerViewItem item) {
                 if (RootUtils.rootAccess()) {
-                    if (Flasher.isPathLog()) {
+                    if (Flasher.isPathLog() && Flasher.isFlashLog()) {
                         lastflash.setSummary(Utils.readFile(Utils.getInternalDataStorage() + "/last_flash.txt"));
                     } else {
                         lastflash.setSummary(getString(R.string.nothing_show));
