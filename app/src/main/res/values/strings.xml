@@ -13,6 +13,7 @@
     <string name="donate_me_summary">Want to appreciate my work with a Donation? Click here</string>
     <string name="donate_nope">Not Now</string>
     <string name="executing">Executing</string>
+    <string name="file_selection_error">Failed to get data from external file manager</string>
     <string name="file_size_limit">Please note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.</string>
     <string name="flasher">Flasher</string>
     <string name="flasher_message">Flash Now</string>
