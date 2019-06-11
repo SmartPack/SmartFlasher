@@ -429,13 +429,13 @@ public class FlasherFragment extends RecyclerViewFragment {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
             if (file.getAbsolutePath().contains("/document/raw:")) {
-                mPath  = file.getAbsolutePath().replace("/document/raw:", "").replace(" ", "'\' ");
+                mPath  = file.getAbsolutePath().replace("/document/raw:", "");
             } else if (file.getAbsolutePath().contains("/document/primary:")) {
-                mPath = (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", "").replace(" ", "'\' "));
+                mPath = (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", ""));
             } else if (file.getAbsolutePath().contains("/document/")) {
-                mPath = file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/").replace(" ", "'\' ");
+                mPath = file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/");
             } else if (file.getAbsolutePath().contains("/storage_root")) {
-                mPath = file.getAbsolutePath().replace("storage_root", "storage/emulated/0").replace(" ", "'\' ");
+                mPath = file.getAbsolutePath().replace("storage_root", "storage/emulated/0");
             } else {
                 mPath = file.getAbsolutePath();
             }
