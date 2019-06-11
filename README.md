@@ -14,6 +14,7 @@ Smart Flasher is a very simple and basic app, even without a settings menu and t
 * Flashing recovery zip files (such as a custom kernel, a magisk module, etc.) of up to 100 MB while running Android OS, without rebooting into custom recovery.
 * Doing basic tasks such as
   * Dispaly Kernel version
+  * Display last flashing log
   * Turn off your device
   * Reboot (Normal, Recovery & Boot-loader) your device
   * Wipe Cache partitions
@@ -31,6 +32,8 @@ If you like to appreciate my work, please consider donating to me (either via [P
 * [jason5545](https://github.com/jason5545/), Chinese (Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations
 * [tom4tot](https://github.com/tom4tot/), French Translations
+* [DanGLES3](https://github.com/DanGLES3/), Portuguese (Brazilian) Translations
+* [IKAR0S](https://github.com/IKAR0S/), Italian Translations
 
 ## Report a bug or request a feature
 
