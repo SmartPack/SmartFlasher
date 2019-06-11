@@ -1,5 +1,9 @@
 # Change-logs
 
+## 5. June 11, 2019
+*Release-tag: v1.4*<br>
+Flasher: Translations: Import Italian translations. Flasher: Introduced an additional file extension check to avoid failure on certain cases.
+
 ## 4. June 10, 2019
 *Release-tag: v1.3*<br>
 Flasher: Translations: Import Portuguese (Brazilian) translations. Flasher: Updates to work with some file managers. Flasher: Update permission handling.
