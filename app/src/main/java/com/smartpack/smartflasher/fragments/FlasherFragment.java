@@ -316,6 +316,10 @@ public class FlasherFragment extends RecyclerViewFragment {
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
         }
+        if (!RootUtils.rootAccess()) {
+            Utils.toast(R.string.no_root_access, getActivity());
+            return;
+        }
 
         mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
                 R.array.flasher), new DialogInterface.OnClickListener() {
