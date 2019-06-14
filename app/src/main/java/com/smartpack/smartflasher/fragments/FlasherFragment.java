@@ -45,7 +45,6 @@ import com.smartpack.smartflasher.views.dialog.Dialog;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
 
 import java.io.File;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /*
@@ -56,8 +55,6 @@ public class FlasherFragment extends RecyclerViewFragment {
     private boolean mPermissionDenied;
 
     private Dialog mSelectionMenu;
-    private Dialog mFlashingDialog;
-    private Dialog mFlashDialog;
 
     private String mPath;
 
@@ -94,7 +91,7 @@ public class FlasherFragment extends RecyclerViewFragment {
 
     private void SmartPackInit(List<RecyclerViewItem> items) {
 
-	String RebootCommand = "am broadcast android.intent.action.ACTION_SHUTDOWN && sync && echo 3 > /proc/sys/vm/drop_caches && sync && sleep 3 && reboot";
+        String RebootCommand = "am broadcast android.intent.action.ACTION_SHUTDOWN && sync && echo 3 > /proc/sys/vm/drop_caches && sync && sleep 3 && reboot";
 
         CardView flasherCard = new CardView(getActivity());
         flasherCard.setTitle(getString(R.string.flasher_options));
@@ -320,18 +317,46 @@ public class FlasherFragment extends RecyclerViewFragment {
             Utils.toast(R.string.no_root_access, getActivity());
             return;
         }
+        if (!Flasher.hasBootPartitionInfo()) {
+            Flasher.exportBootPartitionInfo();
+        }
 
         mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
                 R.array.flasher), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (RootUtils.rootAccess()) {
-                    Utils.toast(R.string.file_size_limit, getActivity());
-                    Intent manualflash  = new Intent(Intent.ACTION_GET_CONTENT);
-                    manualflash.setType("application/zip");
-                    startActivityForResult(manualflash, 0);
-                } else {
-                    Utils.toast(R.string.no_root_access, getActivity());
+                switch (i) {
+                    case 0:
+                        if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
+                            Utils.toast(R.string.boot_partition_unknown, getActivity());
+                        } else {
+                            Dialog backup = new Dialog(getActivity());
+                            backup.setIcon(R.mipmap.ic_launcher);
+                            backup.setTitle(getString(R.string.backup));
+                            backup.setMessage(getString(R.string.backup_summary, Utils.getInternalDataStorage() + "/backup/"));
+                            backup.setNegativeButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
+                            });
+                            backup.setPositiveButton(getString(R.string.ok), (backupdialog, idi) -> {
+                                backup_boot_partition();
+                            });
+                            backup.show();
+                        }
+                        break;
+                    case 1:
+                        Utils.toast(R.string.file_size_limit, getActivity());
+                        Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
+                        manualflash.setType("application/zip");
+                        startActivityForResult(manualflash, 0);
+                        break;
+                    case 2:
+                        if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
+                            Utils.toast(R.string.boot_partition_unknown, getActivity());
+                        } else {
+                            Intent img_flash = new Intent(Intent.ACTION_GET_CONTENT);
+                            img_flash.setType("*/*");
+                            startActivityForResult(img_flash, 1);
+                        }
+                        break;
                 }
             }
         }).setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -343,71 +368,111 @@ public class FlasherFragment extends RecyclerViewFragment {
         mSelectionMenu.show();
     }
 
-    private void showFlashingDialog(final File file) {
-        final LinkedHashMap<String, Flasher.FLASHMENU> menu = getflashMenu();
-        mFlashingDialog = new Dialog(getActivity()).setItems(menu.keySet().toArray(
-                new String[menu.size()]), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Flasher.FLASHMENU flashmenu = menu.values().toArray(new Flasher.FLASHMENU[menu.size()])[i];
-                if (file != null) {
-                    manualFlash(flashmenu, file, true);
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+    private void backup_boot_partition() {
+        ViewUtils.dialogEditText(RootUtils.runCommand("uname -r"),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }, new ViewUtils.OnDialogEditTextListener() {
+                    @Override
+                    public void onClick(String text) {
+                        if (text.isEmpty()) {
+                            Utils.toast(R.string.name_empty, getActivity());
+                            return;
+                        }
+                        if (!text.endsWith(".img")) {
+                            text += ".img";
+                        }
+                        if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
+                            Utils.toast(getString(R.string.already_exists, text), getActivity());
+                            return;
+                        }
+                        final String path = text;
+                        new AsyncTask<Void, Void, Void>() {
+                            private ProgressDialog mProgressDialog;
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                mProgressDialog = new ProgressDialog(getActivity());
+                                mProgressDialog.setMessage(getString(R.string.backup_message, Utils.getInternalDataStorage() + "/backup/"));
+                                mProgressDialog.setCancelable(false);
+                                mProgressDialog.show();
+                            }
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+                                Flasher.backupBootPartition(path);
+                                return null;
+                            }
+                            @Override
+                            protected void onPostExecute(Void aVoid) {
+                                super.onPostExecute(aVoid);
+                                try {
+                                    mProgressDialog.dismiss();
+                                } catch (IllegalArgumentException ignored) {
+                                }
+                            }
+                        }.execute();
+                    }
+                }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                mFlashingDialog = null;
             }
-        });
-        mFlashingDialog.show();
+        }).show();
     }
 
-    private void manualFlash(final Flasher.FLASHMENU flashmenu, final File file, final boolean flashing) {
-        mFlashDialog = ViewUtils.dialogBuilder(getString(R.string.sure_message, file.getName()) + ("\n\n") +
-                getString(R.string.file_size_limit), new DialogInterface.OnClickListener() {
+    private void flash_zip_file(final File file) {
+        new AsyncTask<Void, Void, Void>() {
+            private ProgressDialog mProgressDialog;
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(getActivity());
+                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
             }
-        }, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                new AsyncTask<Void, Void, Void>() {
-
-                    private ProgressDialog mProgressDialog;
-
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        mProgressDialog = new ProgressDialog(getActivity());
-                        mProgressDialog.setMessage(getString(R.string.flashing));
-                        mProgressDialog.setCancelable(false);
-                        mProgressDialog.show();
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-                        Flasher.manualFlash(file);
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        super.onPostExecute(aVoid);
-                        try {
-                            mProgressDialog.dismiss();
-                        } catch (IllegalArgumentException ignored) {
-                        }
-                    }
-                }.execute();
+            protected Void doInBackground(Void... voids) {
+                Flasher.manualFlash(file);
+                return null;
             }
-        }, new DialogInterface.OnDismissListener() {
             @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mFlashDialog = null;
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    mProgressDialog.dismiss();
+                } catch (IllegalArgumentException ignored) {
+                }
             }
-        }, getActivity());
-        mFlashDialog.show();
+        }.execute();
+    }
+
+    private void flash_boot_partition(final File file) {
+        new AsyncTask<Void, Void, Void>() {
+            private ProgressDialog mProgressDialog;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(getActivity());
+                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+            }
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Flasher.flashBootPartition(file);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    mProgressDialog.dismiss();
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+        }.execute();
     }
 
     @Override
@@ -419,34 +484,55 @@ public class FlasherFragment extends RecyclerViewFragment {
         }
     }
 
-    private LinkedHashMap<String, Flasher.FLASHMENU> getflashMenu() {
-        LinkedHashMap<String, Flasher.FLASHMENU> flashingMenu = new LinkedHashMap<>();
-        flashingMenu.put(getString(R.string.flasher_message), Flasher.FLASHMENU.FLASH);
-        return flashingMenu;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
-            if (file.getName().endsWith(".zip")) {
-                if (file.getAbsolutePath().contains("/document/raw:")) {
-                    mPath  = file.getAbsolutePath().replace("/document/raw:", "");
-                } else if (file.getAbsolutePath().contains("/document/primary:")) {
-                    mPath = (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", ""));
-                } else if (file.getAbsolutePath().contains("/document/")) {
-                    mPath = file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/");
-                } else if (file.getAbsolutePath().contains("/storage_root")) {
-                    mPath = file.getAbsolutePath().replace("storage_root", "storage/emulated/0");
-                } else {
-                    mPath = file.getAbsolutePath();
-                }
-                showFlashingDialog(new File(mPath));
+            if (file.getAbsolutePath().contains("/document/raw:")) {
+                mPath = file.getAbsolutePath().replace("/document/raw:", "");
+            } else if (file.getAbsolutePath().contains("/document/primary:")) {
+                mPath = (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", ""));
+            } else if (file.getAbsolutePath().contains("/document/")) {
+                mPath = file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/");
+            } else if (file.getAbsolutePath().contains("/storage_root")) {
+                mPath = file.getAbsolutePath().replace("storage_root", "storage/emulated/0");
             } else {
-                Utils.toast(getString(R.string.file_selection_error), getActivity());
+                mPath = file.getAbsolutePath();
+            }
+            if (requestCode == 0) {
+                if (file.getName().endsWith(".zip")) {
+                    Dialog flashzip = new Dialog(getActivity());
+                    flashzip.setIcon(R.mipmap.ic_launcher);
+                    flashzip.setTitle(getString(R.string.flasher));
+                    flashzip.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.file_size_limit)));
+                    flashzip.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    });
+                    flashzip.setPositiveButton(getString(R.string.ok), (dialog1, id1) -> {
+                        flash_zip_file(new File(mPath));
+                    });
+                    flashzip.show();
+                } else {
+                    Utils.toast(getString(R.string.file_selection_error), getActivity());
+                }
+            }
+            if (requestCode == 1) {
+                if (file.getName().endsWith(".img")) {
+                    Dialog flashimg = new Dialog(getActivity());
+                    flashimg.setIcon(R.mipmap.ic_launcher);
+                    flashimg.setTitle(getString(R.string.flasher));
+                    flashimg.setMessage(getString(R.string.sure_message, file.getName() + ("?")));
+                    flashimg.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    });
+                    flashimg.setPositiveButton(getString(R.string.ok), (dialog1, id1) -> {
+                        flash_boot_partition(new File(mPath));
+                    });
+                    flashimg.show();
+                } else {
+                    Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
+                }
             }
         }
     }

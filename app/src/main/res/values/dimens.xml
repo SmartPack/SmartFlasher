@@ -17,4 +17,6 @@
     <dimen name="circleview_width">50dp</dimen>
     <dimen name="circleview_border">1dp</dimen>
 
+    <dimen name="dialog_padding">30dp</dimen>
+
 </resources>

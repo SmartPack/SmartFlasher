@@ -20,6 +20,8 @@
 
 package com.smartpack.smartflasher.utils;
 
+import android.os.Environment;
+
 import com.smartpack.smartflasher.utils.root.RootUtils;
 
 import java.io.File;
@@ -39,9 +41,7 @@ public class Flasher {
 
     private static final String PATHFILE = Utils.getInternalDataStorage() + "/last_flash.txt";
 
-    public enum FLASHMENU {
-        FLASH
-    }
+    private static final String BOOT_PARTITION_INFO = Environment.getDataDirectory() + "/.boot_partition_info";
 
     public static boolean isZIPFileExtracted() {
         return Utils.existFile(ZIPFILE_EXTRACTED);
@@ -53,6 +53,10 @@ public class Flasher {
 
     public static boolean isFlashLog() {
         return Utils.existFile(FLASHFILE);
+    }
+
+    public static boolean hasBootPartitionInfo() {
+        return Utils.existFile(BOOT_PARTITION_INFO);
     }
 
     public static void cleanFLashLog() {
@@ -73,12 +77,34 @@ public class Flasher {
         }
     }
 
+    public static void cleanBootPartitionInfo() {
+        File file = new File(BOOT_PARTITION_INFO);
+        if (hasBootPartitionInfo()) {
+            file.delete();
+        }
+    }
+
     public static void makeInternalStorageFolder() {
         File file = new File(Utils.getInternalDataStorage());
         if (file.exists() && file.isFile()) {
             file.delete();
         }
         file.mkdirs();
+    }
+
+    public static void backupBootPartition(String name) {
+        String backupFolder = Utils.getInternalDataStorage() + "/backup";
+        makeInternalStorageFolder();
+        if (!Utils.existFile(backupFolder)) {
+            File bachupFolderPath = new File(backupFolder);
+            if (bachupFolderPath.exists() && bachupFolderPath.isFile()) {
+                bachupFolderPath.delete();
+            }
+            bachupFolderPath.mkdirs();
+        }
+        String bootPartition = Utils.getInternalDataStorage() + "/backup/" + name;
+        String command = "dd if=" + findBootPartition() + " of=" + bootPartition;
+        RootUtils.runCommand(command);
     }
 
     public static void manualFlash(File file) {
@@ -97,7 +123,11 @@ public class Flasher {
         if (Utils.existFile(flashFolder)) {
             RootUtils.runCommand(CleanUpCommand);
         } else {
-            RootUtils.runCommand("mkdir '" + flashFolder + "'");
+            File flashFolderPath = new File(flashFolder);
+            if (flashFolderPath.exists() && flashFolderPath.isFile()) {
+                flashFolderPath.delete();
+            }
+            flashFolderPath.mkdirs();
         }
         if (file.length() <= 100000000) {
             RootUtils.runCommand("unzip '" + path + "' -d '" + flashFolder + "'");
@@ -109,5 +139,38 @@ public class Flasher {
                 RootUtils.runCommand(CleanUpCommand);
             }
         }
+    }
+
+    public static void flashBootPartition(File file) {
+        String command = "dd if='" + file.toString() + "' of=" + findBootPartition();
+        RootUtils.runCommand(command);
+    }
+
+    public static void exportBootPartitionInfo() {
+        /*
+         * Inspired from the "find_block()" function on Magisk by topjohnwu @ xda-developers.com
+         * Ref: https://github.com/topjohnwu/Magisk/blob/074b1f8c61e0cd03aea152346ad233d2278354f4/scripts/util_functions.sh#L146
+         */
+        String Command = "echo $(find /dev/block/ -type l -iname boot$(getprop ro.boot.slot_suffix)) > " + BOOT_PARTITION_INFO;
+        if (!hasBootPartitionInfo()) {
+            RootUtils.runCommand(Command);
+        }
+    }
+
+    public static boolean emptyBootPartitionInfo() {
+        return Utils.readFile(BOOT_PARTITION_INFO).isEmpty();
+    }
+
+    public static boolean BootPartitionInfo() {
+        return Utils.readFile(BOOT_PARTITION_INFO).contains("boot");
+    }
+
+    public static String findBootPartition() {
+        if (hasBootPartitionInfo()) {
+            exportBootPartitionInfo();
+        }
+        String partitions = Utils.readFile(BOOT_PARTITION_INFO);
+        int i = partitions.indexOf(' ');
+        return partitions.substring(0, i);
     }
 }

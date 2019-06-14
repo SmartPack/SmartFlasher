@@ -3,7 +3,9 @@
 
     <!-- Flasher -->
     <string-array name="flasher">
-        <item>@string/flasher</item>
+        <item>@string/backup_boot</item>
+        <item>@string/flash_zip</item>
+        <item>@string/flash_img</item>
     </string-array>
 
 </resources>

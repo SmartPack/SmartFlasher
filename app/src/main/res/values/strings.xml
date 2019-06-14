@@ -3,6 +3,13 @@
 
     <string name="about">About</string>
     <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
+    <string name="already_exists">%s already exists!</string>
+    <string name="backup">Backup</string>
+    <string name="backup_boot">Backup Boot partition</string>
+    <string name="backup_summary">Backup Boot partition of your device into %s\n</string>
+    <string name="backup_message">Backing up Boot partition into %s</string>
+    <string name="boot_partition">Boot Partition</string>
+    <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
     <string name="change_logs_summary">View Change-logs</string>
@@ -14,18 +21,21 @@
     <string name="donate_nope">Not Now</string>
     <string name="executing">Executing</string>
     <string name="file_selection_error">Failed to get data from external file manager</string>
-    <string name="file_size_limit">Please note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.</string>
+    <string name="file_size_limit">\n\nPlease note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.\n</string>
     <string name="flasher">Flasher</string>
     <string name="flasher_message">Flash Now</string>
     <string name="flasher_options">Flasher Options</string>
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
+    <string name="flash_img">Flash Boot IMG</string>
+    <string name="flash_zip">Flash Recovery Zip</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>
     <string name="last_flash_summary">Click to get the details of last flashing</string>
     <string name="licence">License</string>
     <string name="licence_summary">Click to read more about GPL-3.0</string>
     <string name="more">More</string>
+    <string name="name_empty">Name is empty!</string>
     <string name="no_root_access">This feature won\'t work without Root Access</string>
     <string name="not_in_range">Not in range</string>
     <string name="nothing_show">Nothing to Show. Click again to recheck</string>
@@ -51,7 +61,7 @@
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>
     <string name="support_summary">Visit support page at xda-developers.com</string>
-    <string name="sure_message">Are you sure to flash %s?</string>
+    <string name="sure_message">Are you sure to flash %s</string>
     <string name="sure_question">Are you sure?</string>
     <string name="turn_off">Turn Off</string>
     <string name="turn_off_message">\nYour device will be Turned Off.\n</string>
@@ -64,4 +74,5 @@
     <string name="wipe_data">Wipe Data</string>
     <string name="wipe_data_message">\nData partition of your device will be completely erased.\n\nWarning! You will lose all the user data including apps.\n\nAttention! The device will be Rebooted.\n</string>
     <string name="wipe_data_summary">Wipe Data Partition</string>
+    <string name="wrong_extension">Please select a file with %s extension.</string>
 </resources>
