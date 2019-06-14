@@ -14,16 +14,22 @@
     <string name="donate_me_playstore">\n請注意: 我除了可以透過 PayPal 接受捐款, 您也可以購買 Play Store 中的 SmartPack Donation Package 來表示支持。此外, 購買 SmartPack Donation Package 將解鎖在這個應用程式中的一些隱藏的功能。\n</string>
     <string name="donate_nope">我不會愛上這種騙局！</string>
     <string name="executing">執行中</string>
-    <string name="file_size_limit">請注意: 出於安全原因, 超過 100 MB 的檔案將不允許刷入。</string>
+    <string name="file_selection_error">從外部檔案管理器取得資料失敗</string>
+    <string name="file_size_limit">\n\n請注意: 出於安全原因, 超過 100 MB 的檔案將不允許刷入。\n\</string>
     <string name="flasher_options">刷入器選項</string>
     <string name="flasher">刷入器</string>
     <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
     <string name="flasher_message">立即刷入</string>
     <string name="flashing">刷入中</string>
+    <string name="flash_img">刷入 Boot 映像檔</string>
+    <string name="flash_zip">刷入 復原模式 Zip 檔案</string>
     <string name="kernel">核心</string>
+    <string name="last_flash">刷入器日誌</string>
+    <string name="last_flash_summary">點選以取得上次刷入的詳細資訊</string>
     <string name="licence">授權協議</string>
     <string name="licence_summary">點選這裡以閱讀 GPL-v3.0 授權協議</string>
     <string name="more">更多</string>
+    <string name="nothing_show">沒有可顯示的資訊。再次點選以重新檢查</string>
     <string name="not_in_range">不在有效的範圍內</string>
     <string name="no_root_access">如果沒有 Root 權限, 此功能將無法正常運作</string>
     <string name="normal_reboot_message">\n裝置將重新開機\n</string>
@@ -48,6 +54,7 @@
     <string name="settings">設定</string>
     <string name="support">支援</string>
     <string name="support_summary">造訪 xda-developers.com 的支援頁面</string>
+    <string name="sure_message">您確定要刷入 %s 嗎</string>
     <string name="sure_question">你確定？</string>
     <string name="turn_off">關機</string>
     <string name="turn_off_message">\n將裝置關機\n</string>
@@ -59,5 +66,6 @@
     <string name="wipe_data_summary">擦除資料分割區</string>
     <string name="wipe_cache_message">\ncache/dalvik 裝置的快取分割區將被刪除。\n\n注意! 裝置將被重新開機。\n\n</string>
     <string name="wipe_data_message">\n您的裝置的資料分區將被完全擦除。\n\n警告! 您將遺失包括應用程式在內的所有使用者資料。\n\n注意! 裝置將被重新開機。\n\n</string>
+    <string name="wrong_extension">請選擇一個包含 %s 副檔名的檔案</string>
 
 </resources>
