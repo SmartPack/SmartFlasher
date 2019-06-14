@@ -151,7 +151,7 @@ public class Flasher {
          * Inspired from the "find_block()" function on Magisk by topjohnwu @ xda-developers.com
          * Ref: https://github.com/topjohnwu/Magisk/blob/074b1f8c61e0cd03aea152346ad233d2278354f4/scripts/util_functions.sh#L146
          */
-        String Command = "echo $(find /dev/block/ -type l -iname boot$(getprop ro.boot.slot_suffix)) > " + BOOT_PARTITION_INFO;
+        String Command = "echo $(find /dev/block/ -type l -iname boot$(getprop ro.boot.slot_suffix)) Created by Smart Flasher > " + BOOT_PARTITION_INFO;
         if (!hasBootPartitionInfo()) {
             RootUtils.runCommand(Command);
         }
