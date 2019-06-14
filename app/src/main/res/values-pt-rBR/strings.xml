@@ -2,6 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="about">Sobre</string>
+    <string name="backup_boot">Fazer backup da partição de boot</string>
+    <string name="backup_summary">Fazer backup da partição de boot para %s\n</string>
+    <string name="backup_message">Fazendo backup da partição de boot %s</string>
+    <string name="boot_partition">Partição de boot</string>
+    <string name="boot_partition_unknown">Falha ao indentificar a partição de boot</string>
     <string name="cancel">Cancelar</string>
     <string name="change_logs">Mudanças</string>
     <string name="change_logs_summary">Ver Mudanças</string>
@@ -12,18 +17,22 @@
     <string name="donate_me_summary">Quer contribuir com uma doação? Clique aqui</string>
     <string name="donate_nope">Agora não</string>
     <string name="executing">Executando</string>
-    <string name="file_size_limit">Tenha em mente: Por questões de segurança arquivos maiores que 100mb não serão instalados.</string>
+    <string name="file_selection_error">Falha ao adquirir dados do gerenciador de arquivos externo</string>
+    <string name="file_size_limit">\n\nTenha em mente: Por questões de segurança arquivos maiores que 100mb não serão instalados.\n</string>
     <string name="flasher">Instalador</string>
     <string name="flasher_message">Instalar agora</string>
     <string name="flasher_options">Opções de instalação</string>
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>
+    <string name="flash_img">Instalar Boot IMG</string>
+    <string name="flash_zip">Instalar Zip de recovery</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Histórico de instalação</string>
     <string name="last_flash_summary">Clique pra ver detalhes da última instalação</string>
     <string name="licence">Licensa</string>
     <string name="licence_summary">Clique pra ler mais sobre GPL-3.0</string>
     <string name="more">Mais</string>
+    <string name="name_empty">Nome esta vazio!</string>
     <string name="no_root_access">Esse recurso não irá funcionar sem acesso root</string>
     <string name="not_in_range">Fora de alcance</string>
     <string name="nothing_show">Nada pra mostrar. Clique pra checar denovo</string>
@@ -49,7 +58,7 @@
     <string name="source_code_summary">Ver código fonte no GitHub</string>
     <string name="support">Suporte</string>
     <string name="support_summary">Visite a página de suporte no xda-developers.com</string>
-    <string name="sure_message">Ter certeza que quer instalar %s?</string>
+    <string name="sure_message">Ter certeza que quer instalar %s</string>
     <string name="sure_question">Tem certeza?</string>
     <string name="turn_off">Desligar</string>
     <string name="turn_off_message">\nSeu dispositivo será desligado.\n</string>
@@ -62,4 +71,5 @@
     <string name="wipe_data">Limpar dados</string>
     <string name="wipe_data_message">\nA partição de dados do seu aparelho será completamente apagada.\n\nAviso! Você irá perder todos seus dados incluindo apps.\n\nAviso! O dispositivo será Reiniciado.\n</string>
     <string name="wipe_data_summary">Limpar partição de dados</string>
+    <string name="wrong_extension">Por favor selecione um arquivo com a extensão %s.</string>
 </resources>
