@@ -1,20 +1,24 @@
 # Smart Flasher
 
-### Smart Flasher is a simple app aimed to make flashing recovery zips much easier.
+### Smart Flasher is a simple app mainly aimed to make flashing recovery zips much easier.
 
 ## Download
 [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
+
+[Download APK](https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true)
 
 ## Requirements
 1. ROOT Access
 2. BusyBox
 
 ## Features
-Smart Flasher is a very simple and basic app, even without a settings menu and themes, which can do the following things
+Smart Flasher is a simple and very basic app, even without a settings menu and themes, which can do the following things
 * Flashing recovery zip files (such as a custom kernel, a magisk module, etc.) of up to 100 MB while running Android OS, without rebooting into custom recovery.
-* Doing basic tasks such as
-  * Dispaly Kernel version
-  * Display last flashing log
+* Back-up boot partition on a supported device.
+* Flash a boot partition '.img' on a supported device.
+* Doing tasks such as
+  * Display last flash log after successful recovery flashing
+  * Display Kernel version
   * Turn off your device
   * Reboot (Normal, Recovery & Boot-loader) your device
   * Wipe Cache partitions
