@@ -77,13 +77,6 @@ public class Flasher {
         }
     }
 
-    public static void cleanBootPartitionInfo() {
-        File file = new File(BOOT_PARTITION_INFO);
-        if (hasBootPartitionInfo()) {
-            file.delete();
-        }
-    }
-
     public static void makeInternalStorageFolder() {
         File file = new File(Utils.getInternalDataStorage());
         if (file.exists() && file.isFile()) {
@@ -166,9 +159,6 @@ public class Flasher {
     }
 
     public static String findBootPartition() {
-        if (hasBootPartitionInfo()) {
-            exportBootPartitionInfo();
-        }
         String partitions = Utils.readFile(BOOT_PARTITION_INFO);
         int i = partitions.indexOf(' ');
         return partitions.substring(0, i);

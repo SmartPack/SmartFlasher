@@ -28,6 +28,7 @@
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
     <string name="flash_img">Flash Boot IMG</string>
+    <string name="flash_img_warning">\n\nWarning: Flashing a wrong \'img\' file likely brick your device. Please be careful.\n</string>
     <string name="flash_zip">Flash Recovery Zip</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>

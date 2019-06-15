@@ -147,7 +147,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     wipecache.setIcon(R.mipmap.ic_launcher);
                     wipecache.setTitle(getString(R.string.sure_question));
                     wipecache.setMessage(getString(R.string.wipe_cache_message));
-                    wipecache.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    wipecache.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     wipecache.setPositiveButton(getString(R.string.wipe_cache), (dialog1, id1) -> {
                         new Execute().execute("echo --wipe_cache > /cache/recovery/command");
@@ -168,7 +168,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     wipedata.setIcon(R.mipmap.ic_launcher);
                     wipedata.setTitle(getString(R.string.sure_question));
                     wipedata.setMessage(getString(R.string.wipe_data_message));
-                    wipedata.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    wipedata.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     wipedata.setPositiveButton(getString(R.string.wipe_data), (dialog1, id1) -> {
                         new Execute().execute("echo --wipe_data > /cache/recovery/command");
@@ -191,7 +191,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     turnoff.setIcon(R.mipmap.ic_launcher);
                     turnoff.setTitle(getString(R.string.sure_question));
                     turnoff.setMessage(getString(R.string.turn_off_message));
-                    turnoff.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    turnoff.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     turnoff.setPositiveButton(getString(R.string.turn_off), (dialog1, id1) -> {
                         new Execute().execute(RebootCommand + " -p");
@@ -215,7 +215,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     reboot.setIcon(R.mipmap.ic_launcher);
                     reboot.setTitle(getString(R.string.sure_question));
                     reboot.setMessage(getString(R.string.normal_reboot_message));
-                    reboot.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    reboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     reboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
                         new Execute().execute(RebootCommand);
@@ -239,7 +239,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     recoveryreboot.setIcon(R.mipmap.ic_launcher);
                     recoveryreboot.setTitle(getString(R.string.sure_question));
                     recoveryreboot.setMessage(getString(R.string.reboot_recovery_message));
-                    recoveryreboot.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    recoveryreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     recoveryreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
                         new Execute().execute(RebootCommand + " recovery");
@@ -263,7 +263,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     bootloaderreboot.setIcon(R.mipmap.ic_launcher);
                     bootloaderreboot.setTitle(getString(R.string.sure_question));
                     bootloaderreboot.setMessage(getString(R.string.reboot_bootloader_message));
-                    bootloaderreboot.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    bootloaderreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     bootloaderreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
                         new Execute().execute(RebootCommand + " bootloader");
@@ -309,12 +309,12 @@ public class FlasherFragment extends RecyclerViewFragment {
     @Override
     protected void onTopFabClick() {
         super.onTopFabClick();
-        if (mPermissionDenied) {
-            Utils.toast(R.string.permission_denied_write_storage, getActivity());
-            return;
-        }
         if (!RootUtils.rootAccess()) {
             Utils.toast(R.string.no_root_access, getActivity());
+            return;
+        }
+        if (mPermissionDenied) {
+            Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
         }
         if (!Flasher.hasBootPartitionInfo()) {
@@ -334,9 +334,9 @@ public class FlasherFragment extends RecyclerViewFragment {
                             backup.setIcon(R.mipmap.ic_launcher);
                             backup.setTitle(getString(R.string.backup));
                             backup.setMessage(getString(R.string.backup_summary, Utils.getInternalDataStorage() + "/backup/"));
-                            backup.setNegativeButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
+                            backup.setNeutralButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
                             });
-                            backup.setPositiveButton(getString(R.string.ok), (backupdialog, idi) -> {
+                            backup.setPositiveButton(getString(R.string.backup), (backupdialog, idi) -> {
                                 backup_boot_partition();
                             });
                             backup.show();
@@ -508,9 +508,9 @@ public class FlasherFragment extends RecyclerViewFragment {
                     flashzip.setIcon(R.mipmap.ic_launcher);
                     flashzip.setTitle(getString(R.string.flasher));
                     flashzip.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.file_size_limit)));
-                    flashzip.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
-                    flashzip.setPositiveButton(getString(R.string.ok), (dialog1, id1) -> {
+                    flashzip.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
                         flash_zip_file(new File(mPath));
                     });
                     flashzip.show();
@@ -523,10 +523,10 @@ public class FlasherFragment extends RecyclerViewFragment {
                     Dialog flashimg = new Dialog(getActivity());
                     flashimg.setIcon(R.mipmap.ic_launcher);
                     flashimg.setTitle(getString(R.string.flasher));
-                    flashimg.setMessage(getString(R.string.sure_message, file.getName() + ("?")));
-                    flashimg.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    flashimg.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.flash_img_warning)));
+                    flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
-                    flashimg.setPositiveButton(getString(R.string.ok), (dialog1, id1) -> {
+                    flashimg.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
                         flash_boot_partition(new File(mPath));
                     });
                     flashimg.show();
