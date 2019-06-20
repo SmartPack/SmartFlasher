@@ -4,11 +4,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="about">關於</string>
+    <string name="already_exists">%s 已存在！</string>
+    <string name="backup">備份</string>
+    <string name="backup_boot">備份 Boot 分割區</string>
+    <string name="backup_summary">將您的裝置的 Boot 分割區備份至 %s\n</string>
+    <string name="backup_message">正在將 Boot 分割區備份至 %s</string>
+    <string name="boot_partition">Boot 分割區</string>
+    <string name="boot_partition_unknown">無法識別 Boot 分割區</string>
     <string name="cancel">取消</string>
     <string name="change_logs">更新日誌</string>
     <string name="change_logs_summary">檢視變更</string>
-    <string name="credits">Credits</string>
-    <string name="donate_me">捐贈給我</string>
+    <string name="credits">致謝名單</string>
+    <string name="donate_me">捐款</string>
     <string name="donate_me_summary">想透過捐款來感謝我的工作嗎？請點選這裡</string>
     <string name="donate_me_message"> \n如果你喜歡我的工作，請考慮給我捐款，因為有助於我的項目更加活躍，儘管不是強制性的。\n</string>
     <string name="donate_me_playstore">\n請注意: 我除了可以透過 PayPal 接受捐款, 您也可以購買 Play Store 中的 SmartPack Donation Package 來表示支持。此外, 購買 SmartPack Donation Package 將解鎖在這個應用程式中的一些隱藏的功能。\n</string>
@@ -22,6 +29,7 @@
     <string name="flasher_message">立即刷入</string>
     <string name="flashing">刷入中</string>
     <string name="flash_img">刷入 Boot 映像檔</string>
+    <string name="flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>
     <string name="flash_zip">刷入 復原模式 Zip 檔案</string>
     <string name="kernel">核心</string>
     <string name="last_flash">刷入器日誌</string>
