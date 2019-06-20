@@ -29,6 +29,7 @@
     <string name="flasher_message">立即刷入</string>
     <string name="flashing">刷入中</string>
     <string name="flash_img">刷入 Boot 映像檔</string>
+	<string name=""flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>
     <string name="flash_zip">刷入 復原模式 Zip 檔案</string>
     <string name="kernel">核心</string>
     <string name="last_flash">刷入器日誌</string>
