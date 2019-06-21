@@ -37,7 +37,7 @@ public class Flasher {
 
     private static final String RECOVERY = "/cache/recovery/";
 
-    private static final String FLASHFILE = Utils.getInternalDataStorage() + "/last_flash.txt";
+    private static final String FLASHFILE = Utils.getInternalDataStorage() + "/flasher_log.txt";
 
     private static final String PATHFILE = Utils.getInternalDataStorage() + "/last_flash.txt";
 
@@ -59,21 +59,18 @@ public class Flasher {
         return Utils.existFile(BOOT_PARTITION_INFO);
     }
 
-    public static void cleanFLashLog() {
-        File file = new File(FLASHFILE);
-        if (isFlashLog()) {
-            file.delete();
-        }
-    }
-
     public static boolean isPathLog() {
         return Utils.existFile(PATHFILE);
     }
 
-    public static void cleanPathLog() {
-        File file = new File(PATHFILE);
+    public static void cleanLogs() {
+        File PathLog = new File(PATHFILE);
+        File FlashLog = new File(FLASHFILE);
         if (isPathLog()) {
-            file.delete();
+            PathLog.delete();
+        }
+        if (isFlashLog()) {
+            FlashLog.delete();
         }
     }
 
@@ -111,8 +108,6 @@ public class Flasher {
          * Credits to osm0sis @ xda-developers.com
          */
         makeInternalStorageFolder();
-        cleanFLashLog();
-        cleanPathLog();
         if (Utils.existFile(flashFolder)) {
             RootUtils.runCommand(CleanUpCommand);
         } else {
@@ -125,7 +120,6 @@ public class Flasher {
         if (file.length() <= 100000000) {
             RootUtils.runCommand("unzip '" + path + "' -d '" + flashFolder + "'");
             if (isZIPFileExtracted()) {
-                RootUtils.runCommand("echo '" + path + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
                 RootUtils.runCommand("cd '" + flashFolder + "' && mount -o remount,rw / && mkdir /tmp");
                 RootUtils.runCommand("mke2fs -F tmp.ext4 250000 && mount -o loop tmp.ext4 /tmp/");
                 RootUtils.runCommand("sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' " + fd + " '" + path + "'| tee '" + Utils.getInternalDataStorage() + "'/flasher_log.txt");

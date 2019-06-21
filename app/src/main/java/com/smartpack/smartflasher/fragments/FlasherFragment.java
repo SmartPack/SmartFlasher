@@ -115,10 +115,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                 if (RootUtils.rootAccess()) {
                     if (Flasher.isPathLog() && Flasher.isFlashLog()) {
                         lastflash.setSummary(Utils.readFile(Utils.getInternalDataStorage() + "/last_flash.txt"));
-                    } else {
-                        lastflash.setSummary(getString(R.string.nothing_show));
-                    }
-                    if (Flasher.isFlashLog()) {
                         Dialog flashLog = new Dialog(getActivity());
                         flashLog.setIcon(R.mipmap.ic_launcher);
                         flashLog.setTitle(getString(R.string.last_flash));
@@ -126,6 +122,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                         flashLog.setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
                         });
                         flashLog.show();
+                    } else {
+                        lastflash.setSummary(getString(R.string.nothing_show));
                     }
                 } else {
                     Utils.toast(R.string.no_root_access, getActivity());
@@ -503,6 +501,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                 mPath = file.getAbsolutePath();
             }
             if (requestCode == 0) {
+                Flasher.cleanLogs();
+                RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
                 if (file.getName().endsWith(".zip")) {
                     Dialog flashzip = new Dialog(getActivity());
                     flashzip.setIcon(R.mipmap.ic_launcher);
