@@ -86,11 +86,14 @@ public class AboutFragment extends RecyclerViewFragment {
         licence.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
-                Utils.launchUrl("https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/LICENSE", requireActivity());
+                Dialog licence = new Dialog(getActivity());
+                licence.setIcon(R.mipmap.ic_launcher);
+                licence.setTitle(getString(R.string.licence));
+                licence.setMessage(getString(R.string.licence_message));
+                licence.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+
+                licence.show();
             }
         });
 
