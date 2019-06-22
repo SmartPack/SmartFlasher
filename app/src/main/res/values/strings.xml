@@ -37,6 +37,7 @@
     <string name="licence_summary">Click to read more about GPL-3.0</string>
     <string name="more">More</string>
     <string name="name_empty">Name is empty!</string>
+    <string name="no_internet">Please check your internet connection!</string>
     <string name="no_root_access">This feature won\'t work without Root Access</string>
     <string name="not_in_range">Not in range</string>
     <string name="nothing_show">Nothing to Show. Click again to recheck</string>
