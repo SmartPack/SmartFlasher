@@ -58,7 +58,7 @@
     <string name="source_code_summary">Ver código fonte no GitHub</string>
     <string name="support">Suporte</string>
     <string name="support_summary">Visite a página de suporte no xda-developers.com</string>
-    <string name="sure_message">Ter certeza que quer instalar %s</string>
+    <string name="sure_message">Ter certeza que quer instalar %s?</string>
     <string name="sure_question">Tem certeza?</string>
     <string name="turn_off">Desligar</string>
     <string name="turn_off_message">\nSeu dispositivo será desligado.\n</string>

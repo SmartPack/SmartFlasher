@@ -97,6 +97,10 @@ public class Flasher {
         RootUtils.runCommand(command);
     }
 
+    public static long fileSize(File file) {
+        return file.length();
+    }
+
     public static void manualFlash(File file) {
         FileDescriptor fd = new FileDescriptor();
         String path = file.toString();
@@ -117,14 +121,12 @@ public class Flasher {
             }
             flashFolderPath.mkdirs();
         }
-        if (file.length() <= 100000000) {
-            RootUtils.runCommand("unzip '" + path + "' -d '" + flashFolder + "'");
-            if (isZIPFileExtracted()) {
-                RootUtils.runCommand("cd '" + flashFolder + "' && mount -o remount,rw / && mkdir /tmp");
-                RootUtils.runCommand("mke2fs -F tmp.ext4 250000 && mount -o loop tmp.ext4 /tmp/");
-                RootUtils.runCommand("sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' " + fd + " '" + path + "'| tee '" + Utils.getInternalDataStorage() + "'/flasher_log.txt");
-                RootUtils.runCommand(CleanUpCommand);
-            }
+        RootUtils.runCommand("unzip '" + path + "' -d '" + flashFolder + "'");
+        if (isZIPFileExtracted()) {
+            RootUtils.runCommand("cd '" + flashFolder + "' && mount -o remount,rw / && mkdir /tmp");
+            RootUtils.runCommand("mke2fs -F tmp.ext4 250000 && mount -o loop tmp.ext4 /tmp/");
+            RootUtils.runCommand("sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' " + fd + " '" + path + "'| tee '" + Utils.getInternalDataStorage() + "'/flasher_log.txt");
+            RootUtils.runCommand(CleanUpCommand);
         }
     }
 

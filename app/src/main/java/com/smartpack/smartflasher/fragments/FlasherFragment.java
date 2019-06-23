@@ -341,7 +341,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                         }
                         break;
                     case 1:
-                        Utils.toast(R.string.file_size_limit, getActivity());
                         Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
                         manualflash.setType("application/zip");
                         startActivityForResult(manualflash, 0);
@@ -507,16 +506,26 @@ public class FlasherFragment extends RecyclerViewFragment {
                     Utils.toast(getString(R.string.file_selection_error), getActivity());
                     return;
                 }
-                Dialog flashzip = new Dialog(getActivity());
-                flashzip.setIcon(R.mipmap.ic_launcher);
-                flashzip.setTitle(getString(R.string.flasher));
-                flashzip.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.file_size_limit)));
-                flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                flashzip.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
-                    flash_zip_file(new File(mPath));
-                });
-                flashzip.show();
+                if (Flasher.fileSize(new File(mPath)) <= 100000000) {
+                    Dialog flashzip = new Dialog(getActivity());
+                    flashzip.setIcon(R.mipmap.ic_launcher);
+                    flashzip.setTitle(getString(R.string.flasher));
+                    flashzip.setMessage(getString(R.string.sure_message, file.getName()));
+                    flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    });
+                    flashzip.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
+                        flash_zip_file(new File(mPath));
+                    });
+                    flashzip.show();
+                } else {
+                    Dialog flashSizeError = new Dialog(getActivity());
+                    flashSizeError.setIcon(R.mipmap.ic_launcher);
+                    flashSizeError.setTitle(getString(R.string.flasher));
+                    flashSizeError.setMessage(getString(R.string.file_size_limit, file.getName()));
+                    flashSizeError.setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
+                    });
+                    flashSizeError.show();
+                }
             }
             if (requestCode == 1) {
                 if (!file.getName().endsWith(".img")) {
@@ -526,7 +535,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 Dialog flashimg = new Dialog(getActivity());
                 flashimg.setIcon(R.mipmap.ic_launcher);
                 flashimg.setTitle(getString(R.string.flasher));
-                flashimg.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.flash_img_warning)));
+                flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
                 flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });
                 flashimg.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {

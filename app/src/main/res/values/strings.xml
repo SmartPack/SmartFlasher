@@ -22,7 +22,7 @@
     <string name="donate_nope">Not Now</string>
     <string name="executing">Executing</string>
     <string name="file_selection_error">Failed to get data from external file manager</string>
-    <string name="file_size_limit">\n\nPlease note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.\n</string>
+    <string name="file_size_limit">The size of %s is bigger than 100 MB.\n\nPlease Note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.</string>
     <string name="flasher">Flasher</string>
     <string name="flasher_message">Flash Now</string>
     <string name="flasher_options">Flasher Options</string>
@@ -65,7 +65,7 @@
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>
     <string name="support_summary">Visit support page at xda-developers.com</string>
-    <string name="sure_message">Are you sure to flash %s</string>
+    <string name="sure_message">Are you sure to flash %s?</string>
     <string name="sure_question">Are you sure?</string>
     <string name="turn_off">Turn Off</string>
     <string name="turn_off_message">\nYour device will be Turned Off.\n</string>

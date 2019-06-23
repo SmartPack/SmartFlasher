@@ -62,7 +62,7 @@
     <string name="settings">設定</string>
     <string name="support">支援</string>
     <string name="support_summary">造訪 xda-developers.com 的支援頁面</string>
-    <string name="sure_message">您確定要刷入 %s 嗎</string>
+    <string name="sure_message">您確定要刷入 %s 嗎?</string>
     <string name="sure_question">你確定？</string>
     <string name="turn_off">關機</string>
     <string name="turn_off_message">\n將裝置關機\n</string>
