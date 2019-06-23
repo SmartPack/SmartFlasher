@@ -1,5 +1,9 @@
 # Change-logs
 
+## 7. June 24, 2019
+*Release-tag: v1.6*<br>
+Flasher: Flash Zip: Updated file Size check. About: Check for network availability. About: Updated License and Change-log View. Translations: Updated Chinese (Traditional) translations. Miscellaneous improvements and fixes, please visit my GitHub page for more information.
+
 ## 6. June 14, 2019
 *Release-tag: v1.5*<br>
 Flasher: Add option to Backup & Flash boot partition on supported devices. Translations: Update Portuguese (Brazilian) & Chinese (Traditional) translations. Miscellaneous changes, please visit my GitHub page for more information.

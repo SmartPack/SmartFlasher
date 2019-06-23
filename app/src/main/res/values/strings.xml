@@ -12,7 +12,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">Placeholder</string>
+    <string name="change_logs_message" translatable="false">- Flasher: Flash Zip: Updated file Size check.\n\n- About: Check for network availability.\n\n- About: Updated License and Change-log View.\n\n- Translations: Updated Chinese (Traditional) translations.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="donate_me">Donate to Me</string>
