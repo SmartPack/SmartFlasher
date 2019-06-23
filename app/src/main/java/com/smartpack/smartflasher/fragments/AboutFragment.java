@@ -137,11 +137,14 @@ public class AboutFragment extends RecyclerViewFragment {
         changelogs.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
-                Utils.launchUrl("https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/change-logs.md", getActivity());
+                Dialog changelogs = new Dialog(getActivity());
+                changelogs.setIcon(R.mipmap.ic_launcher);
+                changelogs.setTitle("v" + BuildConfig.VERSION_NAME);
+                changelogs.setMessage(getString(R.string.change_logs_message));
+                changelogs.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+
+                changelogs.show();
             }
         });
 
