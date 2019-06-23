@@ -503,36 +503,36 @@ public class FlasherFragment extends RecyclerViewFragment {
             if (requestCode == 0) {
                 Flasher.cleanLogs();
                 RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
-                if (file.getName().endsWith(".zip")) {
-                    Dialog flashzip = new Dialog(getActivity());
-                    flashzip.setIcon(R.mipmap.ic_launcher);
-                    flashzip.setTitle(getString(R.string.flasher));
-                    flashzip.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.file_size_limit)));
-                    flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    flashzip.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
-                        flash_zip_file(new File(mPath));
-                    });
-                    flashzip.show();
-                } else {
+                if (!file.getName().endsWith(".zip")) {
                     Utils.toast(getString(R.string.file_selection_error), getActivity());
+                    return;
                 }
+                Dialog flashzip = new Dialog(getActivity());
+                flashzip.setIcon(R.mipmap.ic_launcher);
+                flashzip.setTitle(getString(R.string.flasher));
+                flashzip.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.file_size_limit)));
+                flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                flashzip.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
+                    flash_zip_file(new File(mPath));
+                });
+                flashzip.show();
             }
             if (requestCode == 1) {
-                if (file.getName().endsWith(".img")) {
-                    Dialog flashimg = new Dialog(getActivity());
-                    flashimg.setIcon(R.mipmap.ic_launcher);
-                    flashimg.setTitle(getString(R.string.flasher));
-                    flashimg.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.flash_img_warning)));
-                    flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    flashimg.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
-                        flash_boot_partition(new File(mPath));
-                    });
-                    flashimg.show();
-                } else {
+                if (!file.getName().endsWith(".img")) {
                     Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
+                    return;
                 }
+                Dialog flashimg = new Dialog(getActivity());
+                flashimg.setIcon(R.mipmap.ic_launcher);
+                flashimg.setTitle(getString(R.string.flasher));
+                flashimg.setMessage(getString(R.string.sure_message, file.getName() + ("?") + getString(R.string.flash_img_warning)));
+                flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                flashimg.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
+                    flash_boot_partition(new File(mPath));
+                });
+                flashimg.show();
             }
         }
     }
