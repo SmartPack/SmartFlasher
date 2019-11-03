@@ -9,7 +9,6 @@
     <string name="backup_boot">備份 Boot 分割區</string>
     <string name="backup_summary">將您的裝置的 Boot 分割區備份至 %s\n</string>
     <string name="backup_message">正在將 Boot 分割區備份至 %s</string>
-    <string name="boot_partition">Boot 分割區</string>
     <string name="boot_partition_unknown">無法識別 Boot 分割區</string>
     <string name="cancel">取消</string>
     <string name="change_logs">更新日誌</string>
@@ -35,7 +34,6 @@
     <string name="last_flash">刷入器日誌</string>
     <string name="last_flash_summary">點選以取得上次刷入的詳細資訊</string>
     <string name="licence">授權協議</string>
-    <string name="licence_summary">點選這裡以閱讀 GPL-v3.0 授權協議</string>
     <string name="more">更多</string>
     <string name="nothing_show">沒有可顯示的資訊。再次點選以重新檢查</string>
     <string name="not_in_range">不在有效的範圍內</string>

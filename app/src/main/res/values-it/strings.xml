@@ -22,7 +22,6 @@
     <string name="last_flash">Flasher Log</string>
     <string name="last_flash_summary">Clicca per avere più informazioni sull\'ultimo flash</string>
     <string name="licence">Licenza</string>
-    <string name="licence_summary">Clicca per leggere di più su GPL-3.0</string>
     <string name="more">Di più</string>
     <string name="no_root_access">Questa funzione non funzionerà senza i permessi di root</string>
     <string name="not_in_range">Fuori portata</string>

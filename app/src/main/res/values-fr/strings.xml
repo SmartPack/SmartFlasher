@@ -20,7 +20,6 @@
     <string name="flashing">Flash en cours</string>
     <string name="kernel">Kernel</string>
     <string name="licence">Licence</string>
-    <string name="licence_summary">Cliquez ici pour des informations supplémentaires à propos de la licence GPL-3.0</string>
     <string name="more">Plus</string>
     <string name="no_root_access">Cette fonctionnalité ne fonctionnera pas sans root</string>
     <string name="not_in_range">Not in range</string>

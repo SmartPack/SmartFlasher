@@ -5,7 +5,6 @@
     <string name="backup_boot">Fazer backup da partição de boot</string>
     <string name="backup_summary">Fazer backup da partição de boot para %s\n</string>
     <string name="backup_message">Fazendo backup da partição de boot %s</string>
-    <string name="boot_partition">Partição de boot</string>
     <string name="boot_partition_unknown">Falha ao indentificar a partição de boot</string>
     <string name="cancel">Cancelar</string>
     <string name="change_logs">Mudanças</string>
@@ -30,7 +29,6 @@
     <string name="last_flash">Histórico de instalação</string>
     <string name="last_flash_summary">Clique pra ver detalhes da última instalação</string>
     <string name="licence">Licensa</string>
-    <string name="licence_summary">Clique pra ler mais sobre GPL-3.0</string>
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
     <string name="no_root_access">Esse recurso não irá funcionar sem acesso root</string>
