@@ -1,5 +1,9 @@
 # Change-logs
 
+## 8. November 04, 2019
+*Release-tag: v1.7*<br>
+gradle: Updated SDK to 29 (Android Q). gradle: Updated build tools and dependencies. Flasher: Updated Reboot & ShutDown. About: Integrate License view with the main *SP* icon. Miscellaneous changes.
+
 ## 7. June 24, 2019
 *Release-tag: v1.6*<br>
 Flasher: Flash Zip: Updated file Size check. About: Check for network availability. About: Updated License and Change-log View. Translations: Updated Chinese (Traditional) translations. Miscellaneous improvements and fixes, please visit my GitHub page for more information.

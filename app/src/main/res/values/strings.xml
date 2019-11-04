@@ -11,7 +11,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Flasher: Flash Zip: Updated file Size check.\n\n- About: Check for network availability.\n\n- About: Updated License and Change-log View.\n\n- Translations: Updated Chinese (Traditional) translations.</string>
+    <string name="change_logs_message" translatable="false">- Updated SDK to 29 (Android Q).\n\n- About: gradle: Updated build tools and dependencies.\n\n- Flasher: Updated Reboot and ShutDown.\n\n- About: Integrate License view with the main *SP* icon.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="donate_me">Donate to Me</string>
