@@ -106,7 +106,7 @@ public class Flasher {
         String path = file.toString();
         String flashFolder = Utils.getInternalDataStorage() + "/flash";
         String RECOVERY_API = "3";
-        String CleanUpCommand = "rm -r '" + flashFolder + "'/*";
+        String CleanUpCommand = "rm -r '" + flashFolder + "'";
         /*
          * Flashing recovery zip without rebooting to custom recovery
          * Credits to osm0sis @ xda-developers.com
@@ -114,13 +114,9 @@ public class Flasher {
         makeInternalStorageFolder();
         if (Utils.existFile(flashFolder)) {
             RootUtils.runCommand(CleanUpCommand);
-        } else {
-            File flashFolderPath = new File(flashFolder);
-            if (flashFolderPath.exists() && flashFolderPath.isFile()) {
-                flashFolderPath.delete();
-            }
-            flashFolderPath.mkdirs();
         }
+        File flashFolderPath = new File(flashFolder);
+        flashFolderPath.mkdirs();
         RootUtils.runCommand("unzip '" + path + "' -d '" + flashFolder + "'");
         if (isZIPFileExtracted()) {
             RootUtils.runCommand("cd '" + flashFolder + "' && mount -o remount,rw / && mkdir /tmp");
