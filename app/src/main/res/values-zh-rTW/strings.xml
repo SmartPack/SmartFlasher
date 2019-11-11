@@ -25,7 +25,7 @@
     <string name="flasher_options">刷入器選項</string>
     <string name="flasher">刷入器</string>
     <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
-    <string name="flasher_message">立即刷入</string>
+    <string name="flash_only">立即刷入</string>
     <string name="flashing">刷入中</string>
     <string name="flash_img">刷入 Boot 映像檔</string>
     <string name="flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>

@@ -13,7 +13,7 @@
     <string name="executing">Выполнение</string>
     <string name="file_size_limit">Обратите внимание: по соображениям безопасности файлы восстановления размером более 100 МБ не могут быть прошиты</string>
     <string name="flasher">Прошивальшик</string>
-    <string name="flasher_message">Прошить сейчас</string>
+    <string name="flash_only">Прошить сейчас</string>
     <string name="flasher_options">Настройки прошивальшика</string>
     <string name="flasher_summary">Нажмите кнопку прошивки, чтобы выбрать и прошить файл восстановления ZIP без перезагрузки в пользовательское восстановление. Изменения вступят в силу после перезагрузки.</string>
     <string name="flashing">Прошивка в процессе</string>

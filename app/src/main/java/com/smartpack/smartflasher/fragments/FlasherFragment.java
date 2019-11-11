@@ -36,6 +36,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
+import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.ViewUtils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -57,6 +58,13 @@ public class FlasherFragment extends RecyclerViewFragment {
     private Dialog mSelectionMenu;
 
     private String mPath;
+
+    private String prepareReboot = "am broadcast android.intent.action.ACTION_SHUTDOWN " +
+            "&& sync " +
+            "&& echo 3 > /proc/sys/vm/drop_caches " +
+            "&& sync " +
+            "&& sleep 3 " +
+            "&& reboot";
 
     @Override
     protected boolean showTopFab() {
@@ -90,16 +98,6 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     private void SmartPackInit(List<RecyclerViewItem> items) {
-
-        String prepareReboot = "am broadcast android.intent.action.ACTION_SHUTDOWN " +
-                "&& sync " +
-                "&& echo 3 > /proc/sys/vm/drop_caches " +
-                "&& sync " +
-                "&& sleep 3 " +
-                "&& reboot";
-
-        String shutdownCommand = "svc power shutdown";
-        String rebootCommand = "svc power reboot";
 
         CardView flasherCard = new CardView(getActivity());
         flasherCard.setTitle(getString(R.string.flasher_options));
@@ -200,7 +198,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     turnoff.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     turnoff.setPositiveButton(getString(R.string.turn_off), (dialog1, id1) -> {
-                        RootUtils.runCommand(shutdownCommand);
+                        new Execute().execute(prepareReboot + " -p");
                     });
                     turnoff.show();
                 } else {
@@ -224,7 +222,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     reboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     reboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        RootUtils.runCommand(rebootCommand);
+                        new Execute().execute(prepareReboot);
                     });
                     reboot.show();
                 } else {
@@ -440,6 +438,9 @@ public class FlasherFragment extends RecyclerViewFragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 Flasher.manualFlash(file);
+                if (Prefs.getBoolean("flash_reboot", false, getActivity()) == true) {
+                    RootUtils.runCommand(prepareReboot);
+                }
                 return null;
             }
             @Override
@@ -467,6 +468,9 @@ public class FlasherFragment extends RecyclerViewFragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 Flasher.flashBootPartition(file);
+                if (Prefs.getBoolean("flash_reboot", false, getActivity()) == true) {
+                    RootUtils.runCommand(prepareReboot);
+                }
                 return null;
             }
             @Override
@@ -519,9 +523,12 @@ public class FlasherFragment extends RecyclerViewFragment {
                     flashzip.setIcon(R.mipmap.ic_launcher);
                     flashzip.setTitle(getString(R.string.flasher));
                     flashzip.setMessage(getString(R.string.sure_message, file.getName()));
-                    flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    flashzip.setNeutralButton(getString(R.string.flash_only), (dialogInterface, i) -> {
+                        Prefs.saveBoolean("flash_reboot", false, getActivity());
+                        flash_zip_file(new File(mPath));
                     });
-                    flashzip.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
+                    flashzip.setPositiveButton(getString(R.string.flash_reboot), (dialogInterface, i) -> {
+                        Prefs.saveBoolean("flash_reboot", true, getActivity());
                         flash_zip_file(new File(mPath));
                     });
                     flashzip.show();
@@ -530,7 +537,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     flashSizeError.setIcon(R.mipmap.ic_launcher);
                     flashSizeError.setTitle(getString(R.string.flasher));
                     flashSizeError.setMessage(getString(R.string.file_size_limit, file.getName()));
-                    flashSizeError.setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
+                    flashSizeError.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     flashSizeError.show();
                 }
@@ -544,9 +551,12 @@ public class FlasherFragment extends RecyclerViewFragment {
                 flashimg.setIcon(R.mipmap.ic_launcher);
                 flashimg.setTitle(getString(R.string.flasher));
                 flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
-                flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                flashimg.setNeutralButton(getString(R.string.flash_only), (dialogInterface, i) -> {
+                    Prefs.saveBoolean("flash_reboot", false, getActivity());
+                    flash_boot_partition(new File(mPath));
                 });
-                flashimg.setPositiveButton(getString(R.string.flasher_message), (dialog1, id1) -> {
+                flashimg.setPositiveButton(getString(R.string.flash_reboot), (dialogInterface, i) -> {
+                    Prefs.saveBoolean("flash_reboot", true, getActivity());
                     flash_boot_partition(new File(mPath));
                 });
                 flashimg.show();

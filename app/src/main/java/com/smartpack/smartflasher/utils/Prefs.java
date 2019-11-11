@@ -43,4 +43,8 @@ public class Prefs {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
     }
 
+    public static void saveBoolean(String name, boolean value, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
+    }
+
 }
