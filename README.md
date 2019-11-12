@@ -1,6 +1,8 @@
 # Smart Flasher
 
-### Smart Flasher is a simple app mainly aimed to make flashing recovery zips much easier.
+![Smart Flasher](https://github.com/SmartPack/SmartFlasher/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
+
+### Smart Flasher is a simple tool mainly aimed to make flashing recovery zips much easier.
 
 ## Download
 [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
@@ -12,17 +14,17 @@
 2. BusyBox
 
 ## Features
-Smart Flasher is a simple and very basic app, even without a settings menu and themes, which can do the following things
-* Flashing recovery zip files (such as a custom kernel, a magisk module, etc.) of up to 100 MB while running Android OS, without rebooting into custom recovery.
-* Back-up boot partition on a supported device.
-* Flash a boot partition '.img' on a supported device.
+Smart Flasher is a simple and very basic app, without a settings menu and additional themes, which can do the following things
+* Flashing recovery zip files (such as a custom Kernel, a Magisk module, etc.) of up to 100 MB while running Android OS, even without rebooting into custom recovery.
+* Back-up 'boot' partition on a supported device.
+* Flash a 'boot' partition '.img' on a supported device.
 * Doing tasks such as
   * Display last flash log after successful recovery flashing
   * Display Kernel version
   * Turn off your device
   * Reboot (Normal, Recovery & Boot-loader) your device
-  * Wipe Cache partitions
-  * Wipe Data partitions
+  * Wipe Cache partitions (need custom recovery)
+  * Wipe Data partitions (need custom recovery)
 
 ## Donations
 If you like to appreciate my work, please consider donating to me (either via [PayPal](https://www.paypal.me/sunilpaulmathew/), or [Ko-fi](https://ko-fi.com/sunilpaulmathew/), or by purchasing the [SmartPack Donation Package](https://play.google.com/store/apps/details?id=com.smartpack.donate) from playstore) as it is helpful to continue my projects more active, although it is not at all necessary.<br>
@@ -33,7 +35,7 @@ If you like to appreciate my work, please consider donating to me (either via [P
 [![Ko-fi](https://raw.githubusercontent.com/SmartPack/SmartPack.github.io/master/asset/pic010.png)](https://ko-fi.com/sunilpaulmathew/)
 
 ## Credits
-* [Grarak](https://github.com/Grarak/), Kernel Adiutor, from where I tool a lot of code
+* [Grarak](https://github.com/Grarak/), Kernel Adiutor, from where I took a lot of code
 * [osm0sis](https://github.com/osm0sis/), for helping me with Auto-Flashing
 * [jason5545](https://github.com/jason5545/), Chinese (Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations
