@@ -1,5 +1,9 @@
 # Change-logs
 
+## 9. November 14, 2019
+*Release-tag: v1.8*<br>
+Flasher: Flash ZIP & IMG: Implemented ability to restart device after successful flashing. Flasher: Make it little more better and added a detailed warning.
+
 ## 8. November 04, 2019
 *Release-tag: v1.7*<br>
 gradle: Updated SDK to 29 (Android Q). gradle: Updated build tools and dependencies. Flasher: Updated Reboot & ShutDown. About: Integrate License view with the main *SP* icon. Miscellaneous changes.
