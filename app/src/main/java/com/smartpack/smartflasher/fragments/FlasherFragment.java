@@ -522,7 +522,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                     Dialog flashzip = new Dialog(getActivity());
                     flashzip.setIcon(R.mipmap.ic_launcher);
                     flashzip.setTitle(getString(R.string.flasher));
-                    flashzip.setMessage(getString(R.string.sure_message, file.getName()));
+                    flashzip.setMessage(getString(R.string.sure_message, file.getName()) +
+                            getString(R.string.flasher_warning));
                     flashzip.setNeutralButton(getString(R.string.flash_only), (dialogInterface, i) -> {
                         Prefs.saveBoolean("flash_reboot", false, getActivity());
                         flash_zip_file(new File(mPath));

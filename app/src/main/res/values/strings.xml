@@ -31,6 +31,7 @@
     <string name="flash_img">Flash Boot IMG</string>
     <string name="flash_img_warning">\n\nWarning: Flashing a wrong \'img\' file likely brick your device. Please be careful.\n</string>
     <string name="flash_zip">Flash Recovery Zip</string>
+    <string name="flasher_warning">\n\nWarning: This feature is still very new and under development. It may not have full compatibility with many flashable zip files. If you think that the flashing process failed in any case due to the above mentioned incompatibilities, please restart the app immediately before doing anything.\n\n***USE AT YOUR OWN RISK***\n</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>
     <string name="last_flash_summary">Click to get the details of last flashing</string>
