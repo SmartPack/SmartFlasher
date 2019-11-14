@@ -27,8 +27,7 @@ Smart Flasher is a simple and very basic app, without a settings menu and additi
   * Wipe Data partitions (need custom recovery)
 
 ## Donations
-If you like to appreciate my work, please consider donating to me (either via [PayPal](https://www.paypal.me/sunilpaulmathew/), or [Ko-fi](https://ko-fi.com/sunilpaulmathew/), or by purchasing the [SmartPack Donation Package](https://play.google.com/store/apps/details?id=com.smartpack.donate) from playstore) as it is helpful to continue my projects more active, although it is not at all necessary.<br>
-<br><strong>Please note</strong>: Purchasing the donation package will unlock some hidden features in this app.
+If you like to appreciate my work, please consider donating to me (either via [PayPal](https://www.paypal.me/sunilpaulmathew/), or [Ko-fi](https://ko-fi.com/sunilpaulmathew/), or by purchasing the [SmartPack Donation Package](https://play.google.com/store/apps/details?id=com.smartpack.donate) from playstore) as it is helpful to continue my projects more active, although it is not at all necessary.
 
 [![PayPal](https://raw.githubusercontent.com/SmartPack/SmartPack.github.io/master/asset/pic005.png)](https://www.paypal.me/sunilpaulmathew/)
 [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.smartpack.donate)
