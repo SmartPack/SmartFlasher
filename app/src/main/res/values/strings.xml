@@ -11,7 +11,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Flasher: Flash ZIP and IMG: Implemented ability to restart device after successful flashing.\n\n- Flasher: Make it little more better and added a detailed warning.\n\n- Miscellaneous changes.</string>
+    <string name="change_logs_message" translatable="false">- Main: Overall updates according to material style guidelines.\n\n- Flasher: Improved flashing and added an alert dialogue to prevent using DocumentsUI.\n\n- Flasher: Maintain flashing history.\n\n- build: update gradle build tools</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="documentsui_message">Please use an external \'File Manager\' to pick your file. Selecting files via the default \'DocumentsUI\' is not yet supported.</string>

@@ -1,5 +1,9 @@
 # Change-logs
 
+## 10. November 25, 2019
+*Release-tag: v1.9*<br>
+Main: Overall updates according to material style guidelines. Flasher: Improved flashing and added an alert dialogue to prevent using DocumentsUI. Flasher: Maintain flashing history. build: update gradle build tools.
+
 ## 9. November 14, 2019
 *Release-tag: v1.8*<br>
 Flasher: Flash ZIP & IMG: Implemented ability to restart device after successful flashing. Flasher: Make it little more better and added a detailed warning.
