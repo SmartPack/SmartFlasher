@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smartpack.smartflasher.fragments.AboutFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
+import com.smartpack.smartflasher.utils.Prefs;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);

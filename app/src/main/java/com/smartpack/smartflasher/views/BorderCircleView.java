@@ -38,19 +38,6 @@ public class BorderCircleView extends FrameLayout {
 
     public static final SparseArray<String> sAccentColors = new SparseArray<>();
 
-    static {
-        sAccentColors.put(R.color.red_accent, "red_accent");
-        sAccentColors.put(R.color.pink_accent, "pink_accent");
-        sAccentColors.put(R.color.purple_accent, "purple_accent");
-        sAccentColors.put(R.color.blue_accent, "blue_accent");
-        sAccentColors.put(R.color.green_accent, "green_accent");
-        sAccentColors.put(R.color.orange_accent, "orange_accent");
-        sAccentColors.put(R.color.brown_accent, "brown_accent");
-        sAccentColors.put(R.color.grey_accent, "grey_accent");
-        sAccentColors.put(R.color.blue_grey_accent, "blue_grey_accent");
-        sAccentColors.put(R.color.teal_accent, "teal_accent");
-    }
-
     private final Drawable mCheck;
     private final Paint mPaint;
     private final Paint mPaintBorder;
