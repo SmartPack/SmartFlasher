@@ -14,6 +14,7 @@
     <string name="change_logs_message" translatable="false">- Flasher: Flash ZIP and IMG: Implemented ability to restart device after successful flashing.\n\n- Flasher: Make it little more better and added a detailed warning.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
+    <string name="documentsui_message">Please use an external \'File Manager\' to pick your file. Selecting files via the default \'DocumentsUI\' is not yet supported.</string>
     <string name="donate_me">Donate to Me</string>
     <string name="donate_me_message">\nIf you like to appreciate my work, please consider donating to me as it is helpful to continue my projects more active, although it is not at all necessary.\n</string>
     <string name="donate_me_playstore">\nPlease note: I can accept donations either via PayPal, or through SmartPack Donation Package in PlayStore.\n</string>

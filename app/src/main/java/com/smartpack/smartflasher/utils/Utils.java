@@ -219,4 +219,22 @@ public class Utils {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return (cm.getActiveNetworkInfo() != null) && cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
+
+    public static String getPath(File file) {
+        if (file.getAbsolutePath().contains("/document/raw:")) {
+            return file.getAbsolutePath().replace("/document/raw:", "");
+        } else if (file.getAbsolutePath().contains("/document/primary:")) {
+            return (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", ""));
+        } else if (file.getAbsolutePath().contains("/document/")) {
+            return file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/");
+        } else if (file.getAbsolutePath().contains("/storage_root")) {
+            return file.getAbsolutePath().replace("storage_root", "storage/emulated/0");
+        } else {
+            return file.getAbsolutePath();
+        }
+    }
+
+    public static boolean isDocumentsUI(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
 }

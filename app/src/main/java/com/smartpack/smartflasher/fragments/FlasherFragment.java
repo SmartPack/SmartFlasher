@@ -29,7 +29,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -500,16 +499,14 @@ public class FlasherFragment extends RecyclerViewFragment {
         if (resultCode == Activity.RESULT_OK && data != null) {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
-            if (file.getAbsolutePath().contains("/document/raw:")) {
-                mPath = file.getAbsolutePath().replace("/document/raw:", "");
-            } else if (file.getAbsolutePath().contains("/document/primary:")) {
-                mPath = (Environment.getExternalStorageDirectory() + ("/") + file.getAbsolutePath().replace("/document/primary:", ""));
-            } else if (file.getAbsolutePath().contains("/document/")) {
-                mPath = file.getAbsolutePath().replace("/document/", "/storage/").replace(":", "/");
-            } else if (file.getAbsolutePath().contains("/storage_root")) {
-                mPath = file.getAbsolutePath().replace("storage_root", "storage/emulated/0");
-            } else {
-                mPath = file.getAbsolutePath();
+            mPath = Utils.getPath(file);
+            if (Utils.isDocumentsUI(uri)) {
+                Dialog dialogueDocumentsUI = new Dialog(getActivity());
+                dialogueDocumentsUI.setMessage(getString(R.string.documentsui_message));
+                dialogueDocumentsUI.setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
+                });
+                dialogueDocumentsUI.show();
+                return;
             }
             if (requestCode == 0) {
                 Flasher.cleanLogs();
