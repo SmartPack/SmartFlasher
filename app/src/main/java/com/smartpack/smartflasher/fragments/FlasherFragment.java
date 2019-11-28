@@ -84,6 +84,19 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.app_name),
                 getString(R.string.flasher_summary)));
+        if (!Flasher.hasBootPartitionInfo()) {
+            Flasher.exportBootPartitionInfo();
+        }
+        if (!Flasher.hasRecoveryPartitionInfo()) {
+            Flasher.exportRecoveryPartitionInfo();
+        }
+        if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo()) {
+            addViewPagerFragment(DescriptionFragment.newInstance(Flasher.isABDevice() ? getString(R.string.ab_partition) : getString(R.string.boot_partition), Flasher.findBootPartition()));
+        }
+        if (!Flasher.isABDevice() && Flasher.RecoveryPartitionInfo() && !Flasher.emptyRecoveryPartitionInfo()) {
+            addViewPagerFragment(DescriptionFragment.newInstance(
+                    getString(R.string.recovery_partition), Flasher.findRecoveryPartition()));
+        }
     }
 
     @Override
