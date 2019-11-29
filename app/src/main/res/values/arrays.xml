@@ -3,9 +3,17 @@
 
     <!-- Flasher -->
     <string-array name="flasher">
-        <item>@string/backup_boot</item>
+        <item>@string/backup</item>
+        <item>@string/flash</item>
+    </string-array>
+    <string-array name="backup_items">
+        <item>@string/boot_partition</item>
+        <item>@string/recovery_partition</item>
+    </string-array>
+    <string-array name="flasher_items">
+        <item>@string/boot_img</item>
+        <item>@string/recovery_img</item>
         <item>@string/flash_zip</item>
-        <item>@string/flash_img</item>
     </string-array>
 
 </resources>

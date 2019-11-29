@@ -43,6 +43,8 @@ public class Flasher {
 
     private static final String BOOT_PARTITION_INFO = Environment.getDataDirectory() + "/.boot_partition_info";
 
+    private static final String RECOVERY_PARTITION_INFO = Environment.getDataDirectory() + "/.recovery_partition_info";
+
     public static boolean isZIPFileExtracted() {
         return Utils.existFile(ZIPFILE_EXTRACTED);
     }
@@ -57,6 +59,10 @@ public class Flasher {
 
     public static boolean hasBootPartitionInfo() {
         return Utils.existFile(BOOT_PARTITION_INFO);
+    }
+
+    public static boolean hasRecoveryPartitionInfo() {
+        return Utils.existFile(RECOVERY_PARTITION_INFO);
     }
 
     public static boolean isPathLog() {
@@ -94,6 +100,21 @@ public class Flasher {
         }
         String bootPartition = Utils.getInternalDataStorage() + "/backup/" + name;
         String command = "dd if=" + findBootPartition() + " of=" + bootPartition;
+        RootUtils.runCommand(command);
+    }
+
+    public static void backupRecoveryPartition(String name) {
+        String backupFolder = Utils.getInternalDataStorage() + "/backup";
+        makeInternalStorageFolder();
+        if (!Utils.existFile(backupFolder)) {
+            File bachupFolderPath = new File(backupFolder);
+            if (bachupFolderPath.exists() && bachupFolderPath.isFile()) {
+                bachupFolderPath.delete();
+            }
+            bachupFolderPath.mkdirs();
+        }
+        String recoveryPartition = Utils.getInternalDataStorage() + "/backup/" + name;
+        String command = "dd if=" + findRecoveryPartition() + " of=" + recoveryPartition;
         RootUtils.runCommand(command);
     }
 
@@ -136,6 +157,11 @@ public class Flasher {
         RootUtils.runCommand(command);
     }
 
+    public static void flashRecoveryPartition(File file) {
+        String command = "dd if='" + file.toString() + "' of=" + findRecoveryPartition();
+        RootUtils.runCommand(command);
+    }
+
     public static void exportBootPartitionInfo() {
         /*
          * Inspired from the "find_block()" function on Magisk by topjohnwu @ xda-developers.com
@@ -160,4 +186,30 @@ public class Flasher {
         int i = partitions.indexOf(' ');
         return partitions.substring(0, i);
     }
+
+    public static void exportRecoveryPartitionInfo() {
+        String Command = "echo $(find /dev/block/ -type l -iname recovery) Created by Smart Flasher > " + RECOVERY_PARTITION_INFO;
+        if (!isABDevice() && !hasRecoveryPartitionInfo()) {
+            RootUtils.runCommand(Command);
+        }
+    }
+
+    public static boolean emptyRecoveryPartitionInfo() {
+        return Utils.readFile(RECOVERY_PARTITION_INFO).isEmpty();
+    }
+
+    public static boolean RecoveryPartitionInfo() {
+        return Utils.readFile(RECOVERY_PARTITION_INFO).contains("recovery");
+    }
+
+    public static String findRecoveryPartition() {
+        String partitions = Utils.readFile(RECOVERY_PARTITION_INFO);
+        int i = partitions.indexOf(' ');
+        return partitions.substring(0, i);
+    }
+
+    public static boolean isABDevice() {
+        return Utils.readFile(BOOT_PARTITION_INFO).contains("boot_a") || Utils.readFile(BOOT_PARTITION_INFO).contains("boot_b");
+    }
+
 }

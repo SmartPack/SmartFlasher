@@ -1,13 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name" translatable="false">Smart Flasher</string>
 
+    <string name="ab_partition">A/B Partition</string>
+    <string name="ab_message">You doesn\'t need it anymore as the recovery image is in-built with the A/B partition.</string>
     <string name="about">About</string>
     <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
     <string name="already_exists">%s already exists!</string>
     <string name="backup">Backup</string>
     <string name="backup_boot">Backup Boot partition</string>
-    <string name="backup_summary">Backup Boot partition of your device into %s\n</string>
-    <string name="backup_message">Backing up Boot partition into %s</string>
+    <string name="backup_recovery">Backup Recovery partition</string>
+    <string name="backup_summary">Backup %s of your device into</string>
+    <string name="backup_message">Backing up %s of your device into</string>
+    <string name="boot_img">Boot IMG</string>
+    <string name="boot_partition">Boot partition</string>
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
@@ -29,9 +34,10 @@
     <string name="flasher_options">Flasher Options</string>
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
-    <string name="flash_img">Flash Boot IMG</string>
+    <string name="flash_img">Flash IMG</string>
     <string name="flash_img_warning">\n\nWarning: Flashing a wrong \'img\' file likely brick your device. Please be careful.\n</string>
-    <string name="flash_zip">Flash Recovery Zip</string>
+    <string name="flash">Flash</string>
+    <string name="flash_zip">Recovery Zip</string>
     <string name="flasher_warning">\n\nWarning: This feature is still very new and under development. It may not have full compatibility with many flashable zip files. If you think that the flashing process failed in any case due to the above mentioned incompatibilities, please restart the app immediately before doing anything.\n\n***USE AT YOUR OWN RISK***\n</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>
@@ -61,6 +67,9 @@
     <string name="reboot_recovery_message">\nYour device will be rebooted into Recovery mode.\n</string>
     <string name="reboot_recovery_summary">Reboot device into Recovery Mode</string>
     <string name="reboot_summary">Reboot your device</string>
+    <string name="recovery_img">Recovery IMG</string>
+    <string name="recovery_partition">Recovery partition</string>
+    <string name="recovery_partition_unknown">Failed to get Recovery Partition identity</string>
     <string name="settings">Settings</string>
     <string name="source_code">Source Code</string>
     <string name="source_code_summary">View source code at GitHub</string>
