@@ -7,8 +7,6 @@
     <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
     <string name="already_exists">%s already exists!</string>
     <string name="backup">Backup</string>
-    <string name="backup_boot">Backup Boot partition</string>
-    <string name="backup_recovery">Backup Recovery partition</string>
     <string name="backup_summary">Backup %s of your device into</string>
     <string name="backup_message">Backing up %s of your device into</string>
     <string name="boot_img">Boot IMG</string>
@@ -34,7 +32,6 @@
     <string name="flasher_options">Flasher Options</string>
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
-    <string name="flash_img">Flash IMG</string>
     <string name="flash_img_warning">\n\nWarning: Flashing a wrong \'img\' file likely brick your device. Please be careful.\n</string>
     <string name="flash">Flash</string>
     <string name="flash_zip">Recovery Zip</string>
@@ -48,7 +45,6 @@
     <string name="name_empty">Name is empty!</string>
     <string name="no_internet">Please check your internet connection!</string>
     <string name="no_root_access">This feature won\'t work without Root Access</string>
-    <string name="not_in_range">Not in range</string>
     <string name="nothing_show">Nothing to Show. Click again to recheck</string>
     <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
     <string name="ok">OK</string>

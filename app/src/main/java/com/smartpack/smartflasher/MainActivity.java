@@ -30,14 +30,12 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smartpack.smartflasher.fragments.AboutFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
-import com.smartpack.smartflasher.utils.Prefs;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
  */
 
 public class MainActivity extends BaseActivity {
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,25 +49,25 @@ public class MainActivity extends BaseActivity {
                 new FlasherFragment()).commit();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Fragment selectedFragment = null;
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Fragment selectedFragment = null;
 
-                    switch (menuItem.getItemId()) {
-                        case R.id.nav_flasher:
-                            selectedFragment = new FlasherFragment();
-                            break;
-                        case R.id.nav_about:
-                            selectedFragment = new AboutFragment();
-                            break;
-                    }
+            switch (menuItem.getItemId()) {
+                case R.id.nav_flasher:
+                    selectedFragment = new FlasherFragment();
+                    break;
+                case R.id.nav_about:
+                    selectedFragment = new AboutFragment();
+                    break;
+            }
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    selectedFragment).commit();
 
-                    return true;
-                }
-            };
+            return true;
+        }
+    };
 }

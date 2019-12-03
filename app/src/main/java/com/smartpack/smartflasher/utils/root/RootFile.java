@@ -23,8 +23,6 @@ package com.smartpack.smartflasher.utils.root;
 import com.smartpack.smartflasher.utils.Utils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -37,11 +35,6 @@ public class RootFile {
     private final String mFile;
     private RootUtils.SU mSU;
 
-    public RootFile(String file) {
-        mFile = file;
-        mSU = RootUtils.getSU();
-    }
-
     public RootFile(String file, RootUtils.SU su) {
         mFile = file;
         mSU = su;
@@ -49,46 +42,6 @@ public class RootFile {
 
     public String getName() {
         return new File(mFile).getName();
-    }
-
-    public List<String> list() {
-        List<String> list = new ArrayList<>();
-        String files = mSU.runCommand("ls '" + mFile + "/'");
-        if (files != null) {
-            // Make sure the files exists
-            for (String file : files.split("\\r?\\n")) {
-                if (file != null && !file.isEmpty() && Utils.existFile(mFile + "/" + file)) {
-                    list.add(file);
-                }
-            }
-        }
-        return list;
-    }
-
-    public List<RootFile> listFiles() {
-        List<RootFile> list = new ArrayList<>();
-        String files = mSU.runCommand("ls '" + mFile + "/'");
-        if (files != null) {
-            // Make sure the files exists
-            for (String file : files.split("\\r?\\n")) {
-                if (file != null && !file.isEmpty() && Utils.existFile(mFile + "/" + file)) {
-                    list.add(new RootFile(mFile.equals("/") ? mFile + file : mFile + "/" + file, mSU));
-                }
-            }
-        }
-        return list;
-    }
-
-    public boolean isDirectory() {
-        return "true".equals(mSU.runCommand("[ -d " + mFile + " ] && echo true"));
-    }
-
-    public RootFile getParentFile() {
-        return new RootFile(new File(mFile).getParent(), mSU);
-    }
-
-    public RootFile getRealPath() {
-        return new RootFile(mSU.runCommand("realpath \"" + mFile + "\""), mSU);
     }
 
     public String readFile() {

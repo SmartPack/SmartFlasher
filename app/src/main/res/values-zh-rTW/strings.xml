@@ -6,7 +6,6 @@
     <string name="about">關於</string>
     <string name="already_exists">%s 已存在！</string>
     <string name="backup">備份</string>
-    <string name="backup_boot">備份 Boot 分割區</string>
     <!--<string name="backup_summary">將您的裝置的 Boot 分割區備份至 %s\n</string>
     <string name="backup_message">正在將 Boot 分割區備份至 %s</string>-->
     <string name="boot_partition_unknown">無法識別 Boot 分割區</string>
@@ -27,7 +26,6 @@
     <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
     <string name="flash_only">立即刷入</string>
     <string name="flashing">刷入中</string>
-    <string name="flash_img">刷入 映像檔</string>
     <string name="flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>
     <!--<string name="flash_zip">刷入 復原模式 Zip 檔案</string>-->
     <string name="kernel">核心</string>
@@ -36,7 +34,6 @@
     <string name="licence">授權協議</string>
     <string name="more">更多</string>
     <string name="nothing_show">沒有可顯示的資訊。再次點選以重新檢查</string>
-    <string name="not_in_range">不在有效的範圍內</string>
     <string name="no_root_access">如果沒有 Root 權限, 此功能將無法正常運作</string>
     <string name="normal_reboot_message">\n裝置將重新開機\n</string>
     <string name="ok">確定</string>

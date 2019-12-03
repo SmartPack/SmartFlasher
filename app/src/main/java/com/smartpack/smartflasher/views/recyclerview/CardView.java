@@ -23,7 +23,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -189,26 +188,8 @@ public class CardView extends RecyclerViewItem {
         refresh();
     }
 
-    public void setExpandable(boolean expandable) {
-        mExpandable = expandable;
-        refresh();
-    }
-
-    public void GrxSetInitSelection(boolean isInitSelected, int color ){
-        mGrxIsInitSelected = isInitSelected;
-        mGrxColor = color;
-    }
-
     public void setCardBackgroundColor(int color){
         mRootView.setCardBackgroundColor(color);
-    }
-
-    public void setCardBackgroundColor (ColorStateList color){
-        mRootView.setCardBackgroundColor(color);
-    }
-
-    public ColorStateList getCardBackgroundColor(){
-        return mRootView.getCardBackgroundColor();
     }
 
     public void addItem(final RecyclerViewItem item) {
@@ -219,28 +200,8 @@ public class CardView extends RecyclerViewItem {
         addView(item);
     }
 
-    public void setOnMenuListener(OnMenuListener onMenuListener) {
-        mOnMenuListener = onMenuListener;
-        refresh();
-    }
-
     public int size() {
         return mItems.size();
-    }
-
-    public void removeItem(RecyclerViewItem item) {
-        mItems.remove(item);
-        if (mLayout != null) {
-            mLayout.removeView(mViews.get(item));
-        }
-    }
-
-    public void clearItems() {
-        mRunnables.clear();
-        mItems.clear();
-        if (mLayout != null) {
-            mLayout.removeAllViews();
-        }
     }
 
     private void setupLayout() {

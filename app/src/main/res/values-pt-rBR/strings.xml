@@ -2,7 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="about">Sobre</string>
-    <string name="backup_boot">Fazer backup da partição de boot</string>
     <!--<string name="backup_summary">Fazer backup da partição de boot para %s\n</string>
     <string name="backup_message">Fazendo backup da partição de boot %s</string>-->
     <string name="boot_partition_unknown">Falha ao indentificar a partição de boot</string>
@@ -23,7 +22,6 @@
     <string name="flasher_options">Opções de instalação</string>
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>
-    <string name="flash_img">Instalar IMG</string>
     <!--<string name="flash_zip">Instalar Zip de recovery</string>-->
     <string name="kernel">Kernel</string>
     <string name="last_flash">Histórico de instalação</string>
@@ -32,7 +30,6 @@
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
     <string name="no_root_access">Esse recurso não irá funcionar sem acesso root</string>
-    <string name="not_in_range">Fora de alcance</string>
     <string name="nothing_show">Nada pra mostrar. Clique pra checar denovo</string>
     <string name="normal_reboot_message">\nSeu dispositivo será reiniciado.\n</string>
     <string name="ok">OK</string>

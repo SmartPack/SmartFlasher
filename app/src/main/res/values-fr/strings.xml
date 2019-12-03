@@ -22,7 +22,6 @@
     <string name="licence">Licence</string>
     <string name="more">Plus</string>
     <string name="no_root_access">Cette fonctionnalité ne fonctionnera pas sans root</string>
-    <string name="not_in_range">Not in range</string>
     <string name="normal_reboot_message">\nVotre appareil va redémarrer.\n</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>

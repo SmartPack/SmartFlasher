@@ -22,8 +22,6 @@ package com.smartpack.smartflasher.utils.root;
 
 import android.util.Log;
 
-import com.smartpack.smartflasher.utils.Utils;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -44,30 +42,6 @@ public class RootUtils {
         SU su = getSU();
         su.runCommand("echo /testRoot/");
         return !su.mDenied;
-    }
-
-    public static boolean busyboxInstalled() {
-        return existBinary("busybox") || existBinary("toybox");
-    }
-
-    private static boolean existBinary(String binary) {
-        String paths;
-        if (System.getenv("PATH") != null) {
-            paths = System.getenv("PATH");
-        } else {
-            paths = "/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin";
-        }
-        for (String path : paths.split(":")) {
-            if (!path.endsWith("/")) path += "/";
-            if (Utils.existFile(path + binary, false) || Utils.existFile(path + binary)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void chmod(String file, String permission, SU su) {
-        su.runCommand("chmod " + permission + " " + file);
     }
 
     public static String runCommand(String command) {
