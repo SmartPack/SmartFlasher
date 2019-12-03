@@ -388,7 +388,9 @@ public class FlasherFragment extends RecyclerViewFragment {
                         }
                         break;
                     case 1:
-                        if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
+                        if (Flasher.isABDevice()) {
+                            Utils.toast(R.string.ab_message, getActivity());
+                        } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
                             Utils.toast(R.string.recovery_partition_unknown, getActivity());
                         } else {
                             Dialog recovery = new Dialog(getActivity());
