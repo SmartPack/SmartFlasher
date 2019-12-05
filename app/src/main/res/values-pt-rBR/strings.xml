@@ -2,8 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="about">Sobre</string>
-    <!--<string name="backup_summary">Fazer backup da partição de boot para %s\n</string>
-    <string name="backup_message">Fazendo backup da partição de boot %s</string>-->
+    <string name="backup_summary">Fazer backup da %s\n do seu dispositivo para</string>
+    <string name="backup_message">Fazendo backup de %s do seu dispositivo para</string>
     <string name="boot_partition_unknown">Falha ao indentificar a partição de boot</string>
     <string name="cancel">Cancelar</string>
     <string name="change_logs">Mudanças</string>
@@ -22,7 +22,7 @@
     <string name="flasher_options">Opções de instalação</string>
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>
-    <!--<string name="flash_zip">Instalar Zip de recovery</string>-->
+    <string name="flash_zip">Zip de recovery</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Histórico de instalação</string>
     <string name="last_flash_summary">Clique pra ver detalhes da última instalação</string>
