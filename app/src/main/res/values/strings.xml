@@ -14,7 +14,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Main: Overall updates according to material style guidelines.\n\n- Flasher: Improved flashing and added an alert dialogue to prevent using DocumentsUI.\n\n- Flasher: Maintain flashing history.\n\n- build: update gradle build tools</string>
+    <string name="change_logs_message" translatable="false">- Flasher: Added ability to back-up/flash recovery partition/img.\n\n- Flasher: Display partition information on the main screen.\n\n- App theme: Improved a bit more.\n\n- Translations. Updated Brazilian Portuguese.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="documentsui_message">Please use an external \'File Manager\' to pick your file. Selecting files via the default \'DocumentsUI\' is not yet supported.</string>

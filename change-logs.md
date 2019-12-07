@@ -1,5 +1,9 @@
 # Change-logs
 
+## 11. December 07, 2019
+*Release-tag: v2.0*<br>
+Flasher: Added ability to back-up/flash recovery partition/img. Flasher: Display partition information on the main screen. App theme: Improved a bit more. Translations. Updated Portuguese (Brazilian) (Credits: @DanGLES3).
+
 ## 10. November 25, 2019
 *Release-tag: v1.9*<br>
 Main: Overall updates according to material style guidelines. Flasher: Improved flashing and added an alert dialogue to prevent using DocumentsUI. Flasher: Maintain flashing history. build: update gradle build tools.
