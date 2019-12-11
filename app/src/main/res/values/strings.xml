@@ -57,6 +57,7 @@
     <string name="reboot_bootloader">Reboot Bootloader</string>
     <string name="reboot_bootloader_message">\nYour device will be rebooted into Download Mode.\n</string>
     <string name="reboot_bootloader_summary">Reboot device into Download Mode</string>
+    <string name="reboot_dialog">It is  highly recommended to reboot your device after flashing.</string>
     <string name="reboot_recovery">Reboot Recovery</string>
     <string name="reboot_recovery_message">\nYour device will be rebooted into Recovery mode.\n</string>
     <string name="reboot_recovery_summary">Reboot device into Recovery Mode</string>

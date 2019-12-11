@@ -589,6 +589,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
+                rebootDialog();
             }
         }.execute();
     }
@@ -616,6 +617,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
+                rebootDialog();
             }
         }.execute();
     }
@@ -654,6 +656,22 @@ public class FlasherFragment extends RecyclerViewFragment {
             mPermissionDenied = true;
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
         }
+    }
+
+    public void rebootDialog() {
+        /*
+         * Thanks to Shanu Dey <sd4shanudey@gmail.com> for this idea
+         * Ref: https://github.com/EquinoxKernel/Equinox-Kernel-Adiutor/commit/640ec2e7fc578974eb87864729abdd02439aebd5
+         */
+        Dialog rebootDialog = new Dialog(getActivity());
+        rebootDialog.setMessage(getString(R.string.reboot_dialog));
+        rebootDialog.setCancelable(false);
+        rebootDialog.setNeutralButton(getString(R.string.cancel), (dialog1, id1) -> {
+        });
+        rebootDialog.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
+            new Execute().execute(prepareReboot);
+        });
+        rebootDialog.show();
     }
 
     @Override
