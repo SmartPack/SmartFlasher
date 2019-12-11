@@ -35,7 +35,6 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
-import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.ViewUtils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -581,9 +580,6 @@ public class FlasherFragment extends RecyclerViewFragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 Flasher.flashBootPartition(file);
-                if (Prefs.getBoolean("flash_reboot", false, getActivity()) == true) {
-                    RootUtils.runCommand(prepareReboot);
-                }
                 return null;
             }
             @Override
@@ -611,9 +607,6 @@ public class FlasherFragment extends RecyclerViewFragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 Flasher.flashRecoveryPartition(file);
-                if (Prefs.getBoolean("flash_reboot", false, getActivity()) == true) {
-                    RootUtils.runCommand(prepareReboot);
-                }
                 return null;
             }
             @Override
@@ -641,9 +634,6 @@ public class FlasherFragment extends RecyclerViewFragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 Flasher.manualFlash(file);
-                if (Prefs.getBoolean("flash_reboot", false, getActivity()) == true) {
-                    RootUtils.runCommand(prepareReboot);
-                }
                 return null;
             }
             @Override
@@ -691,16 +681,9 @@ public class FlasherFragment extends RecyclerViewFragment {
                 flashimg.setIcon(R.mipmap.ic_launcher);
                 flashimg.setTitle(getString(R.string.flasher));
                 flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
-                flashimg.setNeutralButton(getString(R.string.flash_only), (dialogInterface, i) -> {
-                    Prefs.saveBoolean("flash_reboot", false, getActivity());
-                    if (requestCode == 0) {
-                        flash_boot_partition(new File(mPath));
-                    } else if (requestCode == 1) {
-                        flash_recovery_partition(new File(mPath));
-                    }
+                flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });
-                flashimg.setPositiveButton(getString(R.string.flash_reboot), (dialogInterface, i) -> {
-                    Prefs.saveBoolean("flash_reboot", true, getActivity());
+                flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
                     if (requestCode == 0) {
                         flash_boot_partition(new File(mPath));
                     } else if (requestCode == 1) {
@@ -721,12 +704,9 @@ public class FlasherFragment extends RecyclerViewFragment {
                     flashzip.setTitle(getString(R.string.flasher));
                     flashzip.setMessage(getString(R.string.sure_message, file.getName()) +
                             getString(R.string.flasher_warning));
-                    flashzip.setNeutralButton(getString(R.string.flash_only), (dialogInterface, i) -> {
-                        Prefs.saveBoolean("flash_reboot", false, getActivity());
-                        flash_zip_file(new File(mPath));
+                    flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
-                    flashzip.setPositiveButton(getString(R.string.flash_reboot), (dialogInterface, i) -> {
-                        Prefs.saveBoolean("flash_reboot", true, getActivity());
+                    flashzip.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
                         flash_zip_file(new File(mPath));
                     });
                     flashzip.show();

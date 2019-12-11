@@ -27,8 +27,6 @@
     <string name="file_selection_error">Failed to get data from external file manager</string>
     <string name="file_size_limit">The size of %s is bigger than 100 MB.\n\nPlease Note: Due to safety reasons, recovery files of more than 100 MB won\'t be allowed to flash.</string>
     <string name="flasher">Flasher</string>
-    <string name="flash_only">Flash Only</string>
-    <string name="flash_reboot">Flash and Reboot</string>
     <string name="flasher_options">Flasher Options</string>
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>

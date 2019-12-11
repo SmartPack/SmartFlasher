@@ -18,7 +18,6 @@
     <string name="file_selection_error">Falha ao adquirir dados do gerenciador de arquivos externo</string>
     <string name="file_size_limit">\n\nTenha em mente: Por questões de segurança arquivos maiores que 100mb não serão instalados.\n</string>
     <string name="flasher">Instalador</string>
-    <string name="flash_only">Instalar agora</string>
     <string name="flasher_options">Opções de instalação</string>
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>

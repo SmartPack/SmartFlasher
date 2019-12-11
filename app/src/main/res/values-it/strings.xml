@@ -14,7 +14,6 @@
     <string name="executing">Eseguendo</string>
     <string name="file_size_limit">Nota bene: Per motivi di sicurezza, i file di dimensioni superiori a 100 non possono essere flashati.</string>
     <string name="flasher">Flasher</string>
-    <string name="flash_only">Flasha Adesso</string>
     <string name="flasher_options">Opzioni Flasher</string>
     <string name="flasher_summary">Clicca il pulsante per selezionare e flashare il file zip senza riavviare nella modalità recovery. Le modifiche verranno applicate dopo il riavvio.</string>
     <string name="flashing">Flashando</string>
