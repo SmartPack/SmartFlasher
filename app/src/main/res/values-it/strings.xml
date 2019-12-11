@@ -19,11 +19,9 @@
     <string name="flashing">Flashando</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>
-    <string name="last_flash_summary">Clicca per avere più informazioni sull\'ultimo flash</string>
     <string name="licence">Licenza</string>
     <string name="more">Di più</string>
     <string name="no_root_access">Questa funzione non funzionerà senza i permessi di root</string>
-    <string name="nothing_show">Nulla da mostrare. Clicca di nuovo per controllare</string>
     <string name="normal_reboot_message">\nIl dispositivo verrà riavviato.\n</string>
     <string name="ok">OK</string>
     <string name="options">Opzioni</string>

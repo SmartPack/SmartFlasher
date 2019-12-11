@@ -124,33 +124,6 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         flasherCard.addItem(kernelinfo);
 
-        DescriptionView lastflash = new DescriptionView();
-        lastflash.setTitle(getString(R.string.last_flash));
-        lastflash.setSummary(getString(R.string.last_flash_summary));
-        lastflash.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                if (RootUtils.rootAccess()) {
-                    if (Flasher.isPathLog() && Flasher.isFlashLog()) {
-                        lastflash.setSummary(Utils.readFile(Utils.getInternalDataStorage() + "/last_flash.txt"));
-                        Dialog flashLog = new Dialog(getActivity());
-                        flashLog.setIcon(R.mipmap.ic_launcher);
-                        flashLog.setTitle(getString(R.string.last_flash));
-                        flashLog.setMessage(Utils.readFile(Utils.getInternalDataStorage() + "/flasher_log.txt"));
-                        flashLog.setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
-                        });
-                        flashLog.show();
-                    } else {
-                        lastflash.setSummary(getString(R.string.nothing_show));
-                    }
-                } else {
-                    Utils.toast(R.string.no_root_access, getActivity());
-                }
-            }
-        });
-
-        flasherCard.addItem(lastflash);
-
         // Show wipe (Cache/Data) functions only if we recognize recovery...
         if (Flasher.hasRecovery()) {
             DescriptionView wipe_cache = new DescriptionView();
@@ -645,6 +618,31 @@ public class FlasherFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
+                Dialog rebootDialog = new Dialog(getActivity());
+                rebootDialog.setMessage(getString(R.string.reboot_dialog));
+                rebootDialog.setCancelable(false);
+                if (Flasher.isPathLog() && Flasher.isFlashLog()) {
+                    rebootDialog.setNeutralButton(getString(R.string.last_flash), (dialog1, id1) -> {
+                        Dialog flashLog = new Dialog(getActivity());
+                        flashLog.setIcon(R.mipmap.ic_launcher);
+                        flashLog.setTitle(getString(R.string.last_flash));
+                        flashLog.setMessage(Utils.readFile(Utils.getInternalDataStorage() + "/flasher_log.txt"));
+                        flashLog.setCancelable(false);
+                        flashLog.setNeutralButton(getString(R.string.cancel), (dialog2, id2) -> {
+                        });
+                        flashLog.setPositiveButton(getString(R.string.reboot), (dialog2, id2) -> {
+                            new Execute().execute(prepareReboot);
+                        });
+                        flashLog.show();
+
+                    });
+                }
+                rebootDialog.setNegativeButton(getString(R.string.cancel), (dialog1, id1) -> {
+                });
+                rebootDialog.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
+                    new Execute().execute(prepareReboot);
+                });
+                rebootDialog.show();
             }
         }.execute();
     }

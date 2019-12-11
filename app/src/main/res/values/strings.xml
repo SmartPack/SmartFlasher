@@ -36,14 +36,12 @@
     <string name="flasher_warning">\n\nWarning: This feature is still very new and under development. It may not have full compatibility with many flashable zip files. If you think that the flashing process failed in any case due to the above mentioned incompatibilities, please restart the app immediately before doing anything.\n\n***USE AT YOUR OWN RISK***\n</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>
-    <string name="last_flash_summary">Click to get the details of last flashing</string>
     <string name="licence">License</string>
     <string name="licence_message" translatable="false">Smart Flasher is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nSmart Flasher is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with Smart Flasher. If not, visit http://www.gnu.org/licenses/.</string>
     <string name="more">More</string>
     <string name="name_empty">Name is empty!</string>
     <string name="no_internet">Please check your internet connection!</string>
     <string name="no_root_access">This feature won\'t work without Root Access</string>
-    <string name="nothing_show">Nothing to Show. Click again to recheck</string>
     <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>

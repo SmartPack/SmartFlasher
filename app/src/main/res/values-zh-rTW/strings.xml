@@ -29,10 +29,8 @@
     <!--<string name="flash_zip">刷入 復原模式 Zip 檔案</string>-->
     <string name="kernel">核心</string>
     <string name="last_flash">刷入器日誌</string>
-    <string name="last_flash_summary">點選以取得上次刷入的詳細資訊</string>
     <string name="licence">授權協議</string>
     <string name="more">更多</string>
-    <string name="nothing_show">沒有可顯示的資訊。再次點選以重新檢查</string>
     <string name="no_root_access">如果沒有 Root 權限, 此功能將無法正常運作</string>
     <string name="normal_reboot_message">\n裝置將重新開機\n</string>
     <string name="ok">確定</string>

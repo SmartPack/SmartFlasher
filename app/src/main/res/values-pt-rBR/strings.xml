@@ -24,12 +24,10 @@
     <string name="flash_zip">Zip de recovery</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Histórico de instalação</string>
-    <string name="last_flash_summary">Clique pra ver detalhes da última instalação</string>
     <string name="licence">Licensa</string>
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
     <string name="no_root_access">Esse recurso não irá funcionar sem acesso root</string>
-    <string name="nothing_show">Nada pra mostrar. Clique pra checar denovo</string>
     <string name="normal_reboot_message">\nSeu dispositivo será reiniciado.\n</string>
     <string name="ok">OK</string>
     <string name="options">Opções</string>
