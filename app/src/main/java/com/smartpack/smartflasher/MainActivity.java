@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smartpack.smartflasher.fragments.AboutFragment;
+import com.smartpack.smartflasher.fragments.BackupFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
 
 /*
@@ -58,6 +59,9 @@ public class MainActivity extends BaseActivity {
             switch (menuItem.getItemId()) {
                 case R.id.nav_flasher:
                     selectedFragment = new FlasherFragment();
+                    break;
+                case R.id.nav_backup:
+                    selectedFragment = new BackupFragment();
                     break;
                 case R.id.nav_about:
                     selectedFragment = new AboutFragment();

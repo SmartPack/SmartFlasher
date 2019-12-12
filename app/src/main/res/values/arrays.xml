@@ -13,7 +13,10 @@
     <string-array name="flasher_items">
         <item>@string/boot_img</item>
         <item>@string/recovery_img</item>
-        <item>@string/flash_zip</item>
+    </string-array>
+    <string-array name="backup_item_options">
+        <item>@string/restore</item>
+        <item>@string/delete</item>
     </string-array>
 
 </resources>

@@ -212,4 +212,13 @@ public class Flasher {
         return Utils.readFile(BOOT_PARTITION_INFO).contains("boot_a") || Utils.readFile(BOOT_PARTITION_INFO).contains("boot_b");
     }
 
+    public static String getPath() {
+        File file = new File(Utils.getInternalDataStorage() + "/backup/");
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+        file.mkdirs();
+        return file.toString();
+    }
+
 }

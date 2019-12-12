@@ -6,6 +6,12 @@
         android:icon="@drawable/ic_flash"
         android:title="@string/flasher" />
 
+
+    <item
+        android:id="@+id/nav_backup"
+        android:icon="@drawable/ic_backup"
+        android:title="@string/backup" />
+
     <item
         android:id="@+id/nav_about"
         android:icon="@drawable/ic_about"

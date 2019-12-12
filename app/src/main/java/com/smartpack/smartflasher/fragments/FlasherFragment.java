@@ -23,7 +23,6 @@ package com.smartpack.smartflasher.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -36,7 +35,6 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.Utils;
-import com.smartpack.smartflasher.utils.ViewUtils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.recyclerview.CardView;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
@@ -54,17 +52,7 @@ public class FlasherFragment extends RecyclerViewFragment {
 
     private boolean mPermissionDenied;
 
-    private Dialog mSelectionMenu;
-
     private String mPath;
-
-    private String prepareReboot = "am broadcast android.intent.action.ACTION_SHUTDOWN " +
-            "&& sync " +
-            "&& echo 3 > /proc/sys/vm/drop_caches " +
-            "&& sync " +
-            "&& sleep 3 " +
-            "&& reboot";
-
     @Override
     protected boolean showTopFab() {
         return true;
@@ -81,21 +69,8 @@ public class FlasherFragment extends RecyclerViewFragment {
     protected void init() {
         super.init();
 
-        addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.app_name),
+        addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.flasher),
                 getString(R.string.flasher_summary)));
-        if (!Flasher.hasBootPartitionInfo()) {
-            Flasher.exportBootPartitionInfo();
-        }
-        if (!Flasher.hasRecoveryPartitionInfo()) {
-            Flasher.exportRecoveryPartitionInfo();
-        }
-        if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo()) {
-            addViewPagerFragment(DescriptionFragment.newInstance(Flasher.isABDevice() ? getString(R.string.ab_partition) : getString(R.string.boot_partition), Flasher.findBootPartition()));
-        }
-        if (!Flasher.isABDevice() && Flasher.RecoveryPartitionInfo() && !Flasher.emptyRecoveryPartitionInfo()) {
-            addViewPagerFragment(DescriptionFragment.newInstance(
-                    getString(R.string.recovery_partition), Flasher.findRecoveryPartition()));
-        }
     }
 
     @Override
@@ -140,7 +115,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     });
                     wipecache.setPositiveButton(getString(R.string.wipe_cache), (dialog1, id1) -> {
                         new Execute().execute("echo --wipe_cache > /cache/recovery/command");
-                        new Execute().execute(prepareReboot + " recovery");
+                        new Execute().execute(Utils.prepareReboot() + " recovery");
                     });
                     wipecache.show();
                 }
@@ -161,7 +136,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     });
                     wipedata.setPositiveButton(getString(R.string.wipe_data), (dialog1, id1) -> {
                         new Execute().execute("echo --wipe_data > /cache/recovery/command");
-                        new Execute().execute(prepareReboot + " recovery");
+                        new Execute().execute(Utils.prepareReboot() + " recovery");
                     });
                     wipedata.show();
                 }
@@ -183,7 +158,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     turnoff.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     turnoff.setPositiveButton(getString(R.string.turn_off), (dialog1, id1) -> {
-                        new Execute().execute(prepareReboot + " -p");
+                        new Execute().execute(Utils.prepareReboot() + " -p");
                     });
                     turnoff.show();
                 } else {
@@ -207,7 +182,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     reboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     reboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        new Execute().execute(prepareReboot);
+                        new Execute().execute(Utils.prepareReboot());
                     });
                     reboot.show();
                 } else {
@@ -231,7 +206,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     recoveryreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     recoveryreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        new Execute().execute(prepareReboot + " recovery");
+                        new Execute().execute(Utils.prepareReboot() + " recovery");
                     });
                     recoveryreboot.show();
                 } else {
@@ -255,7 +230,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     bootloaderreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     });
                     bootloaderreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        new Execute().execute(prepareReboot + " bootloader");
+                        new Execute().execute(Utils.prepareReboot() + " bootloader");
                     });
                     bootloaderreboot.show();
                 } else {
@@ -270,31 +245,6 @@ public class FlasherFragment extends RecyclerViewFragment {
         }
     }
 
-    private class Execute extends AsyncTask<String, Void, Void> {
-        private ProgressDialog mProgressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.executing) + ("..."));
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-            RootUtils.runCommand(params[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            mProgressDialog.dismiss();
-        }
-    }
-
     @Override
     protected void onTopFabClick() {
         super.onTopFabClick();
@@ -306,293 +256,9 @@ public class FlasherFragment extends RecyclerViewFragment {
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
         }
-        if (!Flasher.hasBootPartitionInfo()) {
-            Flasher.exportBootPartitionInfo();
-        }
-        if (!Flasher.hasRecoveryPartitionInfo()) {
-            Flasher.exportRecoveryPartitionInfo();
-        }
-
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.flasher), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        BackupOptions();
-                        break;
-                    case 1:
-                        FlashOptions();
-                        break;
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                mSelectionMenu = null;
-            }
-        });
-        mSelectionMenu.show();
-    }
-
-    private void BackupOptions() {
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.backup_items), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                switch (i) {
-                    case 0:
-                        if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                            Utils.toast(R.string.boot_partition_unknown, getActivity());
-                        } else {
-                            Dialog boot = new Dialog(getActivity());
-                            boot.setIcon(R.mipmap.ic_launcher);
-                            boot.setTitle(getString(R.string.backup) + (" ") + (Flasher.isABDevice() ? getString(R.string.ab_partition) :
-                                    getString(R.string.boot_partition)));
-                            boot.setMessage(getString(R.string.backup_summary, (Flasher.isABDevice() ? getString(R.string.ab_partition) :
-                                    getString(R.string.boot_partition))) + (" ") + Utils.getInternalDataStorage() + "/backup/");
-                            boot.setNeutralButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
-                            });
-                            boot.setPositiveButton(getString(R.string.backup), (backupdialog, idi) -> {
-                                backup_boot_partition();
-                            });
-                            boot.show();
-                        }
-                        break;
-                    case 1:
-                        if (Flasher.isABDevice()) {
-                            Utils.toast(R.string.ab_message, getActivity());
-                        } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                            Utils.toast(R.string.recovery_partition_unknown, getActivity());
-                        } else {
-                            Dialog recovery = new Dialog(getActivity());
-                            recovery.setIcon(R.mipmap.ic_launcher);
-                            recovery.setTitle(getString(R.string.backup) + (" ") + getString(R.string.recovery_partition));
-                            recovery.setMessage(getString(R.string.backup_summary, getString(R.string.recovery_partition)) + (" ") + Utils.getInternalDataStorage() + "/backup/");
-                            recovery.setNeutralButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
-                            });
-                            recovery.setPositiveButton(getString(R.string.backup), (backupdialog, idi) -> {
-                                backup_recovery_partition();
-                            });
-                            recovery.show();
-                        }
-                        break;
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mSelectionMenu = null;
-            }
-        });
-        mSelectionMenu.show();
-    }
-
-    private void FlashOptions() {
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
-                R.array.flasher_items), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                switch (i) {
-                    case 0:
-                        if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                            Utils.toast(R.string.boot_partition_unknown, getActivity());
-                        } else {
-                            Intent boot_img = new Intent(Intent.ACTION_GET_CONTENT);
-                            boot_img.setType("*/*");
-                            startActivityForResult(boot_img, 0);
-                        }
-                        break;
-                    case 1:
-                        if (Flasher.isABDevice()) {
-                            Utils.toast(R.string.ab_message, getActivity());
-                        } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                            Utils.toast(R.string.recovery_partition_unknown, getActivity());
-                        } else {
-                            Intent rec_img = new Intent(Intent.ACTION_GET_CONTENT);
-                            rec_img.setType("*/*");
-                            startActivityForResult(rec_img, 1);
-                        }
-                        break;
-                    case 2:
-                        Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
-                        manualflash.setType("application/zip");
-                        startActivityForResult(manualflash, 2);
-                        break;
-                }
-            }
-        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mSelectionMenu = null;
-            }
-        });
-        mSelectionMenu.show();
-    }
-
-    private void backup_boot_partition() {
-        ViewUtils.dialogEditText(RootUtils.runCommand("uname -r"),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                }, new ViewUtils.OnDialogEditTextListener() {
-                    @Override
-                    public void onClick(String text) {
-                        if (text.isEmpty()) {
-                            Utils.toast(R.string.name_empty, getActivity());
-                            return;
-                        }
-                        if (!text.endsWith(".img")) {
-                            text += ".img";
-                        }
-                        if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
-                            Utils.toast(getString(R.string.already_exists, text), getActivity());
-                            return;
-                        }
-                        final String path = text;
-                        new AsyncTask<Void, Void, Void>() {
-                            private ProgressDialog mProgressDialog;
-                            @Override
-                            protected void onPreExecute() {
-                                super.onPreExecute();
-                                mProgressDialog = new ProgressDialog(getActivity());
-                                mProgressDialog.setMessage(getString(R.string.backup_message, (Flasher.isABDevice() ?
-                                        getString(R.string.ab_partition) : getString(R.string.boot_partition))) +
-                                        (" ") + Utils.getInternalDataStorage() + "/backup/");
-                                mProgressDialog.setCancelable(false);
-                                mProgressDialog.show();
-                            }
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-                                Flasher.backupBootPartition(path);
-                                return null;
-                            }
-                            @Override
-                            protected void onPostExecute(Void aVoid) {
-                                super.onPostExecute(aVoid);
-                                try {
-                                    mProgressDialog.dismiss();
-                                } catch (IllegalArgumentException ignored) {
-                                }
-                            }
-                        }.execute();
-                    }
-                }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-            }
-        }).show();
-    }
-
-    private void backup_recovery_partition() {
-        ViewUtils.dialogEditText("Recovery",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                }, new ViewUtils.OnDialogEditTextListener() {
-                    @Override
-                    public void onClick(String text) {
-                        if (text.isEmpty()) {
-                            Utils.toast(R.string.name_empty, getActivity());
-                            return;
-                        }
-                        if (!text.endsWith(".img")) {
-                            text += ".img";
-                        }
-                        if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
-                            Utils.toast(getString(R.string.already_exists, text), getActivity());
-                            return;
-                        }
-                        final String path = text;
-                        new AsyncTask<Void, Void, Void>() {
-                            private ProgressDialog mProgressDialog;
-                            @Override
-                            protected void onPreExecute() {
-                                super.onPreExecute();
-                                mProgressDialog = new ProgressDialog(getActivity());
-                                mProgressDialog.setMessage(getString(R.string.backup_message, getString(R.string.recovery_partition)) +
-                                        (" ") + Utils.getInternalDataStorage() + "/backup/");
-                                mProgressDialog.setCancelable(false);
-                                mProgressDialog.show();
-                            }
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-                                Flasher.backupRecoveryPartition(path);
-                                return null;
-                            }
-                            @Override
-                            protected void onPostExecute(Void aVoid) {
-                                super.onPostExecute(aVoid);
-                                try {
-                                    mProgressDialog.dismiss();
-                                } catch (IllegalArgumentException ignored) {
-                                }
-                            }
-                        }.execute();
-                    }
-                }, getActivity()).setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-            }
-        }).show();
-    }
-
-    private void flash_boot_partition(final File file) {
-        new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog mProgressDialog;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(getActivity());
-                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Flasher.flashBootPartition(file);
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                rebootDialog();
-            }
-        }.execute();
-    }
-
-    private void flash_recovery_partition(final File file) {
-        new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog mProgressDialog;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(getActivity());
-                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Flasher.flashRecoveryPartition(file);
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                rebootDialog();
-            }
-        }.execute();
+        Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
+        manualflash.setType("application/zip");
+        startActivityForResult(manualflash, 0);
     }
 
     private void flash_zip_file(final File file) {
@@ -631,7 +297,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                         flashLog.setNeutralButton(getString(R.string.cancel), (dialog2, id2) -> {
                         });
                         flashLog.setPositiveButton(getString(R.string.reboot), (dialog2, id2) -> {
-                            new Execute().execute(prepareReboot);
+                            new Execute().execute(Utils.prepareReboot());
                         });
                         flashLog.show();
 
@@ -640,7 +306,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 rebootDialog.setNegativeButton(getString(R.string.cancel), (dialog1, id1) -> {
                 });
                 rebootDialog.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                    new Execute().execute(prepareReboot);
+                    new Execute().execute(Utils.prepareReboot());
                 });
                 rebootDialog.show();
             }
@@ -656,20 +322,29 @@ public class FlasherFragment extends RecyclerViewFragment {
         }
     }
 
-    public void rebootDialog() {
-        /*
-         * Thanks to Shanu Dey <sd4shanudey@gmail.com> for this idea
-         * Ref: https://github.com/EquinoxKernel/Equinox-Kernel-Adiutor/commit/640ec2e7fc578974eb87864729abdd02439aebd5
-         */
-        Dialog rebootDialog = new Dialog(getActivity());
-        rebootDialog.setMessage(getString(R.string.reboot_dialog));
-        rebootDialog.setCancelable(false);
-        rebootDialog.setNeutralButton(getString(R.string.cancel), (dialog1, id1) -> {
-        });
-        rebootDialog.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-            new Execute().execute(prepareReboot);
-        });
-        rebootDialog.show();
+    private class Execute extends AsyncTask<String, Void, Void> {
+        private ProgressDialog mProgressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage(getString(R.string.executing) + ("..."));
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            RootUtils.runCommand(params[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override
@@ -688,26 +363,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 dialogueDocumentsUI.show();
                 return;
             }
-            if (requestCode == 0 || requestCode == 1) {
-                if (!file.getName().endsWith(".img")) {
-                    Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
-                    return;
-                }
-                Dialog flashimg = new Dialog(getActivity());
-                flashimg.setIcon(R.mipmap.ic_launcher);
-                flashimg.setTitle(getString(R.string.flasher));
-                flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
-                flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                    if (requestCode == 0) {
-                        flash_boot_partition(new File(mPath));
-                    } else if (requestCode == 1) {
-                        flash_recovery_partition(new File(mPath));
-                    }
-                });
-                flashimg.show();
-            } else if (requestCode == 2) {
+            if (requestCode == 0) {
                 Flasher.cleanLogs();
                 RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
                 if (!file.getName().endsWith(".zip")) {

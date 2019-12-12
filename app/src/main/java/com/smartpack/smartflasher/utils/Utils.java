@@ -237,4 +237,14 @@ public class Utils {
     public static boolean isDocumentsUI(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
+
+    public static String prepareReboot() {
+        String prepareReboot = "am broadcast android.intent.action.ACTION_SHUTDOWN " + "&&" +
+                " sync " + "&&" +
+                " echo 3 > /proc/sys/vm/drop_caches " + "&&" +
+                " sync " + "&&" +
+                " sleep 3 " + "&&" +
+                " reboot";
+        return prepareReboot;
+    }
 }

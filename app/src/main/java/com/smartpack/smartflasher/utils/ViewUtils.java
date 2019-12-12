@@ -20,11 +20,13 @@
 
 package com.smartpack.smartflasher.utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.smartpack.smartflasher.R;
+import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -267,6 +270,41 @@ public class ViewUtils {
                     });
         }
         return dialog;
+    }
+
+    public static void rebootDialog(Context context) {
+        Dialog rebootDialog = new Dialog(context);
+        rebootDialog.setMessage(context.getString(R.string.reboot_dialog));
+        rebootDialog.setCancelable(false);
+        rebootDialog.setNegativeButton(context.getString(R.string.cancel), (dialog1, id1) -> {
+        });
+        rebootDialog.setPositiveButton(context.getString(R.string.reboot), (dialog1, id1) -> {
+            new AsyncTask<Void, Void, Void>() {
+                private ProgressDialog mProgressDialog;
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    mProgressDialog = new ProgressDialog(context);
+                    mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
+                    mProgressDialog.setCancelable(false);
+                    mProgressDialog.show();
+                }
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    RootUtils.runCommand(Utils.prepareReboot());
+                    return null;
+                }
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    try {
+                        mProgressDialog.dismiss();
+                    } catch (IllegalArgumentException ignored) {
+                    }
+                }
+            }.execute();
+        });
+        rebootDialog.show();
     }
 
 }
