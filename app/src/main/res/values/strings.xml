@@ -9,7 +9,7 @@
     <string name="backup">Backup</string>
     <string name="backup_message">Backing up %s of your device into</string>
     <string name="backup_summary">Backup %s of your device into</string>
-    <string name="backup_title">Click the backup button to initiate a new backup/flashing process. The details of all the backed up partitions will be listed on this page.</string>
+    <string name="backup_title">The details of the already backed up partitions are listed on this page.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Boot partition</string>
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
@@ -44,6 +44,8 @@
     <string name="no_internet">Please check your internet connection!</string>
     <string name="no_root_access">This feature won\'t work without Root Access</string>
     <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
+    <string name="nothing_found">Nothing found!</string>
+    <string name="nothing_found_summary">Click here, or the backup button, to start a new backing up/flashing processes.</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>
     <string name="open_settings">Open Settings</string>

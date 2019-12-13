@@ -56,7 +56,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.appcompat.widget.Toolbar;
 
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.BaseActivity;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.ViewUtils;
@@ -400,7 +399,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         int max = Math.round(getResources().getDimension(R.dimen.banner_max_height));
 
         int height = Prefs.getInt("banner_size", Math.round(getResources().getDimension(
-                R.dimen.banner_default_height)), getActivity());
+                R.dimen.banner_min_height)), getActivity());
         if (height > max) {
             height = max;
             Prefs.saveInt("banner_size", max, getActivity());

@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -62,12 +63,6 @@ public class BackupFragment extends RecyclerViewFragment {
     private Dialog mDeleteDialog;
 
     private String mPath;
-    private String prepareReboot = "am broadcast android.intent.action.ACTION_SHUTDOWN " +
-            "&& sync " +
-            "&& echo 3 > /proc/sys/vm/drop_caches " +
-            "&& sync " +
-            "&& sleep 3 " +
-            "&& reboot";
 
     @Override
     protected boolean showTopFab() {
@@ -83,7 +78,13 @@ public class BackupFragment extends RecyclerViewFragment {
 
     @Override
     public int getSpanCount() {
-        return super.getSpanCount() + 1;
+        int span = Utils.isTablet(getActivity()) ? Utils.getOrientation(getActivity()) ==
+                Configuration.ORIENTATION_LANDSCAPE ? 4 : 3 : Utils.getOrientation(getActivity()) ==
+                Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
+        if (itemsSize() != 0 && span > itemsSize()) {
+            span = itemsSize();
+        }
+        return span;
     }
 
     @Override
@@ -165,6 +166,18 @@ public class BackupFragment extends RecyclerViewFragment {
             itemInit(backupPartitions);
             if (backupPartitions.size() > 0) {
                 items.addAll(backupPartitions);
+            } else {
+                DescriptionView backup = new DescriptionView();
+                backup.setTitle(getString(R.string.nothing_found));
+                backup.setSummary(getString(R.string.nothing_found_summary));
+                backup.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                    @Override
+                    public void onClick(RecyclerViewItem item) {
+                        BackupOptions();
+                    }
+                });
+
+                items.add(backup);
             }
         }
     }
