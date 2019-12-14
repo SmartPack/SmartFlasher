@@ -1,5 +1,9 @@
 # Change-logs
 
+## 12. December 14, 2019
+*Release-tag: v2.1*<br>
+Main: Changed app into tab layout (tabs at bottom). Moved partition related features into new page. Flasher/Backup: Improved reboot option after flashing with possibility to view flasher log.
+
 ## 11. December 07, 2019
 *Release-tag: v2.0*<br>
 Flasher: Added ability to back-up/flash recovery partition/img. Flasher: Display partition information on the main screen. App theme: Improved a bit more. Translations. Updated Portuguese (Brazilian) (Credits: @DanGLES3).

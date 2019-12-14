@@ -15,7 +15,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Flasher: Added ability to back-up/flash recovery partition/img.\n\n- Flasher: Display partition information on the main screen.\n\n- App theme: Improved a bit more.\n\n- Translations. Updated Brazilian Portuguese.</string>
+    <string name="change_logs_message" translatable="false">- Changed app into tab layout (tabs at bottom).\n\n- Moved partition related features into new page.\n\n- Flasher/Backup: Improved reboot option after flashing with possibility to view flasher log.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="delete">Delete</string>
