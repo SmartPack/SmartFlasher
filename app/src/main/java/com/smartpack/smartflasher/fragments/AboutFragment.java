@@ -49,7 +49,7 @@ public class AboutFragment extends RecyclerViewFragment {
     static {
         sCredits.put("Kernel Adiutor,Grarak", "https://github.com/Grarak");
         sCredits.put("Auto Flashing,osm0sis", "https://github.com/osm0sis");
-        sCredits.put("Chinese Traditional Translations,jason5545", "https://github.com/jason5545");
+        sCredits.put("Chinese (Simplified & Traditional) Translations,jason5545", "https://github.com/jason5545");
         sCredits.put("Russian Translations,andrey167", "https://github.com/andrey167");
         sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
         sCredits.put("Portuguese (Brazilian) Translations,DanGLES3", "https://github.com/DanGLES3");
