@@ -595,26 +595,24 @@ public class BackupFragment extends RecyclerViewFragment {
                 dialogueDocumentsUI.show();
                 return;
             }
-            if (requestCode == 0 || requestCode == 1) {
-                if (!file.getName().endsWith(".img")) {
-                    Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
-                    return;
-                }
-                Dialog flashimg = new Dialog(getActivity());
-                flashimg.setIcon(R.mipmap.ic_launcher);
-                flashimg.setTitle(getString(R.string.flasher));
-                flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
-                flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                    if (requestCode == 0) {
-                        flash_boot_partition(new File(mPath));
-                    } else if (requestCode == 1) {
-                        flash_recovery_partition(new File(mPath));
-                    }
-                });
-                flashimg.show();
+            if (!Utils.getExtension(file.getName()).equals("img")) {
+                Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
+                return;
             }
+            Dialog flashimg = new Dialog(getActivity());
+            flashimg.setIcon(R.mipmap.ic_launcher);
+            flashimg.setTitle(getString(R.string.flasher));
+            flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
+            flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+            });
+            flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
+                if (requestCode == 0) {
+                    flash_boot_partition(new File(mPath));
+                } else if (requestCode == 1) {
+                    flash_recovery_partition(new File(mPath));
+                }
+            });
+            flashimg.show();
         }
     }
     

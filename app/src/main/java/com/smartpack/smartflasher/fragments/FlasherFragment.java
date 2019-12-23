@@ -335,7 +335,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             if (requestCode == 0) {
                 Flasher.cleanLogs();
                 RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
-                if (!file.getName().endsWith(".zip")) {
+                if (!Utils.getExtension(file.getName()).equals("zip")) {
                     Utils.toast(getString(R.string.file_selection_error), getActivity());
                     return;
                 }
