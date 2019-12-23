@@ -31,6 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -54,9 +55,6 @@ import java.util.List;
 public class BackupFragment extends RecyclerViewFragment {
 
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
-
-    private boolean mLoaded;
-    private boolean mPermissionDenied;
 
     private Dialog mItemOptionsDialog;
     private Dialog mSelectionMenu;
@@ -94,11 +92,16 @@ public class BackupFragment extends RecyclerViewFragment {
         addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.backup),
                 getString(R.string.backup_title)));
 
-        if (!Flasher.hasBootPartitionInfo()) {
-            Flasher.exportBootPartitionInfo();
-        }
-        if (!Flasher.hasRecoveryPartitionInfo()) {
-            Flasher.exportRecoveryPartitionInfo();
+        if (Utils.checkWriteStoragePermission(getActivity())) {
+            if (!Flasher.hasBootPartitionInfo()) {
+                Flasher.exportBootPartitionInfo();
+            }
+            if (!Flasher.hasRecoveryPartitionInfo()) {
+                Flasher.exportRecoveryPartitionInfo();
+            }
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
         if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo()) {
             addViewPagerFragment(DescriptionFragment.newInstance(Flasher.isABDevice() ? getString(R.string.ab_partition) : getString(R.string.boot_partition), Flasher.findBootPartition()));
@@ -117,9 +120,8 @@ public class BackupFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (!mLoaded) {
-            mLoaded = true;
-            requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (Utils.checkWriteStoragePermission(getActivity())) {
+            load(items);
         }
     }
 
@@ -286,11 +288,23 @@ public class BackupFragment extends RecyclerViewFragment {
     @Override
     protected void onTopFabClick() {
         super.onTopFabClick();
+
         if (!RootUtils.rootAccess()) {
             Utils.toast(R.string.no_root_access, getActivity());
             return;
         }
-        if (mPermissionDenied) {
+
+        if (Utils.checkWriteStoragePermission(getActivity())) {
+            if (!Flasher.hasBootPartitionInfo()) {
+                Flasher.exportBootPartitionInfo();
+            }
+            if (!Flasher.hasRecoveryPartitionInfo()) {
+                Flasher.exportRecoveryPartitionInfo();
+            }
+            reload();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
         }
@@ -575,24 +589,6 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     @Override
-    public void onPermissionDenied(int request) {
-        super.onPermissionDenied(request);
-        if (request == 0) {
-            mPermissionDenied = true;
-            Utils.toast(R.string.permission_denied_write_storage, getActivity());
-        }
-    }
-
-    @Override
-    public void onPermissionGranted(int request) {
-        super.onPermissionGranted(request);
-        if (request == 0) {
-            mPermissionDenied = false;
-            reload();
-        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -629,16 +625,6 @@ public class BackupFragment extends RecyclerViewFragment {
                 flashimg.show();
             }
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mLoader != null) {
-            mLoader.cancel(true);
-        }
-        mPermissionDenied = false;
-        mLoaded = false;
     }
     
 }

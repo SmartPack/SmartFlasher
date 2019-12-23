@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -49,8 +50,6 @@ import java.util.List;
  */
 
 public class FlasherFragment extends RecyclerViewFragment {
-
-    private boolean mPermissionDenied;
 
     private String mPath;
     @Override
@@ -76,7 +75,6 @@ public class FlasherFragment extends RecyclerViewFragment {
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
         SmartPackInit(items);
-        requestPermission(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -248,14 +246,19 @@ public class FlasherFragment extends RecyclerViewFragment {
     @Override
     protected void onTopFabClick() {
         super.onTopFabClick();
+
         if (!RootUtils.rootAccess()) {
             Utils.toast(R.string.no_root_access, getActivity());
             return;
         }
-        if (mPermissionDenied) {
+
+        if (!Utils.checkWriteStoragePermission(getActivity())) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
         }
+
         Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
         manualflash.setType("application/zip");
         startActivityForResult(manualflash, 0);
@@ -311,15 +314,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                 rebootDialog.show();
             }
         }.execute();
-    }
-
-    @Override
-    public void onPermissionDenied(int request) {
-        super.onPermissionDenied(request);
-        if (request == 0) {
-            mPermissionDenied = true;
-            Utils.toast(R.string.permission_denied_write_storage, getActivity());
-        }
     }
 
     private class Execute extends AsyncTask<String, Void, Void> {

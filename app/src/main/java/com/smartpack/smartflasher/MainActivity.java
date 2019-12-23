@@ -20,10 +20,12 @@
 
 package com.smartpack.smartflasher;
 
+import android.Manifest;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -31,6 +33,7 @@ import com.smartpack.smartflasher.fragments.AboutFragment;
 import com.smartpack.smartflasher.fragments.BackupFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
 import com.smartpack.smartflasher.utils.PagerAdapter;
+import com.smartpack.smartflasher.utils.Utils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -42,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (!Utils.checkWriteStoragePermission(this)) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        }
 
         TabLayout tabLayout = findViewById(R.id.tabLayoutID);
         ViewPager viewPager = findViewById(R.id.viewPagerID);
