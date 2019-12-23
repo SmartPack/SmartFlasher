@@ -1,5 +1,9 @@
 # Change-logs
 
+## 13. December 23, 2019
+*Release-tag: v2.2*<br>
+Main: Prevent app launching on un-rooted devices. Main: Fixed crashes due to no storage write access. About: Add option to share app. Translations: Import Chinese Simplified (credits: jason5545). Translations: Update Chinese Traditional (credits: jason5545). res: Adaptive icons. Miscellaneous changes. 
+
 ## 12. December 14, 2019
 *Release-tag: v2.1*<br>
 Main: Changed app into tab layout (tabs at bottom). Moved partition related features into new page. Flasher/Backup: Improved reboot option after flashing with possibility to view flasher log.
