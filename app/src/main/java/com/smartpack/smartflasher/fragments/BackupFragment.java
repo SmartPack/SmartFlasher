@@ -121,7 +121,7 @@ public class BackupFragment extends RecyclerViewFragment {
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
         if (Utils.checkWriteStoragePermission(getActivity())) {
-            load(items);
+            reload();
         }
     }
 
@@ -142,7 +142,25 @@ public class BackupFragment extends RecyclerViewFragment {
                         @Override
                         protected List<RecyclerViewItem> doInBackground(Void... voids) {
                             List<RecyclerViewItem> items = new ArrayList<>();
-                            load(items);
+                            if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo() || Flasher.RecoveryPartitionInfo() && !Flasher.emptyRecoveryPartitionInfo()) {
+                                List<RecyclerViewItem> backupPartitions = new ArrayList<>();
+                                itemInit(backupPartitions);
+                                if (backupPartitions.size() > 0) {
+                                    items.addAll(backupPartitions);
+                                } else {
+                                    DescriptionView backup = new DescriptionView();
+                                    backup.setTitle(getString(R.string.nothing_found));
+                                    backup.setSummary(getString(R.string.nothing_found_summary));
+                                    backup.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                                        @Override
+                                        public void onClick(RecyclerViewItem item) {
+                                            BackupOptions();
+                                        }
+                                    });
+
+                                    items.add(backup);
+                                }
+                            }
                             return items;
                         }
 
@@ -159,28 +177,6 @@ public class BackupFragment extends RecyclerViewFragment {
                     mLoader.execute();
                 }
             }, 250);
-        }
-    }
-
-    private void load(List items) {
-        if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo() || Flasher.RecoveryPartitionInfo() && !Flasher.emptyRecoveryPartitionInfo()) {
-            List<RecyclerViewItem> backupPartitions = new ArrayList<>();
-            itemInit(backupPartitions);
-            if (backupPartitions.size() > 0) {
-                items.addAll(backupPartitions);
-            } else {
-                DescriptionView backup = new DescriptionView();
-                backup.setTitle(getString(R.string.nothing_found));
-                backup.setSummary(getString(R.string.nothing_found_summary));
-                backup.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                    @Override
-                    public void onClick(RecyclerViewItem item) {
-                        BackupOptions();
-                    }
-                });
-
-                items.add(backup);
-            }
         }
     }
 
