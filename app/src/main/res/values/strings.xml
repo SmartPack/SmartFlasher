@@ -69,6 +69,9 @@
     <string name="rebooting">Rebooting</string>
     <string name="restore">Restore</string>
     <string name="settings">Settings</string>
+    <string name="share_app">Share App</string>
+    <string name="share_app_summary">Share Smart Flasher with your friends</string>
+    <string name="share_app_message">Get Smart Flasher %s from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">Source Code</string>
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>

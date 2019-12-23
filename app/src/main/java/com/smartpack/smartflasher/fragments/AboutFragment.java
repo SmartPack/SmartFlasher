@@ -20,6 +20,7 @@
 
 package com.smartpack.smartflasher.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,6 +147,27 @@ public class AboutFragment extends RecyclerViewFragment {
         });
 
         about.addItem(playstore);
+
+        DescriptionView share = new DescriptionView();
+        share.setTitle(getString(R.string.share_app));
+        share.setSummary(getString(R.string.share_app_summary));
+        share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                if (!Utils.isNetworkAvailable(getContext())) {
+                    Utils.toast(R.string.no_internet, getActivity());
+                    return;
+                }
+                Intent shareapp = new Intent();
+                shareapp.setAction(Intent.ACTION_SEND);
+                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
+                shareapp.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(shareapp, null);
+                startActivity(shareIntent);
+            }
+        });
+
+        about.addItem(share);
 
         DescriptionView donatetome = new DescriptionView();
         donatetome.setTitle(getString(R.string.donate_me));
