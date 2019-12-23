@@ -22,6 +22,7 @@ package com.smartpack.smartflasher;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ import com.smartpack.smartflasher.fragments.BackupFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
 import com.smartpack.smartflasher.utils.PagerAdapter;
 import com.smartpack.smartflasher.utils.Utils;
+import com.smartpack.smartflasher.utils.root.RootUtils;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -46,13 +48,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView textView = findViewById(R.id.no_root_Text);
+        TabLayout tabLayout = findViewById(R.id.tabLayoutID);
+        ViewPager viewPager = findViewById(R.id.viewPagerID);
+
+        if (!RootUtils.rootAccess()) {
+            textView.setText(getString(R.string.no_root));
+            return;
+        }
+
         if (!Utils.checkWriteStoragePermission(this)) {
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
-
-        TabLayout tabLayout = findViewById(R.id.tabLayoutID);
-        ViewPager viewPager = findViewById(R.id.viewPagerID);
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.AddFragment(new FlasherFragment(), getString(R.string.flasher));

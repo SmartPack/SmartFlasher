@@ -89,11 +89,7 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         DescriptionView kernelinfo = new DescriptionView();
         kernelinfo.setTitle(getString(R.string.kernel) + (" ") + getString(R.string.version));
-        if (RootUtils.rootAccess()) {
-            kernelinfo.setSummary(RootUtils.runCommand("uname -r"));
-        } else {
-            kernelinfo.setSummary(getString(R.string.unavailable));
-        }
+        kernelinfo.setSummary(RootUtils.runCommand("uname -r"));
 
         flasherCard.addItem(kernelinfo);
 
@@ -148,20 +144,16 @@ public class FlasherFragment extends RecyclerViewFragment {
         turnoff.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (RootUtils.rootAccess()) {
-                    Dialog turnoff = new Dialog(getActivity());
-                    turnoff.setIcon(R.mipmap.ic_launcher);
-                    turnoff.setTitle(getString(R.string.sure_question));
-                    turnoff.setMessage(getString(R.string.turn_off_message));
-                    turnoff.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    turnoff.setPositiveButton(getString(R.string.turn_off), (dialog1, id1) -> {
-                        new Execute().execute(Utils.prepareReboot() + " -p");
-                    });
-                    turnoff.show();
-                } else {
-                    Utils.toast(R.string.no_root_access, getActivity());
-                }
+                Dialog turnoff = new Dialog(getActivity());
+                turnoff.setIcon(R.mipmap.ic_launcher);
+                turnoff.setTitle(getString(R.string.sure_question));
+                turnoff.setMessage(getString(R.string.turn_off_message));
+                turnoff.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                turnoff.setPositiveButton(getString(R.string.turn_off), (dialog1, id1) -> {
+                    new Execute().execute(Utils.prepareReboot() + " -p");
+                });
+                turnoff.show();
             }
         });
         flasherCard.addItem(turnoff);
@@ -172,20 +164,16 @@ public class FlasherFragment extends RecyclerViewFragment {
         reboot.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (RootUtils.rootAccess()) {
-                    Dialog reboot = new Dialog(getActivity());
-                    reboot.setIcon(R.mipmap.ic_launcher);
-                    reboot.setTitle(getString(R.string.sure_question));
-                    reboot.setMessage(getString(R.string.normal_reboot_message));
-                    reboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    reboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        new Execute().execute(Utils.prepareReboot());
-                    });
-                    reboot.show();
-                } else {
-                    Utils.toast(R.string.no_root_access, getActivity());
-                }
+                Dialog reboot = new Dialog(getActivity());
+                reboot.setIcon(R.mipmap.ic_launcher);
+                reboot.setTitle(getString(R.string.sure_question));
+                reboot.setMessage(getString(R.string.normal_reboot_message));
+                reboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                reboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
+                    new Execute().execute(Utils.prepareReboot());
+                });
+                reboot.show();
             }
         });
         flasherCard.addItem(reboot);
@@ -196,20 +184,16 @@ public class FlasherFragment extends RecyclerViewFragment {
         recoveryreboot.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (RootUtils.rootAccess()) {
-                    Dialog recoveryreboot = new Dialog(getActivity());
-                    recoveryreboot.setIcon(R.mipmap.ic_launcher);
-                    recoveryreboot.setTitle(getString(R.string.sure_question));
-                    recoveryreboot.setMessage(getString(R.string.reboot_recovery_message));
-                    recoveryreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    recoveryreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        new Execute().execute(Utils.prepareReboot() + " recovery");
-                    });
-                    recoveryreboot.show();
-                } else {
-                    Utils.toast(R.string.no_root_access, getActivity());
-                }
+                Dialog recoveryreboot = new Dialog(getActivity());
+                recoveryreboot.setIcon(R.mipmap.ic_launcher);
+                recoveryreboot.setTitle(getString(R.string.sure_question));
+                recoveryreboot.setMessage(getString(R.string.reboot_recovery_message));
+                recoveryreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                recoveryreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
+                    new Execute().execute(Utils.prepareReboot() + " recovery");
+                });
+                recoveryreboot.show();
             }
         });
         flasherCard.addItem(recoveryreboot);
@@ -220,20 +204,16 @@ public class FlasherFragment extends RecyclerViewFragment {
         bootloaderreboot.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (RootUtils.rootAccess()) {
-                    Dialog bootloaderreboot = new Dialog(getActivity());
-                    bootloaderreboot.setIcon(R.mipmap.ic_launcher);
-                    bootloaderreboot.setTitle(getString(R.string.sure_question));
-                    bootloaderreboot.setMessage(getString(R.string.reboot_bootloader_message));
-                    bootloaderreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    bootloaderreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                        new Execute().execute(Utils.prepareReboot() + " bootloader");
-                    });
-                    bootloaderreboot.show();
-                } else {
-                    Utils.toast(R.string.no_root_access, getActivity());
-                }
+                Dialog bootloaderreboot = new Dialog(getActivity());
+                bootloaderreboot.setIcon(R.mipmap.ic_launcher);
+                bootloaderreboot.setTitle(getString(R.string.sure_question));
+                bootloaderreboot.setMessage(getString(R.string.reboot_bootloader_message));
+                bootloaderreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                bootloaderreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
+                    new Execute().execute(Utils.prepareReboot() + " bootloader");
+                });
+                bootloaderreboot.show();
             }
         });
         flasherCard.addItem(bootloaderreboot);
@@ -246,11 +226,6 @@ public class FlasherFragment extends RecyclerViewFragment {
     @Override
     protected void onTopFabClick() {
         super.onTopFabClick();
-
-        if (!RootUtils.rootAccess()) {
-            Utils.toast(R.string.no_root_access, getActivity());
-            return;
-        }
 
         if (!Utils.checkWriteStoragePermission(getActivity())) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{

@@ -7,7 +7,18 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/rcBackground_light" />
+        android:background="@color/rcBackground_light" >
+
+        <TextView
+            android:id="@+id/no_root_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHighlight="@color/colorPrimaryDark" />
+    </FrameLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_alignParentBottom="true"

@@ -26,7 +26,6 @@
     <string name="licence">Licensa</string>
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
-    <string name="no_root_access">Esse recurso não irá funcionar sem acesso root</string>
     <string name="normal_reboot_message">\nSeu dispositivo será reiniciado.\n</string>
     <string name="ok">OK</string>
     <string name="options">Opções</string>
@@ -54,7 +53,6 @@
     <string name="turn_off">Desligar</string>
     <string name="turn_off_message">\nSeu dispositivo será desligado.\n</string>
     <string name="turn_off_summary">Desliga seu aparelho</string>
-    <string name="unavailable">Indisponível</string>
     <string name="version">Versão</string>
     <string name="wipe_cache">Limpar Cache</string>
     <string name="wipe_cache_message">\nCache/Dalvik Cache do seu aparelho será apagado.\n\nAtenção! Seu dispositivo será reiniciado.\n</string>

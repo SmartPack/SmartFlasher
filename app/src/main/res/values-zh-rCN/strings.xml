@@ -38,7 +38,6 @@
     <string name="more">更多</string>
     <string name="name_empty">名称为空！</string>
     <string name="no_internet">请检查您的互联网连接！</string>
-    <string name="no_root_access">没有root访问权限，此功能将无法使用</string>
     <string name="normal_reboot_message">\n您的设备将重新启动。\n</string>
     <string name="nothing_found">找不到！</string>
     <string name="nothing_found_summary">点击此处，或点击备份按钮，以开始新的备份/刷入过程。</string>
@@ -73,7 +72,6 @@
     <string name="turn_off">关机</string>
     <string name="turn_off_message">\n您的设备将被关闭。\n</string>
     <string name="turn_off_summary">关闭您的设备</string>
-    <string name="unavailable">无法使用</string>
     <string name="version">版本</string>
     <string name="wipe_cache">清除緩存</string>
     <string name="wipe_cache_message">\n您设备的緩存/ Dalvik緩存分区将被删除。\n\n注意！该设备将重新启动。\n</string>

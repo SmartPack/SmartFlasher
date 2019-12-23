@@ -20,7 +20,6 @@
     <string name="kernel">Kernel</string>
     <string name="licence">Licence</string>
     <string name="more">Plus</string>
-    <string name="no_root_access">Cette fonctionnalité ne fonctionnera pas sans root</string>
     <string name="normal_reboot_message">\nVotre appareil va redémarrer.\n</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>
@@ -47,7 +46,6 @@
     <string name="turn_off">Éteindre</string>
     <string name="turn_off_message">\nVotre appareil va être éteint.\n</string>
     <string name="turn_off_summary">Éteindre votre appareil</string>
-    <string name="unavailable">Indisponible</string>
     <string name="version">Version</string>
     <string name="wipe_cache">Effacer le Cache</string>
     <string name="wipe_cache_message">\n Les partitions Cache/Dalvik de votre appareil vont être effacés.\n\nAttention! The device will be Rebooted.\n</string>

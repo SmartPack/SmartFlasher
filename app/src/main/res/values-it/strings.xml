@@ -21,7 +21,6 @@
     <string name="last_flash">Flasher Log</string>
     <string name="licence">Licenza</string>
     <string name="more">Di più</string>
-    <string name="no_root_access">Questa funzione non funzionerà senza i permessi di root</string>
     <string name="normal_reboot_message">\nIl dispositivo verrà riavviato.\n</string>
     <string name="ok">OK</string>
     <string name="options">Opzioni</string>
@@ -49,7 +48,6 @@
     <string name="turn_off">Spegni</string>
     <string name="turn_off_message">\nIl dispositivo verrà spento.\n</string>
     <string name="turn_off_summary">Spegni il dispositivo</string>
-    <string name="unavailable">Non Disponibile</string>
     <string name="version">Versionw</string>
     <string name="wipe_cache">Cancella Cache</string>
     <string name="wipe_cache_message">\nLe partizioni Cache/Dalvik Cache del dispositivo verranno cancellate.\n\nAttenzione! Il dispositivo verrà riavviato.\n</string>

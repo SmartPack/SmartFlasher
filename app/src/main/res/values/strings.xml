@@ -42,7 +42,7 @@
     <string name="more">More</string>
     <string name="name_empty">Name is empty!</string>
     <string name="no_internet">Please check your internet connection!</string>
-    <string name="no_root_access">This feature won\'t work without Root Access</string>
+    <string name="no_root">No Root Access</string>
     <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
     <string name="nothing_found">Nothing found!</string>
     <string name="nothing_found_summary">Click here, or the backup button, to start a new backing up/flashing processes.</string>
@@ -78,7 +78,6 @@
     <string name="turn_off">Turn Off</string>
     <string name="turn_off_message">\nYour device will be Turned Off.\n</string>
     <string name="turn_off_summary">Turn Off your device</string>
-    <string name="unavailable">Unavailable</string>
     <string name="version">Version</string>
     <string name="wipe_cache">Wipe Cache</string>
     <string name="wipe_cache_message">\nCache/Dalvik Cache partitions of your device will be erased.\n\nAttention! The device will be Rebooted.\n</string>

@@ -18,7 +18,6 @@
     <string name="flashing">Прошивка в процессе</string>
     <string name="kernel">Ядро</string>
     <string name="more">Больше</string>
-    <string name="no_root_access">Данная функция не работает на устройстве без рут прав</string>
     <string name="normal_reboot_message">\nВаше устройство будет перезагружено.\n</string>
     <string name="ok">Ок</string>
     <string name="open_settings">Открыть настройки</string>

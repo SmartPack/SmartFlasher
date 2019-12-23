@@ -289,11 +289,6 @@ public class BackupFragment extends RecyclerViewFragment {
     protected void onTopFabClick() {
         super.onTopFabClick();
 
-        if (!RootUtils.rootAccess()) {
-            Utils.toast(R.string.no_root_access, getActivity());
-            return;
-        }
-
         if (Utils.checkWriteStoragePermission(getActivity())) {
             if (!Flasher.hasBootPartitionInfo()) {
                 Flasher.exportBootPartitionInfo();
