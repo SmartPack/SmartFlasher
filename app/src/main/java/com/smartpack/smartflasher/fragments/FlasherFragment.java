@@ -52,6 +52,7 @@ import java.util.List;
 public class FlasherFragment extends RecyclerViewFragment {
 
     private String mPath;
+
     @Override
     protected boolean showTopFab() {
         return true;
@@ -240,7 +241,7 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     private void flash_zip_file(final File file) {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, String>() {
             private ProgressDialog mProgressDialog;
             @Override
             protected void onPreExecute() {
@@ -250,57 +251,42 @@ public class FlasherFragment extends RecyclerViewFragment {
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
             }
-            @Override
-            protected Void doInBackground(Void... voids) {
-                Flasher.manualFlash(file);
-                return null;
+            protected String doInBackground(Void... voids) {
+                Flasher.prepareManualFlash(file);
+                return Flasher.manualFlash(file);
             }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
                 try {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
-                Dialog rebootDialog = new Dialog(getActivity());
-                rebootDialog.setMessage(getString(R.string.reboot_dialog));
-                rebootDialog.setCancelable(false);
-                if (Flasher.isPathLog() && Flasher.isFlashLog()) {
-                    rebootDialog.setNeutralButton(getString(R.string.last_flash), (dialog1, id1) -> {
-                        Dialog flashLog = new Dialog(getActivity());
-                        flashLog.setIcon(R.mipmap.ic_launcher);
-                        flashLog.setTitle(getString(R.string.last_flash));
-                        flashLog.setMessage(Utils.readFile(Utils.getInternalDataStorage() + "/flasher_log.txt"));
-                        flashLog.setCancelable(false);
-                        flashLog.setNeutralButton(getString(R.string.cancel), (dialog2, id2) -> {
-                        });
-                        flashLog.setPositiveButton(getString(R.string.reboot), (dialog2, id2) -> {
-                            new Execute().execute(Utils.prepareReboot());
-                        });
-                        flashLog.show();
-
-                    });
+                if (s != null && !s.isEmpty()) {
+                    new Dialog(getActivity())
+                            .setIcon(R.mipmap.ic_launcher)
+                            .setTitle(getString(R.string.last_flash))
+                            .setMessage(s)
+                            .setCancelable(false)
+                            .setNeutralButton(getString(R.string.cancel), (dialog, id) -> {
+                            })
+                            .setPositiveButton(getString(R.string.reboot), (dialog, id) -> {
+                                new Execute().execute(Utils.prepareReboot());
+                            })
+                            .show();
                 }
-                rebootDialog.setNegativeButton(getString(R.string.cancel), (dialog1, id1) -> {
-                });
-                rebootDialog.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                    new Execute().execute(Utils.prepareReboot());
-                });
-                rebootDialog.show();
             }
         }.execute();
     }
 
     private class Execute extends AsyncTask<String, Void, Void> {
-        private ProgressDialog mProgressDialog;
-
+        private ProgressDialog mExecuteDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.executing) + ("..."));
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
+            mExecuteDialog = new ProgressDialog(getActivity());
+            mExecuteDialog.setMessage(getString(R.string.executing) + ("..."));
+            mExecuteDialog.setCancelable(false);
+            mExecuteDialog.show();
         }
 
         @Override
@@ -312,7 +298,7 @@ public class FlasherFragment extends RecyclerViewFragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            mProgressDialog.dismiss();
+            mExecuteDialog.dismiss();
         }
     }
 
@@ -339,27 +325,20 @@ public class FlasherFragment extends RecyclerViewFragment {
                     Utils.toast(getString(R.string.file_selection_error), getActivity());
                     return;
                 }
-                if (Flasher.fileSize(new File(mPath)) <= 100000000) {
-                    Dialog flashzip = new Dialog(getActivity());
-                    flashzip.setIcon(R.mipmap.ic_launcher);
-                    flashzip.setTitle(getString(R.string.flasher));
-                    flashzip.setMessage(getString(R.string.sure_message, file.getName()) +
-                            getString(R.string.flasher_warning));
-                    flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    flashzip.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                        flash_zip_file(new File(mPath));
-                    });
-                    flashzip.show();
-                } else {
-                    Dialog flashSizeError = new Dialog(getActivity());
-                    flashSizeError.setIcon(R.mipmap.ic_launcher);
-                    flashSizeError.setTitle(getString(R.string.flasher));
-                    flashSizeError.setMessage(getString(R.string.file_size_limit, file.getName()));
-                    flashSizeError.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    flashSizeError.show();
+                if (Flasher.fileSize(new File(mPath)) >= 100000000) {
+                    Utils.toast(getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)), getActivity());
                 }
+                Dialog flashzip = new Dialog(getActivity());
+                flashzip.setIcon(R.mipmap.ic_launcher);
+                flashzip.setTitle(getString(R.string.flasher));
+                flashzip.setMessage(getString(R.string.sure_message, file.getName()) +
+                        getString(R.string.flasher_warning));
+                flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
+                flashzip.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
+                    flash_zip_file(new File(mPath));
+                });
+                flashzip.show();
             }
         }
     }

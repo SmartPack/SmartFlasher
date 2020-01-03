@@ -428,6 +428,9 @@ public class BackupFragment extends RecyclerViewFragment {
                         if (!text.endsWith(".img")) {
                             text += ".img";
                         }
+                        if (text.contains(" ")) {
+                            text = text.replace(" ", "_");
+                        }
                         if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
                             Utils.toast(getString(R.string.already_exists, text), getActivity());
                             return;
@@ -483,6 +486,9 @@ public class BackupFragment extends RecyclerViewFragment {
                         }
                         if (!text.endsWith(".img")) {
                             text += ".img";
+                        }
+                        if (text.contains(" ")) {
+                            text = text.replace(" ", "_");
                         }
                         if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
                             Utils.toast(getString(R.string.already_exists, text), getActivity());
