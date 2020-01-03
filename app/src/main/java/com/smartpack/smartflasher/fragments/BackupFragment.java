@@ -149,6 +149,7 @@ public class BackupFragment extends RecyclerViewFragment {
                                     items.addAll(backupPartitions);
                                 } else {
                                     DescriptionView backup = new DescriptionView();
+                                    backup.setDrawable(getResources().getDrawable(R.drawable.ic_about));
                                     backup.setTitle(getString(R.string.nothing_found));
                                     backup.setSummary(getString(R.string.nothing_found_summary));
                                     backup.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -186,6 +187,7 @@ public class BackupFragment extends RecyclerViewFragment {
             for (final File image : file.listFiles()) {
                 if (image.isFile()) {
                     DescriptionView descriptionView = new DescriptionView();
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_img));
                     descriptionView.setTitle(image.getName().replace(".img", ""));
                     descriptionView.setSummary((image.length() / 1024L / 1024L) + " MB");
                     descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {

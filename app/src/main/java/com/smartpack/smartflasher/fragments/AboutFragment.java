@@ -36,6 +36,7 @@ import com.smartpack.smartflasher.views.dialog.Dialog;
 import com.smartpack.smartflasher.views.recyclerview.CardView;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
+import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,10 +52,10 @@ public class AboutFragment extends RecyclerViewFragment {
     static {
         sCredits.put("Kernel Adiutor,Grarak", "https://github.com/Grarak");
         sCredits.put("Auto Flashing,osm0sis", "https://github.com/osm0sis");
-        sCredits.put("Chinese (Simplified & Traditional) Translations,jason5545", "https://github.com/jason5545");
+        sCredits.put("Chinese (rCN & rTW) Translations,jason5545", "https://github.com/jason5545");
         sCredits.put("Russian Translations,andrey167", "https://github.com/andrey167");
         sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
-        sCredits.put("Portuguese (Brazilian) Translations,DanGLES3", "https://github.com/DanGLES3");
+        sCredits.put("Portuguese (rBr) Translations,DanGLES3", "https://github.com/DanGLES3");
         sCredits.put("Italian Translations,IKAR0S", "https://github.com/IKAR0S");
     }
 
@@ -66,23 +67,30 @@ public class AboutFragment extends RecyclerViewFragment {
     }
 
     @Override
+    public int getSpanCount() {
+        return super.getSpanCount() + 1;
+    }
+
+    @Override
     protected void addItems(List<RecyclerViewItem> items) {
         aboutInit(items);
         creditsInit(items);
     }
 
     private void aboutInit(List<RecyclerViewItem> items) {
-
-        CardView about = new CardView(getActivity());
-        about.setTitle(getString(R.string.app_name));
+        TitleView about = new TitleView();
+        about.setText(getString(R.string.app_name));
+        items.add(about);
 
         DescriptionView versioninfo = new DescriptionView();
+        versioninfo.setDrawable(getResources().getDrawable(R.drawable.ic_about));
         versioninfo.setTitle(getString(R.string.version));
         versioninfo.setSummary("v" + BuildConfig.VERSION_NAME);
 
-        about.addItem(versioninfo);
+        items.add(versioninfo);
 
         DescriptionView support = new DescriptionView();
+        support.setDrawable(getResources().getDrawable(R.drawable.ic_support));
         support.setTitle(getString(R.string.support));
         support.setSummary(getString(R.string.support_summary));
         support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -96,9 +104,10 @@ public class AboutFragment extends RecyclerViewFragment {
             }
         });
 
-        about.addItem(support);
+        items.add(support);
 
         DescriptionView sourcecode = new DescriptionView();
+        sourcecode.setDrawable(getResources().getDrawable(R.drawable.ic_source));
         sourcecode.setTitle(getString(R.string.source_code));
         sourcecode.setSummary(getString(R.string.source_code_summary));
         sourcecode.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -112,9 +121,10 @@ public class AboutFragment extends RecyclerViewFragment {
             }
         });
 
-        about.addItem(sourcecode);
+        items.add(sourcecode);
 
         DescriptionView changelogs = new DescriptionView();
+        changelogs.setDrawable(getResources().getDrawable(R.drawable.ic_changelog));
         changelogs.setTitle(getString(R.string.change_logs));
         changelogs.setSummary(getString(R.string.change_logs_summary));
         changelogs.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -131,10 +141,11 @@ public class AboutFragment extends RecyclerViewFragment {
             }
         });
 
-        about.addItem(changelogs);
+        items.add(changelogs);
 
         if (UpdateCheck.isPlayStoreInstalled(getActivity())) {
             DescriptionView playstore = new DescriptionView();
+            playstore.setDrawable(getResources().getDrawable(R.drawable.ic_playstore));
             playstore.setTitle(getString(R.string.playstore));
             playstore.setSummary(getString(R.string.playstore_summary));
             playstore.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -148,9 +159,10 @@ public class AboutFragment extends RecyclerViewFragment {
                 }
             });
 
-            about.addItem(playstore);
+            items.add(playstore);
         } else {
             DescriptionView updateCheck = new DescriptionView();
+            updateCheck.setDrawable(getResources().getDrawable(R.drawable.ic_update));
             updateCheck.setTitle(getString(R.string.update_check));
             updateCheck.setSummary(getString(R.string.update_check_summary));
             updateCheck.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -164,10 +176,11 @@ public class AboutFragment extends RecyclerViewFragment {
                 }
             });
 
-            about.addItem(updateCheck);
+            items.add(updateCheck);
         }
 
         DescriptionView share = new DescriptionView();
+        share.setDrawable(getResources().getDrawable(R.drawable.ic_share));
         share.setTitle(getString(R.string.share_app));
         share.setSummary(getString(R.string.share_app_summary));
         share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -186,9 +199,10 @@ public class AboutFragment extends RecyclerViewFragment {
             }
         });
 
-        about.addItem(share);
+        items.add(share);
 
         DescriptionView donatetome = new DescriptionView();
+        donatetome.setDrawable(getResources().getDrawable(R.drawable.ic_donate));
         donatetome.setTitle(getString(R.string.donate_me));
         donatetome.setSummary(getString(R.string.donate_me_summary));
         donatetome.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
@@ -218,20 +232,36 @@ public class AboutFragment extends RecyclerViewFragment {
             }
         });
 
-        about.addItem(donatetome);
-
-        items.add(about);
+        items.add(donatetome);
     }
 
     private void creditsInit(List<RecyclerViewItem> items) {
 
-        CardView credits = new CardView(getActivity());
-        credits.setTitle(getString(R.string.credits));
+        TitleView credits = new TitleView();
+        credits.setText(getString(R.string.credits));
+        items.add(credits);
 
         for (final String lib : sCredits.keySet()) {
+            String title = lib.split(",")[1];
+            String summary = lib.split(",")[0];
             DescriptionView descriptionView = new DescriptionView();
-            descriptionView.setTitle(lib.split(",")[1]);
-            descriptionView.setSummary(lib.split(",")[0]);
+            if (title.equals("Grarak")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_grarak));
+            } else if (title.equals("osm0sis")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_osm0sis));
+            } else if (title.equals("jason5545")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_jason5545));
+            } else if (title.equals("andrey167")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_andrey167));
+            } else if (title.equals("tom4tot")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_tom4tot));
+            } else if (title.equals("DanGLES3")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_dangles3));
+            } else if (title.equals("IKAR0S")) {
+                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_ikar0s));
+            }
+            descriptionView.setTitle(title);
+            descriptionView.setSummary(summary);
             descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
@@ -243,10 +273,7 @@ public class AboutFragment extends RecyclerViewFragment {
                 }
             });
 
-            credits.addItem(descriptionView);
-        }
-        if (credits.size() > 0) {
-            items.add(credits);
+            items.add(descriptionView);
         }
     }
 
