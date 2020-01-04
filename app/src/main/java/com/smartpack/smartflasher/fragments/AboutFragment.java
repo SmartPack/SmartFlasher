@@ -246,20 +246,28 @@ public class AboutFragment extends RecyclerViewFragment {
             String title = lib.split(",")[1];
             String summary = lib.split(",")[0];
             DescriptionView descriptionView = new DescriptionView();
-            if (title.equals("Grarak")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_grarak));
-            } else if (title.equals("osm0sis")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_osm0sis));
-            } else if (title.equals("jason5545")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_jason5545));
-            } else if (title.equals("andrey167")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_andrey167));
-            } else if (title.equals("tom4tot")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_tom4tot));
-            } else if (title.equals("DanGLES3")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_dangles3));
-            } else if (title.equals("IKAR0S")) {
-                descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_ikar0s));
+            switch (title) {
+                case "Grarak":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_grarak));
+                    break;
+                case "osm0sis":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_osm0sis));
+                    break;
+                case "jason5545":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_jason5545));
+                    break;
+                case "andrey167":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_andrey167));
+                    break;
+                case "tom4tot":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_tom4tot));
+                    break;
+                case "DanGLES3":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_dangles3));
+                    break;
+                case "IKAR0S":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_ikar0s));
+                    break;
             }
             descriptionView.setTitle(title);
             descriptionView.setSummary(summary);
