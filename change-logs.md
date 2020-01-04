@@ -1,5 +1,9 @@
 # Change-logs
 
+## 14. January 04, 2019
+*Release-tag: v2.3*<br>
+Flasher: Manual Flash: Directly catch and show the flashing output. Flasher: Manual Flash: Removed file size limit with a warning toast message. Backup: Workaround to avoid failing if user input a space in name. Main: Implement update notification for non-google play devices. Main: Make about section more captive. Miscellaneous changes.
+
 ## 13. December 23, 2019
 *Release-tag: v2.2*<br>
 Main: Prevent app launching on un-rooted devices. Main: Fixed crashes due to no storage write access. About: Add option to share app. Translations: Import Chinese Simplified (credits: jason5545). Translations: Update Chinese Traditional (credits: jason5545). res: Adaptive icons. Miscellaneous changes. 

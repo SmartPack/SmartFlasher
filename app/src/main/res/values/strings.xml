@@ -15,7 +15,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Main: Prevent app launching on un-rooted devices.\n\n- Main: Fixed crashes due to no storage write access.\n\n- About: Add option to share app.\n\n- Translations: Import Chinese Simplified (credits: jason5545).\n\n- Translations: Update Chinese Traditional (credits: jason5545).\n\n- res: Adaptive icons.\n\n- Miscellaneous changes.</string>
+    <string name="change_logs_message" translatable="false">- Flasher: Manual Flash: Directly catch and show the flashing output.\n\n- Flasher: Manual Flash: Removed file size limit with a warning toast message.\n\n- Backup: Workaround to avoid failing if user input a space in name.\n\n- Main: Implement update notification for non-google play devices.\n\n- Main: Re-designed about section.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="delete">Delete</string>

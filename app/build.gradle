@@ -18,8 +18,8 @@ android {
         applicationId "com.smartpack.smartflasher"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 13
-        versionName "2.2-" + getDate()
+        versionCode 14
+        versionName "2.3-" + getDate()
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "$applicationId-v$versionName"
     }
@@ -62,7 +62,7 @@ dependencies {
     }
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
     implementation 'com.squareup.picasso:picasso:2.5.2'
