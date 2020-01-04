@@ -35,6 +35,7 @@
     <string name="flash_img_warning">\n\nWarning: Flashing a wrong \'img\' file likely brick your device. Please be careful.\n</string>
     <string name="flash">Flash</string>
     <string name="flasher_warning">\n\nWarning: This feature is still very new and under development. It may not have full compatibility with many flashable zip files. If you think that the flashing process failed in any case due to the above mentioned incompatibilities, please restart the app immediately before doing anything.\n\n***USE AT YOUR OWN RISK***\n</string>
+    <string name="get_it">Get it</string>
     <string name="kernel">Kernel</string>
     <string name="last_flash">Flasher Log</string>
     <string name="licence">License</string>
@@ -81,6 +82,11 @@
     <string name="turn_off">Turn Off</string>
     <string name="turn_off_message">\nYour device will be Turned Off.\n</string>
     <string name="turn_off_summary">Turn Off your device</string>
+    <string name="update_check">Check for update</string>
+    <string name="update_check_failed">Failed to get latest version information!</string>
+    <string name="update_check_summary">Check for a new versions of Smart Flasher</string>
+    <string name="update_available">New update available! Please download and manually update the app.</string>
+    <string name="uptodate_message">Congrats! You are up-to-date.</string>
     <string name="version">Version</string>
     <string name="wipe_cache">Wipe Cache</string>
     <string name="wipe_cache_message">\nCache/Dalvik Cache partitions of your device will be erased.\n\nAttention! The device will be Rebooted.\n</string>

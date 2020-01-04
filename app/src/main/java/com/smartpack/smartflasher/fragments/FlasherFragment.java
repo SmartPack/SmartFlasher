@@ -35,6 +35,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
+import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.recyclerview.CardView;
@@ -342,5 +343,22 @@ public class FlasherFragment extends RecyclerViewFragment {
             }
         }
     }
-    
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        // Initialize manual Update Check, if play store not found
+        if (!UpdateCheck.isPlayStoreInstalled(getActivity())) {
+            if (!Utils.checkWriteStoragePermission(getActivity())) {
+                Utils.toast(getString(R.string.update_check_failed) + " " + getString(R.string.permission_denied_write_storage), getActivity());
+                return;
+            }
+            if (!Utils.isNetworkAvailable(getContext())) {
+                Utils.toast(getString(R.string.update_check_failed) + " " + getString(R.string.no_internet), getActivity());
+                return;
+            }
+            UpdateCheck.autoUpdateCheck(getActivity());
+        }
+    }
 }

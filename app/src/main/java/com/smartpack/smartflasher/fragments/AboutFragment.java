@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
 
 import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
+import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
 import com.smartpack.smartflasher.views.recyclerview.CardView;
@@ -132,21 +133,39 @@ public class AboutFragment extends RecyclerViewFragment {
 
         about.addItem(changelogs);
 
-        DescriptionView playstore = new DescriptionView();
-        playstore.setTitle(getString(R.string.playstore));
-        playstore.setSummary(getString(R.string.playstore_summary));
-        playstore.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
+        if (UpdateCheck.isPlayStoreInstalled(getActivity())) {
+            DescriptionView playstore = new DescriptionView();
+            playstore.setTitle(getString(R.string.playstore));
+            playstore.setSummary(getString(R.string.playstore_summary));
+            playstore.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (!Utils.isNetworkAvailable(getContext())) {
+                        Utils.toast(R.string.no_internet, getActivity());
+                        return;
+                    }
+                    Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.smartflasher", requireActivity());
                 }
-                Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.smartflasher", requireActivity());
-            }
-        });
+            });
 
-        about.addItem(playstore);
+            about.addItem(playstore);
+        } else {
+            DescriptionView updateCheck = new DescriptionView();
+            updateCheck.setTitle(getString(R.string.update_check));
+            updateCheck.setSummary(getString(R.string.update_check_summary));
+            updateCheck.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (!Utils.isNetworkAvailable(getContext())) {
+                        Utils.toast(R.string.no_internet, getActivity());
+                        return;
+                    }
+                    UpdateCheck.updateCheck(getActivity());
+                }
+            });
+
+            about.addItem(updateCheck);
+        }
 
         DescriptionView share = new DescriptionView();
         share.setTitle(getString(R.string.share_app));
