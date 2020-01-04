@@ -192,6 +192,7 @@ public class AboutFragment extends RecyclerViewFragment {
                 }
                 Intent shareapp = new Intent();
                 shareapp.setAction(Intent.ACTION_SEND);
+                shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
                 shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
                 shareapp.setType("text/plain");
                 Intent shareIntent = Intent.createChooser(shareapp, null);
