@@ -10,7 +10,6 @@
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="discreteSeekBarStyle">@style/Widget.DiscreteSeekBar</item>
         <item name="banner_frame_drawable">@drawable/drawable_frame_dark</item>
         <item name="native_express_id">@string/native_express_id_dark</item>
         <item name="android:textAlignment">gravity</item>
