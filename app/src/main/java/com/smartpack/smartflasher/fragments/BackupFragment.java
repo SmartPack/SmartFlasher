@@ -603,14 +603,14 @@ public class BackupFragment extends RecyclerViewFragment {
                 dialogueDocumentsUI.show();
                 return;
             }
-            if (!Utils.getExtension(file.getName()).equals("img")) {
+            if (!Utils.getExtension(mPath).equals("img")) {
                 Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
                 return;
             }
             Dialog flashimg = new Dialog(getActivity());
             flashimg.setIcon(R.mipmap.ic_launcher);
             flashimg.setTitle(getString(R.string.flasher));
-            flashimg.setMessage(getString(R.string.sure_message, file.getName()) + getString(R.string.flash_img_warning));
+            flashimg.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "")) + getString(R.string.flash_img_warning));
             flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
             });
             flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {

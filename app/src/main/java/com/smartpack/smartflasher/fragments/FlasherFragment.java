@@ -322,7 +322,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             if (requestCode == 0) {
                 Flasher.cleanLogs();
                 RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
-                if (!Utils.getExtension(file.getName()).equals("zip")) {
+                if (!Utils.getExtension(mPath).equals("zip")) {
                     Utils.toast(getString(R.string.file_selection_error), getActivity());
                     return;
                 }
@@ -332,7 +332,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 Dialog flashzip = new Dialog(getActivity());
                 flashzip.setIcon(R.mipmap.ic_launcher);
                 flashzip.setTitle(getString(R.string.flasher));
-                flashzip.setMessage(getString(R.string.sure_message, file.getName()) +
+                flashzip.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "")) +
                         getString(R.string.flasher_warning));
                 flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });
