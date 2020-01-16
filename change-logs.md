@@ -1,6 +1,10 @@
 # Change-logs
 
-## 14. January 04, 2019
+## 15. January 16, 2020
+*Release-tag: v2.4*<br>
+Flasher: Workaround to use Magisk BusyBox. Main: Moved data folder to /sdcard/Smart_Flasher. Flasher & Backup: Fixed picking files from sdcard root. Updated Russian translations. Miscellaneous changes.
+
+## 14. January 04, 2020
 *Release-tag: v2.3*<br>
 Flasher: Manual Flash: Directly catch and show the flashing output. Flasher: Manual Flash: Removed file size limit with a warning toast message. Backup: Workaround to avoid failing if user input a space in name. Main: Implement update notification for non-google play devices. Main: Make about section more captive. Miscellaneous changes.
 

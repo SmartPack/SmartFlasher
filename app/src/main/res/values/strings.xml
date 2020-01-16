@@ -15,7 +15,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Flasher: Manual Flash: Directly catch and show the flashing output.\n\n- Flasher: Manual Flash: Removed file size limit with a warning toast message.\n\n- Backup: Workaround to avoid failing if user input a space in name.\n\n- Main: Implement update notification for non-google play devices.\n\n- Main: Re-designed about section.\n\n- Miscellaneous changes.</string>
+    <string name="change_logs_message" translatable="false">- Flasher: Workaround to use Magisk BusyBox.\n\n- Main: Moved data folder to \'/sdcard/Smart_Flasher\'.\n\n- Flasher and Backup: Fixed picking files from sdcard root.\n\n- Updated Russian translations (credits: @andrey167).\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="delete">Delete</string>
