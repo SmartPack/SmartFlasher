@@ -76,7 +76,7 @@ public class Utils {
     }
 
     public static String getInternalDataStorage() {
-        return Environment.getExternalStorageDirectory().toString() + "/SP";
+        return Environment.getExternalStorageDirectory().toString() + "/Smart_Flasher";
     }
 
     // MD5 code from
