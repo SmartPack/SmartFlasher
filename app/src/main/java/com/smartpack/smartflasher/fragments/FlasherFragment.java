@@ -348,11 +348,9 @@ public class FlasherFragment extends RecyclerViewFragment {
         // Initialize manual Update Check, if play store not found
         if (!UpdateCheck.isPlayStoreInstalled(getActivity())) {
             if (!Utils.checkWriteStoragePermission(getActivity())) {
-                Utils.toast(getString(R.string.update_check_failed) + " " + getString(R.string.permission_denied_write_storage), getActivity());
                 return;
             }
             if (!Utils.isNetworkAvailable(getContext())) {
-                Utils.toast(getString(R.string.update_check_failed) + " " + getString(R.string.no_internet), getActivity());
                 return;
             }
             UpdateCheck.autoUpdateCheck(getActivity());

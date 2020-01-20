@@ -62,7 +62,11 @@ public class UpdateCheck {
         return Utils.strToInt(Utils.readFile(LATEST_VERSION));
     }
 
-    public static boolean hasVersionInfo() {
+    private static long lastModified() {
+        return new File(LATEST_VERSION).lastModified();
+    }
+
+    private static boolean hasVersionInfo() {
         return Utils.existFile(LATEST_VERSION);
     }
 
@@ -79,13 +83,13 @@ public class UpdateCheck {
     }
 
     public static void autoUpdateCheck(Context context) {
-        getVersionInfo();
+        if (!hasVersionInfo() && lastModified() + 89280000L < System.currentTimeMillis()) {
+            getVersionInfo();
+        }
         if (hasVersionInfo()) {
             if (BuildConfig.VERSION_CODE < getLatestVersionNumber()) {
                 updateAvailableDialog(context);
             }
-        } else {
-            Utils.toast(context.getString(R.string.update_check_failed) + " " + context.getString(R.string.no_internet), context);
         }
     }
 
