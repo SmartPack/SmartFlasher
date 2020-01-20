@@ -27,6 +27,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:linksClickable="true"
-            android:textColor="@color/textcolor_dark" />
+            android:textColor="@color/description" />
     </LinearLayout>
 </ScrollView>

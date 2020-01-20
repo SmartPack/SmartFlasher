@@ -149,9 +149,8 @@ public class BackupFragment extends RecyclerViewFragment {
                                     items.addAll(backupPartitions);
                                 } else {
                                     DescriptionView backup = new DescriptionView();
-                                    backup.setDrawable(getResources().getDrawable(R.drawable.ic_about));
+                                    backup.setDrawable(getResources().getDrawable(R.drawable.ic_info));
                                     backup.setTitle(getString(R.string.nothing_found));
-                                    backup.setSummary(getString(R.string.nothing_found_summary));
                                     backup.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                                         @Override
                                         public void onClick(RecyclerViewItem item) {

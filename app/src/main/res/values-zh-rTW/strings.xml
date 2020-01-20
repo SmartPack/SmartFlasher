@@ -40,7 +40,6 @@
     <string name="no_internet">請檢查您的網際網路連線！</string>
     <string name="normal_reboot_message">\n您的裝置將重新啟動。\n</string>
     <string name="nothing_found">找不到！</string>
-    <string name="nothing_found_summary">點選此處，或點選備份按鈕，以開始新的備份/刷入過程。</string>
     <string name="ok">好</string>
     <string name="options">選項</string>
     <string name="open_settings">開啟設定</string>

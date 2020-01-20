@@ -40,7 +40,6 @@
     <string name="no_internet">请检查您的互联网连接！</string>
     <string name="normal_reboot_message">\n您的设备将重新启动。\n</string>
     <string name="nothing_found">找不到！</string>
-    <string name="nothing_found_summary">点击此处，或点击备份按钮，以开始新的备份/刷入过程。</string>
     <string name="ok">好</string>
     <string name="options">选项</string>
     <string name="open_settings">开启设定</string>

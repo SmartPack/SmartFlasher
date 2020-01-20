@@ -19,27 +19,45 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="16dp"
-            android:layout_gravity="fill"
+            android:layout_marginRight="16dp"
+            android:scaleType="fitCenter"
             android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:textSize="15sp" />
+                android:textColor="?android:attr/textColorPrimary" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/summary"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/summary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switcher"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

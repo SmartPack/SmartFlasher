@@ -42,7 +42,6 @@
     <string name="no_root">Нет корневого доступа</string>
     <string name="normal_reboot_message">\nВаше устройство будет перезагружено.\n</string>
     <string name="nothing_found">Ничего не найдено!</string>
-    <string name="nothing_found_summary">Нажмите здесь или кнопку резервного копирования, чтобы начать новый процесс резервного копирования / перепрошивки.</string>
     <string name="ok">Ок</string>
     <string name="options">Опции</string>
     <string name="open_settings">Открыть настройки</string>

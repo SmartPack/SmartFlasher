@@ -38,10 +38,10 @@ import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
-import com.smartpack.smartflasher.views.recyclerview.CardView;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.dialog.Dialog;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
+import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
 import java.io.File;
 import java.util.List;
@@ -86,14 +86,15 @@ public class FlasherFragment extends RecyclerViewFragment {
 
     private void SmartPackInit(List<RecyclerViewItem> items) {
 
-        CardView flasherCard = new CardView(getActivity());
-        flasherCard.setTitle(getString(R.string.flasher_options));
+        TitleView titleView = new TitleView();
+        titleView.setText(getString(R.string.flasher_options));
+        items.add(titleView);
 
         DescriptionView kernelinfo = new DescriptionView();
         kernelinfo.setTitle(getString(R.string.kernel) + (" ") + getString(R.string.version));
         kernelinfo.setSummary(RootUtils.runCommand("uname -r"));
 
-        flasherCard.addItem(kernelinfo);
+        items.add(kernelinfo);
 
         // Show wipe (Cache/Data) functions only if we recognize recovery...
         if (Flasher.hasRecovery()) {
@@ -116,7 +117,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     wipecache.show();
                 }
             });
-            flasherCard.addItem(wipe_cache);
+            items.add(wipe_cache);
 
             DescriptionView wipe_data = new DescriptionView();
             wipe_data.setTitle(getString(R.string.wipe_data));
@@ -137,7 +138,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     wipedata.show();
                 }
             });
-            flasherCard.addItem(wipe_data);
+            items.add(wipe_data);
         }
 
         DescriptionView turnoff = new DescriptionView();
@@ -158,7 +159,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 turnoff.show();
             }
         });
-        flasherCard.addItem(turnoff);
+        items.add(turnoff);
 
         DescriptionView reboot = new DescriptionView();
         reboot.setTitle(getString(R.string.reboot));
@@ -178,7 +179,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 reboot.show();
             }
         });
-        flasherCard.addItem(reboot);
+        items.add(reboot);
 
         DescriptionView recoveryreboot = new DescriptionView();
         recoveryreboot.setTitle(getString(R.string.reboot_recovery));
@@ -198,7 +199,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 recoveryreboot.show();
             }
         });
-        flasherCard.addItem(recoveryreboot);
+        items.add(recoveryreboot);
 
         DescriptionView bootloaderreboot = new DescriptionView();
         bootloaderreboot.setTitle(getString(R.string.reboot_bootloader));
@@ -218,11 +219,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 bootloaderreboot.show();
             }
         });
-        flasherCard.addItem(bootloaderreboot);
-
-        if (flasherCard.size() > 0) {
-            items.add(flasherCard);
-        }
+        items.add(bootloaderreboot);
     }
 
     @Override

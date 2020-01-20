@@ -29,13 +29,15 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.smartpack.smartflasher.BuildConfig;
+import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
+import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
-import com.smartpack.smartflasher.views.recyclerview.CardView;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
+import com.smartpack.smartflasher.views.recyclerview.SwitchView;
 import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
 import java.util.LinkedHashMap;
@@ -52,10 +54,10 @@ public class AboutFragment extends RecyclerViewFragment {
     static {
         sCredits.put("Kernel Adiutor,Grarak", "https://github.com/Grarak");
         sCredits.put("Auto Flashing,osm0sis", "https://github.com/osm0sis");
-        sCredits.put("Chinese (rCN & rTW) Translations,jason5545", "https://github.com/jason5545");
         sCredits.put("Russian Translations,andrey167", "https://github.com/andrey167");
-        sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
+        sCredits.put("Chinese (rCN & rTW) Translations,jason5545", "https://github.com/jason5545");
         sCredits.put("Portuguese (rBr) Translations,DanGLES3", "https://github.com/DanGLES3");
+        sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
         sCredits.put("Italian Translations,IKAR0S", "https://github.com/IKAR0S");
     }
 
@@ -83,11 +85,27 @@ public class AboutFragment extends RecyclerViewFragment {
         items.add(about);
 
         DescriptionView versioninfo = new DescriptionView();
-        versioninfo.setDrawable(getResources().getDrawable(R.drawable.ic_about));
+        versioninfo.setDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
         versioninfo.setTitle(getString(R.string.version));
         versioninfo.setSummary("v" + BuildConfig.VERSION_NAME);
 
         items.add(versioninfo);
+
+        SwitchView dark_theme = new SwitchView();
+        dark_theme.setDrawable(getResources().getDrawable(R.drawable.ic_color));
+        dark_theme.setSummary(getString(R.string.dark_theme));
+        dark_theme.setChecked(Prefs.getBoolean("dark_theme", true, getActivity()));
+        dark_theme.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+            @Override
+            public void onChanged(SwitchView switchview, boolean isChecked) {
+                Prefs.saveBoolean("dark_theme", isChecked, getActivity());
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        items.add(dark_theme);
 
         DescriptionView support = new DescriptionView();
         support.setDrawable(getResources().getDrawable(R.drawable.ic_support));
@@ -105,23 +123,6 @@ public class AboutFragment extends RecyclerViewFragment {
         });
 
         items.add(support);
-
-        DescriptionView sourcecode = new DescriptionView();
-        sourcecode.setDrawable(getResources().getDrawable(R.drawable.ic_source));
-        sourcecode.setTitle(getString(R.string.source_code));
-        sourcecode.setSummary(getString(R.string.source_code_summary));
-        sourcecode.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
-                Utils.launchUrl("https://github.com/SmartPack/SmartFlasher", requireActivity());
-            }
-        });
-
-        items.add(sourcecode);
 
         DescriptionView changelogs = new DescriptionView();
         changelogs.setDrawable(getResources().getDrawable(R.drawable.ic_changelog));
@@ -142,6 +143,23 @@ public class AboutFragment extends RecyclerViewFragment {
         });
 
         items.add(changelogs);
+
+        DescriptionView sourcecode = new DescriptionView();
+        sourcecode.setDrawable(getResources().getDrawable(R.drawable.ic_source));
+        sourcecode.setTitle(getString(R.string.source_code));
+        sourcecode.setSummary(getString(R.string.source_code_summary));
+        sourcecode.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                if (!Utils.isNetworkAvailable(getContext())) {
+                    Utils.toast(R.string.no_internet, getActivity());
+                    return;
+                }
+                Utils.launchUrl("https://github.com/SmartPack/SmartFlasher", requireActivity());
+            }
+        });
+
+        items.add(sourcecode);
 
         if (UpdateCheck.isPlayStoreInstalled(getActivity())) {
             DescriptionView playstore = new DescriptionView();

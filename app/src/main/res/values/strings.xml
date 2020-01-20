@@ -18,6 +18,7 @@
     <string name="change_logs_message" translatable="false">- Flasher: Workaround to use Magisk BusyBox.\n\n- Main: Moved data folder to \'/sdcard/Smart_Flasher\'.\n\n- Flasher and Backup: Fixed picking files from sdcard root.\n\n- Updated Russian translations (credits: @andrey167).\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
+    <string name="dark_theme">Dark Theme</string>
     <string name="delete">Delete</string>
     <string name="documentsui_message">Please use an external \'File Manager\' to pick your file. Selecting files via the default \'DocumentsUI\' is not yet supported.</string>
     <string name="donate_me">Donate to Me</string>
@@ -45,8 +46,7 @@
     <string name="no_internet">Please check your internet connection!</string>
     <string name="no_root">No Root Access</string>
     <string name="normal_reboot_message">\nYour device will be rebooted.\n</string>
-    <string name="nothing_found">Nothing found!</string>
-    <string name="nothing_found_summary">Click here, or the backup button, to start a new backing up/flashing processes.</string>
+    <string name="nothing_found">Nothing found! Click here, or the backup button, to start a new back up/flashing processes.</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>
     <string name="open_settings">Open Settings</string>

@@ -7,5 +7,7 @@
     android:focusable="false"
     android:textIsSelectable="true"
     android:textSize="18sp"
-    android:paddingLeft="10dp"
-    android:textColor="@color/blue"/>
+    android:paddingTop="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:textColor="?attr/colorSecondary"/>
