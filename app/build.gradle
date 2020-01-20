@@ -18,8 +18,8 @@ android {
         applicationId "com.smartpack.smartflasher"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 15
-        versionName "2.4-" + getDate()
+        versionCode 16
+        versionName "2.5-" + getDate()
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "$applicationId-v$versionName"
         signingConfig signingConfigs.release

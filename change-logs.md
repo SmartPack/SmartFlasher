@@ -1,5 +1,9 @@
 # Change-logs
 
+## 16. January 20, 2020
+*Release-tag: v2.5*<br>
+Main: Switch to dark theme with an option to change to light in about page. Miscellaneous changes.
+
 ## 15. January 16, 2020
 *Release-tag: v2.4*<br>
 Flasher: Workaround to use Magisk BusyBox. Main: Moved data folder to /sdcard/Smart_Flasher. Flasher & Backup: Fixed picking files from sdcard root. Updated Russian translations. Miscellaneous changes.
