@@ -2,7 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="about">Sobre</string>
-    <string name="backup_summary">Fazer backup da %s\n do seu dispositivo para</string>
     <string name="backup_message">Fazendo backup de %s do seu dispositivo para</string>
     <string name="boot_partition_unknown">Falha ao indentificar a partição de boot</string>
     <string name="cancel">Cancelar</string>

@@ -8,7 +8,6 @@
     <string name="already_exists">%s already exists!</string>
     <string name="backup">Backup</string>
     <string name="backup_message">Backing up %s of your device into</string>
-    <string name="backup_summary">Backup %s of your device into</string>
     <string name="backup_title">The details of the already backed up partitions are listed on this page.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Boot partition</string>

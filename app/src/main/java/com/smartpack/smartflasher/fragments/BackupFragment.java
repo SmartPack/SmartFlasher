@@ -333,18 +333,7 @@ public class BackupFragment extends RecyclerViewFragment {
                         if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
                             Utils.toast(R.string.boot_partition_unknown, getActivity());
                         } else {
-                            Dialog boot = new Dialog(getActivity());
-                            boot.setIcon(R.mipmap.ic_launcher);
-                            boot.setTitle(getString(R.string.backup) + (" ") + (Flasher.isABDevice() ? getString(R.string.ab_partition) :
-                                    getString(R.string.boot_partition)));
-                            boot.setMessage(getString(R.string.backup_summary, (Flasher.isABDevice() ? getString(R.string.ab_partition) :
-                                    getString(R.string.boot_partition))) + (" ") + Utils.getInternalDataStorage() + "/backup/");
-                            boot.setNeutralButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
-                            });
-                            boot.setPositiveButton(getString(R.string.backup), (backupdialog, idi) -> {
-                                backup_boot_partition();
-                            });
-                            boot.show();
+                            backup_boot_partition();
                         }
                         break;
                     case 1:
@@ -353,16 +342,7 @@ public class BackupFragment extends RecyclerViewFragment {
                         } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
                             Utils.toast(R.string.recovery_partition_unknown, getActivity());
                         } else {
-                            Dialog recovery = new Dialog(getActivity());
-                            recovery.setIcon(R.mipmap.ic_launcher);
-                            recovery.setTitle(getString(R.string.backup) + (" ") + getString(R.string.recovery_partition));
-                            recovery.setMessage(getString(R.string.backup_summary, getString(R.string.recovery_partition)) + (" ") + Utils.getInternalDataStorage() + "/backup/");
-                            recovery.setNeutralButton(getString(R.string.cancel), (backupdialogInterface, ii) -> {
-                            });
-                            recovery.setPositiveButton(getString(R.string.backup), (backupdialog, idi) -> {
-                                backup_recovery_partition();
-                            });
-                            recovery.show();
+                            backup_recovery_partition();
                         }
                         break;
                 }

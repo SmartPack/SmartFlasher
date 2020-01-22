@@ -2,9 +2,7 @@
 <resources>
     <color name="black">#000000</color>
     <color name="colorPrimary">#212121</color>
-    <color name="colorSecondary">#2962FF</color>
     <color name="white">#ffffff</color>
-    <color name="green">#00FF00</color>
     <color name="headings">#FFC107</color>
     <color name="description">#BFFFFFFF</color>
 </resources>

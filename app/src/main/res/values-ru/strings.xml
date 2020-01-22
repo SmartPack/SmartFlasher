@@ -7,7 +7,6 @@
     <string name="already_exists">%s уже существует!</string>
     <string name="backup">Резервное копирование</string>
     <string name="backup_message">Резервное копирование%s вашего устройства в</string>
-    <string name="backup_summary">Резервное копирование%s вашего устройства в</string>
     <string name="backup_title">Детали уже зарезервированных разделов перечислены на этой странице.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Раздел Boot</string>

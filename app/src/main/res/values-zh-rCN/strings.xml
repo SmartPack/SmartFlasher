@@ -7,7 +7,6 @@
     <string name="already_exists">％s已经存在！</string>
     <string name="backup">备份</string>
     <string name="backup_message">将设备的％s备份到</string>
-    <string name="backup_summary">将设备的％s备份到</string>
     <string name="backup_title">此页面上列出了已备份分区的详细信息。</string>
     <string name="boot_img">Boot 映像</string>
     <string name="boot_partition">Boot 分区</string>
