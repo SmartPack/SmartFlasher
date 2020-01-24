@@ -20,9 +20,14 @@
 
 package com.smartpack.smartflasher.utils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Environment;
 
+import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootUtils;
+import com.smartpack.smartflasher.views.dialog.Dialog;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -34,27 +39,20 @@ import java.io.FileDescriptor;
 public class Flasher {
 
     private static final String ZIPFILE_EXTRACTED = Utils.getInternalDataStorage() + "/flash/META-INF/com/google/android/update-binary";
-
     private static final String RECOVERY = "/cache/recovery/";
-
-    private static final String FLASHFILE = Utils.getInternalDataStorage() + "/flasher_log.txt";
-
-    private static final String PATHFILE = Utils.getInternalDataStorage() + "/last_flash.txt";
-
     private static final String BOOT_PARTITION_INFO = Environment.getDataDirectory() + "/.boot_partition_info";
-
     private static final String RECOVERY_PARTITION_INFO = Environment.getDataDirectory() + "/.recovery_partition_info";
-
     private static final String FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash";
-
     private static final String CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'";
-
     private static final String UNZIP_BINARY = "/system/bin/unzip";
-
     private static final String MAGISK_UNZIP = "/sbin/.magisk/busybox/unzip";
 
     private static String mountFS(String command, String fs) {
         return "mount " + command + " " + fs;
+    }
+
+    private static String flashingCommand(String binary, String api, FileDescriptor fd, String zip) {
+        return "sh " + binary + " " + api + " " + fd + " " + zip;
     }
 
     private static boolean isZIPFileExtracted() {
@@ -65,31 +63,12 @@ public class Flasher {
         return Utils.existFile(RECOVERY);
     }
 
-    public static boolean isFlashLog() {
-        return Utils.existFile(FLASHFILE);
-    }
-
     public static boolean hasBootPartitionInfo() {
         return Utils.existFile(BOOT_PARTITION_INFO);
     }
 
     public static boolean hasRecoveryPartitionInfo() {
         return Utils.existFile(RECOVERY_PARTITION_INFO);
-    }
-
-    public static boolean isPathLog() {
-        return Utils.existFile(PATHFILE);
-    }
-
-    public static void cleanLogs() {
-        File PathLog = new File(PATHFILE);
-        File FlashLog = new File(FLASHFILE);
-        if (isPathLog()) {
-            PathLog.delete();
-        }
-        if (isFlashLog()) {
-            FlashLog.delete();
-        }
     }
 
     public static void makeInternalStorageFolder() {
@@ -138,7 +117,7 @@ public class Flasher {
      * Flashing recovery zip without rebooting to custom recovery
      * Credits to osm0sis @ xda-developers.com
      */
-    public static void prepareManualFlash(File file) {
+    private static void prepareManualFlash(File file) {
         String path = file.toString();
         makeInternalStorageFolder();
         if (Utils.existFile(FLASH_FOLDER)) {
@@ -154,26 +133,79 @@ public class Flasher {
         }
         RootUtils.runCommand("unzip '" + path + "' -d '" + FLASH_FOLDER + "'");
         if (isZIPFileExtracted()) {
-            RootUtils.runCommand("cd '" + FLASH_FOLDER + "'");
             RootUtils.runCommand(mountFS("-o remount,rw", "/"));
             RootUtils.runCommand("mkdir /tmp");
-            RootUtils.runCommand("mke2fs -F tmp.ext4 500000");
-            Utils.mount("-o loop", "tmp.ext4", "/tmp/");
+            RootUtils.runCommand("mke2fs -F " + FLASH_FOLDER + "/tmp.ext4 500000");
+            Utils.mount("-o loop", FLASH_FOLDER + "/tmp.ext4", "/tmp/");
         }
     }
 
-    public static String manualFlash(File file) {
+    private static String manualFlash(File file) {
         FileDescriptor fd = new FileDescriptor();
         String RECOVERY_API = "3";
-        String path = file.toString();
-        String date = RootUtils.runCommand("date");
-        String flashingCommand = "sh META-INF/com/google/android/update-binary '" + RECOVERY_API + "' " + fd + " '" + path + "'| tee '" + Utils.getInternalDataStorage() + "'/flasher_log.txt";
-        String logTime = "echo '" + date + "' >> '" + Utils.getInternalDataStorage() + "'/flasher_history.txt";
-        String logPath = "echo -- '" + path + "' >> '" + Utils.getInternalDataStorage() + "'/flasher_history.txt";
-        String logEmptyLine = "echo ' ' >> '" + Utils.getInternalDataStorage() + "'/flasher_history.txt";
-        return RootUtils.runCommand(flashingCommand + " && " + logTime + " && " + logPath + " && " +
-                logEmptyLine + " && " + CLEANING_COMMAND + " && " +
-                mountFS("-o remount,ro", "/ /system"));
+        return RootUtils.runCommand(flashingCommand(ZIPFILE_EXTRACTED, RECOVERY_API, fd, file.toString()) + " && " + CLEANING_COMMAND +
+                " && " + mountFS("-o remount,ro", "/ /system"));
+    }
+
+    public static void flashingTask(File file, Context context) {
+        new AsyncTask<Void, Void, String>() {
+            private ProgressDialog mProgressDialog;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(context);
+                mProgressDialog.setMessage(context.getString(R.string.flashing) + (" ") + file.getName());
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+            }
+            protected String doInBackground(Void... voids) {
+                Flasher.prepareManualFlash(file);
+                return Flasher.manualFlash(file);
+            }
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    mProgressDialog.dismiss();
+                } catch (IllegalArgumentException ignored) {
+                }
+                if (s != null && !s.isEmpty()) {
+                    new Dialog(context)
+                            .setIcon(R.mipmap.ic_launcher)
+                            .setTitle(context.getString(R.string.last_flash))
+                            .setMessage(s)
+                            .setCancelable(false)
+                            .setNeutralButton(context.getString(R.string.cancel), (dialog, id) -> {
+                            })
+                            .setPositiveButton(context.getString(R.string.reboot), (dialog, id) -> {
+                                new AsyncTask<Void, Void, Void>() {
+                                    @Override
+                                    protected void onPreExecute() {
+                                        super.onPreExecute();
+                                        mProgressDialog = new ProgressDialog(context);
+                                        mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
+                                        mProgressDialog.setCancelable(false);
+                                        mProgressDialog.show();
+                                    }
+                                    @Override
+                                    protected Void doInBackground(Void... voids) {
+                                        RootUtils.runCommand(Utils.prepareReboot());
+                                        return null;
+                                    }
+                                    @Override
+                                    protected void onPostExecute(Void aVoid) {
+                                        super.onPostExecute(aVoid);
+                                        try {
+                                            mProgressDialog.dismiss();
+                                        } catch (IllegalArgumentException ignored) {
+                                        }
+                                    }
+                                }.execute();
+                            })
+                            .show();
+
+                }
+            }
+        }.execute();
     }
 
     public static void flashBootPartition(File file) {

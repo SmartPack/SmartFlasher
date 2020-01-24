@@ -99,9 +99,7 @@ public class AboutFragment extends RecyclerViewFragment {
             @Override
             public void onChanged(SwitchView switchview, boolean isChecked) {
                 Prefs.saveBoolean("dark_theme", isChecked, getActivity());
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -114,11 +112,11 @@ public class AboutFragment extends RecyclerViewFragment {
         support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
+                if (!Utils.isNetworkAvailable(getActivity())) {
                     Utils.toast(R.string.no_internet, getActivity());
                     return;
                 }
-                Utils.launchUrl("https://forum.xda-developers.com/android/apps-games/app-smart-flasher-t3934438", getActivity());
+                Utils.launchUrl("https://t.me/smartpack_kmanager", getActivity());
             }
         });
 
@@ -151,7 +149,7 @@ public class AboutFragment extends RecyclerViewFragment {
         sourcecode.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
+                if (!Utils.isNetworkAvailable(getActivity())) {
                     Utils.toast(R.string.no_internet, getActivity());
                     return;
                 }
@@ -169,7 +167,7 @@ public class AboutFragment extends RecyclerViewFragment {
             playstore.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getContext())) {
+                    if (!Utils.isNetworkAvailable(getActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -186,7 +184,7 @@ public class AboutFragment extends RecyclerViewFragment {
             updateCheck.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getContext())) {
+                    if (!Utils.isNetworkAvailable(getActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -197,29 +195,6 @@ public class AboutFragment extends RecyclerViewFragment {
             items.add(updateCheck);
         }
 
-        DescriptionView share = new DescriptionView();
-        share.setDrawable(getResources().getDrawable(R.drawable.ic_share));
-        share.setTitle(getString(R.string.share_app));
-        share.setSummary(getString(R.string.share_app_summary));
-        share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
-                Intent shareapp = new Intent();
-                shareapp.setAction(Intent.ACTION_SEND);
-                shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
-                shareapp.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(shareapp, null);
-                startActivity(shareIntent);
-            }
-        });
-
-        items.add(share);
-
         DescriptionView donatetome = new DescriptionView();
         donatetome.setDrawable(getResources().getDrawable(R.drawable.ic_donate));
         donatetome.setTitle(getString(R.string.donate_me));
@@ -227,7 +202,7 @@ public class AboutFragment extends RecyclerViewFragment {
         donatetome.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getContext())) {
+                if (!Utils.isNetworkAvailable(getActivity())) {
                     Utils.toast(R.string.no_internet, getActivity());
                     return;
                 }
@@ -252,6 +227,29 @@ public class AboutFragment extends RecyclerViewFragment {
         });
 
         items.add(donatetome);
+
+        DescriptionView share = new DescriptionView();
+        share.setDrawable(getResources().getDrawable(R.drawable.ic_share));
+        share.setTitle(getString(R.string.share_app));
+        share.setSummary(getString(R.string.share_app_summary));
+        share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                if (!Utils.isNetworkAvailable(getActivity())) {
+                    Utils.toast(R.string.no_internet, getActivity());
+                    return;
+                }
+                Intent shareapp = new Intent();
+                shareapp.setAction(Intent.ACTION_SEND);
+                shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
+                shareapp.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(shareapp, null);
+                startActivity(shareIntent);
+            }
+        });
+
+        items.add(share);
     }
 
     private void creditsInit(List<RecyclerViewItem> items) {
@@ -292,7 +290,7 @@ public class AboutFragment extends RecyclerViewFragment {
             descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getContext())) {
+                    if (!Utils.isNetworkAvailable(getActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -325,6 +323,14 @@ public class AboutFragment extends RecyclerViewFragment {
             });
             return rootView;
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        return true;
     }
 
 }

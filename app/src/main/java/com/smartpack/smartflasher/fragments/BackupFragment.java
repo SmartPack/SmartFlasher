@@ -35,6 +35,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.Utils;
@@ -151,6 +152,7 @@ public class BackupFragment extends RecyclerViewFragment {
                                     DescriptionView backup = new DescriptionView();
                                     backup.setDrawable(getResources().getDrawable(R.drawable.ic_info));
                                     backup.setTitle(getString(R.string.nothing_found));
+                                    backup.setSummary(getString(R.string.nothing_found_summary, Utils.getInternalDataStorage() + "/backup"));
                                     backup.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                                         @Override
                                         public void onClick(RecyclerViewItem item) {
@@ -601,6 +603,14 @@ public class BackupFragment extends RecyclerViewFragment {
             });
             flashimg.show();
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        return true;
     }
     
 }

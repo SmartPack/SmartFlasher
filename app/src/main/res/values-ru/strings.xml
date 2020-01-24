@@ -25,7 +25,6 @@
     <string name="file_selection_error">Не удалось получить данные из внешнего файлового менеджера</string>
     <string name="file_size_limit">Обратите внимание: по соображениям безопасности файлы восстановления размером более 100 МБ не могут быть прошиты</string>
     <string name="flasher">Прошивальшик</string>
-    <string name="flasher_options">Настройки прошивальшика</string>
     <string name="flasher_summary">Нажмите кнопку прошивки, чтобы выбрать и прошить файл восстановления ZIP без перезагрузки в пользовательское восстановление. Изменения вступят в силу после перезагрузки.</string>
     <string name="flashing">Прошивка в процессе</string>
     <string name="flash_img_warning">\n\nПредупреждение: перепрошивка неправильного файла \'img\' может привести к поломке вашего устройства. Пожалуйста, будьте осторожны.\n</string>
@@ -52,12 +51,9 @@
     <string name="reboot">Перезагрузить</string>
     <string name="reboot_bootloader">Перезагрузить в загрузчик</string>
     <string name="reboot_bootloader_message">\nВаше устройство будет перезагружено в режим загрузки\n</string>
-    <string name="reboot_bootloader_summary">Перезагрузить в режим загрузки</string>
     <string name="reboot_dialog">Настоятельно рекомендуется перезагрузить устройство после прошивки.</string>
     <string name="reboot_recovery">Перезагрузить в рекавери</string>
     <string name="reboot_recovery_message">\nВаше устройство будет перезагружено в режим Рековери.\n</string>
-    <string name="reboot_recovery_summary">Ваше устройство будет перезагружено в режим рекавери</string>
-    <string name="reboot_summary">Перезагрузить устройство</string>
     <string name="recovery_img">Recovery IMG</string>
     <string name="recovery_partition">Раздел восстановления</string>
     <string name="recovery_partition_unknown">Не удалось получить удостоверение раздела восстановления</string>
@@ -75,7 +71,6 @@
     <string name="sure_question">Вы уверены?</string>
     <string name="turn_off">Выключен</string>
     <string name="turn_off_message">\nУстройство будет выключено.\n</string>
-    <string name="turn_off_summary">Выключить устройство</string>
     <string name="update_check">Проверить обновления</string>
     <string name="update_check_failed">Не удалось получить информацию о последней версии!</string>
     <string name="update_check_summary">Проверьте наличие новых версий Smart Flasher</string>

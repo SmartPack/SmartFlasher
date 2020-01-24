@@ -25,7 +25,6 @@
     <string name="file_selection_error">无法从外部文件管理器取得数据</string>
     <string name="file_size_limit">％s的大小大于100 MB。\n\n请注意：出于安全原因，超过100 MB的复原文件将不允许刷入。</string>
     <string name="flasher">刷入器</string>
-    <string name="flasher_options">刷入器选项</string>
     <string name="flasher_summary">单击刷入按钮选择并刷入可用于恢复模式的 zip 文件, 而无需重新启动到第三方恢复模式。变更将在重新启动后套用。</string>
     <string name="flashing">刷入</string>
     <string name="flash_img_warning">\n\n警告: 刷入错误的「.img」 文件可能会损坏您的设备。请小心。\n</string>
@@ -50,11 +49,8 @@
     <string name="reboot">重启</string>
     <string name="reboot_bootloader">重启至 Bootloader</string>
     <string name="reboot_bootloader_message">\n您的设备将重新启动到下载模式。\n\n</string>
-    <string name="reboot_bootloader_summary">将设备重新启动到下载模式</string>
     <string name="reboot_recovery">重启至 Recovery</string>
     <string name="reboot_recovery_message">\n您的设备将重新启动到恢复模式。\n\n</string>
-    <string name="reboot_recovery_summary">将设备重新启动到恢复模式</string>
-    <string name="reboot_summary">重新启动您的设备</string>
     <string name="recovery_img">复原映像</string>
     <string name="recovery_partition">复原分区</string>
     <string name="recovery_partition_unknown">无法取得复原分区信息</string>
@@ -69,7 +65,6 @@
     <string name="sure_question">你确定吗？</string>
     <string name="turn_off">关机</string>
     <string name="turn_off_message">\n您的设备将被关闭。\n</string>
-    <string name="turn_off_summary">关闭您的设备</string>
     <string name="version">版本</string>
     <string name="wipe_cache">清除緩存</string>
     <string name="wipe_cache_message">\n您设备的緩存/ Dalvik緩存分区将被删除。\n\n注意！该设备将重新启动。\n</string>

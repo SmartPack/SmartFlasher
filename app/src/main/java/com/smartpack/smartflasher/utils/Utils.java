@@ -215,6 +215,10 @@ public class Utils {
         RootUtils.runCommand("curl -L -o " + path + " " + url);
     }
 
+    public static String getChecksum(String path) {
+        return RootUtils.runCommand("sha1sum " + path);
+    }
+
     public static boolean existFile(String file) {
         return existFile(file, true);
     }
@@ -229,6 +233,13 @@ public class Utils {
 
     public static String create(String text, String path) {
         return RootUtils.runCommand("echo '" + text + "' > " + path);
+    }
+
+    public static String delete(String path) {
+        if (Utils.existFile(path)) {
+            return RootUtils.runCommand("rm -r " + path);
+        }
+        return null;
     }
 
     public static String mount(String command, String source, String dest) {

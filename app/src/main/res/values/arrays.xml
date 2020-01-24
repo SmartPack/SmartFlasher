@@ -6,13 +6,19 @@
         <item>@string/backup</item>
         <item>@string/flash</item>
     </string-array>
-    <string-array name="backup_items">
-        <item>@string/boot_partition</item>
-        <item>@string/recovery_partition</item>
-    </string-array>
     <string-array name="flasher_items">
         <item>@string/boot_img</item>
         <item>@string/recovery_img</item>
+    </string-array>
+    <string-array name="reboot_options">
+        <item>@string/turn_off</item>
+        <item>@string/reboot_normal</item>
+        <item>@string/reboot_recovery</item>
+        <item>@string/reboot_bootloader</item>
+    </string-array>
+    <string-array name="backup_items">
+        <item>@string/boot_partition</item>
+        <item>@string/recovery_partition</item>
     </string-array>
     <string-array name="backup_item_options">
         <item>@string/restore</item>

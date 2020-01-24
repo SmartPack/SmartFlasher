@@ -25,7 +25,6 @@
     <string name="file_selection_error">無法從外部檔案管理器取得資料</string>
     <string name="file_size_limit">％s的大小大於100 MB。\n\n請注意：出於安全原因，超過100 MB的復原檔案將不允許刷入。</string>
     <string name="flasher">刷入器</string>
-    <string name="flasher_options">刷入器選項</string>
     <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
     <string name="flashing">刷入</string>
     <string name="flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>
@@ -50,11 +49,8 @@
     <string name="reboot">重啟</string>
     <string name="reboot_bootloader">重啟至 Bootloader</string>
     <string name="reboot_bootloader_message">\n您的裝置將重新開機到下載模式。\n\n</string>
-    <string name="reboot_bootloader_summary">將裝置重新開機到下載模式</string>
     <string name="reboot_recovery">重啟至 Recovery</string>
     <string name="reboot_recovery_message">\n您的裝置將重新開機到復原模式。\n\n</string>
-    <string name="reboot_recovery_summary">將裝置重新開機到復原模式</string>
-    <string name="reboot_summary">重新啟動您的裝置</string>
     <string name="recovery_img">復原映像</string>
     <string name="recovery_partition">復原分割區</string>
     <string name="recovery_partition_unknown">無法取得復原分割區資訊</string>
@@ -69,7 +65,6 @@
     <string name="sure_question">你確定嗎？</string>
     <string name="turn_off">關機</string>
     <string name="turn_off_message">\n您的裝置將被關閉。\n</string>
-    <string name="turn_off_summary">關閉您的裝置</string>
     <string name="version">版本</string>
     <string name="wipe_cache">清除快取</string>
     <string name="wipe_cache_message">\n您裝置的快取/ Dalvik快取分割區將被刪除。\n\n注意！該裝置將重新啟動。\n</string>

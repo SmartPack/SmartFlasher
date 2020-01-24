@@ -23,6 +23,7 @@ package com.smartpack.smartflasher.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -33,17 +34,23 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
+import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
+import com.smartpack.smartflasher.utils.KernelUpdater;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.dialog.Dialog;
+import com.smartpack.smartflasher.views.recyclerview.GenericSelectView;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
+import com.smartpack.smartflasher.views.recyclerview.SwitchView;
 import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -52,6 +59,8 @@ import java.util.List;
 
 public class FlasherFragment extends RecyclerViewFragment {
 
+    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
+    private Dialog mItemOptionsDialog;
     private String mPath;
 
     @Override
@@ -75,8 +84,51 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     @Override
+    public int getSpanCount() {
+        return super.getSpanCount() + 1;
+    }
+
+    @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        SmartPackInit(items);
+        reload();
+    }
+
+    private void reload() {
+        if (mLoader == null) {
+            getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    clearItems();
+                    mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
+
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            showProgress();
+                        }
+
+                        @Override
+                        protected List<RecyclerViewItem> doInBackground(Void... voids) {
+                            List<RecyclerViewItem> items = new ArrayList<>();
+                            kernelinfoInit(items);
+                            SmartPackInit(items);
+                            return items;
+                        }
+
+                        @Override
+                        protected void onPostExecute(List<RecyclerViewItem> recyclerViewItems) {
+                            super.onPostExecute(recyclerViewItems);
+                            for (RecyclerViewItem item : recyclerViewItems) {
+                                addItem(item);
+                            }
+                            hideProgress();
+                            mLoader = null;
+                        }
+                    };
+                    mLoader.execute();
+                }
+            }, 250);
+        }
     }
 
     @Override
@@ -84,17 +136,199 @@ public class FlasherFragment extends RecyclerViewFragment {
         super.postInit();
     }
 
-    private void SmartPackInit(List<RecyclerViewItem> items) {
+    private void kernelinfoInit(List<RecyclerViewItem> items) {
+        TitleView kernel = new TitleView();
+        kernel.setText(!KernelUpdater.getKernelName().equals("Unavailable") ? KernelUpdater.getKernelName() :
+                getString(R.string.kernel_information));
 
-        TitleView titleView = new TitleView();
-        titleView.setText(getString(R.string.flasher_options));
-        items.add(titleView);
+        items.add(kernel);
 
         DescriptionView kernelinfo = new DescriptionView();
-        kernelinfo.setTitle(getString(R.string.kernel) + (" ") + getString(R.string.version));
+        kernelinfo.setTitle(getString(R.string.kernel));
         kernelinfo.setSummary(RootUtils.runCommand("uname -r"));
 
         items.add(kernelinfo);
+
+        GenericSelectView updateChannel = new GenericSelectView();
+        updateChannel.setTitle(getString(R.string.update_channel));
+        updateChannel.setValue((!KernelUpdater.getKernelName().equals("Unavailable"))
+                ? KernelUpdater.getUpdateChannel() : getString(R.string.update_channel_summary));
+        updateChannel.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
+            @Override
+            public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
+                if (!Utils.checkWriteStoragePermission(getActivity())) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                    Utils.toast(R.string.permission_denied_write_storage, getActivity());
+                    return;
+                }
+                if (!Utils.isNetworkAvailable(getActivity())) {
+                    Utils.toast(R.string.no_internet, getActivity());
+                    return;
+                }
+                if (value.isEmpty()) {
+                    KernelUpdater.clearUpdateInfo();
+                    Utils.toast(R.string.update_channel_empty, getActivity());
+                    reload();
+                    return;
+                }
+                if (value.equals(KernelUpdater.getUpdateChannel())) {
+                    return;
+                }
+                KernelUpdater.acquireUpdateInfo(value, getActivity());
+                getHandler().postDelayed(() -> {
+                    updateChannel.setValue((!KernelUpdater.getKernelName().equals("Unavailable"))
+                            ? KernelUpdater.getUpdateChannel() : getString(R.string.update_channel_summary));
+                }, 100);
+                reload();
+
+            }
+        });
+
+        items.add(updateChannel);
+
+        if (KernelUpdater.getLatestVersion().equals("Unavailable")) {
+            DescriptionView info = new DescriptionView();
+            info.setDrawable(getResources().getDrawable(R.drawable.ic_info));
+            info.setTitle(getString(R.string.update_channel_info, Utils.getInternalDataStorage()));
+            info.setFullSpan(true);
+            info.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (!Utils.isNetworkAvailable(getActivity())) {
+                        Utils.toast(R.string.no_internet, getActivity());
+                        return;
+                    }
+                    Utils.launchUrl("https://smartpack.github.io/kerneldownloads/", getActivity());
+                }
+            });
+
+            items.add(info);
+        }
+
+        if (!KernelUpdater.getLatestVersion().equals("Unavailable")) {
+            DescriptionView latest = new DescriptionView();
+            latest.setTitle(getString(R.string.kernel_latest));
+            latest.setSummary(KernelUpdater.getLatestVersion());
+
+            items.add(latest);
+        }
+
+        if (!KernelUpdater.getChangeLog().equals("Unavailable")) {
+            DescriptionView changelogs = new DescriptionView();
+            changelogs.setTitle(getString(R.string.change_logs));
+            changelogs.setSummary(getString(R.string.change_logs_summary));
+            changelogs.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (KernelUpdater.getChangeLog().contains("https://") ||
+                            KernelUpdater.getChangeLog().contains("http://")) {
+                        if (!Utils.isNetworkAvailable(getActivity())) {
+                            Utils.toast(R.string.no_internet, getActivity());
+                            return;
+                        }
+                        Utils.launchUrl(KernelUpdater.getChangeLog(), getActivity());
+                    } else {
+                        new Dialog(getActivity())
+                                .setTitle(KernelUpdater.getKernelName() + " " + KernelUpdater.getLatestVersion())
+                                .setMessage(KernelUpdater.getChangeLog())
+                                .setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
+                                })
+                                .show();
+                    }
+                }
+            });
+
+            items.add(changelogs);
+        }
+
+        if (!KernelUpdater.getUrl().equals("Unavailable")) {
+            DescriptionView download = new DescriptionView();
+            download.setTitle(getString(R.string.download));
+            download.setSummary(getString(R.string.get_it_summary));
+            download.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (!Utils.checkWriteStoragePermission(getActivity())) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        Utils.toast(R.string.permission_denied_write_storage, getActivity());
+                        return;
+                    }
+                    if (!Utils.isNetworkAvailable(getActivity())) {
+                        Utils.toast(getString(R.string.no_internet), getActivity());
+                        return;
+                    }
+                    KernelUpdater.downloadKernel(getActivity());
+                }
+            });
+
+            items.add(download);
+        }
+
+        if (!KernelUpdater.getSupport().equals("Unavailable")) {
+            DescriptionView support = new DescriptionView();
+            support.setTitle(getString(R.string.support));
+            support.setSummary(getString(R.string.support_summary));
+            support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (!Utils.isNetworkAvailable(getActivity())) {
+                        Utils.toast(R.string.no_internet, getActivity());
+                        return;
+                    }
+                    Utils.launchUrl(KernelUpdater.getSupport(), getActivity());
+                }
+            });
+
+            items.add(support);
+        }
+
+        if (!KernelUpdater.getLatestVersion().equals("Unavailable")) {
+            DescriptionView donations = new DescriptionView();
+            donations.setTitle(getString(R.string.donations));
+            donations.setSummary(getString(R.string.donations_summary));
+            donations.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+                @Override
+                public void onClick(RecyclerViewItem item) {
+                    if (!Utils.isNetworkAvailable(getActivity())) {
+                        Utils.toast(R.string.no_internet, getActivity());
+                        return;
+                    }
+                    if (KernelUpdater.getDonationLink().equals("Unavailable")) {
+                        Utils.toast(getString(R.string.donations_unknown), getActivity());
+                        return;
+                    }
+                    Utils.launchUrl(KernelUpdater.getDonationLink(), getActivity());
+                }
+            });
+
+            items.add(donations);
+        }
+
+        if (!KernelUpdater.getKernelName().equals("Unavailable")) {
+            SwitchView update_check = new SwitchView();
+            update_check.setSummary(getString(R.string.update_check));
+            update_check.setChecked(Prefs.getBoolean("update_check", false, getActivity()));
+            update_check.addOnSwitchListener(new SwitchView.OnSwitchListener() {
+                @Override
+                public void onChanged(SwitchView switchview, boolean isChecked) {
+                    Prefs.saveBoolean("update_check", isChecked, getActivity());
+                    if (Prefs.getBoolean("update_check", true, getActivity())) {
+                        Utils.toast(getString(R.string.update_check_message, !KernelUpdater.getKernelName().
+                                equals("Unavailable") ? KernelUpdater.getKernelName() : "this"), getActivity());
+                    }
+                }
+            });
+
+            items.add(update_check);
+        }
+    }
+
+    private void SmartPackInit(List<RecyclerViewItem> items) {
+        TitleView wipe = new TitleView();
+        wipe.setText(getString(R.string.wipe));
+        items.add(wipe);
 
         // Show wipe (Cache/Data) functions only if we recognize recovery...
         if (Flasher.hasRecovery()) {
@@ -141,85 +375,84 @@ public class FlasherFragment extends RecyclerViewFragment {
             items.add(wipe_data);
         }
 
-        DescriptionView turnoff = new DescriptionView();
-        turnoff.setTitle(getString(R.string.turn_off));
-        turnoff.setSummary(getString(R.string.turn_off_summary));
-        turnoff.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Dialog turnoff = new Dialog(getActivity());
-                turnoff.setIcon(R.mipmap.ic_launcher);
-                turnoff.setTitle(getString(R.string.sure_question));
-                turnoff.setMessage(getString(R.string.turn_off_message));
-                turnoff.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                turnoff.setPositiveButton(getString(R.string.turn_off), (dialog1, id1) -> {
-                    new Execute().execute(Utils.prepareReboot() + " -p");
-                });
-                turnoff.show();
-            }
-        });
-        items.add(turnoff);
+        TitleView reboot_options = new TitleView();
+        reboot_options.setText(getString(R.string.reboot_options));
+        items.add(reboot_options);
 
-        DescriptionView reboot = new DescriptionView();
-        reboot.setTitle(getString(R.string.reboot));
-        reboot.setSummary(getString(R.string.reboot_summary));
-        reboot.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
+        DescriptionView rebootOptions = new DescriptionView();
+        rebootOptions.setTitle(getString(R.string.reboot_options));
+        rebootOptions.setSummary(getString(R.string.reboot_options_Summary));
+        rebootOptions.setFullSpan(true);
+        rebootOptions.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                Dialog reboot = new Dialog(getActivity());
-                reboot.setIcon(R.mipmap.ic_launcher);
-                reboot.setTitle(getString(R.string.sure_question));
-                reboot.setMessage(getString(R.string.normal_reboot_message));
-                reboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                reboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                    new Execute().execute(Utils.prepareReboot());
-                });
-                reboot.show();
+                mItemOptionsDialog = new Dialog(getActivity())
+                        .setItems(getResources().getStringArray(R.array.reboot_options),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        switch (i) {
+                                            case 0:
+                                                new Dialog(getActivity())
+                                                        .setIcon(R.mipmap.ic_launcher)
+                                                        .setTitle(getString(R.string.sure_question))
+                                                        .setMessage(getString(R.string.turn_off_message))
+                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        })
+                                                        .setPositiveButton(getString(R.string.turn_off), (dialogInterfacei, ii) -> {
+                                                            new Execute().execute(Utils.prepareReboot() + " -p");
+                                                        })
+                                                        .show();
+                                                break;
+                                            case 1:
+                                                new Dialog(getActivity())
+                                                        .setIcon(R.mipmap.ic_launcher)
+                                                        .setTitle(getString(R.string.sure_question))
+                                                        .setMessage(getString(R.string.normal_reboot_message))
+                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        })
+                                                        .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
+                                                            new Execute().execute(Utils.prepareReboot());
+                                                        })
+                                                        .show();
+                                                break;
+                                            case 2:
+                                                new Dialog(getActivity())
+                                                        .setIcon(R.mipmap.ic_launcher)
+                                                        .setTitle(getString(R.string.sure_question))
+                                                        .setMessage(getString(R.string.reboot_recovery_message))
+                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        })
+                                                        .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
+                                                            new Execute().execute(Utils.prepareReboot() + " recovery");
+                                                        })
+                                                        .show();
+                                                break;
+                                            case 3:
+                                                new Dialog(getActivity())
+                                                        .setIcon(R.mipmap.ic_launcher)
+                                                        .setTitle(getString(R.string.sure_question))
+                                                        .setMessage(getString(R.string.reboot_bootloader_message))
+                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        })
+                                                        .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
+                                                            new Execute().execute(Utils.prepareReboot() + " bootloader");
+                                                        })
+                                                        .show();
+                                                break;
+                                        }
+                                    }
+                                })
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                mItemOptionsDialog = null;
+                            }
+                        });
+                mItemOptionsDialog.show();
             }
         });
-        items.add(reboot);
-
-        DescriptionView recoveryreboot = new DescriptionView();
-        recoveryreboot.setTitle(getString(R.string.reboot_recovery));
-        recoveryreboot.setSummary(getString(R.string.reboot_recovery_summary));
-        recoveryreboot.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Dialog recoveryreboot = new Dialog(getActivity());
-                recoveryreboot.setIcon(R.mipmap.ic_launcher);
-                recoveryreboot.setTitle(getString(R.string.sure_question));
-                recoveryreboot.setMessage(getString(R.string.reboot_recovery_message));
-                recoveryreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                recoveryreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                    new Execute().execute(Utils.prepareReboot() + " recovery");
-                });
-                recoveryreboot.show();
-            }
-        });
-        items.add(recoveryreboot);
-
-        DescriptionView bootloaderreboot = new DescriptionView();
-        bootloaderreboot.setTitle(getString(R.string.reboot_bootloader));
-        bootloaderreboot.setSummary(getString(R.string.reboot_bootloader_summary));
-        bootloaderreboot.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Dialog bootloaderreboot = new Dialog(getActivity());
-                bootloaderreboot.setIcon(R.mipmap.ic_launcher);
-                bootloaderreboot.setTitle(getString(R.string.sure_question));
-                bootloaderreboot.setMessage(getString(R.string.reboot_bootloader_message));
-                bootloaderreboot.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                bootloaderreboot.setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
-                    new Execute().execute(Utils.prepareReboot() + " bootloader");
-                });
-                bootloaderreboot.show();
-            }
-        });
-        items.add(bootloaderreboot);
+        items.add(rebootOptions);
     }
 
     @Override
@@ -236,44 +469,6 @@ public class FlasherFragment extends RecyclerViewFragment {
         Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
         manualflash.setType("application/zip");
         startActivityForResult(manualflash, 0);
-    }
-
-    private void flash_zip_file(final File file) {
-        new AsyncTask<Void, Void, String>() {
-            private ProgressDialog mProgressDialog;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(getActivity());
-                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-            protected String doInBackground(Void... voids) {
-                Flasher.prepareManualFlash(file);
-                return Flasher.manualFlash(file);
-            }
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                if (s != null && !s.isEmpty()) {
-                    new Dialog(getActivity())
-                            .setIcon(R.mipmap.ic_launcher)
-                            .setTitle(getString(R.string.last_flash))
-                            .setMessage(s)
-                            .setCancelable(false)
-                            .setNeutralButton(getString(R.string.cancel), (dialog, id) -> {
-                            })
-                            .setPositiveButton(getString(R.string.reboot), (dialog, id) -> {
-                                new Execute().execute(Utils.prepareReboot());
-                            })
-                            .show();
-                }
-            }
-        }.execute();
     }
 
     private class Execute extends AsyncTask<String, Void, Void> {
@@ -317,8 +512,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                 return;
             }
             if (requestCode == 0) {
-                Flasher.cleanLogs();
-                RootUtils.runCommand("echo '" + mPath + "' > " + Utils.getInternalDataStorage() + "/last_flash.txt");
                 if (!Utils.getExtension(mPath).equals("zip")) {
                     Utils.toast(getString(R.string.file_selection_error), getActivity());
                     return;
@@ -334,7 +527,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });
                 flashzip.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                    flash_zip_file(new File(mPath));
+                    Flasher.flashingTask(new File(mPath), getActivity());
                 });
                 flashzip.show();
             }
@@ -345,15 +538,30 @@ public class FlasherFragment extends RecyclerViewFragment {
     public void onStart(){
         super.onStart();
 
+        // Initialize kernel update check - Once in a day
+        if (Utils.isNetworkAvailable(getActivity()) && Prefs.getBoolean("update_check", true, getActivity())
+                && !KernelUpdater.getUpdateChannel().equals("Unavailable") && KernelUpdater.lastModified() +
+                89280000L < System.currentTimeMillis()) {
+            KernelUpdater.updateInfo(Utils.getInternalDataStorage() + "/update_channel");
+        }
+
         // Initialize manual Update Check, if play store not found
         if (!UpdateCheck.isPlayStoreInstalled(getActivity())) {
             if (!Utils.checkWriteStoragePermission(getActivity())) {
                 return;
             }
-            if (!Utils.isNetworkAvailable(getContext())) {
+            if (!Utils.isNetworkAvailable(getActivity())) {
                 return;
             }
             UpdateCheck.autoUpdateCheck(getActivity());
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        return true;
     }
 }
