@@ -17,8 +17,9 @@
 2. BusyBox
 
 ## Features
-Smart Flasher is a simple and very basic app, without a settings menu and additional themes, which can do the following things
+Smart Flasher is a simple and very basic app, without a settings menu, which can do the following things
 * Flashing recovery zip files (such as a custom Kernel, a Magisk module, etc.) while running Android OS, even without rebooting into custom recovery.
+* Download and auto-flash various custom kernels directly from app ([Documentation](https://smartpack.github.io/kerneldownloads/)).
 * Back-up 'boot' & 'recovery' partition on a supported device.
 * Flash a 'boot' partition '.img' or 'recovery' partition '.img' on a supported device.
 * Doing tasks such as

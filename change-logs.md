@@ -1,5 +1,9 @@
 # Change-logs
 
+## 17. January 24, 2020
+*Release-tag: v2.6*<br>
+Flasher: Implemented FK model kernel update feature. Backup: Simplified backup menu. res: Updated app icon. Miscellaneous changes.
+
 ## 16. January 20, 2020
 *Release-tag: v2.5*<br>
 Main: Switch to dark theme with an option to change to light in about page. Miscellaneous changes.

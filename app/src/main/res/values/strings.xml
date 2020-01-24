@@ -15,7 +15,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Main: Switch to dark theme with an option to change to light in about page.\n\n- Miscellaneous changes.</string>
+    <string name="change_logs_message" translatable="false">- Flasher: Implemented FK model kernel update feature.\n\n- Backup: Simplified backup menu.\n\n- res: Updated app icon.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="dark_theme">Dark Theme</string>
