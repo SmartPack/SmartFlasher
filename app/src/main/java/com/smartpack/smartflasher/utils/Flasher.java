@@ -188,7 +188,8 @@ public class Flasher {
                                     }
                                     @Override
                                     protected Void doInBackground(Void... voids) {
-                                        RootUtils.runCommand(Utils.prepareReboot());
+                                        RootUtils.runCommand(Utils.existFile("/system/bin/svc") ? "svc power reboot"
+                                                : Utils.prepareReboot());
                                         return null;
                                     }
                                     @Override

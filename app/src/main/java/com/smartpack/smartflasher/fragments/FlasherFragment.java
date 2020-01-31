@@ -400,7 +400,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
                                                         .setPositiveButton(getString(R.string.turn_off), (dialogInterfacei, ii) -> {
-                                                            new Execute().execute(Utils.prepareReboot() + " -p");
+                                                            new Execute().execute(Utils.existFile("/system/bin/svc") ? "svc power shutdown"
+                                                                    : Utils.prepareReboot() + " -p");
                                                         })
                                                         .show();
                                                 break;
@@ -412,7 +413,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
                                                         .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
-                                                            new Execute().execute(Utils.prepareReboot());
+                                                            new Execute().execute(Utils.existFile("/system/bin/svc") ? "svc power reboot"
+                                                                    : Utils.prepareReboot());
                                                         })
                                                         .show();
                                                 break;
