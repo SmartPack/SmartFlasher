@@ -542,7 +542,7 @@ public class FlasherFragment extends RecyclerViewFragment {
         if (Utils.isNetworkAvailable(getActivity()) && Prefs.getBoolean("update_check", true, getActivity())
                 && !KernelUpdater.getUpdateChannel().equals("Unavailable") && KernelUpdater.lastModified() +
                 89280000L < System.currentTimeMillis()) {
-            KernelUpdater.updateInfo(Utils.getInternalDataStorage() + "/update_channel");
+            KernelUpdater.updateInfo(Utils.readFile(Utils.getInternalDataStorage() + "/update_channel"));
         }
 
         // Initialize manual Update Check, if play store not found
