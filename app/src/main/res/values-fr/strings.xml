@@ -19,7 +19,6 @@
     <string name="kernel">Kernel</string>
     <string name="licence">Licence</string>
     <string name="more">Plus</string>
-    <string name="normal_reboot_message">\nVotre appareil va redémarrer.\n</string>
     <string name="ok">OK</string>
     <string name="options">Options</string>
     <string name="open_settings">Ouvrir les réglages</string>
@@ -30,9 +29,7 @@
     <string name="purchase_app">Donation App</string>
     <string name="reboot">Redémarrer</string>
     <string name="reboot_bootloader">Redémarrer dans le Bootloader</string>
-    <string name="reboot_bootloader_message">\nVotre appareil va redémarer dans le mode Download.\n</string>
     <string name="reboot_recovery">Redémarrer dans le Recovery</string>
-    <string name="reboot_recovery_message">\nVotre appareil va redémarrer dans le Recovery.\n</string>
     <string name="settings">Réglages</string>
     <string name="source_code">Code source</string>
     <string name="source_code_summary">Voir le code source sur GitHub</string>
@@ -40,12 +37,5 @@
     <string name="support_summary">Visiter la page d\'assistance sur xda-developers.com</string>
     <string name="sure_question">Êtes-vous sûr ?</string>
     <string name="turn_off">Éteindre</string>
-    <string name="turn_off_message">\nVotre appareil va être éteint.\n</string>
     <string name="version">Version</string>
-    <string name="wipe_cache">Effacer le Cache</string>
-    <string name="wipe_cache_message">\n Les partitions Cache/Dalvik de votre appareil vont être effacés.\n\nAttention! The device will be Rebooted.\n</string>
-    <string name="wipe_cache_summary">Effacer la partition Cache</string>
-    <string name="wipe_data">Effacer la partition Data</string>
-    <string name="wipe_data_message">\n La partition Data de votre appareil va être complètement supprimée ! Vous allez perdre toutes vos données utilisateurs, y compris vos applications. \n\ Attention ! L\'appareil va redémarrer.\n</string>
-    <string name="wipe_data_summary">Effacer la parition Data</string>
 </resources>

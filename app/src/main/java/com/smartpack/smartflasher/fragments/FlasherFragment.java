@@ -326,58 +326,9 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     private void SmartPackInit(List<RecyclerViewItem> items) {
-        TitleView wipe = new TitleView();
-        wipe.setText(getString(R.string.wipe));
-        items.add(wipe);
-
-        // Show wipe (Cache/Data) functions only if we recognize recovery...
-        if (Flasher.hasRecovery()) {
-            DescriptionView wipe_cache = new DescriptionView();
-            wipe_cache.setTitle(getString(R.string.wipe_cache));
-            wipe_cache.setSummary(getString(R.string.wipe_cache_summary));
-            wipe_cache.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    Dialog wipecache = new Dialog(getActivity());
-                    wipecache.setIcon(R.mipmap.ic_launcher);
-                    wipecache.setTitle(getString(R.string.sure_question));
-                    wipecache.setMessage(getString(R.string.wipe_cache_message));
-                    wipecache.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    wipecache.setPositiveButton(getString(R.string.wipe_cache), (dialog1, id1) -> {
-                        new Execute().execute("echo --wipe_cache > /cache/recovery/command");
-                        new Execute().execute(Utils.prepareReboot() + " recovery");
-                    });
-                    wipecache.show();
-                }
-            });
-            items.add(wipe_cache);
-
-            DescriptionView wipe_data = new DescriptionView();
-            wipe_data.setTitle(getString(R.string.wipe_data));
-            wipe_data.setSummary(getString(R.string.wipe_data_summary));
-            wipe_data.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    Dialog wipedata = new Dialog(getActivity());
-                    wipedata.setIcon(R.mipmap.ic_launcher);
-                    wipedata.setTitle(getString(R.string.sure_question));
-                    wipedata.setMessage(getString(R.string.wipe_data_message));
-                    wipedata.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
-                    wipedata.setPositiveButton(getString(R.string.wipe_data), (dialog1, id1) -> {
-                        new Execute().execute("echo --wipe_data > /cache/recovery/command");
-                        new Execute().execute(Utils.prepareReboot() + " recovery");
-                    });
-                    wipedata.show();
-                }
-            });
-            items.add(wipe_data);
-        }
-
-        TitleView reboot_options = new TitleView();
-        reboot_options.setText(getString(R.string.reboot_options));
-        items.add(reboot_options);
+        TitleView other_options = new TitleView();
+        other_options.setText(getString(R.string.other_options));
+        items.add(other_options);
 
         DescriptionView rebootOptions = new DescriptionView();
         rebootOptions.setTitle(getString(R.string.reboot_options));
@@ -394,12 +345,10 @@ public class FlasherFragment extends RecyclerViewFragment {
                                         switch (i) {
                                             case 0:
                                                 new Dialog(getActivity())
-                                                        .setIcon(R.mipmap.ic_launcher)
-                                                        .setTitle(getString(R.string.sure_question))
-                                                        .setMessage(getString(R.string.turn_off_message))
-                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        .setMessage(getString(R.string.sure_question))
+                                                        .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
-                                                        .setPositiveButton(getString(R.string.turn_off), (dialogInterfacei, ii) -> {
+                                                        .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
                                                             new Execute().execute(Utils.existFile("/system/bin/svc") ? "svc power shutdown"
                                                                     : Utils.prepareReboot() + " -p");
                                                         })
@@ -407,12 +356,10 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                 break;
                                             case 1:
                                                 new Dialog(getActivity())
-                                                        .setIcon(R.mipmap.ic_launcher)
-                                                        .setTitle(getString(R.string.sure_question))
-                                                        .setMessage(getString(R.string.normal_reboot_message))
-                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        .setMessage(getString(R.string.sure_question))
+                                                        .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
-                                                        .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
+                                                        .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
                                                             new Execute().execute(Utils.existFile("/system/bin/svc") ? "svc power reboot"
                                                                     : Utils.prepareReboot());
                                                         })
@@ -420,24 +367,20 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                 break;
                                             case 2:
                                                 new Dialog(getActivity())
-                                                        .setIcon(R.mipmap.ic_launcher)
-                                                        .setTitle(getString(R.string.sure_question))
-                                                        .setMessage(getString(R.string.reboot_recovery_message))
-                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        .setMessage(getString(R.string.sure_question))
+                                                        .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
-                                                        .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
+                                                        .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
                                                             new Execute().execute(Utils.prepareReboot() + " recovery");
                                                         })
                                                         .show();
                                                 break;
                                             case 3:
                                                 new Dialog(getActivity())
-                                                        .setIcon(R.mipmap.ic_launcher)
-                                                        .setTitle(getString(R.string.sure_question))
-                                                        .setMessage(getString(R.string.reboot_bootloader_message))
-                                                        .setNeutralButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
+                                                        .setMessage(getString(R.string.sure_question))
+                                                        .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
-                                                        .setPositiveButton(getString(R.string.reboot), (dialogInterfacei, ii) -> {
+                                                        .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
                                                             new Execute().execute(Utils.prepareReboot() + " bootloader");
                                                         })
                                                         .show();

@@ -36,7 +36,6 @@
     <string name="more">更多</string>
     <string name="name_empty">名稱為空！</string>
     <string name="no_internet">請檢查您的網際網路連線！</string>
-    <string name="normal_reboot_message">\n您的裝置將重新啟動。\n</string>
     <string name="nothing_found">找不到！</string>
     <string name="ok">好</string>
     <string name="options">選項</string>
@@ -48,9 +47,7 @@
     <string name="purchase_app">購買應用程式</string>
     <string name="reboot">重啟</string>
     <string name="reboot_bootloader">重啟至 Bootloader</string>
-    <string name="reboot_bootloader_message">\n您的裝置將重新開機到下載模式。\n\n</string>
     <string name="reboot_recovery">重啟至 Recovery</string>
-    <string name="reboot_recovery_message">\n您的裝置將重新開機到復原模式。\n\n</string>
     <string name="recovery_img">復原映像</string>
     <string name="recovery_partition">復原分割區</string>
     <string name="recovery_partition_unknown">無法取得復原分割區資訊</string>
@@ -64,13 +61,6 @@
     <string name="sure_message">您確定要刷入％s嗎？</string>
     <string name="sure_question">你確定嗎？</string>
     <string name="turn_off">關機</string>
-    <string name="turn_off_message">\n您的裝置將被關閉。\n</string>
     <string name="version">版本</string>
-    <string name="wipe_cache">清除快取</string>
-    <string name="wipe_cache_message">\n您裝置的快取/ Dalvik快取分割區將被刪除。\n\n注意！該裝置將重新啟動。\n</string>
-    <string name="wipe_cache_summary">擦除快取分割區</string>
-    <string name="wipe_data">清除資料</string>
-    <string name="wipe_data_message">\n您裝置的資料分割區將被完全刪除。\n\n警告！您將遺失所有使用者資料，包括應用程式。\n\n注意！該裝置將重新啟動。\n</string>
-    <string name="wipe_data_summary">擦除資料分割區</string>
     <string name="wrong_extension">請選擇副檔名為％s的檔案。</string>
 </resources>

@@ -36,7 +36,6 @@
     <string name="more">更多</string>
     <string name="name_empty">名称为空！</string>
     <string name="no_internet">请检查您的互联网连接！</string>
-    <string name="normal_reboot_message">\n您的设备将重新启动。\n</string>
     <string name="nothing_found">找不到！</string>
     <string name="ok">好</string>
     <string name="options">选项</string>
@@ -48,9 +47,7 @@
     <string name="purchase_app">购买应用程序</string>
     <string name="reboot">重启</string>
     <string name="reboot_bootloader">重启至 Bootloader</string>
-    <string name="reboot_bootloader_message">\n您的设备将重新启动到下载模式。\n\n</string>
     <string name="reboot_recovery">重启至 Recovery</string>
-    <string name="reboot_recovery_message">\n您的设备将重新启动到恢复模式。\n\n</string>
     <string name="recovery_img">复原映像</string>
     <string name="recovery_partition">复原分区</string>
     <string name="recovery_partition_unknown">无法取得复原分区信息</string>
@@ -64,13 +61,6 @@
     <string name="sure_message">您确定要刷入％s吗？</string>
     <string name="sure_question">你确定吗？</string>
     <string name="turn_off">关机</string>
-    <string name="turn_off_message">\n您的设备将被关闭。\n</string>
     <string name="version">版本</string>
-    <string name="wipe_cache">清除緩存</string>
-    <string name="wipe_cache_message">\n您设备的緩存/ Dalvik緩存分区将被删除。\n\n注意！该设备将重新启动。\n</string>
-    <string name="wipe_cache_summary">擦除緩存分区</string>
-    <string name="wipe_data">擦除数据</string>
-    <string name="wipe_data_message">\n您设备的数据分区将被完全删除。\n\n警告！您将遗失所有用户数据，包括应用程序。\n\n注意！该设备将重新启动。\n</string>
-    <string name="wipe_data_summary">擦除数据分区</string>
     <string name="wrong_extension">请选择扩展名为％s的文件。</string>
 </resources>

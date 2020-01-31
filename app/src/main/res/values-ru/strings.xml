@@ -38,7 +38,6 @@
     <string name="name_empty">Имя пусто!</string>
     <string name="no_internet">Пожалуйста, проверьте ваше интернет-соединение!</string>
     <string name="no_root">Нет корневого доступа</string>
-    <string name="normal_reboot_message">\nВаше устройство будет перезагружено.\n</string>
     <string name="nothing_found">Ничего не найдено!</string>
     <string name="ok">Ок</string>
     <string name="options">Опции</string>
@@ -50,10 +49,8 @@
     <string name="purchase_app">Приложение для пожертвований</string>
     <string name="reboot">Перезагрузить</string>
     <string name="reboot_bootloader">Перезагрузить в загрузчик</string>
-    <string name="reboot_bootloader_message">\nВаше устройство будет перезагружено в режим загрузки\n</string>
     <string name="reboot_dialog">Настоятельно рекомендуется перезагрузить устройство после прошивки.</string>
     <string name="reboot_recovery">Перезагрузить в рекавери</string>
-    <string name="reboot_recovery_message">\nВаше устройство будет перезагружено в режим Рековери.\n</string>
     <string name="recovery_img">Recovery IMG</string>
     <string name="recovery_partition">Раздел восстановления</string>
     <string name="recovery_partition_unknown">Не удалось получить удостоверение раздела восстановления</string>
@@ -70,18 +67,11 @@
     <string name="sure_message">Вы уверены, что прошить %s?</string>
     <string name="sure_question">Вы уверены?</string>
     <string name="turn_off">Выключен</string>
-    <string name="turn_off_message">\nУстройство будет выключено.\n</string>
     <string name="update_check">Проверить обновления</string>
     <string name="update_check_failed">Не удалось получить информацию о последней версии!</string>
     <string name="update_check_summary">Проверьте наличие новых версий Smart Flasher</string>
     <string name="update_available">Доступно новое обновление! Пожалуйста, загрузите и обновите приложение вручную.</string>
     <string name="uptodate_message">Congrats! You are up-to-date.</string>
     <string name="version">Версия</string>
-    <string name="wipe_cache">Стереть кэш</string>
-    <string name="wipe_cache_message">\nРазделы кэша / Dalvik Cache вашего устройства будут удалены. \ N \ nВнимание Устройство будет перезагружено.\n</string>
-    <string name="wipe_cache_summary">Очистить раздел кеша</string>
-    <string name="wipe_data">Очистить раздел Data</string>
-    <string name="wipe_data_message">\nРаздел данных вашего устройства будет полностью удален. \ N \ nВнимание! Вы потеряете все пользовательские данные, включая приложения. \ N \ nВнимание! Устройство будет перезагружено.\n</string>
-    <string name="wipe_data_summary">Очистить раздел Data</string>
     <string name="wrong_extension">Пожалуйста, выберите файл с расширением %s</string>
 </resources>

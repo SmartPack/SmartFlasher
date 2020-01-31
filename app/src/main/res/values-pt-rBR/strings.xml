@@ -24,7 +24,6 @@
     <string name="licence">Licensa</string>
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
-    <string name="normal_reboot_message">\nSeu dispositivo será reiniciado.\n</string>
     <string name="ok">OK</string>
     <string name="options">Opções</string>
     <string name="open_settings">Abrir Configurações</string>
@@ -35,9 +34,7 @@
     <string name="purchase_app">App de Doação</string>
     <string name="reboot">Reiniciar</string>
     <string name="reboot_bootloader">Reiniciar pro Bootloader</string>
-    <string name="reboot_bootloader_message">\nSeu dispositivo será reiniciado em modo download.\n</string>
     <string name="reboot_recovery">Reiniciar pro Recovery</string>
-    <string name="reboot_recovery_message">\nSeu dispositivo será reiniciado em modo recovery.\n</string>
     <string name="settings">Configurações</string>
     <string name="source_code">Código Fonte</string>
     <string name="source_code_summary">Ver código fonte no GitHub</string>
@@ -46,13 +43,6 @@
     <string name="sure_message">Ter certeza que quer instalar %s?</string>
     <string name="sure_question">Tem certeza?</string>
     <string name="turn_off">Desligar</string>
-    <string name="turn_off_message">\nSeu dispositivo será desligado.\n</string>
     <string name="version">Versão</string>
-    <string name="wipe_cache">Limpar Cache</string>
-    <string name="wipe_cache_message">\nCache/Dalvik Cache do seu aparelho será apagado.\n\nAtenção! Seu dispositivo será reiniciado.\n</string>
-    <string name="wipe_cache_summary">Limpar a partição Cache</string>
-    <string name="wipe_data">Limpar dados</string>
-    <string name="wipe_data_message">\nA partição de dados do seu aparelho será completamente apagada.\n\nAviso! Você irá perder todos seus dados incluindo apps.\n\nAviso! O dispositivo será Reiniciado.\n</string>
-    <string name="wipe_data_summary">Limpar partição de dados</string>
     <string name="wrong_extension">Por favor selecione um arquivo com a extensão %s.</string>
 </resources>

@@ -20,7 +20,6 @@
     <string name="last_flash">Flasher Log</string>
     <string name="licence">Licenza</string>
     <string name="more">Di più</string>
-    <string name="normal_reboot_message">\nIl dispositivo verrà riavviato.\n</string>
     <string name="ok">OK</string>
     <string name="options">Opzioni</string>
     <string name="open_settings">Apri impostazioni</string>
@@ -31,9 +30,7 @@
     <string name="purchase_app">Donation App</string>
     <string name="reboot">Riavvia</string>
     <string name="reboot_bootloader">Riavvia in Bootloader</string>
-    <string name="reboot_bootloader_message">\nIl dispositivo verrà riavviato in modalità Download.\n</string>
     <string name="reboot_recovery">Riavvia in Recovery</string>
-    <string name="reboot_recovery_message">\nIl dispositivo verrà riavviato in modalità Recovery.\n</string>
     <string name="settings">Impostazioni</string>
     <string name="source_code">Codice Sorgente</string>
     <string name="source_code_summary">Visualizza codice sorgente su GitHub</string>
@@ -42,12 +39,5 @@
     <string name="sure_message">Sei sicuro di flashare %s?</string>
     <string name="sure_question">Sei sicuro?</string>
     <string name="turn_off">Spegni</string>
-    <string name="turn_off_message">\nIl dispositivo verrà spento.\n</string>
     <string name="version">Versionw</string>
-    <string name="wipe_cache">Cancella Cache</string>
-    <string name="wipe_cache_message">\nLe partizioni Cache/Dalvik Cache del dispositivo verranno cancellate.\n\nAttenzione! Il dispositivo verrà riavviato.\n</string>
-    <string name="wipe_cache_summary">Cancella la Partizione Cache</string>
-    <string name="wipe_data">Cancella Dati</string>
-    <string name="wipe_data_message">\nLa partizione Dati del dispositivo verrà completamente cancellata.\n\nAttention! Perderai tutti i dati utente incluse le appp.\n\nAttenzione! Il dispositivo verrà riavviato.\n</string>
-    <string name="wipe_data_summary">Cancella la Partizione Dati</string>
 </resources>
