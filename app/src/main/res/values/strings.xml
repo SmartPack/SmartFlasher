@@ -76,11 +76,16 @@
     <string name="recovery_partition">Recovery partition</string>
     <string name="recovery_partition_unknown">Failed to get Recovery Partition identity</string>
     <string name="rebooting">Rebooting</string>
+    <string name="remove">Remove</string>
+    <string name="remove_summary">Remove this channel</string>
     <string name="restore">Restore</string>
     <string name="settings">Settings</string>
     <string name="share_app">Share App</string>
     <string name="share_app_summary">Share Smart Flasher with your friends</string>
     <string name="share_app_message">Get Smart Flasher %s from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
+    <string name="share_channel">Share Channel</string>
+    <string name="share_channel_summary">Share this Channel</string>
+    <string name="share_channel_message">To configure this update channel, simply input \'%s\' on SmartFlasher -> Update Channel Url.\n\nGet Smart Flasher from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">Source Code</string>
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>
