@@ -1,0 +1,5 @@
+{
+  "version": 17,
+  "changelog": "Change-logs\n - Flasher: Implemented FK model kernel update feature.\n - Backup: Simplified backup menu.\n - res: Updated app icon.\n - Miscellaneous changes.",
+  "versionName": "2.6"
+}

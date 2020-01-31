@@ -27,6 +27,9 @@ import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.views.dialog.Dialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 
 /**
@@ -36,8 +39,8 @@ import java.io.File;
 public class UpdateCheck {
 
     private static final String PLAY_STORE = "com.android.vending";
-    private static final String LATEST_VERSION = Utils.getInternalDataStorage() + "/.version";
-    private static final String LATEST_VERSION_URL = "https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/release/version?raw=true";
+    private static final String LATEST_VERSION = Utils.getInternalDataStorage() + "/version";
+    private static final String LATEST_VERSION_URL = "https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/release/version.json?raw=true";
     private static final String DOWNLOAD_PAGE_URL = "https://github.com/SmartPack/SmartFlasher/tree/master/release";
 
     public static boolean isPlayStoreInstalled(Context context) {
@@ -59,7 +62,30 @@ public class UpdateCheck {
     }
 
     private static int getLatestVersionNumber() {
-        return Utils.strToInt(Utils.readFile(LATEST_VERSION));
+        try {
+            JSONObject obj = new JSONObject(Utils.readFile(LATEST_VERSION));
+            return (obj.getInt("version"));
+        } catch (JSONException e) {
+            return BuildConfig.VERSION_CODE;
+        }
+    }
+
+    private static String getLatestVersionName() {
+        try {
+            JSONObject obj = new JSONObject(Utils.readFile(LATEST_VERSION));
+            return (obj.getString("versionName"));
+        } catch (JSONException e) {
+            return "Unavailable";
+        }
+    }
+
+    private static String getChangelogs() {
+        try {
+            JSONObject obj = new JSONObject(Utils.readFile(LATEST_VERSION));
+            return (obj.getString("changelog"));
+        } catch (JSONException e) {
+            return "Unavailable";
+        }
     }
 
     private static long lastModified() {
@@ -72,7 +98,8 @@ public class UpdateCheck {
 
     private static void updateAvailableDialog(Context context) {
         new Dialog(context)
-                .setMessage(context.getString(R.string.update_available))
+                .setTitle(context.getString(R.string.update_available) + getLatestVersionName())
+                .setMessage(context.getString(R.string.update_available_summary, getChangelogs()))
                 .setCancelable(false)
                 .setNegativeButton(context.getString(R.string.cancel), (dialog, id) -> {
                 })
