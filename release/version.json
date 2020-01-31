@@ -1,5 +1,5 @@
 {
-  "version": 17,
-  "changelog": "Change-logs\n - Flasher: Implemented FK model kernel update feature.\n - Backup: Simplified backup menu.\n - res: Updated app icon.\n - Miscellaneous changes.",
-  "versionName": "2.6"
+  "version": 18,
+  "changelog": "Change-logs\n - Kernel Updater: Properly updated Auto update check.\n - Misc: Updated reboot options to use svc power reboot if available.\n - Flasher: Removed wipe options and simplified reboot menu.\n - Kernel Updater: Added option to remove and share update channel.\n - Miscellaneous changes.",
+  "versionName": "2.7"
 }

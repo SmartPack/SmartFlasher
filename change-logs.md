@@ -1,5 +1,9 @@
 # Change-logs
 
+## 18. January 31, 2020
+*Release-tag: v2.7*<br>
+Kernel Updater: Properly acquire update Auto update check. Misc: Updated reboot options to use svc power reboot if available. Flasher: removed wipe options and simplified reboot menu. Kernel Updater: Added option to remove and share channel. Miscellaneous changes.
+
 ## 17. January 24, 2020
 *Release-tag: v2.6*<br>
 Flasher: Implemented FK model kernel update feature. Backup: Simplified backup menu. res: Updated app icon. Miscellaneous changes.

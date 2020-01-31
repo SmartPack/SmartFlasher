@@ -27,8 +27,6 @@ Smart Flasher is a simple and very basic app, without a settings menu, which can
   * Display Kernel version
   * Turn off your device
   * Reboot (Normal, Recovery & Boot-loader) your device
-  * Wipe Cache partitions (need custom recovery)
-  * Wipe Data partitions (need custom recovery)
 
 ## Donations
 If you like to appreciate my work, please consider donating to me (either via [PayPal](https://www.paypal.me/sunilpaulmathew/), or [Ko-fi](https://ko-fi.com/sunilpaulmathew/), or by purchasing the [SmartPack Donation Package](https://play.google.com/store/apps/details?id=com.smartpack.donate) from playstore) as it is helpful to continue my projects more active, although it is not at all necessary.
