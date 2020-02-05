@@ -15,7 +15,7 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Kernel Updater: Properly updated auto update check.\n\n- Misc: Updated reboot options to use svc power reboot if available.\n\n- Flasher: Removed wipe options and simplified reboot menu.\n\n- Kernel Updater: Added option to remove and share update channel.\n\n- Miscellaneous changes.</string>
+    <string name="change_logs_message" translatable="false">- Flasher: Manual Flashing: Improve flashing.\n\n- Flasher and Backup: Support more file manager.\n\n- Misc: Added option to share error log if created.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="dark_theme">Dark Theme</string>

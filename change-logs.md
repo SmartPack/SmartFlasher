@@ -1,5 +1,9 @@
 # Change-logs
 
+## 19. February 05, 2020
+*Release-tag: v2.8*<br>
+Flasher: Manual Flashing: Improve flashing. Flasher and Backup: Support more file manager. Misc: Added option to share error log if created. Miscellaneous changes
+
 ## 18. January 31, 2020
 *Release-tag: v2.7*<br>
 Kernel Updater: Properly acquire update Auto update check. Misc: Updated reboot options to use svc power reboot if available. Flasher: removed wipe options and simplified reboot menu. Kernel Updater: Added option to remove and share channel. Miscellaneous changes.
