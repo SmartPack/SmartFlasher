@@ -33,6 +33,7 @@
     <string name="download_completed">%s is successfully downloaded. Do you want to flash it?</string>
     <string name="download_failed">It seems like the download is failed, or a corrupted file is downloaded!</string>
     <string name="downloading">Downloading %s</string>
+    <string name="empty_flasher_log">It seems like flashing is failed!</string>
     <string name="executing">Executing</string>
     <string name="file_selection_error">Failed to get data from external file manager</string>
     <string name="file_size_limit">Warning! You\'re selected a file of ~%s MB for flashing. Flashing bigger files, such as ROM\'s, using this app might be dangerous to your device.</string>
@@ -80,12 +81,16 @@
     <string name="remove_summary">Remove this channel</string>
     <string name="restore">Restore</string>
     <string name="settings">Settings</string>
+    <string name="share">Share</string>
     <string name="share_app">Share App</string>
     <string name="share_app_summary">Share Smart Flasher with your friends</string>
     <string name="share_app_message">Get Smart Flasher %s from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
+    <string name="share_by">\'%s\' | error log shared by Smart Flasher!</string>
     <string name="share_channel">Share Channel</string>
     <string name="share_channel_summary">Share this Channel</string>
     <string name="share_channel_message">To configure this update channel, simply input \'%s\' on SmartFlasher -> Update Channel Url.\n\nGet Smart Flasher from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
+    <string name="share_log">In order to fix this issue, please consider sharing the log file created at \'%s\' with the developer of this app.\nDo you want to share it now?</string>
+    <string name="share_log_message">Here is the contents of the log file\n\'%s\'\n\n</string>
     <string name="source_code">Source Code</string>
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>

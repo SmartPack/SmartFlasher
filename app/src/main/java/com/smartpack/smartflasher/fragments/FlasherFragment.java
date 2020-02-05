@@ -41,6 +41,7 @@ import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.KernelUpdater;
 import com.smartpack.smartflasher.utils.Utils;
+import com.smartpack.smartflasher.utils.ViewUtils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.dialog.Dialog;
@@ -493,17 +494,14 @@ public class FlasherFragment extends RecyclerViewFragment {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
             mPath = Utils.getPath(file);
-            if (Utils.isDocumentsUI(uri)) {
-                Dialog dialogueDocumentsUI = new Dialog(getActivity());
-                dialogueDocumentsUI.setMessage(getString(R.string.documentsui_message));
-                dialogueDocumentsUI.setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
-                });
-                dialogueDocumentsUI.show();
-                return;
-            }
             if (requestCode == 0) {
+                if (Utils.isDocumentsUI(uri) && !Utils.existFile(mPath)) {
+                    ViewUtils.dialogDocumentsUI(getActivity());
+                    return;
+                }
                 if (!Utils.getExtension(mPath).equals("zip")) {
-                    Utils.toast(getString(R.string.file_selection_error), getActivity());
+                    Utils.create(file.getAbsolutePath(), Utils.errorLog());
+                    ViewUtils.dialogError(getString(R.string.file_selection_error), Utils.errorLog(), getActivity());
                     return;
                 }
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {
@@ -512,7 +510,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                 Dialog flashzip = new Dialog(getActivity());
                 flashzip.setIcon(R.mipmap.ic_launcher);
                 flashzip.setTitle(getString(R.string.flasher));
-                flashzip.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "")) +
+                flashzip.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "").
+                        replace("file%3A%2F%2F%2F", "").replace("%2F", "/")) +
                         getString(R.string.flasher_warning));
                 flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });

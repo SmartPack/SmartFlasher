@@ -23,6 +23,7 @@ package com.smartpack.smartflasher.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -37,6 +38,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
@@ -148,6 +150,31 @@ public class ViewUtils {
                     });
         }
         return dialog;
+    }
+
+    public static void dialogDocumentsUI(Context context) {
+        new Dialog(context)
+                .setMessage(context.getString(R.string.documentsui_message))
+                .setPositiveButton(context.getString(R.string.ok), (dialogInterface, i) -> {
+                })
+                .show();    }
+
+    public static void dialogError(String string, String path, Context context) {
+        new Dialog(context)
+                .setMessage(string + "\n" + context.getString(R.string.share_log,
+                        path))
+                .setNegativeButton(context.getString(R.string.cancel), (dialogInterface, i) -> {
+                })
+                .setPositiveButton(context.getString(R.string.share), (dialogInterface, i) -> {
+                    Intent sharelog = new Intent();
+                    sharelog.setAction(Intent.ACTION_SEND);
+                    sharelog.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_by, path));
+                    sharelog.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_log_message, Utils.readFile(path)) + context.getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
+                    sharelog.setType("text/plain");
+                    Intent shareIntent = Intent.createChooser(sharelog, null);
+                    context.startActivity(shareIntent);
+                })
+                .show();
     }
 
     public static void rebootDialog(Context context) {

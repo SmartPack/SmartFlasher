@@ -576,22 +576,24 @@ public class BackupFragment extends RecyclerViewFragment {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
             mPath = Utils.getPath(file);
-            if (Utils.isDocumentsUI(uri)) {
-                Dialog dialogueDocumentsUI = new Dialog(getActivity());
-                dialogueDocumentsUI.setMessage(getString(R.string.documentsui_message));
-                dialogueDocumentsUI.setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
-                });
-                dialogueDocumentsUI.show();
+            if (Utils.isDocumentsUI(uri) && !Utils.existFile(mPath)) {
+                ViewUtils.dialogDocumentsUI(getActivity());
                 return;
             }
-            if (!Utils.getExtension(mPath).equals("img")) {
+            if (!Utils.getExtension(mPath).equals("img") && Utils.existFile(mPath)) {
                 Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
+                return;
+            }
+            if (!Utils.existFile(mPath) && Utils.getExtension(mPath).equals("img")) {
+                Utils.create(file.getAbsolutePath(), Utils.errorLog());
+                ViewUtils.dialogError(getString(R.string.file_selection_error), Utils.errorLog(), getActivity());
                 return;
             }
             Dialog flashimg = new Dialog(getActivity());
             flashimg.setIcon(R.mipmap.ic_launcher);
             flashimg.setTitle(getString(R.string.flasher));
-            flashimg.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "")) + getString(R.string.flash_img_warning));
+            flashimg.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "").
+                    replace("file%3A%2F%2F%2F", "").replace("%2F", "/")) + getString(R.string.flash_img_warning));
             flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
             });
             flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
