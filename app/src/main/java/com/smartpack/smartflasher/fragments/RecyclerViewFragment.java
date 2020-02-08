@@ -42,6 +42,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
@@ -128,7 +131,14 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mRootView = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         mHandler = new Handler();
 
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerview);
+        mRecyclerView = mRootView.findViewById(R.id.recyclerview);
+
+        // Initialize Google Ads
+        if (!Utils.isDonated(getActivity())) {
+            AdView mAdView = mRootView.findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
 
         if (mViewPagerFragments != null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
@@ -141,11 +151,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             mViewPagerFragments = new ArrayList<>();
         }
         mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
-        mViewPager = (ViewPager) mRootView.findViewById(R.id.viewpager);
+        mViewPager = mRootView.findViewById(R.id.viewpager);
         mViewPager.setVisibility(View.INVISIBLE);
         mViewPagerShadow = mRootView.findViewById(R.id.viewpager_shadow);
         mViewPagerShadow.setVisibility(View.INVISIBLE);
-        mCirclePageIndicator = (CirclePageIndicator) mRootView.findViewById(R.id.indicator);
+        mCirclePageIndicator = mRootView.findViewById(R.id.indicator);
         mViewPagerParent.setVisibility(View.INVISIBLE);
         ViewUtils.dismissDialog(getChildFragmentManager());
 
@@ -163,8 +173,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             }, 150);
         }
 
-        mTopFab = (FloatingActionButton) mRootView.findViewById(R.id.top_fab);
-        mBottomFab = (FloatingActionButton) mRootView.findViewById(R.id.bottom_fab);
+        mTopFab = mRootView.findViewById(R.id.top_fab);
+        mBottomFab = mRootView.findViewById(R.id.bottom_fab);
 
         mRecyclerView.clearOnScrollListeners();
         if (showViewPager()) {
@@ -218,7 +228,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mForegroundVisible = false;
         if (foregroundFragment != null) {
             mForegroundParent = mRootView.findViewById(R.id.foreground_parent);
-            mForegroundText = (TextView) mRootView.findViewById(R.id.foreground_text);
+            mForegroundText = mRootView.findViewById(R.id.foreground_text);
             mForegroundText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
