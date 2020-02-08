@@ -15,7 +15,6 @@
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
     <string name="cancel">Cancel</string>
     <string name="change_logs">Change-logs</string>
-    <string name="change_logs_message" translatable="false">- Flasher: Manual Flashing: Improve flashing.\n\n- Flasher and Backup: Support more file manager.\n\n- Misc: Added option to share error log if created.\n\n- Miscellaneous changes.</string>
     <string name="change_logs_summary">View Change-logs</string>
     <string name="credits">Credits</string>
     <string name="dark_theme">Dark Theme</string>
