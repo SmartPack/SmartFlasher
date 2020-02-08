@@ -1,5 +1,9 @@
 # Change-logs
 
+## 20. February 08, 2020
+*Release-tag: v2.9*<br>
+Main: Added a simple banner Ad view at the bottom. Main: Overall improvements and optimizations. Miscellaneous changes
+
 ## 19. February 05, 2020
 *Release-tag: v2.8*<br>
 Flasher: Manual Flashing: Improve flashing. Flasher and Backup: Support more file manager. Misc: Added option to share error log if created. Miscellaneous changes
