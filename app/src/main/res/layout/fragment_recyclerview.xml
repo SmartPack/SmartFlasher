@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="@dimen/banner_min_height"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="45dp"
         android:visibility="gone" />
 
     <LinearLayout
@@ -68,6 +68,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
+        android:background="@android:color/transparent"
         ads:adUnitId="ca-app-pub-2781194772510522/8557159360" >
     </com.google.android.gms.ads.AdView>
 
