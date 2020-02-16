@@ -134,7 +134,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mRecyclerView = mRootView.findViewById(R.id.recyclerview);
 
         // Initialize Google Ads
-        if (!Utils.isDonated(getActivity())) {
+        if (Prefs.getBoolean("google_ads", true, getActivity())) {
             AdView mAdView = mRootView.findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);

@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         // Initialize Google Ads
-        if (!Utils.isDonated(this)) {
-            MobileAds.initialize(this, "ca-app-pub-7791710838910455~6603969352");
-        }
+        MobileAds.initialize(this, "ca-app-pub-7791710838910455~6603969352");
     }
 }

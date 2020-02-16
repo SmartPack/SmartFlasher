@@ -6,6 +6,8 @@
     <string name="about">About</string>
     <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
     <string name="acquiring">Acquiring update info</string>
+    <string name="allow_ads">Allow Ads</string>
+    <string name="allow_ads_message">Thank you very much for supporting the developer by allowing Ads!</string>
     <string name="already_exists">%s already exists!</string>
     <string name="backup">Backup</string>
     <string name="backup_message">Backing up %s of your device into</string>
@@ -19,6 +21,7 @@
     <string name="credits">Credits</string>
     <string name="dark_theme">Dark Theme</string>
     <string name="delete">Delete</string>
+    <string name="disable_ads_message">Ads will be disabled on next app launch! However, please be noted that the revenue obtained from these Ads are really helpful for the developer to continue his android development projects more active. If it doesn\'t hurt you much, please consider allowing the Ads to support the development.</string>
     <string name="documentsui_message">Please use an external \'File Manager\' to pick your file. Selecting files via the default \'DocumentsUI\' is not yet supported.</string>
     <string name="donate_me">Donate to Me</string>
     <string name="donate_me_message">\nIf you like to appreciate my work, please consider donating to me as it is helpful to continue my projects more active, although it is not at all necessary.\n</string>
