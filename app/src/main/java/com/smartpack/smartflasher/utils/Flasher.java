@@ -26,11 +26,13 @@ import android.os.AsyncTask;
 import android.os.Environment;
 
 import com.smartpack.smartflasher.R;
+import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
 
 import java.io.File;
 import java.io.FileDescriptor;
+import java.util.List;
 
 /**
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 29, 2018
@@ -42,6 +44,7 @@ public class Flasher {
     private static final String BOOT_PARTITION_INFO = Environment.getDataDirectory() + "/.boot_partition_info";
     private static final String RECOVERY_PARTITION_INFO = Environment.getDataDirectory() + "/.recovery_partition_info";
     private static final String FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash";
+    private static final String BACKUP_FOLDER = Utils.getInternalDataStorage() + "/backup";
     private static final String CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'";
     private static final String UNZIP_BINARY = "/system/bin/unzip";
     private static final String MAGISK_UNZIP = "/sbin/.magisk/busybox/unzip";
@@ -67,11 +70,22 @@ public class Flasher {
         file.mkdirs();
     }
 
+    public static File backupPath() {
+        return new File(BACKUP_FOLDER);
+    }
+
+    public static List<String> backupItems() {
+        RootFile file = new RootFile(BACKUP_FOLDER);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        return file.list();
+    }
+
     public static void backupBootPartition(String name) {
-        String backupFolder = Utils.getInternalDataStorage() + "/backup";
         makeInternalStorageFolder();
-        if (!Utils.existFile(backupFolder)) {
-            File bachupFolderPath = new File(backupFolder);
+        if (!Utils.existFile(BACKUP_FOLDER)) {
+            File bachupFolderPath = new File(BACKUP_FOLDER);
             if (bachupFolderPath.exists() && bachupFolderPath.isFile()) {
                 bachupFolderPath.delete();
             }
@@ -83,10 +97,9 @@ public class Flasher {
     }
 
     public static void backupRecoveryPartition(String name) {
-        String backupFolder = Utils.getInternalDataStorage() + "/backup";
         makeInternalStorageFolder();
-        if (!Utils.existFile(backupFolder)) {
-            File bachupFolderPath = new File(backupFolder);
+        if (!Utils.existFile(BACKUP_FOLDER)) {
+            File bachupFolderPath = new File(BACKUP_FOLDER);
             if (bachupFolderPath.exists() && bachupFolderPath.isFile()) {
                 bachupFolderPath.delete();
             }

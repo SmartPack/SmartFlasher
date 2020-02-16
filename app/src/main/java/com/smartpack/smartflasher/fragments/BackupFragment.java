@@ -188,7 +188,8 @@ public class BackupFragment extends RecyclerViewFragment {
     private void itemInit(List<RecyclerViewItem> items) {
         File file = new File(Flasher.getPath());
         if (file.exists()) {
-            for (final File image : file.listFiles()) {
+            for (final String backup : Flasher.backupItems()) {
+                final File image = new File(Flasher.backupPath() + "/" + backup);
                 if (image.isFile()) {
                     DescriptionView descriptionView = new DescriptionView();
                     descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_img));
