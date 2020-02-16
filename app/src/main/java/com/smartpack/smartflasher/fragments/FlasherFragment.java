@@ -25,10 +25,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.provider.OpenableColumns;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -493,17 +496,21 @@ public class FlasherFragment extends RecyclerViewFragment {
         if (resultCode == Activity.RESULT_OK && data != null) {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
-            mPath = Utils.getPath(file);
-            if (requestCode == 0) {
-                if (Utils.isDocumentsUI(uri) && !Utils.existFile(mPath)) {
-                    ViewUtils.dialogDocumentsUI(getActivity());
-                    return;
+            if (Utils.isDocumentsUI(uri)) {
+                Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    mPath = Environment.getExternalStorageDirectory().toString() + "/Download/" +
+                            cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 }
-                if (!Utils.getExtension(mPath).equals("zip")) {
+            } else {
+                mPath = Utils.getPath(file);
+                if (!Utils.existFile(mPath) || !Utils.getExtension(mPath).equals("zip")) {
                     Utils.create(file.getAbsolutePath(), Utils.errorLog());
                     ViewUtils.dialogError(getString(R.string.file_selection_error), Utils.errorLog(), getActivity());
                     return;
                 }
+            }
+            if (requestCode == 0) {
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {
                     Utils.toast(getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)), getActivity());
                 }
