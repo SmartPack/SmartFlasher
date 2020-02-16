@@ -1,12 +1,16 @@
 # Change-logs
 
+## 21. February 16, 2020
+*Release-tag: v3.0*<br>
+Flasher and Backup: Updated to work with Document Uri. Backup: Workaround to avoid crashing on some devices. About: Add option to disable Ads. Miscellaneous changes.
+
 ## 20. February 08, 2020
 *Release-tag: v2.9*<br>
-Main: Added a simple banner Ad view at the bottom. Main: Overall improvements and optimizations. Miscellaneous changes
+Main: Added a simple banner Ad view at the bottom. Main: Overall improvements and optimizations. Miscellaneous changes.
 
 ## 19. February 05, 2020
 *Release-tag: v2.8*<br>
-Flasher: Manual Flashing: Improve flashing. Flasher and Backup: Support more file manager. Misc: Added option to share error log if created. Miscellaneous changes
+Flasher: Manual Flashing: Improve flashing. Flasher and Backup: Support more file manager. Misc: Added option to share error log if created. Miscellaneous changes.
 
 ## 18. January 31, 2020
 *Release-tag: v2.7*<br>
