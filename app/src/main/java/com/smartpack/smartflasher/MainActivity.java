@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Google Ads
         if (!Utils.isDonated(this)) {
-            MobileAds.initialize(this, "ca-app-pub-2781194772510522~6969100743");
+            MobileAds.initialize(this, "ca-app-pub-7791710838910455~6603969352");
         }
     }
 }
