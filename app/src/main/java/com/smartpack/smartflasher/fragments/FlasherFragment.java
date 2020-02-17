@@ -504,11 +504,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                 }
             } else {
                 mPath = Utils.getPath(file);
-                if (!Utils.existFile(mPath) || !Utils.getExtension(mPath).equals("zip")) {
-                    Utils.create(file.getAbsolutePath(), Utils.errorLog());
-                    ViewUtils.dialogError(getString(R.string.file_selection_error), Utils.errorLog(), getActivity());
-                    return;
-                }
             }
             if (requestCode == 0) {
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {

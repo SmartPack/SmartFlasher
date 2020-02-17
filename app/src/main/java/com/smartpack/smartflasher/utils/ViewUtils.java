@@ -152,13 +152,6 @@ public class ViewUtils {
         return dialog;
     }
 
-    public static void dialogDocumentsUI(Context context) {
-        new Dialog(context)
-                .setMessage(context.getString(R.string.documentsui_message))
-                .setPositiveButton(context.getString(R.string.ok), (dialogInterface, i) -> {
-                })
-                .show();    }
-
     public static void dialogError(String string, String path, Context context) {
         new Dialog(context)
                 .setMessage(string + "\n" + context.getString(R.string.share_log,

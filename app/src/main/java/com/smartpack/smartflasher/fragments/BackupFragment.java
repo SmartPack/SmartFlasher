@@ -587,7 +587,7 @@ public class BackupFragment extends RecyclerViewFragment {
                 }
             } else {
                 mPath = Utils.getPath(file);
-                if (!Utils.existFile(mPath) || !Utils.getExtension(mPath).equals("img")) {
+                if (!Utils.getExtension(mPath).equals("img")) {
                     Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
                     return;
                 }
