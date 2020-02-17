@@ -1,5 +1,5 @@
 {
-  "version": 21,
-  "changelog": "Change-logs\n - Main: Flasher and Backup: Updated to work with Document Uri.\n - Backup: Workaround to avoid crashing on some devices.\n - About: Added option to disable Ads.\n - Miscellaneous changes.",
-  "versionName": "3.0"
+  "version": 22,
+  "changelog": "Change-logs\n - Flasher and Backup: Fixed some critical bugs in file selection.\n - Miscellaneous changes.",
+  "versionName": "3.1"
 }

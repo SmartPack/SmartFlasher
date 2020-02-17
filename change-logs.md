@@ -1,5 +1,9 @@
 # Change-logs
 
+## 22. February 17, 2020
+*Release-tag: v3.1*<br>
+Flasher and Backup: Fixed some critical bugs in file selection. Miscellaneous changes.
+
 ## 21. February 16, 2020
 *Release-tag: v3.0*<br>
 Flasher and Backup: Updated to work with Document Uri. Backup: Workaround to avoid crashing on some devices. About: Add option to disable Ads. Miscellaneous changes.
