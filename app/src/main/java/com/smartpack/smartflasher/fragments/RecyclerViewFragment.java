@@ -24,6 +24,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -58,6 +59,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.appcompat.widget.Toolbar;
 
+import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
@@ -101,7 +103,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     private ViewPagerAdapter mViewPagerAdapter;
     private View mViewPagerParent;
     private ViewPager mViewPager;
-    private View mViewPagerShadow;
     private CirclePageIndicator mCirclePageIndicator;
 
     private FloatingActionButton mTopFab;
@@ -153,8 +154,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
         mViewPager = mRootView.findViewById(R.id.viewpager);
         mViewPager.setVisibility(View.INVISIBLE);
-        mViewPagerShadow = mRootView.findViewById(R.id.viewpager_shadow);
-        mViewPagerShadow.setVisibility(View.INVISIBLE);
         mCirclePageIndicator = mRootView.findViewById(R.id.indicator);
         mViewPagerParent.setVisibility(View.INVISIBLE);
         ViewUtils.dismissDialog(getChildFragmentManager());
@@ -251,7 +250,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             adjustScrollPosition();
 
             mViewPager.setVisibility(View.VISIBLE);
-            mViewPagerShadow.setVisibility(View.VISIBLE);
         }
 
         return mRootView;
@@ -323,7 +321,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                                 @Override
                                 public void onAnimationEnd() {
                                     super.onAnimationEnd();
-                                    fragment.mViewPagerShadow.setVisibility(View.VISIBLE);
                                 }
                             });
                             animator.setDuration(400);
@@ -333,7 +330,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 });
             } else {
                 fragment.mViewPager.setVisibility(View.VISIBLE);
-                fragment.mViewPagerShadow.setVisibility(View.VISIBLE);
             }
             fragment.mLoader = null;
         }
@@ -736,11 +732,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     @Override
     public boolean onBackPressed() {
-        if (mForegroundVisible) {
-            dismissForeground();
-            return true;
-        }
-        return false;
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        return true;
     }
 
     @Override

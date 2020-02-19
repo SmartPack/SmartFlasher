@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.smartpack.smartflasher.BuildConfig;
-import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
@@ -342,14 +341,6 @@ public class AboutFragment extends RecyclerViewFragment {
             });
             return rootView;
         }
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        return true;
     }
 
 }

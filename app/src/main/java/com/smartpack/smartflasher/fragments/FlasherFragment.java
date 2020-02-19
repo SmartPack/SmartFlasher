@@ -37,14 +37,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.KernelUpdater;
 import com.smartpack.smartflasher.utils.Utils;
-import com.smartpack.smartflasher.utils.ViewUtils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.dialog.Dialog;
@@ -546,13 +544,5 @@ public class FlasherFragment extends RecyclerViewFragment {
             }
             UpdateCheck.autoUpdateCheck(getActivity());
         }
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        return true;
     }
 }

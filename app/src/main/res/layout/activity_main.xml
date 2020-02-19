@@ -33,7 +33,7 @@
             app:tabMode="fixed"
             android:background="@color/colorPrimary"
             app:tabTextColor="@color/description"
-            app:tabSelectedTextColor="@color/white"
+            app:tabSelectedTextColor="?attr/colorSecondary"
             android:id="@+id/tabLayoutID" />
 
     </com.google.android.material.appbar.AppBarLayout>
