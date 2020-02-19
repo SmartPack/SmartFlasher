@@ -1,5 +1,9 @@
 # Change-logs
 
+## 23. February 19, 2020
+*Release-tag: v3.2*<br>
+Main: Various improvements on UI. Miscellaneous changes.
+
 ## 22. February 17, 2020
 *Release-tag: v3.1*<br>
 Flasher and Backup: Fixed some critical bugs in file selection. Miscellaneous changes.

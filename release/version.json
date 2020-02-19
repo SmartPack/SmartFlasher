@@ -1,5 +1,5 @@
 {
-  "version": 22,
-  "changelog": "Change-logs\n - Flasher and Backup: Fixed some critical bugs in file selection.\n - Miscellaneous changes.",
-  "versionName": "3.1"
+  "version": 23,
+  "changelog": "Change-logs\n - Main: Various improvements on UI.\n - Miscellaneous changes.",
+  "versionName": "3.2"
 }
