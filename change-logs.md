@@ -1,5 +1,9 @@
 # Change-logs
 
+## 24. February 21, 2020
+*Release-tag: v3.3*<br>
+Main: Disabled Ads by default. Misc: Clean un-used resources. Miscellaneous changes.
+
 ## 23. February 19, 2020
 *Release-tag: v3.2*<br>
 Main: Various improvements on UI. Miscellaneous changes.

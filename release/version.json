@@ -1,5 +1,5 @@
 {
-  "version": 23,
-  "changelog": "Change-logs\n - Main: Various improvements on UI.\n - Miscellaneous changes.",
-  "versionName": "3.2"
+  "version": 24,
+  "changelog": "Change-logs\n - Main: Disabled Ads by default.\n - Misc: Clean un-used resources.\n - Miscellaneous changes.",
+  "versionName": "3.3"
 }

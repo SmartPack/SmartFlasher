@@ -98,10 +98,6 @@ public class AboutFragment extends RecyclerViewFragment {
         changelogs.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
                 Utils.launchUrl("https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/change-logs.md", getActivity());
             }
         });
@@ -157,10 +153,6 @@ public class AboutFragment extends RecyclerViewFragment {
         support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
                 Utils.launchUrl("https://t.me/smartpack_kmanager", getActivity());
             }
         });
@@ -174,10 +166,6 @@ public class AboutFragment extends RecyclerViewFragment {
         sourcecode.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
                 Utils.launchUrl("https://github.com/SmartPack/SmartFlasher", requireActivity());
             }
         });
@@ -192,10 +180,6 @@ public class AboutFragment extends RecyclerViewFragment {
             playstore.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
-                        Utils.toast(R.string.no_internet, getActivity());
-                        return;
-                    }
                     Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.smartflasher", requireActivity());
                 }
             });
@@ -227,10 +211,6 @@ public class AboutFragment extends RecyclerViewFragment {
         donatetome.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
                 Dialog donate_to_me = new Dialog(getActivity());
                 donate_to_me.setIcon(R.mipmap.ic_launcher);
                 donate_to_me.setTitle(getString(R.string.donate_me));
@@ -260,10 +240,6 @@ public class AboutFragment extends RecyclerViewFragment {
         share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                if (!Utils.isNetworkAvailable(getActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
                 Intent shareapp = new Intent();
                 shareapp.setAction(Intent.ACTION_SEND);
                 shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
@@ -315,10 +291,6 @@ public class AboutFragment extends RecyclerViewFragment {
             descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
-                        Utils.toast(R.string.no_internet, getActivity());
-                        return;
-                    }
                     Utils.launchUrl(sCredits.get(lib), getActivity());
                 }
             });
