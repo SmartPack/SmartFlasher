@@ -20,14 +20,12 @@
 
 package com.smartpack.smartflasher;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.ads.MobileAds;
@@ -37,7 +35,6 @@ import com.smartpack.smartflasher.fragments.BackupFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
 import com.smartpack.smartflasher.utils.PagerAdapter;
 import com.smartpack.smartflasher.utils.Prefs;
-import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 
 /*
@@ -67,11 +64,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (!Utils.checkWriteStoragePermission(this)) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
-
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.AddFragment(new FlasherFragment(), getString(R.string.flasher));
         adapter.AddFragment(new BackupFragment(), getString(R.string.backup));
@@ -81,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         // Initialize Google Ads
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7791710838910455~6603969352");
+        if (Prefs.getBoolean("google_ads", false, this)) {
+            MobileAds.initialize(this, "ca-app-pub-7791710838910455~6603969352");
+        }
     }
 }

@@ -7,7 +7,7 @@
     <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
     <string name="acquiring">Acquiring update info</string>
     <string name="allow_ads">Allow Ads</string>
-    <string name="allow_ads_message">Thank you very much for supporting the developer by allowing Ads!</string>
+    <string name="allow_ads_message">Thank you very much for supporting the developer by allowing Ads!\n\nHowever, please be noted that allowing Ads sometimes results weired behaviour. If you encounter any such issues, feel free to disable it.</string>
     <string name="already_exists">%s already exists!</string>
     <string name="backup">Backup</string>
     <string name="backup_message">Backing up %s of your device into</string>
