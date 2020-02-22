@@ -15,7 +15,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="25sp"
-            android:textColor="@color/headings" />
+            android:textColor="?android:attr/colorAccent" />
     </FrameLayout>
 
     <com.google.android.material.appbar.AppBarLayout
