@@ -54,6 +54,7 @@ public class AboutFragment extends RecyclerViewFragment {
     static {
         sCredits.put("Kernel Adiutor,Grarak", "https://github.com/Grarak");
         sCredits.put("Auto Flashing,osm0sis", "https://github.com/osm0sis");
+        sCredits.put("App Icon,Toxinpiper", "https://t.me/toxinpiper");
         sCredits.put("Russian Translations,andrey167", "https://github.com/andrey167");
         sCredits.put("Chinese (rCN & rTW) Translations,jason5545", "https://github.com/jason5545");
         sCredits.put("Portuguese (rBr) Translations,DanGLES3", "https://github.com/DanGLES3");
@@ -269,6 +270,9 @@ public class AboutFragment extends RecyclerViewFragment {
                     break;
                 case "osm0sis":
                     descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_osm0sis));
+                    break;
+                case "Toxinpiper":
+                    descriptionView.setDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
                     break;
                 case "jason5545":
                     descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_jason5545));
