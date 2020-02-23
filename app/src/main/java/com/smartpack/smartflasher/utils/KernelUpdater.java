@@ -142,6 +142,7 @@ public class KernelUpdater {
                 }
                 if (getChecksum().equals("Unavailable") || !getChecksum().equals("Unavailable") &&
                         Utils.getChecksum(LATEST_KERNEL).contains(getChecksum())) {
+                    Utils.getInstance().showInterstitialAd(context);
                     new Dialog(context)
                             .setMessage(context.getString(R.string.download_completed,
                                     getKernelName() + "-" + getLatestVersion()))

@@ -107,7 +107,7 @@ public class AboutFragment extends RecyclerViewFragment {
         SwitchView allow_ads = new SwitchView();
         allow_ads.setDrawable(getResources().getDrawable(R.drawable.ic_ads));
         allow_ads.setSummary(getString(R.string.allow_ads));
-        allow_ads.setChecked(Prefs.getBoolean("google_ads", false, getActivity()));
+        allow_ads.setChecked(Prefs.getBoolean("google_ads", true, getActivity()));
         allow_ads.addOnSwitchListener(new SwitchView.OnSwitchListener() {
             @Override
             public void onChanged(SwitchView switchview, boolean isChecked) {

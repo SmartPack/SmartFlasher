@@ -26,7 +26,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,8 +33,6 @@ import android.os.Environment;
 import android.provider.OpenableColumns;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
@@ -72,9 +69,7 @@ public class FlasherFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_flash));
-        DrawableCompat.setTint(drawable, Color.WHITE);
-        return drawable;
+        return getResources().getDrawable(R.drawable.ic_flash);
     }
 
     @Override
@@ -507,6 +502,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {
                     Utils.toast(getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)), getActivity());
                 }
+                Utils.getInstance().showInterstitialAd(requireActivity());
                 Dialog flashzip = new Dialog(getActivity());
                 flashzip.setIcon(R.mipmap.ic_launcher);
                 flashzip.setTitle(getString(R.string.flasher));

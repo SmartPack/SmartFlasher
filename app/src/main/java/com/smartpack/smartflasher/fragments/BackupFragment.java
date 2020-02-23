@@ -237,6 +237,7 @@ public class BackupFragment extends RecyclerViewFragment {
                 }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.getInstance().showInterstitialAd(requireActivity());
                         file.delete();
                         reload();
                     }
@@ -538,6 +539,7 @@ public class BackupFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
+                Utils.getInstance().showInterstitialAd(requireActivity());
                 ViewUtils.rebootDialog(getActivity());
             }
         }.execute();
@@ -566,6 +568,7 @@ public class BackupFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
+                Utils.getInstance().showInterstitialAd(requireActivity());
                 ViewUtils.rebootDialog(getActivity());
             }
         }.execute();
@@ -591,6 +594,7 @@ public class BackupFragment extends RecyclerViewFragment {
                     return;
                 }
             }
+            Utils.getInstance().showInterstitialAd(requireActivity());
             Dialog flashimg = new Dialog(getActivity());
             flashimg.setIcon(R.mipmap.ic_launcher);
             flashimg.setTitle(getString(R.string.flasher));

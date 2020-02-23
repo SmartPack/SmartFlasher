@@ -35,7 +35,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -59,8 +63,19 @@ import java.security.NoSuchAlgorithmException;
 
 public class Utils {
 
+    private static Utils sInstance;
+
+    public static Utils getInstance() {
+        if (sInstance == null) {
+            sInstance = new Utils();
+        }
+        return sInstance;
+    }
+
     private static final String TAG = Utils.class.getSimpleName();
     private static final String DONATION_PACKAGE = "com.smartpack.donate";
+
+    private InterstitialAd mInterstitialAd;
 
     public static boolean isDonated(Context context) {
         try {
@@ -68,6 +83,32 @@ public class Utils {
             return true;
         } catch (PackageManager.NameNotFoundException ignored) {
             return false;
+        }
+    }
+
+    public static void initializeAppTheme(Context context) {
+        if (Prefs.getBoolean("dark_theme", true, context)) {
+            AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    public void initializeGoogleAds(Context context) {
+        if (Prefs.getBoolean("google_ads", true, context)) {
+            MobileAds.initialize(context, "ca-app-pub-7791710838910455~6603969352");
+            mInterstitialAd = new InterstitialAd(context);
+            mInterstitialAd.setAdUnitId("ca-app-pub-7791710838910455/3158159307");
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        }
+    }
+
+    public void showInterstitialAd(Context context) {
+        if (Prefs.getBoolean("google_ads", true, context) &&
+                mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
     }
 
