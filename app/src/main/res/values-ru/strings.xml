@@ -15,14 +15,12 @@
     <string name="change_logs">История изменений</string><string name="change_logs_summary">Посмотреть историю изменений</string>
     <string name="credits">Кредиты</string>
     <string name="delete">Удалить</string>
-    <string name="documentsui_message">Пожалуйста, используйте внешний «Файловый менеджер», чтобы выбрать файл. Выбор файлов через стандартный \'DocumentsUI \' пока не поддерживается.</string>
     <string name="donate_me">Пожертвовать мне</string>
     <string name="donate_me_message">\nЕсли вам нравится моя работа, рассмотрите возможность пожертвования для меня, так как полезно продолжать мои проекты более активно, хотя в этом нет необходимости. \n</string>
     <string name="donate_me_playstore">\nОбратите внимание: я могу принимать пожертвования через PayPal или через пакет пожертвований SmartPack в PlayStore. \n</string>
     <string name="donate_me_summary">Хотите оценить мою работу с пожертвованием? кликните сюда</string>
     <string name="donate_nope">Я не попадусь на эту аферу!</string>
     <string name="executing">Выполнение</string>
-    <string name="file_selection_error">Не удалось получить данные из внешнего файлового менеджера</string>
     <string name="file_size_limit">Обратите внимание: по соображениям безопасности файлы восстановления размером более 100 МБ не могут быть прошиты</string>
     <string name="flasher">Прошивальшик</string>
     <string name="flasher_summary">Нажмите кнопку прошивки, чтобы выбрать и прошить файл восстановления ZIP без перезагрузки в пользовательское восстановление. Изменения вступят в силу после перезагрузки.</string>
@@ -41,7 +39,6 @@
     <string name="nothing_found">Ничего не найдено!</string>
     <string name="ok">Ок</string>
     <string name="options">Опции</string>
-    <string name="open_settings">Открыть настройки</string>
     <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">Отказано в разрешении на запись в память устройства!</string>
     <string name="playstore">PlayStore</string>
@@ -56,7 +53,6 @@
     <string name="recovery_partition_unknown">Не удалось получить удостоверение раздела восстановления</string>
     <string name="rebooting">Rebooting</string>
     <string name="restore">Восстановить</string>
-    <string name="settings">Настройки</string>
     <string name="share_app">Поделиться приложением</string>
     <string name="share_app_summary">Поделитесь Smart Flasher со своими друзьями</string>
     <string name="share_app_message">Загрузите смарт-флешер %s из\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>

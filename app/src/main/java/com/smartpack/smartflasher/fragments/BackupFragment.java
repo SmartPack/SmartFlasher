@@ -27,7 +27,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -35,8 +34,6 @@ import android.os.Environment;
 import android.provider.OpenableColumns;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
@@ -72,14 +69,12 @@ public class BackupFragment extends RecyclerViewFragment {
 
     @Override
     protected Drawable getTopFabDrawable() {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getActivity(), R.drawable.ic_backup));
-        DrawableCompat.setTint(drawable, Color.WHITE);
-        return drawable;
+        return getResources().getDrawable(R.drawable.ic_backup);
     }
 
     @Override
     public int getSpanCount() {
-        int span = Utils.isTablet(getActivity()) ? Utils.getOrientation(getActivity()) ==
+        int span = Utils.isTablet(requireActivity()) ? Utils.getOrientation(getActivity()) ==
                 Configuration.ORIENTATION_LANDSCAPE ? 4 : 3 : Utils.getOrientation(getActivity()) ==
                 Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
         if (itemsSize() != 0 && span > itemsSize()) {
@@ -95,7 +90,7 @@ public class BackupFragment extends RecyclerViewFragment {
         addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.backup),
                 getString(R.string.backup_title)));
 
-        if (Utils.checkWriteStoragePermission(getActivity())) {
+        if (Utils.checkWriteStoragePermission(requireActivity())) {
             if (!Flasher.hasBootPartitionInfo()) {
                 Flasher.exportBootPartitionInfo();
             }
@@ -103,7 +98,7 @@ public class BackupFragment extends RecyclerViewFragment {
                 Flasher.exportRecoveryPartitionInfo();
             }
         } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
         if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo()) {
@@ -123,7 +118,7 @@ public class BackupFragment extends RecyclerViewFragment {
 
     @Override
     protected void addItems(List<RecyclerViewItem> items) {
-        if (Utils.checkWriteStoragePermission(getActivity())) {
+        if (Utils.checkWriteStoragePermission(requireActivity())) {
             reload();
         }
     }
@@ -197,7 +192,7 @@ public class BackupFragment extends RecyclerViewFragment {
                     descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                         @Override
                         public void onClick(RecyclerViewItem item) {
-                            mItemOptionsDialog = new Dialog(getActivity())
+                            mItemOptionsDialog = new Dialog(requireActivity())
                                     .setItems(getResources().getStringArray(R.array.backup_item_options),
                                             new DialogInterface.OnClickListener() {
                                                 @Override
@@ -251,7 +246,7 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     private void restoreOptions(final File file) {
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
+        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
                 R.array.backup_items), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
@@ -292,7 +287,7 @@ public class BackupFragment extends RecyclerViewFragment {
     protected void onTopFabClick() {
         super.onTopFabClick();
 
-        if (Utils.checkWriteStoragePermission(getActivity())) {
+        if (Utils.checkWriteStoragePermission(requireActivity())) {
             if (!Flasher.hasBootPartitionInfo()) {
                 Flasher.exportBootPartitionInfo();
             }
@@ -301,13 +296,13 @@ public class BackupFragment extends RecyclerViewFragment {
             }
             reload();
         } else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
         }
 
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
+        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
                 R.array.flasher), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -330,7 +325,7 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     private void BackupOptions() {
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
+        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
                 R.array.backup_items), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
@@ -363,7 +358,7 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     private void FlashOptions() {
-        mSelectionMenu = new Dialog(getActivity()).setItems(getResources().getStringArray(
+        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
                 R.array.flasher_items), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
@@ -582,7 +577,7 @@ public class BackupFragment extends RecyclerViewFragment {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
             if (Utils.isDocumentsUI(uri)) {
-                Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+                Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null);
                 if (cursor != null && cursor.moveToFirst()) {
                     mPath = Environment.getExternalStorageDirectory().toString() + "/Download/" +
                             cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
@@ -595,7 +590,7 @@ public class BackupFragment extends RecyclerViewFragment {
                 }
             }
             Utils.getInstance().showInterstitialAd(requireActivity());
-            Dialog flashimg = new Dialog(getActivity());
+            Dialog flashimg = new Dialog(requireActivity());
             flashimg.setIcon(R.mipmap.ic_launcher);
             flashimg.setTitle(getString(R.string.flasher));
             flashimg.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "").
@@ -610,6 +605,14 @@ public class BackupFragment extends RecyclerViewFragment {
                 }
             });
             flashimg.show();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mLoader != null) {
+            mLoader.cancel(true);
         }
     }
     

@@ -15,14 +15,12 @@
     <string name="change_logs">變更日誌</string><string name="change_logs_summary">檢視變更日誌</string>
     <string name="credits">致謝名單</string>
     <string name="delete">刪除</string>
-    <string name="documentsui_message">請使用外部“檔案管理器”選擇您的檔案。尚不支援透過預設的\'DocumentsUI \'選擇檔案。</string>
     <string name="donate_me">捐款</string>
     <string name="donate_me_message">\n如果您想欣賞我的工作，請考慮捐款給我，因為這對繼續我的項目更加積極有幫助，儘管這完全沒有必要。\n</string>
     <string name="donate_me_playstore">\n請注意：我可以透過PayPal或PlayStore中的SmartPack捐贈包接受捐贈。\n</string>
     <string name="donate_me_summary">想透過捐贈來感謝我的工作嗎？點選這裡</string>
     <string name="donate_nope">現在不要</string>
     <string name="executing">執行中</string>
-    <string name="file_selection_error">無法從外部檔案管理器取得資料</string>
     <string name="file_size_limit">％s的大小大於100 MB。\n\n請注意：出於安全原因，超過100 MB的復原檔案將不允許刷入。</string>
     <string name="flasher">刷入器</string>
     <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
@@ -39,7 +37,6 @@
     <string name="nothing_found">找不到！</string>
     <string name="ok">好</string>
     <string name="options">選項</string>
-    <string name="open_settings">開啟設定</string>
     <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">不允許寫入儲存空間！</string>
     <string name="playstore">Play 商店</string>
@@ -53,7 +50,6 @@
     <string name="recovery_partition_unknown">無法取得復原分割區資訊</string>
     <string name="rebooting">重新啟動</string>
     <string name="restore">復原</string>
-    <string name="settings">設定</string>
     <string name="source_code">原始碼</string>
     <string name="source_code_summary">在GitHub上檢視原始碼</string>
     <string name="support">支援</string>

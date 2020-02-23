@@ -153,13 +153,13 @@ public class FlasherFragment extends RecyclerViewFragment {
         updateChannel.setOnGenericValueListener(new GenericSelectView.OnGenericValueListener() {
             @Override
             public void onGenericValueSelected(GenericSelectView genericSelectView, String value) {
-                if (!Utils.checkWriteStoragePermission(getActivity())) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{
+                if (!Utils.checkWriteStoragePermission(requireActivity())) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{
                             Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
                     Utils.toast(R.string.permission_denied_write_storage, getActivity());
                     return;
                 }
-                if (!Utils.isNetworkAvailable(getActivity())) {
+                if (!Utils.isNetworkAvailable(requireActivity())) {
                     Utils.toast(R.string.no_internet, getActivity());
                     return;
                 }
@@ -192,7 +192,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             info.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
+                    if (!Utils.isNetworkAvailable(requireActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -220,13 +220,13 @@ public class FlasherFragment extends RecyclerViewFragment {
                 public void onClick(RecyclerViewItem item) {
                     if (KernelUpdater.getChangeLog().contains("https://") ||
                             KernelUpdater.getChangeLog().contains("http://")) {
-                        if (!Utils.isNetworkAvailable(getActivity())) {
+                        if (!Utils.isNetworkAvailable(requireActivity())) {
                             Utils.toast(R.string.no_internet, getActivity());
                             return;
                         }
                         Utils.launchUrl(KernelUpdater.getChangeLog(), getActivity());
                     } else {
-                        new Dialog(getActivity())
+                        new Dialog(requireActivity())
                                 .setTitle(KernelUpdater.getKernelName() + " " + KernelUpdater.getLatestVersion())
                                 .setMessage(KernelUpdater.getChangeLog())
                                 .setPositiveButton(getString(R.string.cancel), (dialog1, id1) -> {
@@ -246,13 +246,13 @@ public class FlasherFragment extends RecyclerViewFragment {
             download.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.checkWriteStoragePermission(getActivity())) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    if (!Utils.checkWriteStoragePermission(requireActivity())) {
+                        ActivityCompat.requestPermissions(requireActivity(), new String[]{
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                         Utils.toast(R.string.permission_denied_write_storage, getActivity());
                         return;
                     }
-                    if (!Utils.isNetworkAvailable(getActivity())) {
+                    if (!Utils.isNetworkAvailable(requireActivity())) {
                         Utils.toast(getString(R.string.no_internet), getActivity());
                         return;
                     }
@@ -270,7 +270,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
+                    if (!Utils.isNetworkAvailable(requireActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -288,7 +288,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
+                    if (!Utils.isNetworkAvailable(requireActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -311,7 +311,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             remove.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    new Dialog(getActivity())
+                    new Dialog(requireActivity())
                             .setMessage(getString(R.string.sure_question))
                             .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                             })
@@ -333,7 +333,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             donations.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
+                    if (!Utils.isNetworkAvailable(requireActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -379,14 +379,14 @@ public class FlasherFragment extends RecyclerViewFragment {
         rebootOptions.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                mItemOptionsDialog = new Dialog(getActivity())
+                mItemOptionsDialog = new Dialog(requireActivity())
                         .setItems(getResources().getStringArray(R.array.reboot_options),
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         switch (i) {
                                             case 0:
-                                                new Dialog(getActivity())
+                                                new Dialog(requireActivity())
                                                         .setMessage(getString(R.string.sure_question))
                                                         .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
@@ -397,7 +397,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .show();
                                                 break;
                                             case 1:
-                                                new Dialog(getActivity())
+                                                new Dialog(requireActivity())
                                                         .setMessage(getString(R.string.sure_question))
                                                         .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
@@ -408,7 +408,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .show();
                                                 break;
                                             case 2:
-                                                new Dialog(getActivity())
+                                                new Dialog(requireActivity())
                                                         .setMessage(getString(R.string.sure_question))
                                                         .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
@@ -418,7 +418,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .show();
                                                 break;
                                             case 3:
-                                                new Dialog(getActivity())
+                                                new Dialog(requireActivity())
                                                         .setMessage(getString(R.string.sure_question))
                                                         .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
@@ -446,8 +446,8 @@ public class FlasherFragment extends RecyclerViewFragment {
     protected void onTopFabClick() {
         super.onTopFabClick();
 
-        if (!Utils.checkWriteStoragePermission(getActivity())) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
+        if (!Utils.checkWriteStoragePermission(requireActivity())) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             Utils.toast(R.string.permission_denied_write_storage, getActivity());
             return;
@@ -490,7 +490,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
             if (Utils.isDocumentsUI(uri)) {
-                Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+                Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null);
                 if (cursor != null && cursor.moveToFirst()) {
                     mPath = Environment.getExternalStorageDirectory().toString() + "/Download/" +
                             cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
@@ -503,7 +503,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     Utils.toast(getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)), getActivity());
                 }
                 Utils.getInstance().showInterstitialAd(requireActivity());
-                Dialog flashzip = new Dialog(getActivity());
+                Dialog flashzip = new Dialog(requireActivity());
                 flashzip.setIcon(R.mipmap.ic_launcher);
                 flashzip.setTitle(getString(R.string.flasher));
                 flashzip.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "").
@@ -524,21 +524,29 @@ public class FlasherFragment extends RecyclerViewFragment {
         super.onStart();
 
         // Initialize kernel update check - Once in a day
-        if (Utils.isNetworkAvailable(getActivity()) && Prefs.getBoolean("update_check", true, getActivity())
+        if (Utils.isNetworkAvailable(requireActivity()) && Prefs.getBoolean("update_check", true, getActivity())
                 && !KernelUpdater.getUpdateChannel().equals("Unavailable") && KernelUpdater.lastModified() +
                 89280000L < System.currentTimeMillis()) {
             KernelUpdater.updateInfo(Utils.readFile(Utils.getInternalDataStorage() + "/update_channel"));
         }
 
         // Initialize manual Update Check, if play store not found
-        if (!UpdateCheck.isPlayStoreInstalled(getActivity())) {
-            if (!Utils.checkWriteStoragePermission(getActivity())) {
+        if (!UpdateCheck.isPlayStoreInstalled(requireActivity())) {
+            if (!Utils.checkWriteStoragePermission(requireActivity())) {
                 return;
             }
-            if (!Utils.isNetworkAvailable(getActivity())) {
+            if (!Utils.isNetworkAvailable(requireActivity())) {
                 return;
             }
             UpdateCheck.autoUpdateCheck(getActivity());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mLoader != null) {
+            mLoader.cancel(true);
         }
     }
 }

@@ -113,13 +113,13 @@ public class AboutFragment extends RecyclerViewFragment {
             public void onChanged(SwitchView switchview, boolean isChecked) {
                 Prefs.saveBoolean("google_ads", isChecked, getActivity());
                 if (!isChecked) {
-                    new Dialog(getActivity())
+                    new Dialog(requireActivity())
                             .setMessage(R.string.disable_ads_message)
                             .setPositiveButton(R.string.ok, (dialog, id) -> {
                             })
                             .show();
                 } else {
-                    new Dialog(getActivity())
+                    new Dialog(requireActivity())
                             .setMessage(R.string.allow_ads_message)
                             .setPositiveButton(R.string.ok, (dialog, id) -> {
                             })
@@ -172,7 +172,7 @@ public class AboutFragment extends RecyclerViewFragment {
 
         items.add(sourcecode);
 
-        if (UpdateCheck.isPlayStoreInstalled(getActivity())) {
+        if (UpdateCheck.isPlayStoreInstalled(requireActivity())) {
             DescriptionView playstore = new DescriptionView();
             playstore.setDrawable(getResources().getDrawable(R.drawable.ic_playstore));
             playstore.setTitle(getString(R.string.playstore));
@@ -193,7 +193,7 @@ public class AboutFragment extends RecyclerViewFragment {
             updateCheck.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
                 @Override
                 public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(getActivity())) {
+                    if (!Utils.isNetworkAvailable(requireActivity())) {
                         Utils.toast(R.string.no_internet, getActivity());
                         return;
                     }
@@ -211,7 +211,7 @@ public class AboutFragment extends RecyclerViewFragment {
         donatetome.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
             @Override
             public void onClick(RecyclerViewItem item) {
-                Dialog donate_to_me = new Dialog(getActivity());
+                Dialog donate_to_me = new Dialog(requireActivity());
                 donate_to_me.setIcon(R.mipmap.ic_launcher);
                 donate_to_me.setTitle(getString(R.string.donate_me));
                 if (Utils.isDonated(requireActivity())) {
@@ -308,7 +308,7 @@ public class AboutFragment extends RecyclerViewFragment {
             rootView.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Dialog licence = new Dialog(getActivity());
+                    Dialog licence = new Dialog(requireActivity());
                     licence.setIcon(R.mipmap.ic_launcher);
                     licence.setTitle(getString(R.string.licence));
                     licence.setMessage(getString(R.string.licence_message));

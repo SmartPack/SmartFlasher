@@ -14,7 +14,6 @@
     <string name="donate_me_summary">Quer contribuir com uma doação? Clique aqui</string>
     <string name="donate_nope">Agora não</string>
     <string name="executing">Executando</string>
-    <string name="file_selection_error">Falha ao adquirir dados do gerenciador de arquivos externo</string>
     <string name="file_size_limit">\n\nTenha em mente: Por questões de segurança arquivos maiores que 100mb não serão instalados.\n</string>
     <string name="flasher">Instalador</string>
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
@@ -26,7 +25,6 @@
     <string name="name_empty">Nome esta vazio!</string>
     <string name="ok">OK</string>
     <string name="options">Opções</string>
-    <string name="open_settings">Abrir Configurações</string>
     <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">Permissão pra acessar o armazenamento negada!</string>
     <string name="playstore">PlayStore</string>
@@ -35,7 +33,6 @@
     <string name="reboot">Reiniciar</string>
     <string name="reboot_bootloader">Reiniciar pro Bootloader</string>
     <string name="reboot_recovery">Reiniciar pro Recovery</string>
-    <string name="settings">Configurações</string>
     <string name="source_code">Código Fonte</string>
     <string name="source_code_summary">Ver código fonte no GitHub</string>
     <string name="support">Suporte</string>

@@ -22,7 +22,6 @@
     <string name="more">Di più</string>
     <string name="ok">OK</string>
     <string name="options">Opzioni</string>
-    <string name="open_settings">Apri impostazioni</string>
     <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">Permesso per scrivere sull\'archivio negato!</string>
     <string name="playstore">Play Store</string>
@@ -31,7 +30,6 @@
     <string name="reboot">Riavvia</string>
     <string name="reboot_bootloader">Riavvia in Bootloader</string>
     <string name="reboot_recovery">Riavvia in Recovery</string>
-    <string name="settings">Impostazioni</string>
     <string name="source_code">Codice Sorgente</string>
     <string name="source_code_summary">Visualizza codice sorgente su GitHub</string>
     <string name="support">Supporto</string>
