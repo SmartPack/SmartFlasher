@@ -1,5 +1,9 @@
 # Change-logs
 
+## 25. February 23, 2020
+*Release-tag: v3.4*<br>
+Main: Improved App UI. res: Brand  new icons by Toxinpiper. Main: Improved coding quality and cleaned un-resourced resources. build: gradle: Updated dependencies. Misc: Ads: Replaced Banner with a event based Interstitial Ad. Miscellaneous changes.
+
 ## 24. February 21, 2020
 *Release-tag: v3.3*<br>
 Main: Disabled Ads by default. Misc: Clean un-used resources. Miscellaneous changes.
