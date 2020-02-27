@@ -64,6 +64,7 @@
     <string name="permission_denied_write_storage">Permission denied for writing to storage!</string>
     <string name="playstore">PlayStore</string>
     <string name="playstore_summary">Visit Smart Flasher page on PlayStore</string>
+    <string name="press_back">Press back again to exit</string>
     <string name="purchase_app">Donation App</string>
     <string name="reboot">Reboot</string>
     <string name="reboot_bootloader">Reboot Bootloader</string>

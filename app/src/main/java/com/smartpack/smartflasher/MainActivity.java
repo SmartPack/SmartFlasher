@@ -21,6 +21,7 @@
 package com.smartpack.smartflasher;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -40,6 +41,9 @@ import com.smartpack.smartflasher.utils.root.RootUtils;
  */
 
 public class MainActivity extends AppCompatActivity {
+
+    private boolean mExit;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +69,26 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!RootUtils.rootAccess()) {
+            super.onBackPressed();
+        }
+        if (mExit) {
+            mExit = false;
+            super.onBackPressed();
+        } else {
+            Utils.toast(R.string.press_back, this);
+            mExit = true;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mExit = false;
+                }
+            }, 2000);
+        }
     }
 
 }
