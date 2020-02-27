@@ -22,10 +22,12 @@ package com.smartpack.smartflasher;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -53,12 +55,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AppCompatImageView unsupported = findViewById(R.id.no_root_Image);
         TextView textView = findViewById(R.id.no_root_Text);
         TabLayout tabLayout = findViewById(R.id.tabLayoutID);
         ViewPager viewPager = findViewById(R.id.viewPagerID);
 
         if (!RootUtils.rootAccess()) {
             textView.setText(getString(R.string.no_root));
+            unsupported.setImageDrawable(getResources().getDrawable(R.drawable.ic_help));
             return;
         }
 
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void androidRooting(View view) {
+        Utils.launchUrl("https://www.google.com/search?site=&source=hp&q=android+rooting+magisk", this);
     }
 
     @Override
