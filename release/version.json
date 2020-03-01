@@ -1,5 +1,5 @@
 {
-  "version": 25,
-  "changelog": "Change-logs\n - Main: Improved App UI.\n - res: Brand  new icons by Toxinpiper.\n - Main: Improved coding quality and cleaned un-resourced resources.\n - build: gradle: Updated dependencies.\n - Misc: Ads: Replaced Banner with a event based Interstitial Ad.\n - Miscellaneous changes.",
-  "versionName": "3.4"
+  "version": 26,
+  "changelog": "Change-logs\n - Main: Exit app only after pressing back button twice (prevent accidental closing).\n - Main: Fixed rebooting from app on most cases.\n - Misc: Improved no-root message.\n - gradle: Updated build tools.\n - Miscellaneous changes.",
+  "versionName": "3.5"
 }

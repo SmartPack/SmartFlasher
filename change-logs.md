@@ -1,5 +1,9 @@
 # Change-logs
 
+## 26. March 01, 2020
+*Release-tag: v3.5*<br>
+Main: Exit app only after pressing back button twice (prevent accidental closing). Main: Fixed rebooting from app on most cases. Misc: Improved no-root message. gradle: Updated build tools. Miscellaneous changes.
+
 ## 25. February 23, 2020
 *Release-tag: v3.4*<br>
 Main: Improved App UI. res: Brand  new icons by Toxinpiper. Main: Improved coding quality and cleaned un-resourced resources. build: gradle: Updated dependencies. Misc: Ads: Replaced Banner with a event based Interstitial Ad. Miscellaneous changes.
