@@ -339,7 +339,7 @@ public class Utils {
                 " sync " + "&&" +
                 " echo 3 > /proc/sys/vm/drop_caches " + "&&" +
                 " sync " + "&&" +
-                " sleep 3 " + "&&" +
+                " sleep 1 " + "&&" +
                 " reboot";
         return prepareReboot;
     }

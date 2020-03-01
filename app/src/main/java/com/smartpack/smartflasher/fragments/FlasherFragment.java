@@ -391,8 +391,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
                                                         .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
-                                                            new Execute().execute(Utils.existFile("/system/bin/svc") ? "svc power shutdown"
-                                                                    : Utils.prepareReboot() + " -p");
+                                                            new Execute().execute(Utils.prepareReboot() + " -p");
                                                         })
                                                         .show();
                                                 break;
@@ -402,8 +401,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                                                         .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
                                                         })
                                                         .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
-                                                            new Execute().execute(Utils.existFile("/system/bin/svc") ? "svc power reboot"
-                                                                    : Utils.prepareReboot());
+                                                            new Execute().execute(Utils.prepareReboot());
                                                         })
                                                         .show();
                                                 break;
@@ -502,12 +500,10 @@ public class FlasherFragment extends RecyclerViewFragment {
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {
                     Utils.toast(getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)), getActivity());
                 }
-                Utils.getInstance().showInterstitialAd(requireActivity());
                 Dialog flashzip = new Dialog(requireActivity());
                 flashzip.setIcon(R.mipmap.ic_launcher);
                 flashzip.setTitle(getString(R.string.flasher));
-                flashzip.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "").
-                        replace("file%3A%2F%2F%2F", "").replace("%2F", "/")) +
+                flashzip.setMessage(getString(R.string.sure_message, mPath) +
                         getString(R.string.flasher_warning));
                 flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });

@@ -589,7 +589,6 @@ public class BackupFragment extends RecyclerViewFragment {
                     return;
                 }
             }
-            Utils.getInstance().showInterstitialAd(requireActivity());
             Dialog flashimg = new Dialog(requireActivity());
             flashimg.setIcon(R.mipmap.ic_launcher);
             flashimg.setTitle(getString(R.string.flasher));

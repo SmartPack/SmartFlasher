@@ -185,6 +185,7 @@ public class Flasher {
                             .setMessage(s)
                             .setCancelable(false)
                             .setNeutralButton(context.getString(R.string.cancel), (dialog, id) -> {
+                                Utils.getInstance().showInterstitialAd(context);
                             })
                             .setPositiveButton(context.getString(R.string.reboot), (dialog, id) -> {
                                 new AsyncTask<Void, Void, Void>() {
@@ -198,8 +199,7 @@ public class Flasher {
                                     }
                                     @Override
                                     protected Void doInBackground(Void... voids) {
-                                        RootUtils.runCommand(Utils.existFile("/system/bin/svc") ? "svc power reboot"
-                                                : Utils.prepareReboot());
+                                        RootUtils.runCommand(Utils.prepareReboot());
                                         return null;
                                     }
                                     @Override
