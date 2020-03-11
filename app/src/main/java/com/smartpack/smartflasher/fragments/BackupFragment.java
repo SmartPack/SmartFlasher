@@ -592,8 +592,7 @@ public class BackupFragment extends RecyclerViewFragment {
             Dialog flashimg = new Dialog(requireActivity());
             flashimg.setIcon(R.mipmap.ic_launcher);
             flashimg.setTitle(getString(R.string.flasher));
-            flashimg.setMessage(getString(R.string.sure_message, file.getName().replace("primary:", "").
-                    replace("file%3A%2F%2F%2F", "").replace("%2F", "/")) + getString(R.string.flash_img_warning));
+            flashimg.setMessage(getString(R.string.sure_message, new File(mPath).getName()) + getString(R.string.flash_img_warning));
             flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
             });
             flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
