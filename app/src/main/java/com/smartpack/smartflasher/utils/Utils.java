@@ -258,7 +258,8 @@ public class Utils {
     }
 
     public static void downloadFile(String path, String url) {
-        RootUtils.runCommand("curl -L -o " + path + " " + url);
+        RootUtils.runCommand((Utils.existFile("/system/bin/curl") ?
+                "curl -L -o " : "wget -O ") + path + " " + url);
     }
 
     public static String getChecksum(String path) {
