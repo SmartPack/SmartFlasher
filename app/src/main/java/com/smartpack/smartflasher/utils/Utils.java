@@ -48,10 +48,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -258,8 +261,24 @@ public class Utils {
     }
 
     public static void downloadFile(String path, String url) {
-        RootUtils.runCommand((Utils.existFile("/system/bin/curl") ?
-                "curl -L -o " : "wget -O ") + path + " " + url);
+        if (Utils.existFile("/system/bin/curl") || Utils.existFile("/system/bin/wget")) {
+            RootUtils.runCommand((Utils.existFile("/system/bin/curl") ?
+                    "curl -L -o " : "wget -O ") + path + " " + url);
+        } else {
+            /*
+             * Based on the following stackoverflow discussion
+             * Ref: https://stackoverflow.com/questions/15758856/android-how-to-download-file-from-webserver
+             */
+            try (InputStream input = new URL(url).openStream();
+                 OutputStream output = new FileOutputStream(path)) {
+                byte[] data = new byte[4096];
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    output.write(data, 0, count);
+                }
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     public static String getChecksum(String path) {

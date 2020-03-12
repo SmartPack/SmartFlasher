@@ -348,7 +348,8 @@ public class FlasherFragment extends RecyclerViewFragment {
             items.add(donations);
         }
 
-        if (!KernelUpdater.getKernelName().equals("Unavailable")) {
+        if (!KernelUpdater.getKernelName().equals("Unavailable") && (Utils.existFile("/system/bin/curl")
+                || Utils.existFile("/system/bin/wget"))) {
             SwitchView update_check = new SwitchView();
             update_check.setSummary(getString(R.string.update_check));
             update_check.setChecked(Prefs.getBoolean("update_check", false, getActivity()));
@@ -519,8 +520,18 @@ public class FlasherFragment extends RecyclerViewFragment {
     public void onStart(){
         super.onStart();
 
+        if (!Utils.checkWriteStoragePermission(requireActivity())) {
+            return;
+        }
+        if (!Utils.isNetworkAvailable(requireActivity())) {
+            return;
+        }
+        if (!Utils.existFile("/system/bin/curl") && !Utils.existFile("/system/bin/wget")) {
+            return;
+        }
+
         // Initialize kernel update check - Once in a day
-        if (Utils.isNetworkAvailable(requireActivity()) && Prefs.getBoolean("update_check", true, getActivity())
+        if (Prefs.getBoolean("update_check", true, getActivity())
                 && !KernelUpdater.getUpdateChannel().equals("Unavailable") && KernelUpdater.lastModified() +
                 89280000L < System.currentTimeMillis()) {
             KernelUpdater.updateInfo(Utils.readFile(Utils.getInternalDataStorage() + "/update_channel"));
@@ -528,12 +539,6 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         // Initialize manual Update Check, if play store not found
         if (!UpdateCheck.isPlayStoreInstalled(requireActivity())) {
-            if (!Utils.checkWriteStoragePermission(requireActivity())) {
-                return;
-            }
-            if (!Utils.isNetworkAvailable(requireActivity())) {
-                return;
-            }
             UpdateCheck.autoUpdateCheck(getActivity());
         }
     }
