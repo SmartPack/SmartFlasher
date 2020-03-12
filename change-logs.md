@@ -1,5 +1,9 @@
 # Change-logs
 
+## 27. March 12, 2020
+*Release-tag: v3.6*<br>
+Main: Added Korean translations (Credits: @SmgKhOaRn). Kernel Downloader: Update to use wget, if curl unavailable. gradle: Updated build tools & dependencies. Miscellaneous changes.
+
 ## 26. March 01, 2020
 *Release-tag: v3.5*<br>
 Main: Exit app only after pressing back button twice (prevent accidental closing). Main: Fixed rebooting from app on most cases. Misc: Improved no-root message. gradle: Updated build tools. Miscellaneous changes.

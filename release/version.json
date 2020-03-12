@@ -1,5 +1,5 @@
 {
-  "version": 26,
-  "changelog": "Change-logs\n - Main: Exit app only after pressing back button twice (prevent accidental closing).\n - Main: Fixed rebooting from app on most cases.\n - Misc: Improved no-root message.\n - gradle: Updated build tools.\n - Miscellaneous changes.",
-  "versionName": "3.5"
+  "version": 27,
+  "changelog": "Change-logs\n - Added Korean translations (Credits: @SmgKhOaRn).\n - Updated kernel downloader to use wget, if curl unavailable.\n - Updated build tools & dependencies.\n - Miscellaneous changes.",
+  "versionName": "3.6"
 }
