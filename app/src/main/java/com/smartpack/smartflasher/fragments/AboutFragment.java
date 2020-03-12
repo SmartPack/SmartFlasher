@@ -60,6 +60,7 @@ public class AboutFragment extends RecyclerViewFragment {
         sCredits.put("Portuguese (rBr) Translations,DanGLES3", "https://github.com/DanGLES3");
         sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
         sCredits.put("Italian Translations,IKAR0S", "https://github.com/IKAR0S");
+        sCredits.put("Korean Translations,SmgKhOaRn", "https://github.com/SmgKhOaRn");
     }
 
     @Override
@@ -226,7 +227,7 @@ public class AboutFragment extends RecyclerViewFragment {
                     });
                 }
                 donate_to_me.setPositiveButton(getString(R.string.paypal_donation), (dialog1, id1) -> {
-                    Utils.launchUrl("https://www.paypal.me/sunilpaulmathew", getActivity());
+                    Utils.launchUrl("https://www.paypal.me/menacherry", getActivity());
                 });
                 donate_to_me.show();
             }
@@ -288,6 +289,9 @@ public class AboutFragment extends RecyclerViewFragment {
                     break;
                 case "IKAR0S":
                     descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_ikar0s));
+                    break;
+                case "SmgKhOaRn":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_smgkhoarn));
                     break;
             }
             descriptionView.setTitle(title);
