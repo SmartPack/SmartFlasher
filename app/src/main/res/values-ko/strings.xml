@@ -39,7 +39,7 @@
     <string name="flasher">설치 매니저</string>
     <string name="flasher_summary">설치 버튼을 눌러 리커버리 ZIP 파일을 선택하고 커스텀 리커버리로의 부팅 없이 설치하세요. 변경된 점들은 다시 시작 후에 적용됩니다.</string>
     <string name="flashing">설치하는 중</string>
-    <string name="flash_img_warning">\n\n주의: 잘못된 \'img'\ 파일을 설치하는 것은 여러분의 기기를 "단단한 벽돌"로 만들어버릴 수 있습니다. 항상 조심하세요.\n</string>
+    <string name="flash_img_warning">\n\n주의: 잘못된 \'img\' 파일을 설치하는 것은 여러분의 기기를 "단단한 벽돌"로 만들어버릴 수 있습니다. 항상 조심하세요.\n</string>
     <string name="flash">설치</string>
     <string name="flasher_warning">\n\n주의: 이 기능은 여전히 개발 중입니다. 설치 가능한 zip 파일들에 대한 완벽한 호환성을 보장하지 않습니다. 만약 위에서 언급된 비호환성으로 인해 설치가 되지 않았다고 생각하신다면, 다시 무언가를 실행하기 전에 앱을 즉시 다시 시작하세요.\n\n*** <b>위험을 감수하고 사용하세요 (본인 책임입니다)</b> ***\n</string>
     <string name="get_it">커널 받기</string>
