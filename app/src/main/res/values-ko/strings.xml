@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <!--Author: SmgKhOaRn <smgkhoarn@gmail.com>-->
+    <!--Author: SmgKhOaRn <smgkhoarn@gmail.com>-->  
 
     <string name="ab_partition">A/B 파티션</string>
     <string name="ab_message">리커버리 이미지가 A/B 파티션에 빌트인되어 있으므로 필요하지 않습니다.</string>
@@ -39,7 +39,7 @@
     <string name="flasher">설치 매니저</string>
     <string name="flasher_summary">설치 버튼을 눌러 리커버리 ZIP 파일을 선택하고 커스텀 리커버리로의 부팅 없이 설치하세요. 변경된 점들은 다시 시작 후에 적용됩니다.</string>
     <string name="flashing">설치하는 중</string>
-    <string name="flash_img_warning">\n\n주의: 잘못된 \'img\' 파일을 설치하는 것은 여러분의 기기를 "단단한 벽돌"로 만들어버릴 수 있습니다. 항상 조심하세요.\n</string>
+    <string name="flash_img_warning">\n\n주의: 잘못된 \'img'\ 파일을 설치하는 것은 여러분의 기기를 "단단한 벽돌"로 만들어버릴 수 있습니다. 항상 조심하세요.\n</string>
     <string name="flash">설치</string>
     <string name="flasher_warning">\n\n주의: 이 기능은 여전히 개발 중입니다. 설치 가능한 zip 파일들에 대한 완벽한 호환성을 보장하지 않습니다. 만약 위에서 언급된 비호환성으로 인해 설치가 되지 않았다고 생각하신다면, 다시 무언가를 실행하기 전에 앱을 즉시 다시 시작하세요.\n\n*** <b>위험을 감수하고 사용하세요 (본인 책임입니다)</b> ***\n</string>
     <string name="get_it">커널 받기</string>
@@ -80,7 +80,7 @@
     <string name="share">공유</string>
     <string name="share_app">앱 공유</string>
     <string name="share_app_summary">Smart Flasher를 친구들과 공유하세요.</string>
-    <string name="share_app_message">Smart Flasher %s은(는) 아래에서 다운받을 수 있습니다 \n플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
+    <string name="share_app_message">Smart Flasher %s은(는) 아래에서 다운받을 수 있습니다.\n플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_by">\'%s\' | Smart Flasher에서 공유된 에러 로그!</string>
     <string name="share_channel">채널 공유</string>
     <string name="share_channel_summary">이 채널을 공유하세요.</string>
@@ -98,7 +98,7 @@
     <string name="update_check_failed">최신 버젼 정보를 얻는데 실패했습니다!</string>
     <string name="update_check_message">Smart Flasher는 %s의 새로운 버젼을 하루에 한 번씩 확인할 것입니다!</string>
     <string name="update_check_summary">최신 버젼을 확인하세요.</string>
-    <string name="update_available">업데이트 가능!\n</string>
+    <string name="update_available">업데이트 가능!\nv</string>
     <string name="update_available_summary">%s\n\n**주의: 앱을 다운로드하고 수동으로 업데이트하세요!**</string>
     <string name="update_channel">업데이트 채널 Url</string>
     <string name="update_channel_empty">업데이트 채널 정보를 정리합니다!</string>
