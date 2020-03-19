@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from

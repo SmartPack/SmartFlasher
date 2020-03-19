@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -34,7 +34,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.smartpack.smartflasher.fragments.AboutFragment;
 import com.smartpack.smartflasher.fragments.BackupFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
+import com.smartpack.smartflasher.utils.KernelUpdater;
 import com.smartpack.smartflasher.utils.PagerAdapter;
+import com.smartpack.smartflasher.utils.Prefs;
+import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 
@@ -80,6 +83,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+
+        if (!Utils.checkWriteStoragePermission(this)) {
+            return;
+        }
+        if (Utils.networkUnavailable(this)) {
+            return;
+        }
+        if (!Utils.isDownloadBinaries()) {
+            return;
+        }
+
+        // Initialize kernel update check - Once in a day
+        if (Prefs.getBoolean("update_check", true, this)
+                && !KernelUpdater.getUpdateChannel().equals("Unavailable") && KernelUpdater.lastModified() +
+                89280000L < System.currentTimeMillis()) {
+            KernelUpdater.updateInfo(Utils.readFile(Utils.getInternalDataStorage() + "/update_channel"));
+        }
+
+        // Initialize manual Update Check, if play store not found
+        if (!UpdateCheck.isPlayStoreInstalled(this)) {
+            UpdateCheck.autoUpdateCheck(this);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (RootUtils.rootAccess()) {
             if (mExit) {
@@ -88,12 +118,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Utils.toast(R.string.press_back, this);
                 mExit = true;
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mExit = false;
-                    }
-                }, 2000);
+                mHandler.postDelayed(() -> mExit = false, 2000);
             }
         } else {
             super.onBackPressed();

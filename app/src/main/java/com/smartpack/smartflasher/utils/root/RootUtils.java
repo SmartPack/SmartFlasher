@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -70,14 +70,14 @@ public class RootUtils {
         private final boolean mRoot;
         private final String mTag;
         private boolean mClosed;
-        public boolean mDenied;
+        boolean mDenied;
         private boolean mFirstTry;
 
-        public SU() {
+        SU() {
             this(true, null);
         }
 
-        public SU(boolean root, String tag) {
+        SU(boolean root, String tag) {
             mRoot = root;
             mTag = tag;
             try {
@@ -97,7 +97,7 @@ public class RootUtils {
             }
         }
 
-        public synchronized String runCommand(final String command) {
+        synchronized String runCommand(final String command) {
             synchronized (this) {
                 try {
                     StringBuilder sb = new StringBuilder();
@@ -134,7 +134,7 @@ public class RootUtils {
             }
         }
 
-        public void close() {
+        void close() {
             try {
                 if (mWriter != null) {
                     mWriter.write("exit\n");

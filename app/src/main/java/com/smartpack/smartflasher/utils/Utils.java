@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -57,6 +57,7 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -116,7 +117,7 @@ public class Utils {
     }
 
     public static boolean isTv(Context context) {
-        return ((UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE))
+        return ((UiModeManager) Objects.requireNonNull(context.getSystemService(Context.UI_MODE_SERVICE)))
                 .getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 
@@ -194,12 +195,12 @@ public class Utils {
         toast(context.getString(id), context);
     }
 
-    public static void toast(String message, Context context, int duration) {
+    private static void toast(String message, Context context, int duration) {
         Toast.makeText(context, message, duration).show();
     }
 
     public static void launchUrl(String url, Context context) {
-        if (!Utils.isNetworkAvailable(context)) {
+        if (Utils.networkUnavailable(context)) {
             Utils.toast(R.string.no_internet, context);
             return;
         }
@@ -221,11 +222,11 @@ public class Utils {
         return readFile(file, true);
     }
 
-    public static String readFile(String file, boolean root) {
+    private static String readFile(String file, boolean root) {
         return readFile(file, root ? RootUtils.getSU() : null);
     }
 
-    public static String readFile(String file, RootUtils.SU su) {
+    private static String readFile(String file, RootUtils.SU su) {
         if (su != null) {
             return new RootFile(file, su).readFile();
         }
@@ -260,8 +261,12 @@ public class Utils {
         }
     }
 
-    public static void downloadFile(String path, String url) {
-        if (Utils.existFile("/system/bin/curl") || Utils.existFile("/system/bin/wget")) {
+    public static boolean isDownloadBinaries() {
+        return Utils.existFile("/system/bin/curl") || Utils.existFile("/system/bin/wget");
+    }
+
+    static void downloadFile(String path, String url) {
+        if (isDownloadBinaries()) {
             RootUtils.runCommand((Utils.existFile("/system/bin/curl") ?
                     "curl -L -o " : "wget -O ") + path + " " + url);
         } else {
@@ -281,7 +286,7 @@ public class Utils {
         }
     }
 
-    public static String getChecksum(String path) {
+    static String getChecksum(String path) {
         return RootUtils.runCommand("sha1sum " + path);
     }
 
@@ -289,19 +294,19 @@ public class Utils {
         return existFile(file, true);
     }
 
-    public static boolean existFile(String file, boolean root) {
+    private static boolean existFile(String file, boolean root) {
         return existFile(file, root ? RootUtils.getSU() : null);
     }
 
-    public static boolean existFile(String file, RootUtils.SU su) {
+    private static boolean existFile(String file, RootUtils.SU su) {
         return su == null ? new File(file).exists() : new RootFile(file, su).exists();
     }
 
-    public static String create(String text, String path) {
-        return RootUtils.runCommand("echo '" + text + "' > " + path);
+    static void create(String text, String path) {
+        RootUtils.runCommand("echo '" + text + "' > " + path);
     }
 
-    public static String append(String text, String path) {
+    static String append(String text, String path) {
         return RootUtils.runCommand("echo '" + text + "' >> " + path);
     }
 
@@ -312,13 +317,14 @@ public class Utils {
         return null;
     }
 
-    public static String mount(String command, String source, String dest) {
-        return RootUtils.runCommand("mount " + command + " " + source + " " + dest);
+    static void mount(String command, String source, String dest) {
+        RootUtils.runCommand("mount " + command + " " + source + " " + dest);
     }
 
-    public static boolean isNetworkAvailable(Context context) {
+    public static boolean networkUnavailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (cm.getActiveNetworkInfo() != null) && cm.getActiveNetworkInfo().isConnectedOrConnecting();
+        assert cm != null;
+        return (cm.getActiveNetworkInfo() == null) || !cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
     public static String getPath(File file) {
@@ -344,10 +350,6 @@ public class Utils {
             path = path.replace("file%3A%2F%2F%2F", "").replace("%2F", "/");
         }
         return path;
-    }
-
-    public static String errorLog() {
-        return Utils.getInternalDataStorage() + "/file_path_error_log";
     }
 
     public static boolean isDocumentsUI(Uri uri) {

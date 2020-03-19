@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -20,6 +20,7 @@
 
 package com.smartpack.smartflasher.utils;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -62,7 +63,7 @@ public class Flasher {
         return Utils.existFile(RECOVERY_PARTITION_INFO);
     }
 
-    public static void makeInternalStorageFolder() {
+    static void makeInternalStorageFolder() {
         File file = new File(Utils.getInternalDataStorage());
         if (file.exists() && file.isFile()) {
             file.delete();
@@ -172,6 +173,7 @@ public class Flasher {
                 Utils.append("Path: " + file.toString() + "\n", FLASHER_LOG);
                 return manualFlash(file);
             }
+            @SuppressLint("StaticFieldLeak")
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 try {

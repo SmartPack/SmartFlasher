@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -18,18 +18,19 @@
  *
  */
 
-/**
- * Created by sunilpaulmathew <sunil.kde@gmail.com> on December 13, 2018
- */
-
 package com.smartpack.smartflasher.utils;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by sunilpaulmathew <sunil.kde@gmail.com> on December 13, 2018
+ */
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
@@ -40,6 +41,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return fragmentList.get(position);
@@ -58,4 +60,5 @@ public class PagerAdapter extends FragmentPagerAdapter {
         fragmentList.add(fragment);
         fragmentListTitles.add(title);
     }
+
 }

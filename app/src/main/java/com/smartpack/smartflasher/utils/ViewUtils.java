@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -42,6 +42,8 @@ import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
+
+import java.util.Objects;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -142,7 +144,7 @@ public class ViewUtils {
         }
         if (onDialogEditTextListener != null) {
             dialog.setPositiveButton(context.getString(R.string.ok), (dialog1, which)
-                    -> onDialogEditTextListener.onClick(editText.getText().toString()))
+                    -> onDialogEditTextListener.onClick(Objects.requireNonNull(editText.getText()).toString()))
                     .setOnDismissListener(dialog1 -> {
                         if (negativeListener != null) {
                             negativeListener.onClick(dialog1, 0);
@@ -152,7 +154,7 @@ public class ViewUtils {
         return dialog;
     }
 
-    public static void dialogError(String string, String path, Context context) {
+    static void dialogError(String string, String path, Context context) {
         new Dialog(context)
                 .setMessage(string + "\n" + context.getString(R.string.share_log,
                         path))

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -97,12 +97,9 @@ public class AboutFragment extends RecyclerViewFragment {
         changelogs.setDrawable(getResources().getDrawable(R.drawable.ic_changelog));
         changelogs.setTitle(getString(R.string.change_logs));
         changelogs.setSummary(getString(R.string.change_logs_summary));
-        changelogs.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Utils.launchUrl("https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/change-logs.md", getActivity());
-            }
-        });
+        changelogs.setOnItemClickListener(item ->
+                Utils.launchUrl("https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/change-logs.md", getActivity())
+        );
 
         items.add(changelogs);
 
@@ -110,23 +107,20 @@ public class AboutFragment extends RecyclerViewFragment {
         allow_ads.setDrawable(getResources().getDrawable(R.drawable.ic_ads));
         allow_ads.setSummary(getString(R.string.allow_ads));
         allow_ads.setChecked(Prefs.getBoolean("google_ads", true, getActivity()));
-        allow_ads.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchview, boolean isChecked) {
-                Prefs.saveBoolean("google_ads", isChecked, getActivity());
-                if (!isChecked) {
-                    new Dialog(requireActivity())
-                            .setMessage(R.string.disable_ads_message)
-                            .setPositiveButton(R.string.ok, (dialog, id) -> {
-                            })
-                            .show();
-                } else {
-                    new Dialog(requireActivity())
-                            .setMessage(R.string.allow_ads_message)
-                            .setPositiveButton(R.string.ok, (dialog, id) -> {
-                            })
-                            .show();
-                }
+        allow_ads.addOnSwitchListener((switchview, isChecked) -> {
+            Prefs.saveBoolean("google_ads", isChecked, getActivity());
+            if (!isChecked) {
+                new Dialog(requireActivity())
+                        .setMessage(R.string.disable_ads_message)
+                        .setPositiveButton(R.string.ok, (dialog, id) -> {
+                        })
+                        .show();
+            } else {
+                new Dialog(requireActivity())
+                        .setMessage(R.string.allow_ads_message)
+                        .setPositiveButton(R.string.ok, (dialog, id) -> {
+                        })
+                        .show();
             }
         });
 
@@ -136,14 +130,11 @@ public class AboutFragment extends RecyclerViewFragment {
         dark_theme.setDrawable(getResources().getDrawable(R.drawable.ic_color));
         dark_theme.setSummary(getString(R.string.dark_theme));
         dark_theme.setChecked(Prefs.getBoolean("dark_theme", true, getActivity()));
-        dark_theme.addOnSwitchListener(new SwitchView.OnSwitchListener() {
-            @Override
-            public void onChanged(SwitchView switchview, boolean isChecked) {
-                Prefs.saveBoolean("dark_theme", isChecked, getActivity());
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
+        dark_theme.addOnSwitchListener((switchview, isChecked) -> {
+            Prefs.saveBoolean("dark_theme", isChecked, getActivity());
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         });
 
         items.add(dark_theme);
@@ -152,12 +143,9 @@ public class AboutFragment extends RecyclerViewFragment {
         support.setDrawable(getResources().getDrawable(R.drawable.ic_support));
         support.setTitle(getString(R.string.support));
         support.setSummary(getString(R.string.support_summary));
-        support.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Utils.launchUrl("https://t.me/smartpack_kmanager", getActivity());
-            }
-        });
+        support.setOnItemClickListener(item ->
+                Utils.launchUrl("https://t.me/smartpack_kmanager", getActivity())
+        );
 
         items.add(support);
 
@@ -165,12 +153,9 @@ public class AboutFragment extends RecyclerViewFragment {
         sourcecode.setDrawable(getResources().getDrawable(R.drawable.ic_source));
         sourcecode.setTitle(getString(R.string.source_code));
         sourcecode.setSummary(getString(R.string.source_code_summary));
-        sourcecode.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Utils.launchUrl("https://github.com/SmartPack/SmartFlasher", requireActivity());
-            }
-        });
+        sourcecode.setOnItemClickListener(item ->
+                Utils.launchUrl("https://github.com/SmartPack/SmartFlasher", requireActivity())
+        );
 
         items.add(sourcecode);
 
@@ -179,12 +164,9 @@ public class AboutFragment extends RecyclerViewFragment {
             playstore.setDrawable(getResources().getDrawable(R.drawable.ic_playstore));
             playstore.setTitle(getString(R.string.playstore));
             playstore.setSummary(getString(R.string.playstore_summary));
-            playstore.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.smartflasher", requireActivity());
-                }
-            });
+            playstore.setOnItemClickListener(item ->
+                    Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.smartflasher", requireActivity())
+            );
 
             items.add(playstore);
         } else {
@@ -192,15 +174,12 @@ public class AboutFragment extends RecyclerViewFragment {
             updateCheck.setDrawable(getResources().getDrawable(R.drawable.ic_update));
             updateCheck.setTitle(getString(R.string.update_check));
             updateCheck.setSummary(getString(R.string.update_check_summary));
-            updateCheck.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    if (!Utils.isNetworkAvailable(requireActivity())) {
-                        Utils.toast(R.string.no_internet, getActivity());
-                        return;
-                    }
-                    UpdateCheck.updateCheck(getActivity());
+            updateCheck.setOnItemClickListener(item -> {
+                if (Utils.networkUnavailable(requireActivity())) {
+                    Utils.toast(R.string.no_internet, getActivity());
+                    return;
                 }
+                UpdateCheck.updateCheck(getActivity());
             });
 
             items.add(updateCheck);
@@ -210,27 +189,24 @@ public class AboutFragment extends RecyclerViewFragment {
         donatetome.setDrawable(getResources().getDrawable(R.drawable.ic_donate));
         donatetome.setTitle(getString(R.string.donate_me));
         donatetome.setSummary(getString(R.string.donate_me_summary));
-        donatetome.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Dialog donate_to_me = new Dialog(requireActivity());
-                donate_to_me.setIcon(R.mipmap.ic_launcher);
-                donate_to_me.setTitle(getString(R.string.donate_me));
-                if (Utils.isDonated(requireActivity())) {
-                    donate_to_me.setMessage(getString(R.string.donate_me_message));
-                    donate_to_me.setNegativeButton(getString(R.string.donate_nope), (dialogInterface, i) -> {
-                    });
-                } else {
-                    donate_to_me.setMessage(getString(R.string.donate_me_message) + getString(R.string.donate_me_playstore));
-                    donate_to_me.setNegativeButton(getString(R.string.purchase_app), (dialogInterface, i) -> {
-                        Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.donate", getActivity());
-                    });
-                }
-                donate_to_me.setPositiveButton(getString(R.string.paypal_donation), (dialog1, id1) -> {
-                    Utils.launchUrl("https://www.paypal.me/menacherry", getActivity());
+        donatetome.setOnItemClickListener(item -> {
+            Dialog donate_to_me = new Dialog(requireActivity());
+            donate_to_me.setIcon(R.mipmap.ic_launcher);
+            donate_to_me.setTitle(getString(R.string.donate_me));
+            if (Utils.isDonated(requireActivity())) {
+                donate_to_me.setMessage(getString(R.string.donate_me_message));
+                donate_to_me.setNegativeButton(getString(R.string.donate_nope), (dialogInterface, i) -> {
                 });
-                donate_to_me.show();
+            } else {
+                donate_to_me.setMessage(getString(R.string.donate_me_message) + getString(R.string.donate_me_playstore));
+                donate_to_me.setNegativeButton(getString(R.string.purchase_app), (dialogInterface, i) -> {
+                    Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.donate", getActivity());
+                });
             }
+            donate_to_me.setPositiveButton(getString(R.string.paypal_donation), (dialog1, id1) -> {
+                Utils.launchUrl("https://www.paypal.me/menacherry", getActivity());
+            });
+            donate_to_me.show();
         });
 
         items.add(donatetome);
@@ -239,17 +215,14 @@ public class AboutFragment extends RecyclerViewFragment {
         share.setDrawable(getResources().getDrawable(R.drawable.ic_share));
         share.setTitle(getString(R.string.share_app));
         share.setSummary(getString(R.string.share_app_summary));
-        share.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-            @Override
-            public void onClick(RecyclerViewItem item) {
-                Intent shareapp = new Intent();
-                shareapp.setAction(Intent.ACTION_SEND);
-                shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
-                shareapp.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(shareapp, null);
-                startActivity(shareIntent);
-            }
+        share.setOnItemClickListener(item -> {
+            Intent shareapp = new Intent();
+            shareapp.setAction(Intent.ACTION_SEND);
+            shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+            shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
+            shareapp.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(shareapp, null);
+            startActivity(shareIntent);
         });
 
         items.add(share);
@@ -296,12 +269,9 @@ public class AboutFragment extends RecyclerViewFragment {
             }
             descriptionView.setTitle(title);
             descriptionView.setSummary(summary);
-            descriptionView.setOnItemClickListener(new RecyclerViewItem.OnItemClickListener() {
-                @Override
-                public void onClick(RecyclerViewItem item) {
-                    Utils.launchUrl(sCredits.get(lib), getActivity());
-                }
-            });
+            descriptionView.setOnItemClickListener(item ->
+                    Utils.launchUrl(sCredits.get(lib), getActivity())
+            );
 
             items.add(descriptionView);
         }
@@ -313,18 +283,15 @@ public class AboutFragment extends RecyclerViewFragment {
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                                  @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_info, container, false);
-            rootView.findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Dialog licence = new Dialog(requireActivity());
-                    licence.setIcon(R.mipmap.ic_launcher);
-                    licence.setTitle(getString(R.string.licence));
-                    licence.setMessage(getString(R.string.licence_message));
-                    licence.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    });
+            rootView.findViewById(R.id.image).setOnClickListener(view -> {
+                Dialog licence = new Dialog(requireActivity());
+                licence.setIcon(R.mipmap.ic_launcher);
+                licence.setTitle(getString(R.string.licence));
+                licence.setMessage(getString(R.string.licence_message));
+                licence.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                });
 
-                    licence.show();
-                }
+                licence.show();
             });
             return rootView;
         }
