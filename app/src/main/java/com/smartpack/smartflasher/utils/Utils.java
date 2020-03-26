@@ -27,10 +27,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.Objects;
 
 /*
@@ -378,6 +381,48 @@ public class Utils {
      */
     public static String getExtension(String string) {
         return android.webkit.MimeTypeMap.getFileExtensionFromUrl(string);
+    }
+
+    public static boolean languageDefault(Context context) {
+        return !Prefs.getBoolean("use_en", false, context)
+                && !Prefs.getBoolean("use_ko", false, context)
+                && !Prefs.getBoolean("use_am", false, context)
+                && !Prefs.getBoolean("use_fr", false, context)
+                && !Prefs.getBoolean("use_ru", false, context)
+                && !Prefs.getBoolean("use_it", false, context)
+                && !Prefs.getBoolean("use_pt", false, context)
+                && !Prefs.getBoolean("use_ch", false, context);
+    }
+
+    public static String getLanguage(Context context) {
+        if (Prefs.getBoolean("use_en", false, context)) {
+            return "en_US";
+        } else if (Prefs.getBoolean("use_ko", false, context)) {
+            return "ko";
+        } else if (Prefs.getBoolean("use_am", false, context)) {
+            return "am";
+        } else if (Prefs.getBoolean("use_fr", false, context)) {
+            return "fr";
+        } else if (Prefs.getBoolean("use_ru", false, context)) {
+            return "ru";
+        } else if (Prefs.getBoolean("use_it", false, context)) {
+            return "it";
+        } else if (Prefs.getBoolean("use_pt", false, context)) {
+            return "pt";
+        } else if (Prefs.getBoolean("use_ch", false, context)) {
+            return "zh";
+        } else {
+            return java.util.Locale.getDefault().getLanguage();
+        }
+    }
+
+    public static void setLanguage(Context context) {
+        Locale myLocale = new Locale(getLanguage(context));
+        Resources res = context.getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 
 }

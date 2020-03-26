@@ -48,6 +48,16 @@
     <string name="kernel">Current Version</string>
     <string name="kernel_latest">Latest Version</string>
     <string name="kernel_information">Kernel Informations</string>
+    <string name="language">Language (%s)</string>
+    <string name="language_default">Default</string>
+    <string name="language_am">Amharic</string>
+    <string name="language_fr">French</string>
+    <string name="language_en">English</string>
+    <string name="language_it">Italian</string>
+    <string name="language_ko">Korean</string>
+    <string name="language_pt">Portuguese</string>
+    <string name="language_ru">Russian</string>
+    <string name="language_ch">Chinease</string>
     <string name="last_flash">Flasher Log</string>
     <string name="licence">License</string>
     <string name="licence_message" translatable="false">Smart Flasher is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nSmart Flasher is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with Smart Flasher. If not, visit http://www.gnu.org/licenses/.</string>

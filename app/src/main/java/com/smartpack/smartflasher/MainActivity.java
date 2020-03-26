@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         Utils.initializeAppTheme(this);
         Utils.getInstance().initializeGoogleAds(this);
         super.onCreate(savedInstanceState);
+        // Set App Language
+        Utils.setLanguage(this);
         setContentView(R.layout.activity_main);
 
         AppCompatImageView unsupported = findViewById(R.id.no_root_Image);

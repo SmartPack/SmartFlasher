@@ -23,6 +23,7 @@ package com.smartpack.smartflasher.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -61,6 +62,7 @@ public class AboutFragment extends RecyclerViewFragment {
         sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
         sCredits.put("Italian Translations,IKAR0S", "https://github.com/IKAR0S");
         sCredits.put("Korean Translations,SmgKhOaRn", "https://github.com/SmgKhOaRn");
+        sCredits.put("Amharic Translations,Mikesew1320", "https://github.com/Mikesew1320");
     }
 
     @Override
@@ -132,9 +134,7 @@ public class AboutFragment extends RecyclerViewFragment {
         dark_theme.setChecked(Prefs.getBoolean("dark_theme", true, getActivity()));
         dark_theme.addOnSwitchListener((switchview, isChecked) -> {
             Prefs.saveBoolean("dark_theme", isChecked, getActivity());
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            restartApp();
         });
 
         items.add(dark_theme);
@@ -158,6 +158,156 @@ public class AboutFragment extends RecyclerViewFragment {
         );
 
         items.add(sourcecode);
+
+        DescriptionView language = new DescriptionView();
+        language.setDrawable(getResources().getDrawable(R.drawable.ic_language));
+        language.setTitle(getString(R.string.language, Utils.getLanguage(getActivity())));
+        language.setMenuIcon(getResources().getDrawable(R.drawable.ic_dots));
+        language.setOnMenuListener((script, popupMenu) -> {
+            Menu menu = popupMenu.getMenu();
+            menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.language_default)).setCheckable(true)
+                    .setChecked(Utils.languageDefault(getActivity()));
+            menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.language_en)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_en", false, getActivity()));
+            menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.language_ch)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_ch", false, getActivity()));
+            menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.language_ru)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_ru", false, getActivity()));
+            menu.add(Menu.NONE, 4, Menu.NONE, getString(R.string.language_pt)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_pt", false, getActivity()));
+            menu.add(Menu.NONE, 5, Menu.NONE, getString(R.string.language_fr)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_fr", false, getActivity()));
+            menu.add(Menu.NONE, 6, Menu.NONE, getString(R.string.language_it)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_it", false, getActivity()));
+            menu.add(Menu.NONE, 7, Menu.NONE, getString(R.string.language_ko)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_ko", false, getActivity()));
+            menu.add(Menu.NONE, 8, Menu.NONE, getString(R.string.language_am)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_am", false, getActivity()));
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case 0:
+                        if (!Utils.languageDefault(getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 1:
+                        if (!Prefs.getBoolean("use_en", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", true, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 2:
+                        if (!Prefs.getBoolean("use_ch", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", true, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 3:
+                        if (!Prefs.getBoolean("use_ru", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", true, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 4:
+                        if (!Prefs.getBoolean("use_pt", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", true, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 5:
+                        if (!Prefs.getBoolean("use_fr", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", true, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 6:
+                        if (!Prefs.getBoolean("use_it", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", true, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 7:
+                        if (!Prefs.getBoolean("use_ko", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", true, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 8:
+                        if (!Prefs.getBoolean("use_am", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", true, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                }
+                return false;
+            });
+        });
+
+        items.add(language);
 
         if (UpdateCheck.isPlayStoreInstalled(requireActivity())) {
             DescriptionView playstore = new DescriptionView();
@@ -228,6 +378,12 @@ public class AboutFragment extends RecyclerViewFragment {
         items.add(share);
     }
 
+    private void restartApp() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
     private void creditsInit(List<RecyclerViewItem> items) {
 
         TitleView credits = new TitleView();
@@ -265,6 +421,9 @@ public class AboutFragment extends RecyclerViewFragment {
                     break;
                 case "SmgKhOaRn":
                     descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_smgkhoarn));
+                    break;
+                case "Mikesew1320":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_mikesew));
                     break;
             }
             descriptionView.setTitle(title);
