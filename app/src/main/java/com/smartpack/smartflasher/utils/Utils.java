@@ -306,10 +306,6 @@ public class Utils {
         RootUtils.runCommand("echo '" + text + "' > " + path);
     }
 
-    static String append(String text, String path) {
-        return RootUtils.runCommand("echo '" + text + "' >> " + path);
-    }
-
     public static String delete(String path) {
         if (Utils.existFile(path)) {
             return RootUtils.runCommand("rm -r " + path);

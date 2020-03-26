@@ -4,7 +4,7 @@
     <string name="ab_partition">A/B Partition</string>
     <string name="ab_message">You doesn\'t need it anymore as the recovery image is in-built with the A/B partition.</string>
     <string name="about">About</string>
-    <string name="about_me" translatable="false">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
+    <string name="about_me">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
     <string name="acquiring">Acquiring update info</string>
     <string name="allow_ads">Allow Ads</string>
     <string name="allow_ads_message">Thank you very much for supporting the developer by allowing Ads!\n\nHowever, please be noted that allowing Ads sometimes results weired behaviour. If you encounter any such issues, feel free to disable it.</string>
@@ -80,6 +80,8 @@
     <string name="remove">Remove</string>
     <string name="remove_summary">Remove this channel</string>
     <string name="restore">Restore</string>
+    <string name="save_log">Save Log</string>
+    <string name="save_log_message">Flasher Log file is exported as %s!</string>
     <string name="share">Share</string>
     <string name="share_app">Share App</string>
     <string name="share_app_summary">Share Smart Flasher with your friends</string>

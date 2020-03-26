@@ -47,12 +47,26 @@ public class Flasher {
     private static final String FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash";
     private static final String BACKUP_FOLDER = Utils.getInternalDataStorage() + "/backup";
     private static final String CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'";
-    private static final String UNZIP_BINARY = "/system/bin/unzip";
-    private static final String MAGISK_UNZIP = "/sbin/.magisk/busybox/unzip";
     private static final String FLASHER_LOG = Utils.getInternalDataStorage() + "/flasher_log";
 
-    private static String mountFS(String command, String fs) {
-        return "mount " + command + " " + fs;
+    private static StringBuilder mFlashingResult = null;
+
+    private static String mountRootFS(String command) {
+        return "mount -o remount," + command + " /";
+    }
+
+    private static boolean isUnzipAvailable() {
+        return Utils.existFile("/system/bin/unzip") || Utils.existFile("/system/xbin/unzip");
+    }
+
+    private static String busyboxUnzip() {
+        if (Utils.existFile("/sbin/.core/busybox/unzip")) {
+            return "/sbin/.core/busybox/unzip";
+        } else if (Utils.existFile("/sbin/.magisk/busybox/unzip")) {
+            return "/sbin/.magisk/busybox/unzip";
+        } else {
+            return null;
+        }
     }
 
     public static boolean hasBootPartitionInfo() {
@@ -129,30 +143,33 @@ public class Flasher {
         } else {
             RootUtils.runCommand("mkdir '" + FLASH_FOLDER + "'");
         }
-        Utils.append("Checking BusyBox binaries...", FLASHER_LOG);
-        if ((Utils.readFile(UNZIP_BINARY).isEmpty() || !Utils.existFile(UNZIP_BINARY)) &&
-                Utils.existFile(MAGISK_UNZIP)) {
-            Utils.append("Native BusyBox binaries unavailable...\nUsing Magisk BusyBox...", FLASHER_LOG);
-            RootUtils.runCommand(mountFS("-o remount,rw", "/system"));
-            Utils.create("", UNZIP_BINARY);
-            Utils.mount("-o bind", MAGISK_UNZIP, UNZIP_BINARY);
+        mFlashingResult.append("** Checking for unzip binary! ");
+        if (isUnzipAvailable()) {
+            mFlashingResult.append("Native binary available...\n");
+            RootUtils.runCommand("unzip " + file.toString() + " -d '" + FLASH_FOLDER + "'");
+        } else {
+            mFlashingResult.append("BusyBox binary available...\n");
+            RootUtils.runCommand(busyboxUnzip() + " " + file.toString() + " -d '" + FLASH_FOLDER + "'");
         }
-        Utils.append("Extracting " + file.getName() + " to working folder...", FLASHER_LOG);
         RootUtils.runCommand("unzip '" + file.toString() + "' -d '" + FLASH_FOLDER + "'");
         if (Utils.existFile(ZIPFILE_EXTRACTED)) {
-            Utils.append("Preparing a recovery-like environment for flashing...", FLASHER_LOG);
+            mFlashingResult.append("\n** Extracting ").append(file.getName()).append(" into working folder: Done *\n\n");
+            mFlashingResult.append("** Preparing a recovery-like environment for flashing...\n\n");
             RootUtils.runCommand("cd '" + FLASH_FOLDER + "'");
-            Utils.append("Mounting root file system ...", FLASHER_LOG);
-            RootUtils.runCommand(mountFS("-o remount,rw", "/"));
+            mFlashingResult.append("** Mounting root file system: Done *\n\n");
+            RootUtils.runCommand(mountRootFS("rw"));
             RootUtils.runCommand("mkdir /tmp");
-            Utils.append("Preparing a temporary ext4 image and loop mounting to '/tmp' ...", FLASHER_LOG);
+            mFlashingResult.append("** Preparing a temporary ext4 image and loop mounting to '/tmp': Done *\n\n");
             RootUtils.runCommand("mke2fs -F tmp.ext4 500000");
             Utils.mount("-o loop", "tmp.ext4", "/tmp/");
-            Utils.append("\nFlashing " + file.getName() + " ...\n", FLASHER_LOG);
+            mFlashingResult.append("\n** Flashing ").append(file.getName()).append(" ...\n");
             return RootUtils.runCommand(flashingCommand + " && " + CLEANING_COMMAND + " && " +
-                    mountFS("-o remount,ro", "/ /system"));
+                    mountRootFS("ro"));
         } else {
-            return Utils.append("\nExtracting zip file failed! Aborting...", FLASHER_LOG);
+            mFlashingResult.append("** Extracting zip file failed! *\n\n");
+            mFlashingResult.append("** Flashing Failed! *\n** Reason: Necessary BusyBox binaries not available! *");
+            return RootUtils.runCommand(CLEANING_COMMAND + " && " +
+                    mountRootFS("ro"));
         }
     }
 
@@ -168,9 +185,14 @@ public class Flasher {
                 mProgressDialog.show();
             }
             protected String doInBackground(Void... voids) {
-                Utils.create("## Flasher log created by Smart Flasher\n\n", FLASHER_LOG);
-                Utils.append("Preparing to flash " + file.getName() + "...", FLASHER_LOG);
-                Utils.append("Path: " + file.toString() + "\n", FLASHER_LOG);
+                if (mFlashingResult == null) {
+                    mFlashingResult = new StringBuilder();
+                } else {
+                    mFlashingResult.setLength(0);
+                }
+                mFlashingResult.append("## Flasher log created by Smart Flasher\n\n");
+                mFlashingResult.append("** Preparing to flash ").append(file.getName()).append("...\n\n");
+                mFlashingResult.append("** Path: '").append(file.toString()).append("'\n\n");
                 return manualFlash(file);
             }
             @SuppressLint("StaticFieldLeak")
@@ -180,44 +202,46 @@ public class Flasher {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
-                if (s != null && !s.isEmpty()) {
-                    new Dialog(context)
-                            .setIcon(R.mipmap.ic_launcher)
-                            .setTitle(context.getString(R.string.last_flash))
-                            .setMessage(s)
-                            .setCancelable(false)
-                            .setNeutralButton(context.getString(R.string.cancel), (dialog, id) -> {
-                                Utils.getInstance().showInterstitialAd(context);
-                            })
-                            .setPositiveButton(context.getString(R.string.reboot), (dialog, id) -> {
-                                new AsyncTask<Void, Void, Void>() {
-                                    @Override
-                                    protected void onPreExecute() {
-                                        super.onPreExecute();
-                                        mProgressDialog = new ProgressDialog(context);
-                                        mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
-                                        mProgressDialog.setCancelable(false);
-                                        mProgressDialog.show();
-                                    }
-                                    @Override
-                                    protected Void doInBackground(Void... voids) {
-                                        RootUtils.runCommand(Utils.prepareReboot());
-                                        return null;
-                                    }
-                                    @Override
-                                    protected void onPostExecute(Void aVoid) {
-                                        super.onPostExecute(aVoid);
-                                        try {
-                                            mProgressDialog.dismiss();
-                                        } catch (IllegalArgumentException ignored) {
-                                        }
-                                    }
-                                }.execute();
-                            })
-                            .show();
-                } else {
-                    ViewUtils.dialogError(context.getString(R.string.empty_flasher_log), FLASHER_LOG, context);
-                }
+                boolean flashResult = s != null && !s.isEmpty();
+                Dialog flashingResult = new Dialog(context);
+                flashingResult.setIcon(R.mipmap.ic_launcher);
+                flashingResult.setTitle(context.getString(R.string.last_flash));
+                flashingResult.setCancelable(false);
+                flashingResult.setMessage(mFlashingResult.toString() + (flashResult ? "\n" + s : ""));
+                flashingResult.setNeutralButton(context.getString(R.string.save_log), (dialog, id) -> {
+                    Utils.create(mFlashingResult.toString() + "\n" + s, FLASHER_LOG + "_" +
+                            file.getName().replace(".zip", ""));
+                    Utils.toast(context.getString(R.string.save_log_message, FLASHER_LOG + "_" + file.getName()
+                            .replace(".zip", "")), context);
+                });
+                flashingResult.setNegativeButton(context.getString(R.string.cancel), (dialog, id) -> {
+                });
+                flashingResult.setPositiveButton(context.getString(R.string.reboot), (dialog, id) -> {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            mProgressDialog = new ProgressDialog(context);
+                            mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
+                            mProgressDialog.setCancelable(false);
+                            mProgressDialog.show();
+                        }
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            RootUtils.runCommand(Utils.prepareReboot());
+                            return null;
+                        }
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+                            try {
+                                mProgressDialog.dismiss();
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
+                    }.execute();
+                });
+                flashingResult.show();
             }
         }.execute();
     }
