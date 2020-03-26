@@ -22,8 +22,10 @@ package com.smartpack.smartflasher.views.recyclerview;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.PopupMenu;
 
 import com.smartpack.smartflasher.R;
 
@@ -32,17 +34,22 @@ import com.smartpack.smartflasher.R;
  */
 public class DescriptionView extends RecyclerViewItem {
 
+    public interface OnMenuListener {
+        void onMenuReady(DescriptionView descriptionView, PopupMenu popupMenu);
+    }
+
     private View mRootView;
     private AppCompatImageView mImageView;
     private AppCompatTextView mTitleView;
     private AppCompatTextView mSummaryView;
+    private AppCompatImageButton mMenuIconView;
 
     private Drawable mImage;
     private CharSequence mTitle;
     private CharSequence mSummary;
-
-    private boolean mGrxIsInitSelected = false;
-    private int mGrxColor = 0;
+    private Drawable mMenuIcon;
+    private PopupMenu mPopupMenu;
+    private OnMenuListener mOnMenuListener;
 
     @Override
     public int getLayoutRes() {
@@ -52,31 +59,32 @@ public class DescriptionView extends RecyclerViewItem {
     @Override
     public void onCreateView(View view) {
         mRootView = view;
-        mImageView = (AppCompatImageView) view.findViewById(R.id.image);
-        mTitleView = (AppCompatTextView) view.findViewById(R.id.title);
-        mSummaryView = (AppCompatTextView) view.findViewById(R.id.summary);
-        if(mGrxIsInitSelected) this.setTextColor(mGrxColor);
 
+        mImageView = view.findViewById(R.id.image);
+        mTitleView = view.findViewById(R.id.title);
         if (mTitleView != null) {
-            mTitleView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        mRootView.requestFocus();
-                    }
+            mTitleView.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    mRootView.requestFocus();
                 }
             });
         }
+
+        mSummaryView = view.findViewById(R.id.summary);
         if (mSummaryView != null) {
-            mSummaryView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        mRootView.requestFocus();
-                    }
+            mSummaryView.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    mRootView.requestFocus();
                 }
             });
         }
+
+        mMenuIconView = view.findViewById(R.id.menu_icon);
+        mMenuIconView.setOnClickListener(v -> {
+            if (mPopupMenu != null) {
+                mPopupMenu.show();
+            }
+        });
 
         super.onCreateView(view);
     }
@@ -96,12 +104,14 @@ public class DescriptionView extends RecyclerViewItem {
         refresh();
     }
 
-    public void setTextColor(int color) {
-        mSummaryView.setTextColor(color);
+    public void setMenuIcon(Drawable menuIcon) {
+        mMenuIcon = menuIcon;
+        refresh();
     }
 
-    public CharSequence getTitle() {
-        return mTitle;
+    public void setOnMenuListener(OnMenuListener onMenuListener) {
+        mOnMenuListener = onMenuListener;
+        refresh();
     }
 
     @Override
@@ -114,26 +124,33 @@ public class DescriptionView extends RecyclerViewItem {
         if (mTitleView != null) {
             if (mTitle != null) {
                 mTitleView.setText(mTitle);
-                mTitleView.setVisibility(View.VISIBLE);
             } else {
                 mTitleView.setVisibility(View.GONE);
             }
         }
-        if (mSummaryView != null && mSummary != null) {
-            mSummaryView.setText(mSummary);
+        if (mSummaryView != null) {
+            if (mSummary != null) {
+                mSummaryView.setText(mSummary);
+            } else {
+                mSummaryView.setVisibility(View.GONE);
+            }
+        }
+        if (mMenuIconView != null && mMenuIcon != null && mOnMenuListener != null) {
+            mMenuIconView.setImageDrawable(mMenuIcon);
+            mMenuIconView.setVisibility(View.VISIBLE);
+            mPopupMenu = new PopupMenu(mMenuIconView.getContext(), mMenuIconView);
+            mOnMenuListener.onMenuReady(this, mPopupMenu);
         }
         if (mRootView != null && getOnItemClickListener() != null && mTitleView != null
                 && mSummaryView != null) {
             mTitleView.setTextIsSelectable(false);
             mSummaryView.setTextIsSelectable(false);
-            mRootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getOnItemClickListener() != null) {
-                        getOnItemClickListener().onClick(DescriptionView.this);
-                    }
+            mRootView.setOnClickListener(v -> {
+                if (getOnItemClickListener() != null) {
+                    getOnItemClickListener().onClick(DescriptionView.this);
                 }
             });
         }
     }
+
 }
