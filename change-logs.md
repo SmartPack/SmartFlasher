@@ -1,5 +1,9 @@
 # Change-logs
 
+## 28. March 26, 2020
+*Release-tag: v3.7*<br>
+Update to work Kernel Downloader without curl/wget. Fixed creating app folder on Android 10. Added option to switch app language. Added Amharic translations (Credits: @Mikesew1320). Improved Korean translations (Credits: @SmgKhOaRn). Miscellaneous changes.
+
 ## 27. March 12, 2020
 *Release-tag: v3.6*<br>
 Main: Added Korean translations (Credits: @SmgKhOaRn). Kernel Downloader: Update to use wget, if curl unavailable. gradle: Updated build tools & dependencies. Miscellaneous changes.

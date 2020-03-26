@@ -47,6 +47,11 @@
     <string name="kernel">현제 버젼</string>
     <string name="kernel_latest">최신 버젼</string>
     <string name="kernel_information">커널 정보</string>
+    <string name="language">언어 (%s)</string>
+    <string name="language_en">영어</string>
+    <string name="language_default">시스템 언어</string>
+    <string name="language_ko">한국어</string>
+    <string name="language_am">에티오피아어</string>
     <string name="last_flash">설치 매니저 로그</string>
     <string name="licence">라이선스</string>
     <string name="more">더보기</string>

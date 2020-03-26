@@ -1,5 +1,6 @@
 {
-  "version": 27,
-  "changelog": "Change-logs\n - Added Korean translations (Credits: @SmgKhOaRn).\n - Updated kernel downloader to use wget, if curl unavailable.\n - Updated build tools & dependencies.\n - Miscellaneous changes.",
-  "versionName": "3.6"
+  "version": 28,
+  "changelog": "Change-logs\n - Update to work Kernel Downloader without curl/wget.\n - Fixed creating app folder on Android 10.\n - Added option to switch app language.\n - Added Amharic translations (Credits: @Mikesew1320).\n - Improved Korean translations (Credits: @SmgKhOaRn).\n - Miscellaneous changes.",
+  "versionName": "3.7",
+  "inherit": true
 }
