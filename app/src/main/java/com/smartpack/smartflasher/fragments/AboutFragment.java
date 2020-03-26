@@ -114,13 +114,17 @@ public class AboutFragment extends RecyclerViewFragment {
             if (!isChecked) {
                 new Dialog(requireActivity())
                         .setMessage(R.string.disable_ads_message)
+                        .setCancelable(false)
                         .setPositiveButton(R.string.ok, (dialog, id) -> {
+                            restartApp();
                         })
                         .show();
             } else {
                 new Dialog(requireActivity())
                         .setMessage(R.string.allow_ads_message)
+                        .setCancelable(false)
                         .setPositiveButton(R.string.ok, (dialog, id) -> {
+                            restartApp();
                         })
                         .show();
             }
