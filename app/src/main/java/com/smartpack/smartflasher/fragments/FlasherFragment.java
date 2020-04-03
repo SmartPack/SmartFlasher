@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.view.Menu;
 
 import androidx.core.app.ActivityCompat;
 
@@ -148,6 +149,7 @@ public class FlasherFragment extends RecyclerViewFragment {
         items.add(kernelinfo);
 
         GenericSelectView updateChannel = new GenericSelectView();
+        updateChannel.setMenuIcon(getResources().getDrawable(R.drawable.ic_dots));
         updateChannel.setTitle(getString(R.string.update_channel));
         updateChannel.setValue((!KernelUpdater.getKernelName().equals("Unavailable"))
                 ? KernelUpdater.getUpdateChannel() : getString(R.string.update_channel_summary));
@@ -179,6 +181,39 @@ public class FlasherFragment extends RecyclerViewFragment {
             reload();
 
         });
+        if (!KernelUpdater.getKernelName().equals("Unavailable")) {
+            updateChannel.setOnMenuListener((itemslist1, popupMenu) -> {
+                Menu menu = popupMenu.getMenu();
+                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.remove));
+                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.share));
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case 0:
+                            new Dialog(requireActivity())
+                                    .setMessage(getString(R.string.sure_question))
+                                    .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                                    })
+                                    .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+                                        KernelUpdater.clearUpdateInfo();
+                                        reload();
+                                    })
+                                    .show();
+                            break;
+                        case 1:
+                            Intent shareChannel = new Intent();
+                            shareChannel.setAction(Intent.ACTION_SEND);
+                            shareChannel.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                            shareChannel.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_channel_message,
+                                    Utils.readFile(Utils.getInternalDataStorage() + "/update_channel")));
+                            shareChannel.setType("text/plain");
+                            Intent shareIntent = Intent.createChooser(shareChannel, null);
+                            startActivity(shareIntent);
+                            break;
+                    }
+                    return false;
+                });
+            });
+        }
 
         items.add(updateChannel);
 
@@ -253,43 +288,6 @@ public class FlasherFragment extends RecyclerViewFragment {
             );
 
             items.add(support);
-        }
-
-        if (!KernelUpdater.getKernelName().equals("Unavailable")) {
-            DescriptionView share = new DescriptionView();
-            share.setTitle(getString(R.string.share_channel));
-            share.setSummary(getString(R.string.share_channel_summary));
-            share.setOnItemClickListener(item -> {
-                if (Utils.networkUnavailable(requireActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
-                    return;
-                }
-                Intent shareChannel = new Intent();
-                shareChannel.setAction(Intent.ACTION_SEND);
-                shareChannel.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                shareChannel.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_channel_message,
-                        Utils.readFile(Utils.getInternalDataStorage() + "/update_channel")));
-                shareChannel.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(shareChannel, null);
-                startActivity(shareIntent);
-            });
-
-            items.add(share);
-
-            DescriptionView remove = new DescriptionView();
-            remove.setTitle(getString(R.string.remove));
-            remove.setSummary(getString(R.string.remove_summary));
-            remove.setOnItemClickListener(item -> new Dialog(requireActivity())
-                    .setMessage(getString(R.string.sure_question))
-                    .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                    })
-                    .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
-                        KernelUpdater.clearUpdateInfo();
-                        reload();
-                    })
-                    .show());
-
-            items.add(remove);
         }
 
         if (!KernelUpdater.getLatestVersion().equals("Unavailable")) {
