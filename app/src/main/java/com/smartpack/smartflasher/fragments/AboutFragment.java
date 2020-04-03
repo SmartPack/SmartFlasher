@@ -63,6 +63,7 @@ public class AboutFragment extends RecyclerViewFragment {
         sCredits.put("Italian Translations,IKAR0S", "https://github.com/IKAR0S");
         sCredits.put("Korean Translations,SmgKhOaRn", "https://github.com/SmgKhOaRn");
         sCredits.put("Amharic Translations,Mikesew1320", "https://github.com/Mikesew1320");
+        sCredits.put("Greek Translations,tsiflimagas", "https://github.com/tsiflimagas");
     }
 
     @Override
@@ -187,6 +188,8 @@ public class AboutFragment extends RecyclerViewFragment {
                     .setChecked(Prefs.getBoolean("use_ko", false, getActivity()));
             menu.add(Menu.NONE, 8, Menu.NONE, getString(R.string.language_am)).setCheckable(true)
                     .setChecked(Prefs.getBoolean("use_am", false, getActivity()));
+            menu.add(Menu.NONE, 9, Menu.NONE, getString(R.string.language_el)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_el", false, getActivity()));
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case 0:
@@ -199,6 +202,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -212,6 +216,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -225,6 +230,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", true, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -238,6 +244,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -251,6 +258,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", true, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -264,6 +272,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -277,6 +286,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", true, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -290,6 +300,7 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
                             restartApp();
                         }
                         break;
@@ -303,6 +314,21 @@ public class AboutFragment extends RecyclerViewFragment {
                             Prefs.saveBoolean("use_it", false, getActivity());
                             Prefs.saveBoolean("use_pt", false, getActivity());
                             Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", false, getActivity());
+                            restartApp();
+                        }
+                        break;
+                    case 9:
+                        if (!Prefs.getBoolean("use_el", false, getActivity())) {
+                            Prefs.saveBoolean("use_en", false, getActivity());
+                            Prefs.saveBoolean("use_ko", false, getActivity());
+                            Prefs.saveBoolean("use_am", false, getActivity());
+                            Prefs.saveBoolean("use_fr", false, getActivity());
+                            Prefs.saveBoolean("use_ru", false, getActivity());
+                            Prefs.saveBoolean("use_it", false, getActivity());
+                            Prefs.saveBoolean("use_pt", false, getActivity());
+                            Prefs.saveBoolean("use_ch", false, getActivity());
+                            Prefs.saveBoolean("use_el", true, getActivity());
                             restartApp();
                         }
                         break;
@@ -428,6 +454,9 @@ public class AboutFragment extends RecyclerViewFragment {
                     break;
                 case "Mikesew1320":
                     descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_mikesew));
+                    break;
+                case "tsiflimagas":
+                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_tsiflimagas));
                     break;
             }
             descriptionView.setTitle(title);

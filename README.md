@@ -51,6 +51,7 @@ If you like to appreciate my work, please consider donating to me (either via [P
 * [DanGLES3](https://github.com/DanGLES3/), Portuguese (Brazilian) Translations
 * [IKAR0S](https://github.com/IKAR0S/), Italian Translations
 * [Mikesew1320](https://github.com/Mikesew1320), Amharic Translations
+* [tsiflimagas](https://github.com/tsiflimagas), Greek Translations
 * [SmgKhOaRn](https://github.com/SmgKhOaRn), Korean Translations
 
 ## Report a bug or request a feature

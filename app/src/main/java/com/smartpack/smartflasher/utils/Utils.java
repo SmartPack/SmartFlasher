@@ -391,7 +391,8 @@ public class Utils {
                 && !Prefs.getBoolean("use_ru", false, context)
                 && !Prefs.getBoolean("use_it", false, context)
                 && !Prefs.getBoolean("use_pt", false, context)
-                && !Prefs.getBoolean("use_ch", false, context);
+                && !Prefs.getBoolean("use_ch", false, context)
+                && !Prefs.getBoolean("use_el", false, context);
     }
 
     public static String getLanguage(Context context) {
@@ -411,6 +412,8 @@ public class Utils {
             return "pt";
         } else if (Prefs.getBoolean("use_ch", false, context)) {
             return "zh";
+        } else if (Prefs.getBoolean("use_el", false, context)) {
+            return "el";
         } else {
             return java.util.Locale.getDefault().getLanguage();
         }
