@@ -34,7 +34,6 @@
     <string name="download_completed">%s is successfully downloaded. Do you want to flash it?</string>
     <string name="download_failed">It seems like the download is failed, or a corrupted file is downloaded!</string>
     <string name="downloading">Downloading %s</string>
-    <string name="empty_flasher_log">It seems like flashing is failed!</string>
     <string name="executing">Executing</string>
     <string name="file_size_limit">Warning! You\'re selected a file of ~%s MB for flashing. Flashing bigger files, such as ROM\'s, using this app might be dangerous to your device.</string>
     <string name="flasher">Flasher</string>
@@ -52,6 +51,7 @@
     <string name="language_default">Default</string>
     <string name="language_am">Amharic</string>
     <string name="language_fr">French</string>
+    <string name="language_el">Greek</string>
     <string name="language_en">English</string>
     <string name="language_it">Italian</string>
     <string name="language_ko">Korean</string>
@@ -88,7 +88,6 @@
     <string name="recovery_partition_unknown">Failed to get Recovery Partition identity</string>
     <string name="rebooting">Rebooting</string>
     <string name="remove">Remove</string>
-    <string name="remove_summary">Remove this channel</string>
     <string name="restore">Restore</string>
     <string name="save_log">Save Log</string>
     <string name="save_log_message">Flasher Log file is exported as %s!</string>
@@ -97,8 +96,6 @@
     <string name="share_app_summary">Share Smart Flasher with your friends</string>
     <string name="share_app_message">Get Smart Flasher %s from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_by">\'%s\' | error log shared by Smart Flasher!</string>
-    <string name="share_channel">Share Channel</string>
-    <string name="share_channel_summary">Share this Channel</string>
     <string name="share_channel_message">To configure this update channel, simply input \'%s\' on SmartFlasher -> Update Channel Url.\n\nGet Smart Flasher from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_log">In order to fix this issue, please consider sharing the log file created at \'%s\' with the developer of this app.\nDo you want to share it now?</string>
     <string name="share_log_message">Here is the contents of the log file\n\'%s\'\n\n</string>

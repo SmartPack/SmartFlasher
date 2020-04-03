@@ -1,6 +1,6 @@
 {
-  "version": 28,
-  "changelog": "Change-logs\n - Update to work Kernel Downloader without curl/wget.\n - Fixed creating app folder on Android 10.\n - Added option to switch app language.\n - Added Amharic translations (Credits: @Mikesew1320).\n - Improved Korean translations (Credits: @SmgKhOaRn).\n - Miscellaneous changes.",
-  "versionName": "3.7",
+  "version": 29,
+  "changelog": "Change-logs\n - Moved remove and share update channel options to popup menu.\n - Added Greek translations (credits: @tsiflimagas).\n - Updated gradle build tools.\n - Miscellaneous changes.",
+  "versionName": "3.8",
   "inherit": true
 }

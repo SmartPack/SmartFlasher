@@ -33,7 +33,6 @@
     <string name="download_completed">%s은(는) 성공적으로 다운로드를 완료했습니다. 파일을 설치하고 싶으신가요?</string>
     <string name="download_failed">파일을 다운로드를 하는데 실패했거나, 손상된 파일을 받았습니다. !</string>
     <string name="downloading">%s을(를) 받는 중</string>
-    <string name="empty_flasher_log">파일을 설치하는데 실패했습니다!</string>
     <string name="executing">실행하는 중</string>
     <string name="file_size_limit">주의! ~%s MB의 파일을 선택했습니다. 이 앱을 통해 롬과 같은 큰 파일들을 설치하는 것은 여러분의 기기에 문제를 야기할 수도 있습니다.</string>
     <string name="flasher">설치 매니저</string>
@@ -51,6 +50,11 @@
     <string name="language_en">영어</string>
     <string name="language_default">시스템 언어</string>
     <string name="language_ko">한국어</string>
+    <string name="language_fr">프랑스어</string>
+    <string name="language_it">이탈리아어</string>
+    <string name="language_pt">포르투갈어</string>
+    <string name="language_ch">중국어</string>
+    <string name="language_ru">러시아어</string>
     <string name="language_am">에티오피아어</string>
     <string name="last_flash">설치 매니저 로그</string>
     <string name="licence">라이선스</string>
@@ -80,15 +84,12 @@
     <string name="recovery_partition_unknown">리커버리 파티션을 확인하는데 실패했습니다.</string>
     <string name="rebooting">다시 시작하는 중</string>
     <string name="remove">제거</string>
-    <string name="remove_summary">이 채널을 제거합니다.</string>
     <string name="restore">복구</string>
     <string name="share">공유</string>
     <string name="share_app">앱 공유</string>
     <string name="share_app_summary">Smart Flasher를 친구들과 공유하세요.</string>
     <string name="share_app_message">Smart Flasher %s은(는) 아래에서 다운받을 수 있습니다 \n플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_by">\'%s\' | Smart Flasher에서 공유된 에러 로그!</string>
-    <string name="share_channel">채널 공유</string>
-    <string name="share_channel_summary">이 채널을 공유하세요.</string>
     <string name="share_channel_message">이 업데이트 채널을 구성하려면, \'%s\' 을(를)  Smart Flasher에 입력하고 -> 채널 URL을 업데이트하세요.\n\nSmart Flasher을 아래에서 다운받으세요\n플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\n깃허브: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_log">이 문제를 해결하기 위해, \'%s\' 에 생성된 로그 파일을 이 앱의 개발자에게 보내세요.\n지금 공유하시겠어요?</string>
     <string name="share_log_message">로그 파일의 내용입니다\n\'%s\'\n\n</string>

@@ -33,7 +33,6 @@
     <string name="download_completed">%s κατέβηκε επιτυχώς. Θέλετε να το εγκαταστήσετε;</string>
     <string name="download_failed">Φαίνεται πως η λήψη απέτυχε, ή ένα αλλοιωμένο αρχείο έχει ληφθεί!</string>
     <string name="downloading">Λήψη %s</string>
-    <string name="empty_flasher_log">Φαίνεται πως η εγκατάσταση απέτυχε!</string>
     <string name="executing">Εκτέλεση</string>
     <string name="file_size_limit">Προειδοποίηση! Έχετε επιλέξει ένα αρχείο μεγέθους ~%s MB για εγκατάσταση. Η εγκατάσταση μεγαλύτερων αρχείων, όπως ROM\'s, χρησιμοποιώντας αυτήν την εφαρμογή ίσως να είναι επικίνδυνο για τη συσκευή σας.</string>
     <string name="flasher">Εργαλείο εγκατάστασης</string>
@@ -81,15 +80,12 @@
     <string name="recovery_partition_unknown">Αποτυχία απόκτησης ταυτότητας διαμερίσματος Recovery</string>
     <string name="rebooting">Επανεκκίνηση</string>
     <string name="remove">Αφαίρεση</string>
-    <string name="remove_summary">Αφαίρεση καναλιού</string>
     <string name="restore">Επαναφορά</string>
     <string name="share">Κοινοποίηση</string>
     <string name="share_app">Κοινοποιήστε την εφαρμογή</string>
     <string name="share_app_summary">Μοιραστείτε την εφαρμογή με τους φίλους σας</string>
     <string name="share_app_message">Αποκτήστε το Smart Flasher %s από\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_by">\'%s\' | αρχείο καταγραφής σφάλματος κοινοποιημένο από το Smart Flasher!</string>
-    <string name="share_channel">Κοινοποίηση Καναλιού</string>
-    <string name="share_channel_summary">Κοινοποιήστε αυτό το Κανάλι</string>
     <string name="share_channel_message">Για να ρυθμίσετε αυτό το κανάλι ενημέρωσης, απλώς εισάγετε \'%s\' στο SmartFlasher -> Κανάλι Ενημέρωσης Url.\n\nΑποκτήστε το Smart Flasher από\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_log">Για την επίλυση του προβλήματος, παρακαλώ μοιραστείτε το αρχείο καταγραφής που δημιουργήθηκε στο \'%s\' με τον προγραμματιστή αυτής της εφαρμογής.\nΘέλετε να το μοιραστείτε τώρα;</string>
     <string name="share_log_message">Εδώ βρίσκονται τα περιεχόμενα του αρχείου καταγραφής\n\'%s\'\n\n</string>

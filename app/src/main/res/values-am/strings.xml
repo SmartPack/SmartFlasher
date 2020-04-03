@@ -34,7 +34,6 @@
     <string name="download_completed">%s በትክክል ወርዷል። ፍላሽ ማድረግ ይፈልጋሉ?</string>
     <string name="download_failed">የማዉረድ ሂደት የተስተጓጎለ ይመስላል ወይም የወረደው ፋይል የተበላሸ ነዉ!</string>
     <string name="downloading">በማዉረድ ላይ %s</string>
-    <string name="empty_flasher_log">ፍላሽ የማድረግ ሂደት የተስተጓጎለ ይመስላል!</string>
     <string name="executing">በመተግበር ላይ</string>
     <string name="file_size_limit">ማሳሰቢያ! ፍላሽ ለማድረግ ~%s MB ፋይል መርጠዋል። ይህንን መተግበሪያ ተተቅሞ እንደ ROM ያሉ ትላልቅ ፋይሎችን ፍላሽ ለማድረግ መሞከር ለስልክዎ በጣም አደገኛ ነዉ!</string>
     <string name="flasher">ፍላሸር</string>
@@ -83,15 +82,12 @@
     <string name="recovery_partition_unknown">የሪከቨሪ ፓርትሽንን ማንነት ማግኘት አልተቻለም!</string>
     <string name="rebooting">እንገና በማስጀመር ላይ</string>
     <string name="remove">አስወግድ</string>
-    <string name="remove_summary">ይህንን ቻናል አጥፋ</string>
     <string name="restore">እንደገና መልስ</string>
     <string name="share">አጋራ</string>
     <string name="share_app">መተግበሪያዉን አጋራ</string>
     <string name="share_app_summary">ስማርት ፍላሸርን ለሚወዱት ሰዉ ያጋሩ</string>
     <string name="share_app_message">ስማርት ፍላሸርን አግኝ %s ከ\nፕሌይስቶር: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nጂትሀብ: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_by">ስማርት ፍላሸር \'%s\' | የስህተት ዝርዝር አጋርቷል!</string>
-    <string name="share_channel">ቻናል ያጋሩ</string>
-    <string name="share_channel_summary">ይሄንን ቻናል ያጋሩ</string>
     <string name="share_channel_message">የከርነል ማሳደጊያ ቻናሉን ለማዋቀር በቀላሉ \'%s\' በ ስማርት ፍላሸር -> የማሳደጊያ ቻናል Url.\n\nስማርት ፍላሸርን\nከ ፕሌይስቶር: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nጂትሀብ: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="share_log">ይህንን ችግር ለመፍታት \'%s\' የየለውን የስህተት ዝርዝር ፋይል ወደ መተግበሪያዉ አበልፃጊ መላክ ይችላሉ።\nአሁኑኑ መላክ ይፈልጋሉ?</string>
     <string name="share_log_message">ከስልክዎ የተሰበሰበዉ ዝርዝር መረጃ ይዘት ይህንን ይመስላል\n\'%s\'\n\n</string>
