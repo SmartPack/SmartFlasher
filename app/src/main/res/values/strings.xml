@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">Smart Flasher</string>
 
     <string name="ab_partition">A/B Partition</string>
-    <string name="ab_message">You doesn\'t need it anymore as the recovery image is in-built with the A/B partition.</string>
+    <string name="ab_message">You don\'t need it anymore as the recovery image is in-built with the A/B partition.</string>
     <string name="about">About</string>
     <string name="about_me">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
     <string name="acquiring">Acquiring update info</string>
@@ -57,7 +57,7 @@
     <string name="language_ko">Korean</string>
     <string name="language_pt">Portuguese</string>
     <string name="language_ru">Russian</string>
-    <string name="language_ch">Chinease</string>
+    <string name="language_ch">Chinese</string>
     <string name="last_flash">Flasher Log</string>
     <string name="licence">License</string>
     <string name="licence_message" translatable="false">Smart Flasher is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nSmart Flasher is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with Smart Flasher. If not, visit http://www.gnu.org/licenses/.</string>
