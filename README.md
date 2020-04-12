@@ -48,7 +48,7 @@ If you like to appreciate my work, please consider donating to me (either via [P
 * [jason5545](https://github.com/jason5545/), Chinese (Simplified & Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations
 * [tom4tot](https://github.com/tom4tot/), French Translations
-* [DanGLES3](https://github.com/DanGLES3/), Portuguese (Brazilian) Translations
+* [DanGLES3](https://github.com/DanGLES3/) & [Lennoard](https://github.com/Lennoard/), Portuguese (Brazilian) Translations
 * [IKAR0S](https://github.com/IKAR0S/), Italian Translations
 * [Mikesew1320](https://github.com/Mikesew1320), Amharic Translations
 * [tsiflimagas](https://github.com/tsiflimagas), Greek Translations

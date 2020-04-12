@@ -1,5 +1,9 @@
 # Change-logs
 
+## 30. April 12, 2020
+*Release-tag: v3.9*<br>
+Updated flasher to use Magisk BusyBox. Updated portuguese brazilian translations (Credits: @Lennoard). Updated gradle build tools. Miscellaneous changes.
+
 ## 29. April 03, 2020
 *Release-tag: v3.8*<br>
 Moved remove and share update channel options to popup menu. Updated gradle build tools. Added Greek translations (credits: @tsiflimagas). Miscellaneous changes.

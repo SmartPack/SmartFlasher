@@ -1,6 +1,6 @@
 {
-  "version": 29,
-  "changelog": "Change-logs\n - Moved remove and share update channel options to popup menu.\n - Added Greek translations (credits: @tsiflimagas).\n - Updated gradle build tools.\n - Miscellaneous changes.",
-  "versionName": "3.8",
+  "version": 30,
+  "changelog": "Change-logs\n - Updated flasher to use Magisk BusyBox.\n - Updated portuguese brazilian translations (Credits: @Lennoard).\n - Updated gradle build tools.\n - Miscellaneous changes.",
+  "versionName": "3.9",
   "inherit": true
 }
