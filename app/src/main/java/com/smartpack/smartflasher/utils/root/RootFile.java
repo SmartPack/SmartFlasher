@@ -23,6 +23,7 @@ package com.smartpack.smartflasher.utils.root;
 import androidx.annotation.NonNull;
 
 import com.smartpack.smartflasher.utils.Utils;
+import com.topjohnwu.superuser.Shell;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,16 +38,9 @@ import java.util.List;
 public class RootFile {
 
     private final String mFile;
-    private RootUtils.SU mSU;
 
     public RootFile(String file) {
         mFile = file;
-        mSU = RootUtils.getSU();
-    }
-
-    public RootFile(String file, RootUtils.SU su) {
-        mFile = file;
-        mSU = su;
     }
 
     public String getName() {
@@ -54,13 +48,17 @@ public class RootFile {
     }
 
     public void mkdir() {
-        mSU.runCommand("mkdir -p '" + mFile + "'");
+        Shell.su("mkdir -p '" + mFile + "'").exec();
+    }
+
+    public void delete() {
+        Shell.su("rm -r '" + mFile + "'").exec();
     }
 
     public List<String> list() {
         List<String> list = new ArrayList<>();
-        String files = mSU.runCommand("ls '" + mFile + "/'");
-        if (files != null) {
+        String files = RootUtils.runCommand("ls '" + mFile + "/'");
+        if (!files.isEmpty()) {
             // Make sure the files exists
             for (String file : files.split("\\r?\\n")) {
                 if (file != null && !file.isEmpty() && Utils.existFile(mFile + "/" + file)) {
@@ -72,17 +70,18 @@ public class RootFile {
     }
 
     public boolean exists() {
-        String output = mSU.runCommand("[ -e " + mFile + " ] && echo true");
-        return output != null && output.equals("true");
+        String output = RootUtils.runCommand("[ -e " + mFile + " ] && echo true");
+        return !output.isEmpty() && output.equals("true");
     }
 
     public String readFile() {
-        return mSU.runCommand("cat '" + mFile + "'");
+        return RootUtils.runCommand("cat '" + mFile + "'");
     }
 
-    @Override
     @NonNull
+    @Override
     public String toString() {
         return mFile;
     }
+
 }
