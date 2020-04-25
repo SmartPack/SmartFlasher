@@ -1,5 +1,9 @@
 # Change-logs
 
+## 31. April 25, 2020
+*Release-tag: v4.0*<br>
+Main: Migrated to libsu (Credits: @Lennoard). Flasher: Added Brand New Flashing view. Flasher: Largely improved flashing process (include fixes for syntax error). Updated gradle build tools. Miscellaneous changes.
+
 ## 30. April 12, 2020
 *Release-tag: v3.9*<br>
 Updated flasher to use Magisk BusyBox. Updated portuguese brazilian translations (Credits: @Lennoard). Updated gradle build tools. Miscellaneous changes.

@@ -43,7 +43,9 @@ If you like to appreciate my work, please consider donating to me (either via [P
 
 ## Credits
 * [Grarak](https://github.com/Grarak/), Kernel Adiutor, from where I took a lot of code
+* [topjohnwu](https://github.com/topjohnwu/), libsu
 * [osm0sis](https://github.com/osm0sis/), for helping me with Auto-Flashing
+* [Lennoard](https://github.com/Lennoard/), Code contributions
 * [Toxinpiper](https://t.me/toxinpiper), App Icon
 * [jason5545](https://github.com/jason5545/), Chinese (Simplified & Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations

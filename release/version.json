@@ -1,6 +1,6 @@
 {
-  "version": 30,
-  "changelog": "Change-logs\n - Updated flasher to use Magisk BusyBox.\n - Updated portuguese brazilian translations (Credits: @Lennoard).\n - Updated gradle build tools.\n - Miscellaneous changes.",
-  "versionName": "3.9",
+  "version": 31,
+  "changelog": "Change-logs\n - Main: Migrated to libsu (Credits: @Lennoard).\n - Flasher: Added Brand New Flashing view.\n - Flasher: Largely improved flashing process (include fixes for syntax error).\n - Updated gradle build tools.\n - Miscellaneous changes.",
+  "versionName": "4.0",
   "inherit": true
 }
