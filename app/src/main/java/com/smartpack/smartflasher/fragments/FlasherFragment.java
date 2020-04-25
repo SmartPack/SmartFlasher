@@ -37,6 +37,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
+import com.smartpack.smartflasher.utils.FlashingActivity;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.KernelUpdater;
 import com.smartpack.smartflasher.utils.Utils;
@@ -273,7 +274,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                     Utils.toast(getString(R.string.no_internet), getActivity());
                     return;
                 }
-                KernelUpdater.downloadKernel(getActivity());
+                downloadKernel();
             });
 
             items.add(download);
@@ -335,7 +336,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.busyboxinstaller", getActivity());
         });
         items.add(busybox);
-        
+
         TitleView other_options = new TitleView();
         other_options.setText(getString(R.string.other_options));
         items.add(other_options);
@@ -395,6 +396,90 @@ public class FlasherFragment extends RecyclerViewFragment {
             mItemOptionsDialog.show();
         });
         items.add(rebootOptions);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void downloadKernel() {
+        new AsyncTask<Void, Void, Void>() {
+            private ProgressDialog mProgressDialog;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(getActivity());
+                mProgressDialog.setMessage(getString(R.string.downloading, KernelUpdater.getKernelName() + "-" + KernelUpdater.getLatestVersion()) + "...");
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+            }
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Flasher.makeInternalStorageFolder(Utils.getInternalDataStorage());
+                Utils.downloadFile(Utils.getInternalDataStorage() + "/Kernel.zip", KernelUpdater.getUrl());
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    mProgressDialog.dismiss();
+                } catch (IllegalArgumentException ignored) {
+                }
+                if (KernelUpdater.getChecksum().equals("Unavailable") || !KernelUpdater.getChecksum().equals("Unavailable") &&
+                        Utils.getChecksum(Utils.getInternalDataStorage() + "/Kernel.zip").contains(KernelUpdater.getChecksum())) {
+                    Utils.getInstance().showInterstitialAd(getActivity());
+                    new Dialog(requireActivity())
+                            .setMessage(getString(R.string.download_completed,
+                                    KernelUpdater.getKernelName() + "-" + KernelUpdater.getLatestVersion()))
+                            .setCancelable(false)
+                            .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
+                            })
+                            .setPositiveButton(getString(R.string.flash), (dialog, id) -> {
+                                flashingTask(new File(Utils.getInternalDataStorage() + "/Kernel.zip"));
+                            })
+                            .show();
+                } else {
+                    new Dialog(requireActivity())
+                            .setMessage(getString(R.string.download_failed))
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.cancel), (dialog, id) -> {
+                            })
+                            .show();
+                }
+            }
+        }.execute();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void flashingTask(File file) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                Flasher.mFlashing = true;
+                if (Flasher.mFlashingResult == null) {
+                    Flasher.mFlashingResult = new StringBuilder();
+                } else {
+                    Flasher.mFlashingResult.setLength(0);
+                }
+                Flasher.mFlashingResult.append("** Preparing to flash ").append(file.getName()).append("...\n\n");
+                Flasher.mFlashingResult.append("** Path: '").append(file.toString()).append("'\n\n");
+                Utils.delete("/data/local/tmp/flash.zip");
+                Flasher.mFlashingResult.append("** Copying '").append(file.getName()).append("' into temporary folder: ");
+                Flasher.mFlashingResult.append(RootUtils.runAndGetError("cp '" + file.toString() + "' /data/local/tmp/flash.zip"));
+                Flasher.mFlashingResult.append(Utils.existFile("/data/local/tmp/flash.zip") ? "Done *\n\n" : "\n\n");
+                Intent flashingIntent = new Intent(getActivity(), FlashingActivity.class);
+                startActivityForResult(flashingIntent, 1);
+            }
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Flasher.manualFlash();
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Flasher.mFlashing = false;
+            }
+        }.execute();
     }
 
     @Override
@@ -467,7 +552,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 flashzip.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
                 });
                 flashzip.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                    Flasher.flashingTask(new File(mPath), getActivity());
+                    flashingTask(new File(mPath));
                 });
                 flashzip.show();
             }

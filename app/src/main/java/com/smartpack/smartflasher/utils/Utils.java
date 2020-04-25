@@ -21,6 +21,7 @@
 package com.smartpack.smartflasher.utils;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -30,6 +31,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.util.DisplayMetrics;
@@ -233,7 +235,7 @@ public class Utils {
         return Utils.existFile("/system/bin/curl") || Utils.existFile("/system/bin/wget");
     }
 
-    static void downloadFile(String path, String url) {
+    public static void downloadFile(String path, String url) {
         if (isDownloadBinaries()) {
             RootUtils.runCommand((Utils.existFile("/system/bin/curl") ?
                     "curl -L -o " : "wget -O ") + path + " " + url);
@@ -254,7 +256,7 @@ public class Utils {
         }
     }
 
-    static String getChecksum(String path) {
+    public static String getChecksum(String path) {
         return RootUtils.runCommand("sha1sum " + path);
     }
 
@@ -298,7 +300,7 @@ public class Utils {
         return !root ? new File(file).exists() : new RootFile(file).exists();
     }
 
-    public static void create(String text, String path) {
+    static void create(String text, String path) {
         RootUtils.runCommand("echo '" + text + "' > " + path);
     }
 
@@ -356,6 +358,33 @@ public class Utils {
                 " sleep 1 " + "&&" +
                 " reboot";
         return prepareReboot;
+    }
+
+    public static void rebootCommand(Context context) {
+        new AsyncTask<Void, Void, Void>() {
+            private ProgressDialog mProgressDialog;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(context);
+                mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+            }
+            @Override
+            protected Void doInBackground(Void... voids) {
+                RootUtils.runCommand(prepareReboot());
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    mProgressDialog.dismiss();
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+        }.execute();
     }
 
     /*

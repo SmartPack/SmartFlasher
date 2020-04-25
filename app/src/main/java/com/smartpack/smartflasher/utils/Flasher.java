@@ -20,16 +20,10 @@
 
 package com.smartpack.smartflasher.utils;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Environment;
 
-import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
-import com.smartpack.smartflasher.views.dialog.Dialog;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -47,9 +41,10 @@ public class Flasher {
     private static final String FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash";
     private static final String BACKUP_FOLDER = Utils.getInternalDataStorage() + "/backup";
     private static final String CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'";
-    private static final String FLASHER_LOG = Utils.getInternalDataStorage() + "/flasher_log";
 
-    private static StringBuilder mFlashingResult = null;
+    public static StringBuilder mFlashingResult = null;
+
+    public static boolean mFlashing;
 
     private static String mountRootFS(String command) {
         return "mount -o remount," + command + " /";
@@ -77,8 +72,8 @@ public class Flasher {
         return Utils.existFile(RECOVERY_PARTITION_INFO);
     }
 
-    static void makeInternalStorageFolder() {
-        File file = new File(Utils.getInternalDataStorage());
+    public static void makeInternalStorageFolder(String path) {
+        File file = new File(path);
         if (file.exists() && file.isFile()) {
             file.delete();
         }
@@ -98,28 +93,14 @@ public class Flasher {
     }
 
     public static void backupBootPartition(String name) {
-        makeInternalStorageFolder();
-        if (!Utils.existFile(BACKUP_FOLDER)) {
-            File bachupFolderPath = new File(BACKUP_FOLDER);
-            if (bachupFolderPath.exists() && bachupFolderPath.isFile()) {
-                bachupFolderPath.delete();
-            }
-            bachupFolderPath.mkdirs();
-        }
+        makeInternalStorageFolder(BACKUP_FOLDER);
         String bootPartition = Utils.getInternalDataStorage() + "/backup/" + name;
         String command = "dd if=" + findBootPartition() + " of=" + bootPartition;
         RootUtils.runCommand(command);
     }
 
     public static void backupRecoveryPartition(String name) {
-        makeInternalStorageFolder();
-        if (!Utils.existFile(BACKUP_FOLDER)) {
-            File bachupFolderPath = new File(BACKUP_FOLDER);
-            if (bachupFolderPath.exists() && bachupFolderPath.isFile()) {
-                bachupFolderPath.delete();
-            }
-            bachupFolderPath.mkdirs();
-        }
+        makeInternalStorageFolder(BACKUP_FOLDER);
         String recoveryPartition = Utils.getInternalDataStorage() + "/backup/" + name;
         String command = "dd if=" + findRecoveryPartition() + " of=" + recoveryPartition;
         RootUtils.runCommand(command);
@@ -129,122 +110,48 @@ public class Flasher {
         return file.length();
     }
 
-    private static String manualFlash(File file) {
+    public static void manualFlash() {
         /*
          * Flashing recovery zip without rebooting to custom recovery
          * Credits to osm0sis @ xda-developers.com
          */
         FileDescriptor fd = new FileDescriptor();
         int RECOVERY_API = 3;
+        String path = "/data/local/tmp/flash.zip";
         String flashingCommand = "sh '" + ZIPFILE_EXTRACTED + "' '" + RECOVERY_API + "' '" +
-                fd + "' '" + file.toString() + "'";
+                fd + "' '" + path + "'";
         if (Utils.existFile(FLASH_FOLDER)) {
             RootUtils.runCommand(CLEANING_COMMAND);
-        } else {
-            RootUtils.runCommand("mkdir '" + FLASH_FOLDER + "'");
         }
-        mFlashingResult.append("** Checking for unzip binary! ");
+        makeInternalStorageFolder(FLASH_FOLDER);
+        mFlashingResult.append("** Checking for unzip binary: ");
         if (isUnzipAvailable()) {
-            mFlashingResult.append("Available...\n");
+            mFlashingResult.append("Available *\n\n");
         } else if (BusyBoxPath() != null) {
-            mFlashingResult.append("Available...\n");
+            mFlashingResult.append("Native Binary Unavailable *\nloop mounting BusyBox binaries to '/system/xbin' *\n\n");
             Utils.mount("-o --bind", BusyBoxPath(), "/system/xbin");
         } else {
-            mFlashingResult.append("Unavailable...\n** Suggestion: Please consider installing a standalone BusyBox on your device! *\n");
+            mFlashingResult.append("Unavailable *\n\n");
         }
-        RootUtils.runCommand("unzip " + file.toString() + " -d '" + FLASH_FOLDER + "'");
+        mFlashingResult.append("** Extracting zip file into working folder: ");
+        RootUtils.runAndGetError("unzip " + path + " -d '" + FLASH_FOLDER + "'");
         if (Utils.existFile(ZIPFILE_EXTRACTED)) {
-            mFlashingResult.append("\n** Extracting ").append(file.getName()).append(" into working folder: Done *\n\n");
-            mFlashingResult.append("** Preparing a recovery-like environment for flashing...\n\n");
+            mFlashingResult.append(" Done *\n\n");
+            mFlashingResult.append("** Preparing a recovery-like environment for flashing...\n");
             RootUtils.runCommand("cd '" + FLASH_FOLDER + "'");
-            mFlashingResult.append("** Mounting root file system: Done *\n\n");
-            RootUtils.runCommand(mountRootFS("rw"));
-            RootUtils.runCommand("mkdir /tmp");
-            mFlashingResult.append("** Preparing a temporary ext4 image and loop mounting to '/tmp': Done *\n\n");
-            RootUtils.runCommand("mke2fs -F tmp.ext4 500000");
-            Utils.mount("-o loop", "tmp.ext4", "/tmp/");
-            mFlashingResult.append("\n** Flashing ").append(file.getName()).append(" ...\n");
-            return RootUtils.runCommand(flashingCommand + " && " + CLEANING_COMMAND + " && " +
-                    mountRootFS("ro"));
+            mFlashingResult.append(RootUtils.runCommand(mountRootFS("rw"))).append(" \n");
+            mFlashingResult.append(RootUtils.runAndGetError("mkdir /tmp")).append(" \n");
+            mFlashingResult.append(RootUtils.runAndGetError("mke2fs -F tmp.ext4 500000")).append(" \n");
+            mFlashingResult.append(RootUtils.runAndGetError("mount -o loop tmp.ext4 /tmp/")).append(" \n\n");
+            mFlashingResult.append("** Flashing ...\n\n");
+            mFlashingResult.append(RootUtils.runCommand(flashingCommand));
         } else {
-            mFlashingResult.append("** Extracting zip file failed! *\n\n");
-            mFlashingResult.append("** Flashing Failed! *\n** Reason: Necessary BusyBox binaries not available! *");
-            return RootUtils.runCommand(CLEANING_COMMAND + " && " +
-                    mountRootFS("ro"));
+            mFlashingResult.append(" Failed *\n\n");
+            mFlashingResult.append("** Flashing Failed *");
         }
-    }
-
-    public static void flashingTask(File file, Context context) {
-        new AsyncTask<Void, Void, String>() {
-            private ProgressDialog mProgressDialog;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(context);
-                mProgressDialog.setMessage(context.getString(R.string.flashing) + (" ") + file.getName());
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-            protected String doInBackground(Void... voids) {
-                if (mFlashingResult == null) {
-                    mFlashingResult = new StringBuilder();
-                } else {
-                    mFlashingResult.setLength(0);
-                }
-                mFlashingResult.append("## Flasher log created by Smart Flasher\n\n");
-                mFlashingResult.append("** Preparing to flash ").append(file.getName()).append("...\n\n");
-                mFlashingResult.append("** Path: '").append(file.toString()).append("'\n\n");
-                return manualFlash(file);
-            }
-            @SuppressLint("StaticFieldLeak")
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                boolean flashResult = s != null && !s.isEmpty();
-                Dialog flashingResult = new Dialog(context);
-                flashingResult.setIcon(R.mipmap.ic_launcher);
-                flashingResult.setTitle(context.getString(R.string.last_flash));
-                flashingResult.setCancelable(false);
-                flashingResult.setMessage(mFlashingResult.toString() + (flashResult ? "\n" + s : ""));
-                flashingResult.setNeutralButton(context.getString(R.string.save_log), (dialog, id) -> {
-                    Utils.create(mFlashingResult.toString() + "\n" + s, FLASHER_LOG + "_" +
-                            file.getName().replace(".zip", ""));
-                    Utils.toast(context.getString(R.string.save_log_message, FLASHER_LOG + "_" + file.getName()
-                            .replace(".zip", "")), context);
-                });
-                flashingResult.setNegativeButton(context.getString(R.string.cancel), (dialog, id) -> {
-                });
-                flashingResult.setPositiveButton(context.getString(R.string.reboot), (dialog, id) -> {
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected void onPreExecute() {
-                            super.onPreExecute();
-                            mProgressDialog = new ProgressDialog(context);
-                            mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
-                            mProgressDialog.setCancelable(false);
-                            mProgressDialog.show();
-                        }
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            RootUtils.runCommand(Utils.prepareReboot());
-                            return null;
-                        }
-                        @Override
-                        protected void onPostExecute(Void aVoid) {
-                            super.onPostExecute(aVoid);
-                            try {
-                                mProgressDialog.dismiss();
-                            } catch (IllegalArgumentException ignored) {
-                            }
-                        }
-                    }.execute();
-                });
-                flashingResult.show();
-            }
-        }.execute();
+        RootUtils.runCommand(CLEANING_COMMAND);
+        Utils.delete("/data/local/tmp/flash.zip");
+        RootUtils.runCommand(mountRootFS("ro"));
     }
 
     public static void flashBootPartition(File file) {
