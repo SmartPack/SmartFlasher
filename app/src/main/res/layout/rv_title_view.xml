@@ -10,4 +10,4 @@
     android:paddingTop="10dp"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
-    android:textColor="?attr/colorSecondary"/>
+    android:textColor="?attr/colorAccent"/>

@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,6 +37,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
@@ -82,17 +84,20 @@ public class Utils {
     }
 
     private static final String TAG = Utils.class.getSimpleName();
-    private static final String DONATION_PACKAGE = "com.smartpack.donate";
 
     private InterstitialAd mInterstitialAd;
 
-    public static boolean isDonated(Context context) {
+    public static boolean isPackageInstalled(String id, Context context) {
         try {
-            context.getPackageManager().getApplicationInfo(DONATION_PACKAGE, 0);
+            context.getPackageManager().getApplicationInfo(id, 0);
             return true;
         } catch (PackageManager.NameNotFoundException ignored) {
             return false;
         }
+    }
+
+    public static boolean isDonated(Context context) {
+        return isPackageInstalled("com.smartpack.donate", context);
     }
 
     public static void initializeAppTheme(Context context) {
@@ -119,6 +124,14 @@ public class Utils {
                 mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         }
+    }
+
+    public static Drawable getColoredIcon(int icon, Context context) {
+        TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        Drawable drawable = context.getResources().getDrawable(icon);
+        drawable.setTint(value.data);
+        return drawable;
     }
 
     public static boolean isTv(Context context) {

@@ -220,7 +220,7 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         if (KernelUpdater.getLatestVersion().equals("Unavailable")) {
             DescriptionView info = new DescriptionView();
-            info.setDrawable(getResources().getDrawable(R.drawable.ic_info));
+            info.setDrawable(Utils.getColoredIcon(R.drawable.ic_info, requireActivity()));
             info.setTitle(getString(R.string.update_channel_info, Utils.getInternalDataStorage()));
             info.setFullSpan(true);
             info.setOnItemClickListener(item ->
@@ -323,19 +323,21 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     private void SmartPackInit(List<RecyclerViewItem> items) {
-        TitleView bb = new TitleView();
-        bb.setText(getString(R.string.busybox_installer));
+        if (!Utils.isPackageInstalled("com.smartpack.busyboxinstaller", requireActivity())) {
+            TitleView bb = new TitleView();
+            bb.setText(getString(R.string.busybox_installer));
 
-        items.add(bb);
+            items.add(bb);
 
-        DescriptionView busybox = new DescriptionView();
-        busybox.setDrawable(getResources().getDrawable(R.drawable.ic_playstore));
-        busybox.setSummary(getString(R.string.busybox_installer_summary));
-        busybox.setFullSpan(true);
-        busybox.setOnItemClickListener(item -> {
-            Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.busyboxinstaller", getActivity());
-        });
-        items.add(busybox);
+            DescriptionView busybox = new DescriptionView();
+            busybox.setDrawable(getResources().getDrawable(R.drawable.ic_playstore));
+            busybox.setSummary(getString(R.string.busybox_installer_summary));
+            busybox.setFullSpan(true);
+            busybox.setOnItemClickListener(item -> {
+                Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.busyboxinstaller", getActivity());
+            });
+            items.add(busybox);
+        }
 
         TitleView other_options = new TitleView();
         other_options.setText(getString(R.string.other_options));

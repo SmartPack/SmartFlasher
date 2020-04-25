@@ -134,7 +134,7 @@ public class AboutFragment extends RecyclerViewFragment {
         items.add(allow_ads);
 
         SwitchView dark_theme = new SwitchView();
-        dark_theme.setDrawable(getResources().getDrawable(R.drawable.ic_color));
+        dark_theme.setDrawable(Utils.getColoredIcon(R.drawable.ic_color, requireActivity()));
         dark_theme.setSummary(getString(R.string.dark_theme));
         dark_theme.setChecked(Prefs.getBoolean("dark_theme", true, getActivity()));
         dark_theme.addOnSwitchListener((switchview, isChecked) -> {
@@ -165,7 +165,7 @@ public class AboutFragment extends RecyclerViewFragment {
         items.add(sourcecode);
 
         DescriptionView language = new DescriptionView();
-        language.setDrawable(getResources().getDrawable(R.drawable.ic_language));
+        language.setDrawable(Utils.getColoredIcon(R.drawable.ic_language, requireActivity()));
         language.setTitle(getString(R.string.language, Utils.getLanguage(getActivity())));
         language.setMenuIcon(getResources().getDrawable(R.drawable.ic_dots));
         language.setOnMenuListener((script, popupMenu) -> {
@@ -375,14 +375,14 @@ public class AboutFragment extends RecyclerViewFragment {
             donate_to_me.setTitle(getString(R.string.donate_me));
             if (Utils.isDonated(requireActivity())) {
                 donate_to_me.setMessage(getString(R.string.donate_me_message));
-                donate_to_me.setNegativeButton(getString(R.string.donate_nope), (dialogInterface, i) -> {
-                });
             } else {
                 donate_to_me.setMessage(getString(R.string.donate_me_message) + getString(R.string.donate_me_playstore));
                 donate_to_me.setNegativeButton(getString(R.string.purchase_app), (dialogInterface, i) -> {
                     Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.donate", getActivity());
                 });
             }
+            donate_to_me.setNeutralButton(getString(R.string.donate_nope), (dialogInterface, i) -> {
+            });
             donate_to_me.setPositiveButton(getString(R.string.paypal_donation), (dialog1, id1) -> {
                 Utils.launchUrl("https://www.paypal.me/menacherry", getActivity());
             });

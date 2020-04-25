@@ -21,7 +21,6 @@
 package com.smartpack.smartflasher.utils;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 
 import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
@@ -38,18 +37,12 @@ import java.io.File;
 
 public class UpdateCheck {
 
-    private static final String PLAY_STORE = "com.android.vending";
     private static final String LATEST_VERSION = Utils.getInternalDataStorage() + "/version";
     private static final String LATEST_VERSION_URL = "https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/release/version.json?raw=true";
     private static final String DOWNLOAD_PAGE_URL = "https://github.com/SmartPack/SmartFlasher/tree/master/release";
 
     public static boolean isPlayStoreInstalled(Context context) {
-        try {
-            context.getPackageManager().getApplicationInfo(PLAY_STORE, 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException ignored) {
-            return false;
-        }
+        return Utils.isPackageInstalled("com.android.vending", context);
     }
 
     private static void getVersionInfo() {

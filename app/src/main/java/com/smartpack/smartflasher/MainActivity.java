@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!RootUtils.rootAccess()) {
             textView.setText(getString(R.string.no_root));
-            unsupported.setImageDrawable(getResources().getDrawable(R.drawable.ic_help));
+            unsupported.setImageDrawable(Utils.getColoredIcon(R.drawable.ic_help, this));
             return;
         }
 

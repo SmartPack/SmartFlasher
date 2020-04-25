@@ -149,7 +149,7 @@ public class BackupFragment extends RecyclerViewFragment {
                                     items.addAll(backupPartitions);
                                 } else {
                                     DescriptionView backup = new DescriptionView();
-                                    backup.setDrawable(getResources().getDrawable(R.drawable.ic_info));
+                                    backup.setDrawable(Utils.getColoredIcon(R.drawable.ic_info, requireActivity()));
                                     backup.setTitle(getString(R.string.nothing_found));
                                     backup.setSummary(getString(R.string.nothing_found_summary, Utils.getInternalDataStorage() + "/backup"));
                                     backup.setOnItemClickListener(item -> BackupOptions());
@@ -183,7 +183,7 @@ public class BackupFragment extends RecyclerViewFragment {
                 final File image = new File(Flasher.backupPath() + "/" + backup);
                 if (image.isFile()) {
                     DescriptionView descriptionView = new DescriptionView();
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_img));
+                    descriptionView.setDrawable(Utils.getColoredIcon(R.drawable.ic_img, requireActivity()));
                     descriptionView.setTitle(image.getName().replace(".img", ""));
                     descriptionView.setSummary((image.length() / 1024L / 1024L) + " MB");
                     descriptionView.setOnItemClickListener(item -> {
