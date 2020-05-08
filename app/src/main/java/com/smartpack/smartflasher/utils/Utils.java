@@ -43,9 +43,7 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
+import com.facebook.ads.AudienceNetworkAds;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -85,8 +83,6 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
 
-    private InterstitialAd mInterstitialAd;
-
     public static boolean isPackageInstalled(String id, Context context) {
         try {
             context.getPackageManager().getApplicationInfo(id, 0);
@@ -110,19 +106,9 @@ public class Utils {
         }
     }
 
-    public void initializeGoogleAds(Context context) {
-        if (Prefs.getBoolean("google_ads", true, context)) {
-            MobileAds.initialize(context, "ca-app-pub-7791710838910455~6603969352");
-            mInterstitialAd = new InterstitialAd(context);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7791710838910455/3158159307");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        }
-    }
-
-    public void showInterstitialAd(Context context) {
-        if (Prefs.getBoolean("google_ads", true, context) &&
-                mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+    public void initializeFaceBookAds(Context context) {
+        if (Prefs.getBoolean("allow_ads", true, context)) {
+            AudienceNetworkAds.initialize(context);
         }
     }
 

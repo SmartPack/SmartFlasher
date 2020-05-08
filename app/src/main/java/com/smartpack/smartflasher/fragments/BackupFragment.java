@@ -213,7 +213,6 @@ public class BackupFragment extends RecyclerViewFragment {
         mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
                 (dialogInterface, i) -> {
                 }, (dialogInterface, i) -> {
-                    Utils.getInstance().showInterstitialAd(requireActivity());
                     file.delete();
                     reload();
                 }, dialogInterface -> mDeleteDialog = null, getActivity());
@@ -468,7 +467,6 @@ public class BackupFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
-                Utils.getInstance().showInterstitialAd(requireActivity());
                 ViewUtils.rebootDialog(getActivity());
             }
         }.execute();
@@ -498,7 +496,6 @@ public class BackupFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
-                Utils.getInstance().showInterstitialAd(requireActivity());
                 ViewUtils.rebootDialog(getActivity());
             }
         }.execute();

@@ -427,7 +427,6 @@ public class FlasherFragment extends RecyclerViewFragment {
                 }
                 if (KernelUpdater.getChecksum().equals("Unavailable") || !KernelUpdater.getChecksum().equals("Unavailable") &&
                         Utils.getChecksum(Utils.getInternalDataStorage() + "/Kernel.zip").contains(KernelUpdater.getChecksum())) {
-                    Utils.getInstance().showInterstitialAd(getActivity());
                     new Dialog(requireActivity())
                             .setMessage(getString(R.string.download_completed,
                                     KernelUpdater.getKernelName() + "-" + KernelUpdater.getLatestVersion()))
