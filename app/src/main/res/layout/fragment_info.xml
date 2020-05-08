@@ -15,13 +15,12 @@
         android:gravity="end|center_vertical"
         tools:ignore="UselessParent">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginStart="10dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_width="3dp" />
+            android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:layout_width="match_parent"
