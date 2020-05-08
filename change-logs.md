@@ -1,5 +1,9 @@
 # Change-logs
 
+## 32. May 08, 2020
+*Release-tag: v4.1*<br>
+Improved Root handling. Removed interstitial ads from app. Show flashing failed status if flashing output is empty. Moved menu items into the top part of about page. Miscellaneous changes.
+
 ## 31. April 25, 2020
 *Release-tag: v4.0*<br>
 Main: Migrated to libsu (Credits: @Lennoard). Flasher: Added Brand New Flashing view. Flasher: Largely improved flashing process (include fixes for syntax error). Updated gradle build tools. Miscellaneous changes.
