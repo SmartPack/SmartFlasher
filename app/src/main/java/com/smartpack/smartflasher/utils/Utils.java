@@ -256,7 +256,7 @@ public class Utils {
     }
 
     public static String getChecksum(String path) {
-        return RootUtils.runCommand("sha1sum " + path);
+        return RootUtils.runAndGetOutput("sha1sum " + path);
     }
 
     public static String readFile(String file) {
@@ -303,11 +303,10 @@ public class Utils {
         RootUtils.runCommand("echo '" + text + "' > " + path);
     }
 
-    public static String delete(String path) {
+    public static void delete(String path) {
         if (Utils.existFile(path)) {
-            return RootUtils.runCommand("rm -r " + path);
+            RootUtils.runCommand("rm -r " + path);
         }
-        return null;
     }
 
     static void mount(String command, String source, String dest) {

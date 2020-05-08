@@ -337,10 +337,10 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     private void backup_boot_partition() {
-        ViewUtils.dialogEditText(RootUtils.runCommand("uname -r"),
+        ViewUtils.dialogEditText(RootUtils.runAndGetOutput("uname -r"),
                 (dialogInterface, i) -> {
                 }, new ViewUtils.OnDialogEditTextListener() {
-                    @SuppressLint("StaticFieldLeak")
+                    @SuppressLint({"StaticFieldLeak", "StringFormatInvalid"})
                     @Override
                     public void onClick(String text) {
                         if (text.isEmpty()) {

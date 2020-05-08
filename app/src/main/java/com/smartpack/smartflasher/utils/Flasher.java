@@ -139,12 +139,12 @@ public class Flasher {
             mFlashingResult.append(" Done *\n\n");
             mFlashingResult.append("** Preparing a recovery-like environment for flashing...\n");
             RootUtils.runCommand("cd '" + FLASH_FOLDER + "'");
-            mFlashingResult.append(RootUtils.runCommand(mountRootFS("rw"))).append(" \n");
+            mFlashingResult.append(RootUtils.runAndGetError(mountRootFS("rw"))).append(" \n");
             mFlashingResult.append(RootUtils.runAndGetError("mkdir /tmp")).append(" \n");
             mFlashingResult.append(RootUtils.runAndGetError("mke2fs -F tmp.ext4 500000")).append(" \n");
             mFlashingResult.append(RootUtils.runAndGetError("mount -o loop tmp.ext4 /tmp/")).append(" \n\n");
             mFlashingResult.append("** Flashing ...\n\n");
-            mFlashingResult.append(RootUtils.runCommand(flashingCommand));
+            mFlashingResult.append(RootUtils.runAndGetOutput(flashingCommand));
         } else {
             mFlashingResult.append(" Failed *\n\n");
             mFlashingResult.append("** Flashing Failed *");

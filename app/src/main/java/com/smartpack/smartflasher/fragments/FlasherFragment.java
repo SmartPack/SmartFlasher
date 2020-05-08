@@ -145,7 +145,7 @@ public class FlasherFragment extends RecyclerViewFragment {
 
         DescriptionView kernelinfo = new DescriptionView();
         kernelinfo.setTitle(getString(R.string.kernel));
-        kernelinfo.setSummary(RootUtils.runCommand("uname -r"));
+        kernelinfo.setSummary(RootUtils.runAndGetOutput("uname -r"));
 
         items.add(kernelinfo);
 

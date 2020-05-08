@@ -52,8 +52,12 @@ public class RootUtils {
         return Shell.rootAccess();
     }
 
+    public static void runCommand(String command) {
+        Shell.su(command).exec();
+    }
+
     @NonNull
-    public static String runCommand(String command) {
+    public static String runAndGetOutput(String command) {
         StringBuilder sb = new StringBuilder();
         try {
             List<String> outputs = Shell.su(command).exec().getOut();
@@ -62,7 +66,7 @@ public class RootUtils {
                     sb.append(output).append("\n");
                 }
             }
-            return removeSuffix(sb.toString(), "\n").trim();
+            return removeSuffix(sb.toString()).trim();
         } catch (Exception e) {
             return "";
         }
@@ -81,17 +85,17 @@ public class RootUtils {
                     sb.append(output).append("\n");
                 }
             }
-            return removeSuffix(sb.toString(), "\n").trim();
+            return removeSuffix(sb.toString()).trim();
         } catch (Exception e) {
             return "";
         }
     }
 
-    private static String removeSuffix(@Nullable String s, @Nullable String suffix) {
-        if (s != null && suffix != null && s.endsWith(suffix)) {
-            return s.substring(0, s.length() - suffix.length());
+    private static String removeSuffix(@Nullable String s) {
+        if (s != null && s.endsWith("\n")) {
+            return s.substring(0, s.length() - "\n".length());
         }
         return s;
     }
-
+    
 }
