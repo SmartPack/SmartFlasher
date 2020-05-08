@@ -456,6 +456,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             protected void onPreExecute() {
                 super.onPreExecute();
                 Flasher.mFlashing = true;
+                Flasher.mZipName = file.getName();
                 if (Flasher.mFlashingResult == null) {
                     Flasher.mFlashingResult = new StringBuilder();
                 } else {

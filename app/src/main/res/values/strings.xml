@@ -41,6 +41,7 @@
     <string name="flasher">Flasher</string>
     <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
+    <string name="flashing_failed">Flashing Failed</string>
     <string name="flashing_finished">Flashing Finished</string>
     <string name="flash_img_warning">\n\nWarning: Flashing a wrong \'img\' file likely brick your device. Please be careful.\n</string>
     <string name="flash">Flash</string>
