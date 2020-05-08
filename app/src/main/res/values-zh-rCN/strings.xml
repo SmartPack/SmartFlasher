@@ -29,7 +29,6 @@
     <string name="flash">刷入</string>
     <string name="flasher_warning">\n\n警告：此功能仍是非常新的功能，正在开发中。它可能与许多可用于恢复模式的 zip 文件不完全兼容。如果您认为由于上述不兼容而导致刷入过程在任何情况下均失败，请在执行任何操作之前立即重新启动应用程序。\n\n ***风险自负***\n</string>
     <string name="kernel">內核</string>
-    <string name="last_flash">刷入日志</string>
     <string name="licence">授权协议</string>
     <string name="more">更多</string>
     <string name="name_empty">名称为空！</string>

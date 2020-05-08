@@ -62,7 +62,6 @@
     <string name="language_pt">Portuguese</string>
     <string name="language_ru">Russian</string>
     <string name="language_ch">Chinese</string>
-    <string name="last_flash">Flasher Log</string>
     <string name="licence">License</string>
     <string name="licence_message" translatable="false">Smart Flasher is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nSmart Flasher is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with Smart Flasher. If not, visit http://www.gnu.org/licenses/.</string>
     <string name="more">More</string>
@@ -93,7 +92,6 @@
     <string name="rebooting">Rebooting</string>
     <string name="remove">Remove</string>
     <string name="restore">Restore</string>
-    <string name="save_log">Save Log</string>
     <string name="save_log_message">Flasher Log file is exported as %s!</string>
     <string name="share">Share</string>
     <string name="share_app">Share App</string>
