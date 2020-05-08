@@ -158,16 +158,16 @@ public class FlasherFragment extends RecyclerViewFragment {
             if (!Utils.checkWriteStoragePermission(requireActivity())) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-                Utils.toast(R.string.permission_denied_write_storage, getActivity());
+                Utils.snackbar(getRootView(), getString(R.string.permission_denied_write_storage));
                 return;
             }
             if (Utils.networkUnavailable(requireActivity())) {
-                Utils.toast(R.string.no_internet, getActivity());
+                Utils.snackbar(getRootView(), getString(R.string.no_internet));
                 return;
             }
             if (value.isEmpty()) {
                 KernelUpdater.clearUpdateInfo();
-                Utils.toast(R.string.update_channel_empty, getActivity());
+                Utils.snackbar(getRootView(), getString(R.string.update_channel_empty));
                 reload();
                 return;
             }
@@ -267,11 +267,11 @@ public class FlasherFragment extends RecyclerViewFragment {
                 if (!Utils.checkWriteStoragePermission(requireActivity())) {
                     ActivityCompat.requestPermissions(requireActivity(), new String[]{
                             Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    Utils.toast(R.string.permission_denied_write_storage, getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.permission_denied_write_storage));
                     return;
                 }
                 if (Utils.networkUnavailable(requireActivity())) {
-                    Utils.toast(getString(R.string.no_internet), getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.no_internet));
                     return;
                 }
                 downloadKernel();
@@ -297,7 +297,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             donations.setSummary(getString(R.string.donations_summary));
             donations.setOnItemClickListener(item -> {
                 if (KernelUpdater.getDonationLink().equals("Unavailable")) {
-                    Utils.toast(getString(R.string.donations_unknown), getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.donations_unknown));
                     return;
                 }
                 Utils.launchUrl(KernelUpdater.getDonationLink(), getActivity());
@@ -313,8 +313,8 @@ public class FlasherFragment extends RecyclerViewFragment {
             update_check.addOnSwitchListener((switchview, isChecked) -> {
                 Prefs.saveBoolean("update_check", isChecked, getActivity());
                 if (Prefs.getBoolean("update_check", true, getActivity())) {
-                    Utils.toast(getString(R.string.update_check_message, !KernelUpdater.getKernelName().
-                            equals("Unavailable") ? KernelUpdater.getKernelName() : "this"), getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.update_check_message, !KernelUpdater.getKernelName().
+                            equals("Unavailable") ? KernelUpdater.getKernelName() : "this"));
                 }
             });
 
@@ -491,7 +491,7 @@ public class FlasherFragment extends RecyclerViewFragment {
         if (!Utils.checkWriteStoragePermission(requireActivity())) {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-            Utils.toast(R.string.permission_denied_write_storage, getActivity());
+            Utils.snackbar(getRootView(), getString(R.string.permission_denied_write_storage));
             return;
         }
 
@@ -525,6 +525,7 @@ public class FlasherFragment extends RecyclerViewFragment {
         }
     }
 
+    @SuppressLint({"StringFormatInvalid", "StringFormatMatches"})
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -544,7 +545,7 @@ public class FlasherFragment extends RecyclerViewFragment {
             }
             if (requestCode == 0) {
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {
-                    Utils.toast(getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)), getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.file_size_limit, (Flasher.fileSize(new File(mPath)) / 1000000)));
                 }
                 Dialog flashzip = new Dialog(requireActivity());
                 flashzip.setIcon(R.mipmap.ic_launcher);

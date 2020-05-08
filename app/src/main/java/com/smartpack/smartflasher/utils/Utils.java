@@ -38,12 +38,14 @@ import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.material.snackbar.Snackbar;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -201,6 +203,12 @@ public class Utils {
 
     private static void toast(String message, Context context, int duration) {
         Toast.makeText(context, message, duration).show();
+    }
+
+    public static void snackbar(View view, String message) {
+        Snackbar snackbar;
+        snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     public static void launchUrl(String url, Context context) {

@@ -358,7 +358,7 @@ public class AboutFragment extends RecyclerViewFragment {
             updateCheck.setSummary(getString(R.string.update_check_summary));
             updateCheck.setOnItemClickListener(item -> {
                 if (Utils.networkUnavailable(requireActivity())) {
-                    Utils.toast(R.string.no_internet, getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.no_internet));
                     return;
                 }
                 UpdateCheck.updateCheck(getActivity());
