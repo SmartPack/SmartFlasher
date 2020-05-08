@@ -38,15 +38,14 @@ import androidx.core.app.ActivityCompat;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.FlashingActivity;
-import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.KernelUpdater;
+import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
-import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.dialog.Dialog;
+import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.recyclerview.GenericSelectView;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
-import com.smartpack.smartflasher.views.recyclerview.SwitchView;
 import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
 import java.io.File;
@@ -187,6 +186,8 @@ public class FlasherFragment extends RecyclerViewFragment {
                 Menu menu = popupMenu.getMenu();
                 menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.remove));
                 menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.share));
+                menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.update_check)).setCheckable(true)
+                        .setChecked(Prefs.getBoolean("update_check", false, getActivity()));
                 popupMenu.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case 0:
@@ -209,6 +210,15 @@ public class FlasherFragment extends RecyclerViewFragment {
                             shareChannel.setType("text/plain");
                             Intent shareIntent = Intent.createChooser(shareChannel, null);
                             startActivity(shareIntent);
+                            break;
+                        case 2:
+                            if (Prefs.getBoolean("update_check", false, getActivity())) {
+                                Prefs.saveBoolean("update_check", false, getActivity());
+                            } else {
+                                Prefs.saveBoolean("update_check", true, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.update_check_message, !KernelUpdater.getKernelName().
+                                        equals("Unavailable") ? KernelUpdater.getKernelName() : "this"));
+                            }
                             break;
                     }
                     return false;
@@ -304,21 +314,6 @@ public class FlasherFragment extends RecyclerViewFragment {
             });
 
             items.add(donations);
-        }
-
-        if (!KernelUpdater.getKernelName().equals("Unavailable") && Utils.isDownloadBinaries()) {
-            SwitchView update_check = new SwitchView();
-            update_check.setSummary(getString(R.string.update_check));
-            update_check.setChecked(Prefs.getBoolean("update_check", false, getActivity()));
-            update_check.addOnSwitchListener((switchview, isChecked) -> {
-                Prefs.saveBoolean("update_check", isChecked, getActivity());
-                if (Prefs.getBoolean("update_check", true, getActivity())) {
-                    Utils.snackbar(getRootView(), getString(R.string.update_check_message, !KernelUpdater.getKernelName().
-                            equals("Unavailable") ? KernelUpdater.getKernelName() : "this"));
-                }
-            });
-
-            items.add(update_check);
         }
     }
 
