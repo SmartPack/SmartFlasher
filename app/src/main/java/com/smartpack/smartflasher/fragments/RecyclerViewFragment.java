@@ -38,34 +38,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
-import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.ViewUtils;
+import com.smartpack.smartflasher.viewpagerindicator.CirclePageIndicator;
 import com.smartpack.smartflasher.views.dialog.ViewPagerDialog;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewAdapter;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
-import com.smartpack.smartflasher.viewpagerindicator.CirclePageIndicator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -86,6 +86,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private Handler mHandler;
     private ScheduledThreadPoolExecutor mPoolExecutor;
+
+    private View mRootView;
 
     private List<RecyclerViewItem> mItems = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -124,15 +126,16 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         mHandler = new Handler();
 
         mRecyclerView = mRootView.findViewById(R.id.recyclerview);
 
-        if (Prefs.getBoolean("google_ads", true, requireActivity())) {
-            AdView mAdView = mRootView.findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+        if (Prefs.getBoolean("allow_ads", true, requireActivity())) {
+            AdView mAdView = new AdView(requireActivity(), "634517477132281_634728027111226", AdSize.BANNER_HEIGHT_50);
+            LinearLayout adContainer = mRootView.findViewById(R.id.banner_container);
+            adContainer.addView(mAdView);
+            mAdView.loadAd();
         }
 
         if (mViewPagerFragments != null) {
@@ -666,6 +669,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private boolean autoHideBottomFab() {
         return true;
+    }
+
+    View getRootView() {
+        return mRootView;
     }
 
     @Override

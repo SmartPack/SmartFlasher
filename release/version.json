@@ -1,6 +1,6 @@
 {
-  "version": 31,
-  "changelog": "Change-logs\n - Main: Migrated to libsu (Credits: @Lennoard).\n - Flasher: Added Brand New Flashing view.\n - Flasher: Largely improved flashing process (include fixes for syntax error).\n - Updated gradle build tools.\n - Miscellaneous changes.",
-  "versionName": "4.0",
+  "version": 32,
+  "changelog": "Change-logs\n - Improved Root handling.\n - Removed interstitial ads from app.\n - Show flashing failed status if flashing output is empty.\n - Moved menu items into the top part of about page.\n - Miscellaneous changes.",
+  "versionName": "4.1",
   "inherit": true
 }

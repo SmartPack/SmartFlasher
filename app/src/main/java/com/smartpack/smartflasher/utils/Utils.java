@@ -38,14 +38,14 @@ import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
+import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.material.snackbar.Snackbar;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -85,8 +85,6 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
 
-    private InterstitialAd mInterstitialAd;
-
     public static boolean isPackageInstalled(String id, Context context) {
         try {
             context.getPackageManager().getApplicationInfo(id, 0);
@@ -110,19 +108,9 @@ public class Utils {
         }
     }
 
-    public void initializeGoogleAds(Context context) {
-        if (Prefs.getBoolean("google_ads", true, context)) {
-            MobileAds.initialize(context, "ca-app-pub-7791710838910455~6603969352");
-            mInterstitialAd = new InterstitialAd(context);
-            mInterstitialAd.setAdUnitId("ca-app-pub-7791710838910455/3158159307");
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        }
-    }
-
-    public void showInterstitialAd(Context context) {
-        if (Prefs.getBoolean("google_ads", true, context) &&
-                mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+    public void initializeFaceBookAds(Context context) {
+        if (Prefs.getBoolean("allow_ads", true, context)) {
+            AudienceNetworkAds.initialize(context);
         }
     }
 
@@ -217,6 +205,12 @@ public class Utils {
         Toast.makeText(context, message, duration).show();
     }
 
+    public static void snackbar(View view, String message) {
+        Snackbar snackbar;
+        snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
     public static void launchUrl(String url, Context context) {
         if (Utils.networkUnavailable(context)) {
             Utils.toast(R.string.no_internet, context);
@@ -270,7 +264,7 @@ public class Utils {
     }
 
     public static String getChecksum(String path) {
-        return RootUtils.runCommand("sha1sum " + path);
+        return RootUtils.runAndGetOutput("sha1sum " + path);
     }
 
     public static String readFile(String file) {
@@ -317,11 +311,10 @@ public class Utils {
         RootUtils.runCommand("echo '" + text + "' > " + path);
     }
 
-    public static String delete(String path) {
+    public static void delete(String path) {
         if (Utils.existFile(path)) {
-            return RootUtils.runCommand("rm -r " + path);
+            RootUtils.runCommand("rm -r " + path);
         }
-        return null;
     }
 
     static void mount(String command, String source, String dest) {

@@ -19,7 +19,6 @@
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>
     <string name="kernel">Kernel</string>
-    <string name="last_flash">Histórico de instalação</string>
     <string name="licence">Licensa</string>
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
@@ -93,7 +92,6 @@
     <string name="rebooting">Reiniciando</string>
     <string name="remove">Remover</string>
     <string name="restore">Restaurar</string>
-    <string name="save_log">Salvar o Registro</string>
     <string name="save_log_message">O registro do flasher foi exportado como %s!</string>
     <string name="share">Compartilhar</string>
     <string name="share_app_summary">Compartilhar o Smart Flasher com seus amigos</string>

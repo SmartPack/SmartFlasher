@@ -54,8 +54,9 @@ public class FlashingActivity extends AppCompatActivity {
         mRebootButton = findViewById(R.id.reboot_button);
         mSaveButton.setOnClickListener(v -> {
             Utils.create("## Flasher log created by Smart Flasher\n\n" + Flasher.mFlashingResult.toString(),
-                    Utils.getInternalDataStorage() + "/flasher_log");
-            Utils.toast(getString(R.string.save_log_message, Utils.getInternalDataStorage() + "/flasher_log"), getApplicationContext());
+                    Utils.getInternalDataStorage() + "/flasher_log-" + Flasher.mZipName.replace(".zip", ""));
+            Utils.toast(getString(R.string.save_log_message, Utils.getInternalDataStorage() + "/flasher_log-" +
+                    Flasher.mZipName.replace(".zip", "")), this);
         });
         mCancelButton.setOnClickListener(v -> {
             onBackPressed();
@@ -78,7 +79,11 @@ public class FlashingActivity extends AppCompatActivity {
                             if (Flasher.mFlashingResult != null) {
                                 mFlashingResult.setText(Flasher.mFlashingResult.toString());
                                 if (!Flasher.mFlashing) {
-                                    mFlashingHeading.setText(R.string.flashing_finished);
+                                    if (Flasher.mFlashingOutput.isEmpty()) {
+                                        mFlashingHeading.setText(R.string.flashing_failed);
+                                    } else {
+                                        mFlashingHeading.setText(R.string.flashing_finished);
+                                    }
                                     mCancelButton.setVisibility(View.VISIBLE);
                                     mSaveButton.setVisibility(View.VISIBLE);
                                     mRebootButton.setVisibility(View.VISIBLE);

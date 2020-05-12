@@ -49,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean mExit;
     private Handler mHandler = new Handler();
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // Initialize App Theme & Google Ads
+        // Initialize App Theme & FaceBook Ads
         Utils.initializeAppTheme(this);
-        Utils.getInstance().initializeGoogleAds(this);
+        Utils.getInstance().initializeFaceBookAds(this);
         super.onCreate(savedInstanceState);
         // Set App Language
         Utils.setLanguage(this);
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatImageView unsupported = findViewById(R.id.no_root_Image);
         TextView textView = findViewById(R.id.no_root_Text);
         TabLayout tabLayout = findViewById(R.id.tabLayoutID);
-        ViewPager viewPager = findViewById(R.id.viewPagerID);
+        mViewPager = findViewById(R.id.viewPagerID);
 
         if (!RootUtils.rootAccess()) {
             textView.setText(getString(R.string.no_root));
@@ -76,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.AddFragment(new BackupFragment(), getString(R.string.backup));
         adapter.AddFragment(new AboutFragment(), getString(R.string.about));
 
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        mViewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
     public void androidRooting(View view) {
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 mExit = false;
                 super.onBackPressed();
             } else {
-                Utils.toast(R.string.press_back, this);
+                Utils.snackbar(mViewPager, getString(R.string.press_back));
                 mExit = true;
                 mHandler.postDelayed(() -> mExit = false, 2000);
             }

@@ -213,7 +213,6 @@ public class BackupFragment extends RecyclerViewFragment {
         mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
                 (dialogInterface, i) -> {
                 }, (dialogInterface, i) -> {
-                    Utils.getInstance().showInterstitialAd(requireActivity());
                     file.delete();
                     reload();
                 }, dialogInterface -> mDeleteDialog = null, getActivity());
@@ -226,16 +225,16 @@ public class BackupFragment extends RecyclerViewFragment {
                     switch (i) {
                         case 0:
                             if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                                Utils.toast(R.string.boot_partition_unknown, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.boot_partition_unknown));
                             } else {
                                 flash_boot_partition(file);
                             }
                             break;
                         case 1:
                             if (Flasher.isABDevice()) {
-                                Utils.toast(R.string.ab_message, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.ab_message));
                             } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                                Utils.toast(R.string.recovery_partition_unknown, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.recovery_partition_unknown));
                             } else {
                                 flash_recovery_partition(file);
                             }
@@ -265,7 +264,7 @@ public class BackupFragment extends RecyclerViewFragment {
         } else {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-            Utils.toast(R.string.permission_denied_write_storage, getActivity());
+            Utils.snackbar(getRootView(), getString(R.string.permission_denied_write_storage));
             return;
         }
 
@@ -289,16 +288,16 @@ public class BackupFragment extends RecyclerViewFragment {
                     switch (i) {
                         case 0:
                             if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                                Utils.toast(R.string.boot_partition_unknown, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.boot_partition_unknown));
                             } else {
                                 backup_boot_partition();
                             }
                             break;
                         case 1:
                             if (Flasher.isABDevice()) {
-                                Utils.toast(R.string.ab_message, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.ab_message));
                             } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                                Utils.toast(R.string.recovery_partition_unknown, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.recovery_partition_unknown));
                             } else {
                                 backup_recovery_partition();
                             }
@@ -314,7 +313,7 @@ public class BackupFragment extends RecyclerViewFragment {
                     switch (i) {
                         case 0:
                             if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                                Utils.toast(R.string.boot_partition_unknown, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.boot_partition_unknown));
                             } else {
                                 Intent boot_img = new Intent(Intent.ACTION_GET_CONTENT);
                                 boot_img.setType("*/*");
@@ -323,9 +322,9 @@ public class BackupFragment extends RecyclerViewFragment {
                             break;
                         case 1:
                             if (Flasher.isABDevice()) {
-                                Utils.toast(R.string.ab_message, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.ab_message));
                             } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                                Utils.toast(R.string.recovery_partition_unknown, getActivity());
+                                Utils.snackbar(getRootView(), getString(R.string.recovery_partition_unknown));
                             } else {
                                 Intent rec_img = new Intent(Intent.ACTION_GET_CONTENT);
                                 rec_img.setType("*/*");
@@ -338,14 +337,14 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     private void backup_boot_partition() {
-        ViewUtils.dialogEditText(RootUtils.runCommand("uname -r"),
+        ViewUtils.dialogEditText(RootUtils.runAndGetOutput("uname -r"),
                 (dialogInterface, i) -> {
                 }, new ViewUtils.OnDialogEditTextListener() {
-                    @SuppressLint("StaticFieldLeak")
+                    @SuppressLint({"StaticFieldLeak", "StringFormatInvalid"})
                     @Override
                     public void onClick(String text) {
                         if (text.isEmpty()) {
-                            Utils.toast(R.string.name_empty, getActivity());
+                            Utils.snackbar(getRootView(), getString(R.string.name_empty));
                             return;
                         }
                         if (!text.endsWith(".img")) {
@@ -355,7 +354,7 @@ public class BackupFragment extends RecyclerViewFragment {
                             text = text.replace(" ", "_");
                         }
                         if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
-                            Utils.toast(getString(R.string.already_exists, text), getActivity());
+                            Utils.snackbar(getRootView(), getString(R.string.already_exists, text));
                             return;
                         }
                         final String path = text;
@@ -399,7 +398,7 @@ public class BackupFragment extends RecyclerViewFragment {
                     @Override
                     public void onClick(String text) {
                         if (text.isEmpty()) {
-                            Utils.toast(R.string.name_empty, getActivity());
+                            Utils.snackbar(getRootView(), getString(R.string.name_empty));
                             return;
                         }
                         if (!text.endsWith(".img")) {
@@ -409,7 +408,7 @@ public class BackupFragment extends RecyclerViewFragment {
                             text = text.replace(" ", "_");
                         }
                         if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
-                            Utils.toast(getString(R.string.already_exists, text), getActivity());
+                            Utils.snackbar(getRootView(), getString(R.string.already_exists, text));
                             return;
                         }
                         final String path = text;
@@ -468,7 +467,6 @@ public class BackupFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
-                Utils.getInstance().showInterstitialAd(requireActivity());
                 ViewUtils.rebootDialog(getActivity());
             }
         }.execute();
@@ -498,12 +496,12 @@ public class BackupFragment extends RecyclerViewFragment {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException ignored) {
                 }
-                Utils.getInstance().showInterstitialAd(requireActivity());
                 ViewUtils.rebootDialog(getActivity());
             }
         }.execute();
     }
 
+    @SuppressLint("StringFormatInvalid")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -521,7 +519,7 @@ public class BackupFragment extends RecyclerViewFragment {
             } else {
                 mPath = Utils.getPath(file);
                 if (!Utils.getExtension(mPath).equals("img")) {
-                    Utils.toast(getString(R.string.wrong_extension, ".img"), getActivity());
+                    Utils.snackbar(getRootView(), getString(R.string.wrong_extension, ".img"));
                     return;
                 }
             }

@@ -1,5 +1,9 @@
 # Smart Flasher
 
+[![](https://img.shields.io/badge/Smart%20Flasher-v4.1-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
+![](https://img.shields.io/github/contributors/smartpack/SmartFlasher)
+![](https://img.shields.io/github/license/smartpack/SmartFlasher)
+
 ![Smart Flasher](https://github.com/SmartPack/SmartFlasher/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
 
 ### Smart Flasher is a simple tool mainly aimed to make flashing recovery zips much easier.
