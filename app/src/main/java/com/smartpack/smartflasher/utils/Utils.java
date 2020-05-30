@@ -131,6 +131,14 @@ public class Utils {
         return Environment.getExternalStorageDirectory().toString() + "/Smart_Flasher";
     }
 
+    public static void prepareInternalDataStorage() {
+        File file = new File(getInternalDataStorage());
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+        file.mkdirs();
+    }
+
     // MD5 code from
     // https://github.com/CyanogenMod/android_packages_apps_CMUpdater/blob/cm-12.1/src/com/cyanogenmod/updater/utils/MD5.java
     public static boolean checkMD5(String md5, File updateFile) {

@@ -40,6 +40,7 @@ import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.FlashingActivity;
 import com.smartpack.smartflasher.utils.KernelUpdater;
 import com.smartpack.smartflasher.utils.Prefs;
+import com.smartpack.smartflasher.utils.UpdateChannelActivity;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
@@ -231,11 +232,26 @@ public class FlasherFragment extends RecyclerViewFragment {
         if (KernelUpdater.getLatestVersion().equals("Unavailable")) {
             DescriptionView info = new DescriptionView();
             info.setDrawable(Utils.getColoredIcon(R.drawable.ic_info, requireActivity()));
+            info.setMenuIcon(getResources().getDrawable(R.drawable.ic_dots));
             info.setTitle(getString(R.string.update_channel_info, Utils.getInternalDataStorage()));
             info.setFullSpan(true);
-            info.setOnItemClickListener(item ->
-                    Utils.launchUrl("https://smartpack.github.io/kerneldownloads/", getActivity())
-            );
+            info.setOnMenuListener((update_Channel, popupMenu) -> {
+                Menu menu = popupMenu.getMenu();
+                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.documentation));
+                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.update_channel_create));
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case 0:
+                            Utils.launchUrl("https://smartpack.github.io/kerneldownloads/", getActivity());
+                            break;
+                        case 1:
+                            Intent createUpdateChannel = new Intent(getActivity(), UpdateChannelActivity.class);
+                            startActivity(createUpdateChannel);
+                            break;
+                    }
+                    return false;
+                });
+            });
 
             items.add(info);
         }
