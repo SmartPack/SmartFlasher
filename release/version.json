@@ -1,6 +1,6 @@
 {
-  "version": 32,
-  "changelog": "Change-logs\n - Improved Root handling.\n - Removed interstitial ads from app.\n - Show flashing failed status if flashing output is empty.\n - Moved menu items into the top part of about page.\n - Miscellaneous changes.",
-  "versionName": "4.1",
+  "version": 33,
+  "changelog": "Change-logs\n - Added Option to create update channel within app.\n - Updated build tools to latest.\n - Fixed a small issue in flashing.\n - Miscellaneous changes.",
+  "versionName": "4.2",
   "inherit": true
 }

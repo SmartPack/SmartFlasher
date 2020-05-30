@@ -1,5 +1,9 @@
 # Change-logs
 
+## 33. May 30, 2020
+*Release-tag: v4.2*<br>
+Added option to create update channel within app. Updated build tools to latest. Fixed a small issue in flashing. Miscellaneous changes.
+
 ## 32. May 08, 2020
 *Release-tag: v4.1*<br>
 Improved Root handling. Removed interstitial ads from app. Show flashing failed status if flashing output is empty. Moved menu items into the top part of about page. Miscellaneous changes.
