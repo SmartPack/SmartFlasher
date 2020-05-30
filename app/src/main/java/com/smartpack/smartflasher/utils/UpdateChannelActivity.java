@@ -21,6 +21,7 @@
 package com.smartpack.smartflasher.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,8 @@ import com.smartpack.smartflasher.views.dialog.Dialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 /**
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 30, 2020
@@ -61,7 +64,19 @@ public class UpdateChannelActivity extends AppCompatActivity {
         mBack.setOnClickListener(v -> onBackPressed());
         AppCompatImageButton mSave = findViewById(R.id.save_button);
         mSave.setOnClickListener(v -> {
-            saveUpdateChannel();
+            if (Utils.checkWriteStoragePermission(this)) {
+                if (mKernelNameHint.getText() != null && !mKernelNameHint.getText().toString().equals("")
+                        && mKernelVersionHint.getText() != null && !mKernelVersionHint.getText().toString().equals("")
+                        && mDownloadLinkHint.getText() != null && !mDownloadLinkHint.getText().toString().equals("")) {
+                    saveUpdateChannel();
+                } else {
+                    Utils.snackbar(mCardView, getString(R.string.update_channel_create_abort));
+                }
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                Utils.snackbar(mCardView, getString(R.string.permission_denied_write_storage));
+            }
         });
         AppCompatTextView mClearAll = findViewById(R.id.clear_all);
         mClearAll.setOnClickListener(v -> {
@@ -97,38 +112,46 @@ public class UpdateChannelActivity extends AppCompatActivity {
         mDonationHint.setText(null);
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void saveUpdateChannel() {
-        if (Utils.checkWriteStoragePermission(this)) {
-            if (mKernelNameHint.getText() != null && !mKernelNameHint.getText().toString().equals("")
-                    || mKernelVersionHint.getText() != null && !mKernelVersionHint.getText().toString().equals("")
-                    || mDownloadLinkHint.getText() != null && !mDownloadLinkHint.getText().toString().equals("")) {
-                try {
-                    JSONObject obj = new JSONObject();
-                    JSONObject kernel = new JSONObject();
-                    kernel.put("name", mKernelNameHint.getText());
-                    kernel.put("version", mKernelVersionHint.getText());
-                    kernel.put("link", mDownloadLinkHint.getText());
-                    kernel.put("changelog_url", mChangelogHint.getText());
-                    kernel.put("sha1", mSHA1Hint.getText());
-                    obj.put("kernel", kernel);
-                    JSONObject support = new JSONObject();
-                    support.put("link", mSupportHint.getText());
-                    support.put("donation", mDonationHint.getText());
-                    obj.put("support", support);
-                    Utils.prepareInternalDataStorage();
-                    Utils.create(obj.toString(), Utils.getInternalDataStorage() + "/update_channel.json");
-                    Utils.snackbar(mCardView, getString(R.string.update_channel_create_success,
-                            Utils.getInternalDataStorage() + "/update_channel.json"));
-                } catch (JSONException ignored) {
-                }
-            } else {
-                Utils.snackbar(mCardView, getString(R.string.update_channel_create_abort));
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-            Utils.snackbar(mCardView, getString(R.string.permission_denied_write_storage));
-        }
+        ViewUtils.dialogEditText(Objects.requireNonNull(mKernelNameHint.getText()).toString(),
+                (dialogInterface, i) -> {
+                }, text -> {
+                    if (text.isEmpty()) {
+                        Utils.snackbar(mCardView, getString(R.string.name_empty));
+                        return;
+                    }
+                    if (!text.endsWith(".json")) {
+                        text += ".json";
+                    }
+                    if (text.contains(" ")) {
+                        text = text.replace(" ", "_");
+                    }
+                    if (Utils.existFile(Utils.getInternalDataStorage() + "/" + text)) {
+                        Utils.snackbar(mCardView, getString(R.string.already_exists, text));
+                        return;
+                    }
+                    try {
+                        JSONObject obj = new JSONObject();
+                        JSONObject kernel = new JSONObject();
+                        kernel.put("name", mKernelNameHint.getText());
+                        kernel.put("version", mKernelVersionHint.getText());
+                        kernel.put("link", mDownloadLinkHint.getText());
+                        kernel.put("changelog_url", mChangelogHint.getText());
+                        kernel.put("sha1", mSHA1Hint.getText());
+                        obj.put("kernel", kernel);
+                        JSONObject support = new JSONObject();
+                        support.put("link", mSupportHint.getText());
+                        support.put("donation", mDonationHint.getText());
+                        obj.put("support", support);
+                        Utils.prepareInternalDataStorage();
+                        Utils.create(obj.toString(), Utils.getInternalDataStorage() + "/" + text);
+                        Utils.snackbar(mCardView, getString(R.string.update_channel_create_success,
+                                Utils.getInternalDataStorage() + "/" + text));
+                    } catch (JSONException ignored) {
+                    }
+                }, this).setOnDismissListener(dialogInterface -> {
+        }).show();
     }
 
     private boolean isTextEntered() {
