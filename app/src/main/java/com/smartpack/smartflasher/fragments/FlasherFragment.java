@@ -480,7 +480,7 @@ public class FlasherFragment extends RecyclerViewFragment {
                 Flasher.mFlashingResult.append(RootUtils.runAndGetError("cp '" + file.toString() + "' /data/local/tmp/flash.zip"));
                 Flasher.mFlashingResult.append(Utils.existFile("/data/local/tmp/flash.zip") ? "Done *\n\n" : "\n\n");
                 Intent flashingIntent = new Intent(getActivity(), FlashingActivity.class);
-                startActivityForResult(flashingIntent, 1);
+                startActivity(flashingIntent);
             }
             @Override
             protected Void doInBackground(Void... voids) {
