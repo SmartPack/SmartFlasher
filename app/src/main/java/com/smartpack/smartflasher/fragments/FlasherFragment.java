@@ -237,16 +237,16 @@ public class FlasherFragment extends RecyclerViewFragment {
             info.setFullSpan(true);
             info.setOnMenuListener((update_Channel, popupMenu) -> {
                 Menu menu = popupMenu.getMenu();
-                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.documentation));
-                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.update_channel_create));
+                menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.update_channel_create));
+                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.documentation));
                 popupMenu.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case 0:
-                            Utils.launchUrl("https://smartpack.github.io/kerneldownloads/", getActivity());
-                            break;
-                        case 1:
                             Intent createUpdateChannel = new Intent(getActivity(), UpdateChannelActivity.class);
                             startActivity(createUpdateChannel);
+                            break;
+                        case 1:
+                            Utils.launchUrl("https://smartpack.github.io/kerneldownloads/", getActivity());
                             break;
                     }
                     return false;
