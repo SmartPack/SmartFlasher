@@ -1,5 +1,9 @@
 # Change-logs
 
+## 34. May 31, 2020
+*Release-tag: v4.3*<br>
+Fixed layout issues on create update channel. Re-arranged update channel popup menu items. Miscellaneous changes
+
 ## 33. May 30, 2020
 *Release-tag: v4.2*<br>
 Added option to create update channel within app. Updated build tools to latest. Fixed a small issue in flashing. Miscellaneous changes.

@@ -1,6 +1,6 @@
 {
-  "version": 33,
-  "changelog": "Change-logs\n - Added Option to create update channel within app.\n - Updated build tools to latest.\n - Fixed a small issue in flashing.\n - Miscellaneous changes.",
-  "versionName": "4.2",
+  "version": 34,
+  "changelog": "Change-logs\n - Fixed layout issues on create update channel.\n - Re-arranged update channel popup menu items.\n - Miscellaneous changes.",
+  "versionName": "4.3",
   "inherit": true
 }
