@@ -19,7 +19,7 @@
     <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>
     <string name="kernel">Kernel</string>
-    <string name="licence">Licensa</string>
+    <string name="licence">Licença</string>
     <string name="more">Mais</string>
     <string name="name_empty">Nome esta vazio!</string>
     <string name="ok">OK</string>
@@ -117,4 +117,25 @@
     <string name="update_channel_summary">Insira-a-url-do-canal-aqui</string>
     <string name="uptodate_message">Parabéns! Você está atualizado.</string>
     <string name="yes">Sim</string>
+    <string name="add_here">Addicionar aqui!</string>
+    <string name="busybox_installer">Instalador do Busybox</string>
+    <string name="clear_all">Limpar todos</string>
+    <string name="clear_all_abort_message">Todos os campos estão vazios! Abortando.</string>
+    <string name="clear_all_summary">Tudo o que você adicionou a esta página será limpo!</string>
+    <string name="documentation">Documentação</string>
+    <string name="donation_link">Link de Doação</string>
+    <string name="download_link">Link de Download</string>
+    <string name="flashing_failed">O flash falhou</string>
+    <string name="flashing_finished">O flash terminou</string>
+    <string name="kernel_name">Nome do Kernel</string>
+    <string name="kernel_version">Versão do Kernel</string>
+    <string name="sha1">Algoritmo de Hash Seguro (SHA)</string>
+    <string name="support_group">Grupo de Suporte</string>
+    <string name="update_channel_create">Criar Canal de Atualizações</string>
+    <string name="update_channel_create_abort">Alguns dos campos obrigatórios estão vazios! Abortando.</string>
+    <string name="update_channel_create_success">Parabéns! O canal de atualização foi criado com sucesso em %s. Hospede-o em algum lugar e compartilhe um link de download direto com seus usuários.</string>
+    <string name="update_channel_create_warning">As alterações que você fez serão perdidas!</string>
+    <string name="busybox_installer_summary">É altamente recomendado ter uma instalação do Busybox única no seu dispositivo para algumas funções deste app funcionarem direito (ex., os binários \'unzip\' e \'mke2fs\' para flashear e o binário \'curl\' ou \'wget\' para as atualizações OTA do kernel). Como uma tentativa de ajudar os usuários nessa questão, foi disponibilizado um aplicativo simples, que pode ser usado como um utilitário de instalação do BusyBox com um clique para dispositivos arm, arm64 e x86. Clique aqui para obtê-lo!</string>
+    <string name="update_channel_info">Ao vincular o canal de atualização acima a um arquivo json apropriado para o seu dispositivo, você pode basicamente adicionar download do kernel e o suporte ao flash automático (não para todos os dispositivos) a qualquer Kernel disponível para o seu dispositivo. Por favor, peça ao seu desenvolvedor de kernel favorito para adicionar suporte a esse recurso. O kernel baixado estará disponível em \'%s\'.\n\nDicas! Você pode importar um arquivo json criado para o FK-Kernel Manager do franciscofranco (enorme respeito a ele) e simplesmente funcionará.\n\nPrecisa de mais ajuda? Clique aqui!</string>
+    <string name="update_channel_instructions"><b>Nome do Kernel</b>, <b>Versão do Kernel</b> e <b>Link de Download</b> são os campos obrigatórios a serem preenchidos antes de clicar no botão criar.\n\n<b>Change-logs</b> podem ser fornecidos como um texto bem formatado ou como um link para uma página online.\n\nSecure Hash Algorithm (<b>sha1</b>) é opcional, mas altamente recomendado para garantir a autenticidade do kernel baixado.</string>
 </resources>
