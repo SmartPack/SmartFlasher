@@ -1,6 +1,6 @@
 {
-  "version": 34,
-  "changelog": "Change-logs\n - Fixed layout issues on create update channel.\n - Re-arranged update channel popup menu items.\n - Miscellaneous changes.",
-  "versionName": "4.3",
+  "version": 35,
+  "changelog": "Change-logs\n - Update libsu to v3.0.2.\n - Updated Portuguese (Brazilian) translations (Credits: @Lennoard).\n - Updated gradle build tools.\n - Miscellaneous changes.",
+  "versionName": "4.4",
   "inherit": true
 }

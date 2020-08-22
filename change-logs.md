@@ -1,8 +1,12 @@
 # Change-logs
 
+## 35. August 22, 2020
+*Release-tag: v4.0*<br>
+Update libsu to v3.0.2. Updated Portuguese (Brazilian) translations (Credits: @Lennoard). Updated gradle build tools. Miscellaneous changes.
+
 ## 34. May 31, 2020
 *Release-tag: v4.3*<br>
-Fixed layout issues on create update channel. Re-arranged update channel popup menu items. Miscellaneous changes
+Fixed layout issues on create update channel. Re-arranged update channel popup menu items. Miscellaneous changes.
 
 ## 33. May 30, 2020
 *Release-tag: v4.2*<br>
