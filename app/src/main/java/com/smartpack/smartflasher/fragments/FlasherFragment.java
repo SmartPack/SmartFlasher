@@ -507,7 +507,7 @@ public class FlasherFragment extends RecyclerViewFragment {
         }
 
         Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
-        manualflash.setType("application/zip");
+        manualflash.setType("application/*");
         startActivityForResult(manualflash, 0);
     }
 
@@ -553,6 +553,10 @@ public class FlasherFragment extends RecyclerViewFragment {
                 }
             } else {
                 mPath = Utils.getPath(file);
+            }
+            if (!Utils.getExtension(mPath).equals("zip")) {
+                Utils.snackbar(getRootView(), getString(R.string.wrong_extension, ".zip"));
+                return;
             }
             if (requestCode == 0) {
                 if (Flasher.fileSize(new File(mPath)) >= 100000000) {
