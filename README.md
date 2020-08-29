@@ -1,6 +1,6 @@
 # Smart Flasher
 
-[![](https://img.shields.io/badge/Smart%20Flasher-v4.4-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
+[![](https://img.shields.io/badge/Smart%20Flasher-v4.5-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
 ![](https://img.shields.io/github/contributors/smartpack/SmartFlasher)
 ![](https://img.shields.io/github/license/smartpack/SmartFlasher)
 

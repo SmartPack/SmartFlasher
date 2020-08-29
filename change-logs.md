@@ -1,7 +1,11 @@
 # Change-logs
 
+## 36. August 29, 2020
+*Release-tag: v4.5*<br>
+Improved file picking. Improved flexibility of update channel. Miscellaneous changes.
+
 ## 35. August 22, 2020
-*Release-tag: v4.0*<br>
+*Release-tag: v4.4*<br>
 Update libsu to v3.0.2. Updated Portuguese (Brazilian) translations (Credits: @Lennoard). Updated gradle build tools. Miscellaneous changes.
 
 ## 34. May 31, 2020

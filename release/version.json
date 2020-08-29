@@ -1,6 +1,6 @@
 {
-  "version": 35,
-  "changelog": "Change-logs\n - Update libsu to v3.0.2.\n - Updated Portuguese (Brazilian) translations (Credits: @Lennoard).\n - Updated gradle build tools.\n - Miscellaneous changes.",
-  "versionName": "4.4",
+  "version": 36,
+  "changelog": "Change-logs\n - Improved file picking.\n - Improved flexibility of update channel.\n - Miscellaneous changes.",
+  "versionName": "4.5",
   "inherit": true
 }
