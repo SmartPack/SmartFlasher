@@ -174,6 +174,9 @@ public class FlasherFragment extends RecyclerViewFragment {
             if (value.equals(KernelUpdater.getUpdateChannel())) {
                 return;
             }
+            if (value.contains("/blob/")) {
+                value = value.replace("/blob/", "/raw/");
+            }
             KernelUpdater.acquireUpdateInfo(value, getActivity());
             getHandler().postDelayed(() -> {
                 updateChannel.setValue((!KernelUpdater.getKernelName().equals("Unavailable"))
