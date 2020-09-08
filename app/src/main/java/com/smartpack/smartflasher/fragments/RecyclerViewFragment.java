@@ -38,7 +38,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,8 +53,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smartpack.smartflasher.R;
@@ -130,13 +127,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mHandler = new Handler();
 
         mRecyclerView = mRootView.findViewById(R.id.recyclerview);
-
-        if (Prefs.getBoolean("allow_ads", true, requireActivity())) {
-            AdView mAdView = new AdView(requireActivity(), "634517477132281_634728027111226", AdSize.BANNER_HEIGHT_50);
-            LinearLayout adContainer = mRootView.findViewById(R.id.banner_container);
-            adContainer.addView(mAdView);
-            mAdView.loadAd();
-        }
 
         if (mViewPagerFragments != null) {
             FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();

@@ -23,6 +23,7 @@ package com.smartpack.smartflasher;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -30,6 +31,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.material.tabs.TabLayout;
 import com.smartpack.smartflasher.fragments.AboutFragment;
 import com.smartpack.smartflasher.fragments.BackupFragment;
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Initialize App Theme & FaceBook Ads
         Utils.initializeAppTheme(this);
-        Utils.getInstance().initializeFaceBookAds(this);
+        Utils.initializeGoogleAds(this);
         super.onCreate(savedInstanceState);
         // Set App Language
         Utils.setLanguage(this);
@@ -65,11 +70,29 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.no_root_Text);
         TabLayout tabLayout = findViewById(R.id.tabLayoutID);
         mViewPager = findViewById(R.id.viewPagerID);
+        AdView mAdView = findViewById(R.id.adView);
+        ViewGroup.MarginLayoutParams mLayoutParams = (ViewGroup.MarginLayoutParams) mViewPager.getLayoutParams();
 
         if (!RootUtils.rootAccess()) {
             textView.setText(getString(R.string.no_root));
             unsupported.setImageDrawable(Utils.getColoredIcon(R.drawable.ic_help, this));
             return;
+        }
+
+        if (Prefs.getBoolean("allow_ads", true, this)) {
+            mAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdFailedToLoad(LoadAdError adError) {
+                    mAdView.setVisibility(View.GONE);
+                    mLayoutParams.bottomMargin = 0;
+                }
+            });
+            AdRequest adRequest = new AdRequest.Builder()
+                    .build();
+            mAdView.loadAd(adRequest);
+        } else {
+            mAdView.setVisibility(View.GONE);
+            mLayoutParams.bottomMargin = 0;
         }
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());

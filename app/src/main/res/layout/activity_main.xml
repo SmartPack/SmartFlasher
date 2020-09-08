@@ -5,8 +5,15 @@
     android:layout_height="wrap_content" >
 
     <FrameLayout
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="90dp"
+            android:id="@+id/viewPagerID" />
 
         <TextView
             android:id="@+id/no_root_Text"
@@ -30,29 +37,29 @@
     </FrameLayout>
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white" >
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
 
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            android:background="@color/colorPrimary"
+            android:background="@color/black"
             app:tabTextColor="@color/description"
             app:tabSelectedTextColor="?attr/colorAccent"
             android:id="@+id/tabLayoutID" />
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            ads:adSize="SMART_BANNER"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            ads:adUnitId="ca-app-pub-7791710838910455/3977806012">
+        </com.google.android.gms.ads.AdView>
     </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        android:id="@+id/viewPagerID" />
-
 </RelativeLayout>

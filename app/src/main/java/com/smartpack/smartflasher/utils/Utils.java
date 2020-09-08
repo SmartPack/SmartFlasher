@@ -44,7 +44,7 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.snackbar.Snackbar;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
@@ -74,15 +74,6 @@ import java.util.Objects;
 
 public class Utils {
 
-    private static Utils sInstance;
-
-    public static Utils getInstance() {
-        if (sInstance == null) {
-            sInstance = new Utils();
-        }
-        return sInstance;
-    }
-
     private static final String TAG = Utils.class.getSimpleName();
 
     public static boolean isPackageInstalled(String id, Context context) {
@@ -108,10 +99,8 @@ public class Utils {
         }
     }
 
-    public void initializeFaceBookAds(Context context) {
-        if (Prefs.getBoolean("allow_ads", true, context)) {
-            AudienceNetworkAds.initialize(context);
-        }
+    public static void initializeGoogleAds(Context context) {
+        MobileAds.initialize(context, "ca-app-pub-7791710838910455~6603969352");
     }
 
     public static Drawable getColoredIcon(int icon, Context context) {
