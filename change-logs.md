@@ -1,5 +1,9 @@
 # Change-logs
 
+## 37. September 08, 2020
+*Release-tag: v4.6*<br>
+Improved app layout. Updated Ad view to avoid interfering with other contents. Miscellaneous changes.
+
 ## 36. August 29, 2020
 *Release-tag: v4.5*<br>
 Improved file picking. Improved flexibility of update channel. Miscellaneous changes.

@@ -1,6 +1,6 @@
 {
-  "version": 36,
-  "changelog": "Change-logs\n - Improved file picking.\n - Improved flexibility of update channel.\n - Miscellaneous changes.",
-  "versionName": "4.5",
+  "version": 37,
+  "changelog": "Change-logs\n - Improved app layout.\n - Updated Ad view to avoid interfering with other contents.\n - Miscellaneous changes.",
+  "versionName": "4.6",
   "inherit": true
 }
