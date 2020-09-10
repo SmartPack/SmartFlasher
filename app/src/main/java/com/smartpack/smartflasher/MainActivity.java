@@ -35,7 +35,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.material.tabs.TabLayout;
 import com.smartpack.smartflasher.fragments.AboutFragment;
 import com.smartpack.smartflasher.fragments.BackupFragment;
 import com.smartpack.smartflasher.fragments.FlasherFragment;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppCompatImageView unsupported = findViewById(R.id.no_root_Image);
         TextView textView = findViewById(R.id.no_root_Text);
-        TabLayout tabLayout = findViewById(R.id.tabLayoutID);
+        Utils.mTabLayout = findViewById(R.id.tabLayoutID);
         mViewPager = findViewById(R.id.viewPagerID);
         AdView mAdView = findViewById(R.id.adView);
         ViewGroup.MarginLayoutParams mLayoutParams = (ViewGroup.MarginLayoutParams) mViewPager.getLayoutParams();
@@ -101,7 +100,22 @@ public class MainActivity extends AppCompatActivity {
         adapter.AddFragment(new AboutFragment(), getString(R.string.about));
 
         mViewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(mViewPager);
+        Utils.mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    public void closeForeGround(View view) {
+        Utils.mForegroundCard = findViewById(R.id.changelog_card);
+        Utils.mBackButton = findViewById(R.id.back);
+        Utils.mAppIcon = findViewById(R.id.app_image);
+        Utils.mAppName = findViewById(R.id.app_title);
+        Utils.mTitle = findViewById(R.id.card_title);
+        Utils.mAppIcon.setVisibility(View.GONE);
+        Utils.mAppName.setVisibility(View.GONE);
+        Utils.mBackButton.setVisibility(View.GONE);
+        Utils.mTitle .setVisibility(View.GONE);
+        Utils.mForegroundCard.setVisibility(View.GONE);
+        Utils.mForegroundActive = false;
+        Utils.mTabLayout.setVisibility(View.VISIBLE);
     }
 
     public void androidRooting(View view) {
@@ -138,7 +152,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (RootUtils.rootAccess()) {
-            if (mExit) {
+            if (Utils.mForegroundActive) {
+                closeForeGround(mViewPager);
+            } else if (mExit) {
                 mExit = false;
                 super.onBackPressed();
             } else {

@@ -62,4 +62,6 @@
             ads:adUnitId="ca-app-pub-7791710838910455/3977806012">
         </com.google.android.gms.ads.AdView>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/rv_changelog_view" />
 </RelativeLayout>

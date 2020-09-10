@@ -43,8 +43,12 @@ import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
 import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -104,9 +108,29 @@ public class AboutFragment extends RecyclerViewFragment {
         changelogs.setDrawable(getResources().getDrawable(R.drawable.ic_changelog));
         changelogs.setTitle(getString(R.string.change_logs));
         changelogs.setSummary(getString(R.string.change_logs_summary));
-        changelogs.setOnItemClickListener(item ->
-                Utils.launchUrl("https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/change-logs.md", getActivity())
-        );
+        changelogs.setOnItemClickListener(item -> {
+            String change_log = null;
+            try {
+                change_log = new JSONObject(Objects.requireNonNull(Utils.readAssetFile(
+                        requireActivity(), "version.json"))).getString("fullChanges");
+            } catch (JSONException ignored) {
+            }
+            Utils.mForegroundCard = requireActivity().findViewById(R.id.changelog_card);
+            Utils.mBackButton = requireActivity().findViewById(R.id.back);
+            Utils.mTitle = requireActivity().findViewById(R.id.card_title);
+            Utils.mAppIcon = requireActivity().findViewById(R.id.app_image);
+            Utils.mAppName = requireActivity().findViewById(R.id.app_title);
+            Utils.mText = requireActivity().findViewById(R.id.scroll_text);
+            Utils.mTitle.setText(getString(R.string.change_logs));
+            Utils.mText.setText(change_log);
+            Utils.mForegroundActive = true;
+            Utils.mBackButton.setVisibility(View.VISIBLE);
+            Utils.mTitle.setVisibility(View.VISIBLE);
+            Utils.mAppIcon.setVisibility(View.VISIBLE);
+            Utils.mAppName.setVisibility(View.VISIBLE);
+            Utils.mTabLayout.setVisibility(View.GONE);
+            Utils.mForegroundCard.setVisibility(View.VISIBLE);
+        });
 
         items.add(changelogs);
 

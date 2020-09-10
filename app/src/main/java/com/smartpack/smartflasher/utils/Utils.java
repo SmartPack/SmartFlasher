@@ -43,9 +43,14 @@ import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.root.RootFile;
 import com.smartpack.smartflasher.utils.root.RootUtils;
@@ -58,6 +63,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.URL;
@@ -74,7 +80,21 @@ import java.util.Objects;
 
 public class Utils {
 
+    public static AppCompatImageButton mBackButton;
+
+    public static AppCompatImageView mAppIcon;
+
+    public static AppCompatTextView mTitle;
+    public static AppCompatTextView mAppName;
+    public static AppCompatTextView mText;
+
+    public static boolean mForegroundActive = false;
+
+    public static CardView mForegroundCard;
+
     private static final String TAG = Utils.class.getSimpleName();
+
+    public static TabLayout mTabLayout;
 
     public static boolean isPackageInstalled(String id, Context context) {
         try {
@@ -398,6 +418,31 @@ public class Utils {
         String permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
         int res = context.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
+    }
+
+    public static String readAssetFile(Context context, String file) {
+        InputStream input = null;
+        BufferedReader buf = null;
+        try {
+            StringBuilder s = new StringBuilder();
+            input = context.getAssets().open(file);
+            buf = new BufferedReader(new InputStreamReader(input));
+
+            String str;
+            while ((str = buf.readLine()) != null) {
+                s.append(str).append("\n");
+            }
+            return s.toString().trim();
+        } catch (IOException ignored) {
+        } finally {
+            try {
+                if (input != null) input.close();
+                if (buf != null) buf.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     /**
