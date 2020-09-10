@@ -38,7 +38,7 @@ import java.io.File;
 public class UpdateCheck {
 
     private static final String LATEST_VERSION = Utils.getInternalDataStorage() + "/version";
-    private static final String LATEST_VERSION_URL = "https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/release/version.json?raw=true";
+    private static final String LATEST_VERSION_URL = "https://raw.githubusercontent.com/SmartPack/SmartFlasher/master/app/src/main/assets/version.json?raw=true";
     private static final String DOWNLOAD_PAGE_URL = "https://github.com/SmartPack/SmartFlasher/tree/master/release";
 
     public static boolean isPlayStoreInstalled(Context context) {
