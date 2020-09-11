@@ -25,8 +25,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,13 +36,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -53,13 +48,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.ViewUtils;
-import com.smartpack.smartflasher.viewpagerindicator.CirclePageIndicator;
 import com.smartpack.smartflasher.views.dialog.ViewPagerDialog;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewAdapter;
 import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
@@ -95,23 +88,11 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     private View mProgress;
 
     private List<Fragment> mViewPagerFragments;
-    private ViewPagerAdapter mViewPagerAdapter;
     private ViewPager mViewPager;
-    private CirclePageIndicator mCirclePageIndicator;
 
-    private FloatingActionButton mTopFab;
     private FloatingActionButton mBottomFab;
 
-    private AppBarLayout mAppBarLayout;
-    private Toolbar mToolBar;
-
     private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
-
-    private ValueAnimator mForegroundAnimator;
-    private boolean mForegroundVisible;
-    private View mForegroundParent;
-    private float mForegroundHeight;
-    private CharSequence mForegroundStrText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,21 +120,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         }
         mViewPager = mRootView.findViewById(R.id.viewpager);
         mViewPager.setVisibility(View.INVISIBLE);
-        mCirclePageIndicator = mRootView.findViewById(R.id.indicator);
         ViewUtils.dismissDialog(getChildFragmentManager());
 
         mProgress = mRootView.findViewById(R.id.progress);
 
-        if (mAppBarLayout != null && !isForeground()) {
-            mAppBarLayout.postDelayed(() -> {
-                if (mAppBarLayout != null && isAdded() && getActivity() != null) {
-                    ViewCompat.setElevation(mAppBarLayout, showViewPager() ?
-                            0 : getResources().getDimension(R.dimen.app_bar_elevation));
-                }
-            }, 150);
-        }
-
-        mTopFab = mRootView.findViewById(R.id.top_fab);
         mBottomFab = mRootView.findViewById(R.id.bottom_fab);
 
         mRecyclerView.clearOnScrollListeners();
@@ -170,31 +140,12 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager = getLayoutManager());
         mRecyclerView.setHasFixedSize(true);
 
-        mTopFab.setOnClickListener(v -> onTopFabClick());
-        {
-            Drawable drawable = getTopFabDrawable();
-            if (drawable != null) {
-                mTopFab.setImageDrawable(drawable);
-            }
-        }
-
         mBottomFab.setOnClickListener(v -> onBottomFabClick());
         {
             Drawable drawable = getBottomFabDrawable();
             if (drawable != null) {
                 mBottomFab.setImageDrawable(drawable);
             }
-        }
-
-        BaseFragment foregroundFragment = getForegroundFragment();
-        mForegroundVisible = false;
-        if (foregroundFragment != null) {
-            mForegroundParent = mRootView.findViewById(R.id.foreground_parent);
-            TextView mForegroundText = mRootView.findViewById(R.id.foreground_text);
-            mForegroundText.setOnClickListener(v -> dismissForeground());
-            getChildFragmentManager().beginTransaction().replace(R.id.foreground_content,
-                    foregroundFragment).commit();
-            mForegroundHeight = getResources().getDisplayMetrics().heightPixels;
         }
 
         if (itemsSize() == 0) {
@@ -296,19 +247,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @Override
     public void onViewFinished() {
         super.onViewFinished();
-        if (showViewPager()) {
-            mViewPager.setAdapter(mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(),
-                    mViewPagerFragments));
-            mCirclePageIndicator.setViewPager(mViewPager);
-
-            setAppBarLayoutAlpha(0);
-            adjustScrollPosition();
-        } else {
-            mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), isForeground() ? 0 : mToolBar.getHeight(),
-                    mRecyclerView.getPaddingRight(), mRecyclerView.getPaddingBottom());
-            mRecyclerView.setClipToPadding(true);
-            setAppBarLayoutAlpha(255);
-        }
     }
 
     protected void init() {
@@ -329,17 +267,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     }
 
     protected abstract void addItems(List<RecyclerViewItem> items);
-
-    private void setAppBarLayoutAlpha(int alpha) {
-        if (isForeground()) return;
-        Activity activity;
-        if ((activity = getActivity()) != null && mAppBarLayout != null && mToolBar != null) {
-            int colorPrimary = ViewUtils.getColorPrimaryColor(activity);
-            mAppBarLayout.setBackgroundDrawable(new ColorDrawable(Color.argb(alpha, Color.red(colorPrimary),
-                    Color.green(colorPrimary), Color.blue(colorPrimary))));
-            mToolBar.setTitleTextColor(Color.argb(alpha, 255, 255, 255));
-        }
-    }
 
     void addItem(RecyclerViewItem recyclerViewItem) {
         mItems.add(recyclerViewItem);
@@ -399,13 +326,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return mItems.size();
     }
 
-    void addViewPagerFragment(BaseFragment fragment) {
-        mViewPagerFragments.add(fragment);
-        if (mViewPagerAdapter != null) {
-            mViewPagerAdapter.notifyDataSetChanged();
-        }
-    }
-
     public static class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragments;
@@ -429,8 +349,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private class Scroller extends RecyclerView.OnScrollListener {
 
-        private int mScrollDistance;
-        private int mAppBarLayoutDistance;
         private boolean mFade = true;
         private ValueAnimator mAlphaAnimator;
 
@@ -447,30 +365,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 }
             }
 
-            mScrollDistance = -firstItem.getTop() + mRecyclerView.getPaddingTop();
-
-            int appBarHeight = 0;
-            if (mAppBarLayout != null) {
-                appBarHeight = mAppBarLayout.getHeight();
-            }
-
             fadeAppBarLayout(true);
-            if (mTopFab != null && showTopFab()) {
-                mTopFab.show();
-            }
-
-            if (mAppBarLayout != null) {
-                if (mAppBarLayoutDistance > mAppBarLayout.getHeight()) {
-                    mAppBarLayoutDistance = mAppBarLayout.getHeight();
-                } else if (mAppBarLayoutDistance < 0) {
-                    mAppBarLayoutDistance = 0;
-                }
-                mAppBarLayout.setTranslationY(-mAppBarLayoutDistance);
-            }
-
-            if (mTopFab != null) {
-                mTopFab.setTranslationY(-mScrollDistance);
-            }
 
             if (showBottomFab() && autoHideBottomFab()) {
                 if (dy <= 0) {
@@ -492,7 +387,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 }
 
                 mAlphaAnimator = ValueAnimator.ofFloat(fade ? 1f : 0f, fade ? 0f : 1f);
-                mAlphaAnimator.addUpdateListener(animation -> setAppBarLayoutAlpha(Math.round(255 * (float) animation.getAnimatedValue())));
                 mAlphaAnimator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -507,19 +401,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-
-            if (mAppBarLayout == null || newState != 0 || mAppBarLayoutDistance == 0
-                    || (mAppBarLayoutDistance == mAppBarLayout.getHeight() && mScrollDistance != 0)) {
-                return;
-            }
-
-            boolean show = mAppBarLayoutDistance < mAppBarLayout.getHeight() * 0.5f;
-            ValueAnimator animator = ValueAnimator.ofInt(mAppBarLayoutDistance, show ? 0 : mAppBarLayout.getHeight());
-            animator.addUpdateListener(animation -> {
-                mAppBarLayoutDistance = (int) animation.getAnimatedValue();
-                mAppBarLayout.setTranslationY(-mAppBarLayoutDistance);
-            });
-            animator.start();
         }
     }
 
@@ -529,9 +410,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 if (isAdded()) {
                     mProgress.setVisibility(View.VISIBLE);
                     mRecyclerView.setVisibility(View.INVISIBLE);
-                    if (mTopFab != null && showTopFab()) {
-                        mTopFab.hide();
-                    }
                     if (mBottomFab != null && showBottomFab()) {
                         mBottomFab.hide();
                     }
@@ -543,37 +421,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     void hideProgress() {
         mProgress.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        if (mTopFab != null && showTopFab()) {
-            mTopFab.show();
-        }
         if (mBottomFab != null && showBottomFab()) {
             mBottomFab.show();
         }
         adjustScrollPosition();
-    }
-
-    private boolean isForeground() {
-        return false;
-    }
-
-    private BaseFragment getForegroundFragment() {
-        return null;
-    }
-
-    private void dismissForeground() {
-        float translation = mForegroundParent.getTranslationY();
-        mForegroundAnimator = ValueAnimator.ofFloat(translation, mForegroundHeight);
-        mForegroundAnimator.addUpdateListener(animation -> mForegroundParent.setTranslationY((float) animation.getAnimatedValue()));
-        mForegroundAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                mForegroundParent.setVisibility(View.GONE);
-                mForegroundVisible = false;
-                mForegroundAnimator = null;
-            }
-        });
-        mForegroundAnimator.start();
     }
 
     @Override
@@ -585,11 +436,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                     .setIcon(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_launcher_preview))
                     .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
-        if (showTopFab()) {
-            menu.add(0, 1, Menu.NONE, R.string.more)
-                    .setIcon(getTopFabDrawable())
-                    .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        } else if (showBottomFab()) {
+        if (showBottomFab()) {
             menu.add(0, 1, Menu.NONE, R.string.more)
                     .setIcon(getBottomFabDrawable())
                     .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -604,9 +451,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                         ViewPagerDialog.newInstance(getBannerHeight(), mViewPagerFragments));
                 return true;
             case 1:
-                if (showTopFab()) {
-                    onTopFabClick();
-                } else if (showBottomFab()) {
+                if (showBottomFab()) {
                     onBottomFabClick();
                 }
                 return true;
@@ -616,17 +461,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private boolean showViewPager() {
         return true;
-    }
-
-    protected boolean showTopFab() {
-        return false;
-    }
-
-    protected Drawable getTopFabDrawable() {
-        return null;
-    }
-
-    protected void onTopFabClick() {
     }
 
     protected boolean showBottomFab() {
@@ -696,11 +530,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         super.onDestroy();
         mItems.clear();
         mRecyclerViewAdapter = null;
-        setAppBarLayoutAlpha(255);
-        if (mAppBarLayout != null && !isForeground()) {
-            mAppBarLayout.setTranslationY(0);
-            ViewCompat.setElevation(mAppBarLayout, 0);
-        }
         if (mLoader != null) {
             mLoader.cancel(true);
             mLoader = null;
