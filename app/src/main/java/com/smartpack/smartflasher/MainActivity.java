@@ -20,15 +20,21 @@
 
 package com.smartpack.smartflasher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.ads.AdListener;
@@ -44,6 +50,7 @@ import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.utils.root.RootUtils;
+import com.smartpack.smartflasher.views.dialog.Dialog;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
@@ -51,6 +58,7 @@ import com.smartpack.smartflasher.utils.root.RootUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private AppCompatImageButton mSettings;
     private boolean mExit;
     private Handler mHandler = new Handler();
     private ViewPager mViewPager;
@@ -65,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
         Utils.setLanguage(this);
         setContentView(R.layout.activity_main);
 
+        Utils.mForegroundCard = findViewById(R.id.changelog_card);
+        Utils.mBackButton = findViewById(R.id.back);
+        Utils.mTitle = findViewById(R.id.card_title);
+        Utils.mAppIcon = findViewById(R.id.app_image);
+        Utils.mAppName = findViewById(R.id.app_title);
+        Utils.mText = findViewById(R.id.scroll_text);
+        AppCompatImageView appImage = findViewById(R.id.app_icon);
+        appImage.setOnClickListener(v -> showLicence());
+        mSettings = findViewById(R.id.settings_menu);
+        mSettings.setOnClickListener(v -> settingsMenu());
         AppCompatImageView unsupported = findViewById(R.id.no_root_Image);
         TextView textView = findViewById(R.id.no_root_Text);
         Utils.mTabLayout = findViewById(R.id.tabLayoutID);
@@ -74,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (!RootUtils.rootAccess()) {
             textView.setText(getString(R.string.no_root));
+            textView.setVisibility(View.VISIBLE);
             unsupported.setImageDrawable(Utils.getColoredIcon(R.drawable.ic_help, this));
+            unsupported.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -102,6 +122,226 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(adapter);
         Utils.mTabLayout.setupWithViewPager(mViewPager);
     }
+    public void showLicence() {
+        Utils.mTitle.setText(getString(R.string.licence));
+        Utils.mText.setText(getString(R.string.licence_message));
+        Utils.mForegroundActive = true;
+        Utils.mBackButton.setVisibility(View.VISIBLE);
+        Utils.mTitle.setVisibility(View.VISIBLE);
+        Utils.mAppIcon.setVisibility(View.VISIBLE);
+        Utils.mAppName.setVisibility(View.VISIBLE);
+        Utils.mTabLayout.setVisibility(View.GONE);
+        Utils.mForegroundCard.setVisibility(View.VISIBLE);
+    }
+
+    public void settingsMenu() {
+        mSettings.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(this, mSettings);
+            Menu menu = popupMenu.getMenu();
+            menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.dark_theme)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("dark_theme", true, this));
+            menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.allow_ads)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("allow_ads", true, this));
+            SubMenu language = menu.addSubMenu(Menu.NONE, 0, Menu.NONE, getString(R.string.language, Utils.getLanguage(this)));
+            language.add(Menu.NONE, 3, Menu.NONE, getString(R.string.language_default)).setCheckable(true)
+                    .setChecked(Utils.languageDefault(this));
+            language.add(Menu.NONE, 4, Menu.NONE, getString(R.string.language_en)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_en", false, this));
+            language.add(Menu.NONE, 5, Menu.NONE, getString(R.string.language_ch)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_ch", false, this));
+            language.add(Menu.NONE, 6, Menu.NONE, getString(R.string.language_ru)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_ru", false, this));
+            language.add(Menu.NONE, 7, Menu.NONE, getString(R.string.language_pt)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_pt", false, this));
+            language.add(Menu.NONE, 8, Menu.NONE, getString(R.string.language_fr)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_fr", false, this));
+            language.add(Menu.NONE, 9, Menu.NONE, getString(R.string.language_it)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_it", false, this));
+            language.add(Menu.NONE, 10, Menu.NONE, getString(R.string.language_ko)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_ko", false, this));
+            language.add(Menu.NONE, 11, Menu.NONE, getString(R.string.language_am)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_am", false, this));
+            language.add(Menu.NONE, 12, Menu.NONE, getString(R.string.language_el)).setCheckable(true)
+                    .setChecked(Prefs.getBoolean("use_el", false, this));
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case 0:
+                        break;
+                    case 1:
+                        if (Prefs.getBoolean("dark_theme", true, this)) {
+                            Prefs.saveBoolean("dark_theme", false, this);
+                        } else {
+                            Prefs.saveBoolean("dark_theme", true, this);
+                        }
+                        restartApp();
+                        break;
+                    case 2:
+                        if (Prefs.getBoolean("allow_ads", true, this)) {
+                            Prefs.saveBoolean("allow_ads", false, this);
+                            new Dialog(this)
+                                    .setMessage(R.string.disable_ads_message)
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.ok, (dialog, id) -> {
+                                        restartApp();
+                                    })
+                                    .show();
+                        } else {
+                            Prefs.saveBoolean("allow_ads", true, this);
+                            new Dialog(this)
+                                    .setMessage(R.string.allow_ads_message)
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.ok, (dialog, id) -> {
+                                        restartApp();
+                                    })
+                                    .show();
+                        }
+                        break;
+                    case 3:
+                        if (!Utils.languageDefault(this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 4:
+                        if (!Prefs.getBoolean("use_en", false, this)) {
+                            Prefs.saveBoolean("use_en", true, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 5:
+                        if (!Prefs.getBoolean("use_ch", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", true, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 6:
+                        if (!Prefs.getBoolean("use_ru", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", true, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 7:
+                        if (!Prefs.getBoolean("use_pt", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", true, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 8:
+                        if (!Prefs.getBoolean("use_fr", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", true, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 9:
+                        if (!Prefs.getBoolean("use_it", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", true, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 10:
+                        if (!Prefs.getBoolean("use_ko", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", true, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 11:
+                        if (!Prefs.getBoolean("use_am", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", true, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", false, this);
+                            restartApp();
+                        }
+                        break;
+                    case 12:
+                        if (!Prefs.getBoolean("use_el", false, this)) {
+                            Prefs.saveBoolean("use_en", false, this);
+                            Prefs.saveBoolean("use_ko", false, this);
+                            Prefs.saveBoolean("use_am", false, this);
+                            Prefs.saveBoolean("use_fr", false, this);
+                            Prefs.saveBoolean("use_ru", false, this);
+                            Prefs.saveBoolean("use_it", false, this);
+                            Prefs.saveBoolean("use_pt", false, this);
+                            Prefs.saveBoolean("use_ch", false, this);
+                            Prefs.saveBoolean("use_el", true, this);
+                            restartApp();
+                        }
+                        break;
+                }
+                return false;
+            });
+            popupMenu.show();
+        });
+    }
 
     public void closeForeGround(View view) {
         Utils.mForegroundCard = findViewById(R.id.changelog_card);
@@ -116,6 +356,12 @@ public class MainActivity extends AppCompatActivity {
         Utils.mForegroundCard.setVisibility(View.GONE);
         Utils.mForegroundActive = false;
         Utils.mTabLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public void androidRooting(View view) {

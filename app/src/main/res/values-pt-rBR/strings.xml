@@ -16,7 +16,6 @@
     <string name="executing">Executando</string>
     <string name="file_size_limit">\n\nTenha em mente: Por questões de segurança arquivos maiores que 100mb não serão instalados.\n</string>
     <string name="flasher">Instalador</string>
-    <string name="flasher_summary">Clique no botão de instalar pra selecionar e instalar um arquivo ZIP sem reiniciar pro modo recovery. As mudanças serão aplicadas depois de reiniciar.</string>
     <string name="flashing">Instalando</string>
     <string name="kernel">Kernel</string>
     <string name="licence">Licença</string>
@@ -48,7 +47,6 @@
     <string name="allow_ads">Permitir anúncios</string>
     <string name="already_exists">%s já existe!</string>
     <string name="backup">Backup</string>
-    <string name="backup_title">Os detalhes das partições com backups já feitos estão listados nesta página.</string>
     <string name="boot_img">IMG de Boot</string>
     <string name="boot_partition">Partição de Boot</string>
     <string name="dark_theme">Tema Escuro</string>

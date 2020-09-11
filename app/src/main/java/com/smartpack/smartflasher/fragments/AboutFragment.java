@@ -21,21 +21,10 @@
 package com.smartpack.smartflasher.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.PopupMenu;
 
 import com.smartpack.smartflasher.BuildConfig;
-import com.smartpack.smartflasher.MainActivity;
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.utils.Prefs;
 import com.smartpack.smartflasher.utils.UpdateCheck;
 import com.smartpack.smartflasher.utils.Utils;
 import com.smartpack.smartflasher.views.dialog.Dialog;
@@ -77,8 +66,6 @@ public class AboutFragment extends RecyclerViewFragment {
     @Override
     protected void init() {
         super.init();
-
-        addViewPagerFragment(new InfoFragment());
     }
 
     @Override
@@ -115,12 +102,6 @@ public class AboutFragment extends RecyclerViewFragment {
                         requireActivity(), "version.json"))).getString("fullChanges");
             } catch (JSONException ignored) {
             }
-            Utils.mForegroundCard = requireActivity().findViewById(R.id.changelog_card);
-            Utils.mBackButton = requireActivity().findViewById(R.id.back);
-            Utils.mTitle = requireActivity().findViewById(R.id.card_title);
-            Utils.mAppIcon = requireActivity().findViewById(R.id.app_image);
-            Utils.mAppName = requireActivity().findViewById(R.id.app_title);
-            Utils.mText = requireActivity().findViewById(R.id.scroll_text);
             Utils.mTitle.setText(getString(R.string.change_logs));
             Utils.mText.setText(change_log);
             Utils.mForegroundActive = true;
@@ -281,241 +262,6 @@ public class AboutFragment extends RecyclerViewFragment {
             );
 
             items.add(descriptionView);
-        }
-    }
-
-    public static class InfoFragment extends BaseFragment {
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                                 @Nullable Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_info, container, false);
-            rootView.findViewById(R.id.image).setOnClickListener(view -> {
-                Dialog licence = new Dialog(requireActivity());
-                licence.setIcon(R.mipmap.ic_launcher);
-                licence.setTitle(getString(R.string.licence));
-                licence.setMessage(getString(R.string.licence_message));
-                licence.setPositiveButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-
-                licence.show();
-            });
-
-            AppCompatImageButton settings = rootView.findViewById(R.id.settings_menu);
-            settings.setOnClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(requireActivity(), settings);
-                Menu menu = popupMenu.getMenu();
-                menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.dark_theme)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("dark_theme", true, getActivity()));
-                menu.add(Menu.NONE, 2, Menu.NONE, getString(R.string.allow_ads)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("allow_ads", true, getActivity()));
-                SubMenu language = menu.addSubMenu(Menu.NONE, 0, Menu.NONE, getString(R.string.language, Utils.getLanguage(getActivity())));
-                language.add(Menu.NONE, 3, Menu.NONE, getString(R.string.language_default)).setCheckable(true)
-                        .setChecked(Utils.languageDefault(getActivity()));
-                language.add(Menu.NONE, 4, Menu.NONE, getString(R.string.language_en)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_en", false, getActivity()));
-                language.add(Menu.NONE, 5, Menu.NONE, getString(R.string.language_ch)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_ch", false, getActivity()));
-                language.add(Menu.NONE, 6, Menu.NONE, getString(R.string.language_ru)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_ru", false, getActivity()));
-                language.add(Menu.NONE, 7, Menu.NONE, getString(R.string.language_pt)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_pt", false, getActivity()));
-                language.add(Menu.NONE, 8, Menu.NONE, getString(R.string.language_fr)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_fr", false, getActivity()));
-                language.add(Menu.NONE, 9, Menu.NONE, getString(R.string.language_it)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_it", false, getActivity()));
-                language.add(Menu.NONE, 10, Menu.NONE, getString(R.string.language_ko)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_ko", false, getActivity()));
-                language.add(Menu.NONE, 11, Menu.NONE, getString(R.string.language_am)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_am", false, getActivity()));
-                language.add(Menu.NONE, 12, Menu.NONE, getString(R.string.language_el)).setCheckable(true)
-                        .setChecked(Prefs.getBoolean("use_el", false, getActivity()));
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    switch (item.getItemId()) {
-                        case 0:
-                            break;
-                        case 1:
-                            if (Prefs.getBoolean("dark_theme", true, getActivity())) {
-                                Prefs.saveBoolean("dark_theme", false, getActivity());
-                            } else {
-                                Prefs.saveBoolean("dark_theme", true, getActivity());
-                            }
-                            restartApp();
-                            break;
-                        case 2:
-                            if (Prefs.getBoolean("allow_ads", true, getActivity())) {
-                                Prefs.saveBoolean("allow_ads", false, getActivity());
-                                new Dialog(requireActivity())
-                                        .setMessage(R.string.disable_ads_message)
-                                        .setCancelable(false)
-                                        .setPositiveButton(R.string.ok, (dialog, id) -> {
-                                            restartApp();
-                                        })
-                                        .show();
-                            } else {
-                                Prefs.saveBoolean("allow_ads", true, getActivity());
-                                new Dialog(requireActivity())
-                                        .setMessage(R.string.allow_ads_message)
-                                        .setCancelable(false)
-                                        .setPositiveButton(R.string.ok, (dialog, id) -> {
-                                            restartApp();
-                                        })
-                                        .show();
-                            }
-                            break;
-                        case 3:
-                            if (!Utils.languageDefault(getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 4:
-                            if (!Prefs.getBoolean("use_en", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", true, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 5:
-                            if (!Prefs.getBoolean("use_ch", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", true, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 6:
-                            if (!Prefs.getBoolean("use_ru", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", true, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 7:
-                            if (!Prefs.getBoolean("use_pt", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", true, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 8:
-                            if (!Prefs.getBoolean("use_fr", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", true, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 9:
-                            if (!Prefs.getBoolean("use_it", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", true, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 10:
-                            if (!Prefs.getBoolean("use_ko", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", true, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 11:
-                            if (!Prefs.getBoolean("use_am", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", true, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", false, getActivity());
-                                restartApp();
-                            }
-                            break;
-                        case 12:
-                            if (!Prefs.getBoolean("use_el", false, getActivity())) {
-                                Prefs.saveBoolean("use_en", false, getActivity());
-                                Prefs.saveBoolean("use_ko", false, getActivity());
-                                Prefs.saveBoolean("use_am", false, getActivity());
-                                Prefs.saveBoolean("use_fr", false, getActivity());
-                                Prefs.saveBoolean("use_ru", false, getActivity());
-                                Prefs.saveBoolean("use_it", false, getActivity());
-                                Prefs.saveBoolean("use_pt", false, getActivity());
-                                Prefs.saveBoolean("use_ch", false, getActivity());
-                                Prefs.saveBoolean("use_el", true, getActivity());
-                                restartApp();
-                            }
-                            break;
-                    }
-                    return false;
-                });
-                popupMenu.show();
-            });
-
-            return rootView;
-        }
-
-        private void restartApp() {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
         }
     }
 

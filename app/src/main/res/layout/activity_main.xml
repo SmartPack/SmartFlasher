@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
     <FrameLayout
-        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -22,6 +22,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="25sp"
+            android:visibility="gone"
             android:textColor="?android:attr/colorAccent" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -32,15 +33,18 @@
             android:layout_marginEnd="25dp"
             android:gravity="bottom"
             android:layout_gravity="bottom|end"
-            android:visibility="visible"
+            android:visibility="gone"
             android:onClick="androidRooting"/>
     </FrameLayout>
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:padding="10dp" >
 
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
@@ -52,16 +56,60 @@
             app:tabSelectedTextColor="?attr/colorAccent"
             android:id="@+id/tabLayoutID" />
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            ads:adSize="SMART_BANNER"
-            android:background="@color/black"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            ads:adUnitId="ca-app-pub-7791710838910455/3977806012">
-        </com.google.android.gms.ads.AdView>
-    </com.google.android.material.appbar.AppBarLayout>
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                tools:ignore="UselessParent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/app_icon"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="start"
+                    android:src="@mipmap/ic_launcher_round" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginEnd="45dp"
+                    android:text="@string/about_me"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="start|center"
+                    android:textStyle="italic|bold"
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/settings_menu"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_settings"
+                    android:layout_gravity="end|center"
+                    android:background="@color/black"
+                    android:tint="@color/white" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        ads:adSize="SMART_BANNER"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        ads:adUnitId="ca-app-pub-7791710838910455/3977806012">
+    </com.google.android.gms.ads.AdView>
 
     <include layout="@layout/rv_changelog_view" />
 </RelativeLayout>

@@ -64,12 +64,12 @@ public class BackupFragment extends RecyclerViewFragment {
     private String mPath;
 
     @Override
-    protected boolean showTopFab() {
+    protected boolean showBottomFab() {
         return true;
     }
 
     @Override
-    protected Drawable getTopFabDrawable() {
+    protected Drawable getBottomFabDrawable() {
         return getResources().getDrawable(R.drawable.ic_backup);
     }
 
@@ -88,9 +88,6 @@ public class BackupFragment extends RecyclerViewFragment {
     protected void init() {
         super.init();
 
-        addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.backup),
-                getString(R.string.backup_title)));
-
         if (Utils.checkWriteStoragePermission(requireActivity())) {
             if (!Flasher.hasBootPartitionInfo()) {
                 Flasher.exportBootPartitionInfo();
@@ -101,13 +98,6 @@ public class BackupFragment extends RecyclerViewFragment {
         } else {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
-        if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo()) {
-            addViewPagerFragment(DescriptionFragment.newInstance(Flasher.isABDevice() ? getString(R.string.ab_partition) : getString(R.string.boot_partition), Flasher.findBootPartition()));
-        }
-        if (!Flasher.isABDevice() && Flasher.RecoveryPartitionInfo() && !Flasher.emptyRecoveryPartitionInfo()) {
-            addViewPagerFragment(DescriptionFragment.newInstance(
-                    getString(R.string.recovery_partition), Flasher.findRecoveryPartition()));
         }
         if (mItemOptionsDialog != null) {
             mItemOptionsDialog.show();
@@ -250,8 +240,8 @@ public class BackupFragment extends RecyclerViewFragment {
     }
 
     @Override
-    protected void onTopFabClick() {
-        super.onTopFabClick();
+    protected void onBottomFabClick() {
+        super.onBottomFabClick();
 
         if (Utils.checkWriteStoragePermission(requireActivity())) {
             if (!Flasher.hasBootPartitionInfo()) {

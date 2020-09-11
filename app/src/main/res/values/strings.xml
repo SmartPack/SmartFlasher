@@ -4,7 +4,7 @@
     <string name="ab_partition">A/B Partition</string>
     <string name="ab_message">You don\'t need it anymore as the recovery image is in-built with the A/B partition.</string>
     <string name="about">About</string>
-    <string name="about_me">Smart Flasher is a simple app aimed to make flashing recovery zips much easier.</string>
+    <string name="about_me">Smart Flasher - A simple app to make flashing recovery zips much easier!</string>
     <string name="acquiring">Acquiring update info</string>
     <string name="add_here">Add here!</string>
     <string name="allow_ads">Allow Ads</string>
@@ -12,7 +12,6 @@
     <string name="already_exists">%s already exists!</string>
     <string name="backup">Backup</string>
     <string name="backup_message">Backing up %s of your device into</string>
-    <string name="backup_title">The details of the already backed up partitions are listed on this page.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Boot partition</string>
     <string name="boot_partition_unknown">Failed to get Boot Partition identity</string>
@@ -46,7 +45,6 @@
     <string name="executing">Executing</string>
     <string name="file_size_limit">Warning! You\'re selected a file of ~%s MB for flashing. Flashing bigger files, such as ROM\'s, using this app might be dangerous to your device.</string>
     <string name="flasher">Flasher</string>
-    <string name="flasher_summary">Click the flash button to select and flash a recovery ZIP file without rebooting into custom recovery. The changes will be applied after a reboot.</string>
     <string name="flashing">Flashing</string>
     <string name="flashing_failed">Flashing Failed</string>
     <string name="flashing_finished">Flashing Finished</string>
@@ -131,7 +129,7 @@
     <string name="update_channel_create_success">Congrats! Update Channel is successfully created at %s. Please host it somewhere and share a direct download link with your users.</string>
     <string name="update_channel_create_warning">The changes you made will be lost!</string>
     <string name="update_channel_empty">Cleaning update channel information!</string>
-    <string name="update_channel_info">By linking the above update channel with a proper json file for your device, you can basically add kernel download, and auto-flash (not for all devices) support to any Kernel\'s available for your device. Please ask your favourite kernel developer to add support to this feature. The downloaded kernel will be available at \'%s\'.\n\nTips! You can import a json file created for franciscofranco\'s (huge \u2665 &amp; respect to him) \'FK-Kernel Manager\' and it will simply work.\n\nNeed more help? Click here!</string>
+    <string name="update_channel_info">By linking the above update channel with a proper json file for your device, you can basically add kernel download, and auto-flash (not for all devices) support to any Kernel\'s available for your device. Please ask your favourite kernel developer to add support to this feature. The downloaded kernel will be available at \'%s\'.\n\nTips! You can import a json file created for franciscofranco\'s (huge \u2665 &amp; respect to him) \'FK-Kernel Manager\' and it will simply work.\n\nNeed more help? Click the dots menu!</string>
     <string name="update_channel_invalid">You\'ve entered an invalid Url! Aborting.</string>
     <string name="update_channel_instructions"><b>Kernel Name</b>, <b>Kernel Version</b> &amp; <b>Download Link</b> are the mandatory fields to be filled before clicking the create button.\n\n<b>Change-logs</b> could be provided, either as a well formatted text, or as a link to an online page.\n\nSecure Hash Algorithm (<b>sha1</b>) is optional, but highly recommended to ensure the authenticity of the downloaded kernel.</string>
     <string name="update_channel_summary">Input-update-channel-url-here</string>

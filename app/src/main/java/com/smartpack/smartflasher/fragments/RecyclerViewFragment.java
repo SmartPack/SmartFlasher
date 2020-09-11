@@ -96,7 +96,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     private List<Fragment> mViewPagerFragments;
     private ViewPagerAdapter mViewPagerAdapter;
-    private View mViewPagerParent;
     private ViewPager mViewPager;
     private CirclePageIndicator mCirclePageIndicator;
 
@@ -138,11 +137,9 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         } else {
             mViewPagerFragments = new ArrayList<>();
         }
-        mViewPagerParent = mRootView.findViewById(R.id.viewpagerparent);
         mViewPager = mRootView.findViewById(R.id.viewpager);
         mViewPager.setVisibility(View.INVISIBLE);
         mCirclePageIndicator = mRootView.findViewById(R.id.indicator);
-        mViewPagerParent.setVisibility(View.INVISIBLE);
         ViewUtils.dismissDialog(getChildFragmentManager());
 
         mProgress = mRootView.findViewById(R.id.progress);
@@ -310,9 +307,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
             mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(), isForeground() ? 0 : mToolBar.getHeight(),
                     mRecyclerView.getPaddingRight(), mRecyclerView.getPaddingBottom());
             mRecyclerView.setClipToPadding(true);
-            ViewGroup.LayoutParams layoutParams = mViewPagerParent.getLayoutParams();
-            layoutParams.height = 0;
-            mViewPagerParent.requestLayout();
             setAppBarLayoutAlpha(255);
         }
     }
@@ -460,17 +454,9 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 appBarHeight = mAppBarLayout.getHeight();
             }
 
-            if (mScrollDistance > mViewPagerParent.getHeight() - appBarHeight) {
-                mAppBarLayoutDistance += dy;
-                fadeAppBarLayout(false);
-                if (mTopFab != null && showTopFab()) {
-                    mTopFab.hide();
-                }
-            } else {
-                fadeAppBarLayout(true);
-                if (mTopFab != null && showTopFab()) {
-                    mTopFab.show();
-                }
+            fadeAppBarLayout(true);
+            if (mTopFab != null && showTopFab()) {
+                mTopFab.show();
             }
 
             if (mAppBarLayout != null) {
@@ -482,7 +468,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 mAppBarLayout.setTranslationY(-mAppBarLayoutDistance);
             }
 
-            mViewPagerParent.setTranslationY(-mScrollDistance);
             if (mTopFab != null) {
                 mTopFab.setTranslationY(-mScrollDistance);
             }
@@ -528,8 +513,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 return;
             }
 
-            boolean show = mAppBarLayoutDistance < mAppBarLayout.getHeight() * 0.5f
-                    || mScrollDistance <= mViewPagerParent.getHeight();
+            boolean show = mAppBarLayoutDistance < mAppBarLayout.getHeight() * 0.5f;
             ValueAnimator animator = ValueAnimator.ofInt(mAppBarLayoutDistance, show ? 0 : mAppBarLayout.getHeight());
             animator.addUpdateListener(animation -> {
                 mAppBarLayoutDistance = (int) animation.getAnimatedValue();
@@ -559,7 +543,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     void hideProgress() {
         mProgress.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mViewPagerParent.setVisibility(View.VISIBLE);
         if (mTopFab != null && showTopFab()) {
             mTopFab.show();
         }
@@ -646,15 +629,15 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     protected void onTopFabClick() {
     }
 
-    private boolean showBottomFab() {
+    protected boolean showBottomFab() {
         return false;
     }
 
-    private Drawable getBottomFabDrawable() {
+    protected Drawable getBottomFabDrawable() {
         return null;
     }
 
-    private void onBottomFabClick() {
+    protected void onBottomFabClick() {
     }
 
     private boolean autoHideBottomFab() {

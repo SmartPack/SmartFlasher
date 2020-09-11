@@ -65,21 +65,18 @@ public class FlasherFragment extends RecyclerViewFragment {
     private String mPath;
 
     @Override
-    protected boolean showTopFab() {
+    protected boolean showBottomFab() {
         return true;
     }
 
     @Override
-    protected Drawable getTopFabDrawable() {
+    protected Drawable getBottomFabDrawable() {
         return getResources().getDrawable(R.drawable.ic_flash);
     }
 
     @Override
     protected void init() {
         super.init();
-
-        addViewPagerFragment(DescriptionFragment.newInstance(getString(R.string.flasher),
-                getString(R.string.flasher_summary)));
     }
 
     @Override
@@ -367,44 +364,16 @@ public class FlasherFragment extends RecyclerViewFragment {
                             (dialogInterface, i) -> {
                                 switch (i) {
                                     case 0:
-                                        new Dialog(requireActivity())
-                                                .setMessage(getString(R.string.sure_question))
-                                                .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
-                                                })
-                                                .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
-                                                    new Execute().execute(Utils.prepareReboot() + " -p");
-                                                })
-                                                .show();
+                                        new Execute().execute(Utils.prepareReboot() + " -p");
                                         break;
                                     case 1:
-                                        new Dialog(requireActivity())
-                                                .setMessage(getString(R.string.sure_question))
-                                                .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
-                                                })
-                                                .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
-                                                    new Execute().execute(Utils.prepareReboot());
-                                                })
-                                                .show();
+                                        new Execute().execute(Utils.prepareReboot());
                                         break;
                                     case 2:
-                                        new Dialog(requireActivity())
-                                                .setMessage(getString(R.string.sure_question))
-                                                .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
-                                                })
-                                                .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
-                                                    new Execute().execute(Utils.prepareReboot() + " recovery");
-                                                })
-                                                .show();
+                                        new Execute().execute(Utils.prepareReboot() + " recovery");
                                         break;
                                     case 3:
-                                        new Dialog(requireActivity())
-                                                .setMessage(getString(R.string.sure_question))
-                                                .setNegativeButton(getString(R.string.cancel), (dialogInterfacei, ii) -> {
-                                                })
-                                                .setPositiveButton(getString(R.string.yes), (dialogInterfacei, ii) -> {
-                                                    new Execute().execute(Utils.prepareReboot() + " bootloader");
-                                                })
-                                                .show();
+                                        new Execute().execute(Utils.prepareReboot() + " bootloader");
                                         break;
                                 }
                             })
@@ -499,8 +468,8 @@ public class FlasherFragment extends RecyclerViewFragment {
     }
 
     @Override
-    protected void onTopFabClick() {
-        super.onTopFabClick();
+    protected void onBottomFabClick() {
+        super.onBottomFabClick();
 
         if (!Utils.checkWriteStoragePermission(requireActivity())) {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{

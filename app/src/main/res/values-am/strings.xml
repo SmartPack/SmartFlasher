@@ -11,7 +11,6 @@
     <string name="already_exists">%s ቀድሞዉኑም አለ!</string>
     <string name="backup">መጠባበቂያ</string>
     <string name="backup_message">የስልክዎን %s መጠባበቂያ ወደ</string>
-    <string name="backup_title">ከዚህ ቀደም መጠባበቂያ የተያዘላቸዉ ፖርትሽኖች ዝርዝር መረጃ እዚህ ገፅ ላይ ተዘርዝሯል።</string>
     <string name="boot_img">ቡት አይኤምጂ</string>
     <string name="boot_partition">ቡት ፓርትሽን</string>
     <string name="boot_partition_unknown">የቡት ፓርትሽንን ማንነት ማግኘት አልተቻለም።</string>
@@ -37,7 +36,6 @@
     <string name="executing">በመተግበር ላይ</string>
     <string name="file_size_limit">ማሳሰቢያ! ፍላሽ ለማድረግ ~%s MB ፋይል መርጠዋል። ይህንን መተግበሪያ ተተቅሞ እንደ ROM ያሉ ትላልቅ ፋይሎችን ፍላሽ ለማድረግ መሞከር ለስልክዎ በጣም አደገኛ ነዉ!</string>
     <string name="flasher">ፍላሸር</string>
-    <string name="flasher_summary">ወደ ከስተም ሪከቨሪ መግባት ሳያስፈልግዎ የ ሪከቨሪ ዚፕ መጫን ከፈለጉ እዚህ ጋር ወይም የፍላሽ ምልክቱን ይጫኑ። የተደረጉት ለዉጦች ስልክዎን ዘግተዉ ሲከፍቱ ተግባራዊ ይሆናል።</string>
     <string name="flashing">ፍላሽ በማድረግ ላይ</string>
     <string name="flash_img_warning">\n\nማሳሰቢያ: ትክክል ያልሆነ \'img\' ፋይል ፍላሽ ማድረግ ስልክዎን ሊያበላሽ ይችላል።እባክዎን ፍላሽ ከማድረጎ በፊት እርግጠኛ ይሁኑ!\n</string>
     <string name="flash">ፍላሽ</string>

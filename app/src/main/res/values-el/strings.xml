@@ -10,7 +10,6 @@
     <string name="already_exists">%s υπάρχει ήδη!</string>
     <string name="backup">Αντίγραφο</string>
     <string name="backup_message">Δημιουργία αντιγράφου %s της συσκευής σας στο</string>
-    <string name="backup_title">Οι λεπτομέρειες των ήδη αντιγεγραμμένων διαμερισμάτων είναι καταγεγραμμένες σε αυτήν τη σελίδα.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Διαμέρισμα Boot</string>
     <string name="boot_partition_unknown">Αποτυχία απόκτησης ταυτότητας διαμερίσματος Boot</string>
@@ -36,7 +35,6 @@
     <string name="executing">Εκτέλεση</string>
     <string name="file_size_limit">Προειδοποίηση! Έχετε επιλέξει ένα αρχείο μεγέθους ~%s MB για εγκατάσταση. Η εγκατάσταση μεγαλύτερων αρχείων, όπως ROM\'s, χρησιμοποιώντας αυτήν την εφαρμογή ίσως να είναι επικίνδυνο για τη συσκευή σας.</string>
     <string name="flasher">Εργαλείο εγκατάστασης</string>
-    <string name="flasher_summary">Πατήστε το κουμπί flash για να επιλέξετε και να εγκαταστήσετε ένα recovery ZIP αρχείο χωρίς να επανεκκινήσετε στο custom recovery. Οι αλλαγές θα εφαρμοστούν μετά την επανεκκίνηση.</string>
     <string name="flashing">Εγκατάσταση</string>
     <string name="flash_img_warning">\n\nΠροειδοποίηση: Η εγκατάσταση ενός λάθος \'img\' αρχείου πιθανώς να προκαλέσει brick στη συσκευή σας. Παρακαλώ να είστε προσεκτικοί.\n</string>
     <string name="flash">Εγκατάσταση</string>

@@ -7,7 +7,6 @@
     <string name="already_exists">％s已經存在！</string>
     <string name="backup">備份</string>
     <string name="backup_message">將裝置的％s備份到</string>
-    <string name="backup_title">此頁面上列出了已備份分割區的詳細資訊。</string>
     <string name="boot_img">Boot 映像</string>
     <string name="boot_partition">Boot 分割區</string>
     <string name="boot_partition_unknown">無法識別 Boot 分割區</string>
@@ -23,7 +22,6 @@
     <string name="executing">執行中</string>
     <string name="file_size_limit">％s的大小大於100 MB。\n\n請注意：出於安全原因，超過100 MB的復原檔案將不允許刷入。</string>
     <string name="flasher">刷入器</string>
-    <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
     <string name="flashing">刷入</string>
     <string name="flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>
     <string name="flash">刷入</string>

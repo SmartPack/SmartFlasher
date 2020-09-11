@@ -14,7 +14,6 @@
     <string name="executing">En cours d\'exécution</string>
     <string name="file_size_limit">Notez que pour des raisons de sécurité, les fichiers de plus de 100 Mo ne pourront être flashés.</string>
     <string name="flasher">Flasher</string>
-    <string name="flasher_summary"> Cliquer sur le bouton Flash pour sélectionner et flasher un fichier ZIP, pouvant être flashé dans un recovery, sans redémarrer dans le recovery.</string>
     <string name="flashing">Flash en cours</string>
     <string name="kernel">Kernel</string>
     <string name="licence">Licence</string>

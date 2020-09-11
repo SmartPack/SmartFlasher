@@ -7,7 +7,6 @@
     <string name="already_exists">%s уже существует!</string>
     <string name="backup">Резервное копирование</string>
     <string name="backup_message">Резервное копирование%s вашего устройства в</string>
-    <string name="backup_title">Детали уже зарезервированных разделов перечислены на этой странице.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Раздел Boot</string>
     <string name="boot_partition_unknown">Не удалось получить идентификатор  раздела Boot</string>
@@ -23,7 +22,6 @@
     <string name="executing">Выполнение</string>
     <string name="file_size_limit">Обратите внимание: по соображениям безопасности файлы восстановления размером более 100 МБ не могут быть прошиты</string>
     <string name="flasher">Прошивальшик</string>
-    <string name="flasher_summary">Нажмите кнопку прошивки, чтобы выбрать и прошить файл восстановления ZIP без перезагрузки в пользовательское восстановление. Изменения вступят в силу после перезагрузки.</string>
     <string name="flashing">Прошивка в процессе</string>
     <string name="flash_img_warning">\n\nПредупреждение: перепрошивка неправильного файла \'img\' может привести к поломке вашего устройства. Пожалуйста, будьте осторожны.\n</string>
     <string name="flash">Flash</string>

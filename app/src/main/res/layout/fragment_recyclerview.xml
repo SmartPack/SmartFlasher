@@ -12,18 +12,10 @@
         android:paddingTop="@dimen/banner_min_height"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/viewpagerparent"
+    <include
+        layout="@layout/viewpager_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/banner_min_height"
-        android:orientation="vertical">
-
-        <include
-            layout="@layout/viewpager_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+        android:layout_height="0dp" />
 
     <ProgressBar
         android:id="@+id/progress"
