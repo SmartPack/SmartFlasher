@@ -1,5 +1,9 @@
 # Change-logs
 
+## 38. September 11, 2020
+*Release-tag: v4.7*<br>
+Overall improvements on App UI. Cleaned up a lot of unnecessary code. Moved TabLayout to top. Settings menu is now accessible from every page. Added Brand New change log and licence views. Miscellaneous changes.
+
 ## 37. September 08, 2020
 *Release-tag: v4.6*<br>
 Improved app layout. Updated Ad view to avoid interfering with other contents. Miscellaneous changes.
