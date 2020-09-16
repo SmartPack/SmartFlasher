@@ -30,6 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".utils.FlashingActivity" />
+        <activity android:name=".utils.NoRootActivity" />
         <activity android:name=".utils.UpdateChannelActivity" />
     </application>
 

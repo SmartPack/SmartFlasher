@@ -75,6 +75,7 @@
     <string name="name_empty">Name is empty!</string>
     <string name="no_internet">Please check your internet connection!</string>
     <string name="no_root">No Root</string>
+    <string name="no_root_message"><b>Why this issue happened?</b>\n\nYour device is either not rooted, or the root permission is declined for Smart Flasher by you!\n\n\n<b>Why root permission needed?</b>\n\nIn order to flash a recovery zip file, or  backup a partition image, Smart Flasher need to reach some top-level system partitions, and is impossible without root!\n\n\n<b>How can I root my device?</b>\n\nA simple google search will help to find many guides to achieve root on your device. Please have a look at it!\n\n\n<b>Is rooting a device safe?</b>\n\nRooting poses some security risk, but it\'s generally safe to do!</string>
     <string name="nothing_found">Nothing found!</string>
     <string name="nothing_found_summary">Click here, or the backup button, to start a new back up/flashing processes. The backed-up partitions will be available at \'%s\'.</string>
     <string name="ok">OK</string>

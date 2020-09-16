@@ -14,27 +14,6 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="90dp"
             android:id="@+id/viewPagerID" />
-
-        <TextView
-            android:id="@+id/no_root_Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="25sp"
-            android:visibility="gone"
-            android:textColor="?android:attr/colorAccent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/no_root_Image"
-            android:layout_width="50sp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="85dp"
-            android:layout_marginEnd="25dp"
-            android:gravity="bottom"
-            android:layout_gravity="bottom|end"
-            android:visibility="gone"
-            android:onClick="androidRooting"/>
     </FrameLayout>
 
     <LinearLayout
