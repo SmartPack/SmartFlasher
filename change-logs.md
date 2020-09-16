@@ -1,5 +1,9 @@
 # Change-logs
 
+## 39. September 16, 2020
+*Release-tag: v4.8*<br>
+Introduced new page to explain no root status. Miscellaneous changes.
+
 ## 38. September 11, 2020
 *Release-tag: v4.7*<br>
 Overall improvements on App UI. Cleaned up a lot of unnecessary code. Moved TabLayout to top. Settings menu is now accessible from every page. Added Brand New change log and licence views. Miscellaneous changes.
