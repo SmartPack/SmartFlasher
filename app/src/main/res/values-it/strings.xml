@@ -6,21 +6,12 @@
     <string name="change_logs">Change-logs</string>
     <string name="change_logs_summary">Visualizza Change-logs</string>
     <string name="credits">Crediti</string>
-    <string name="donate_me">Donami</string>
-    <string name="donate_me_message">\nSe ti piace il mio lavoro, considera di donarmi poichè per me è essenziale per migliore i miei progetti, anche se non è necessario.\n</string>
-    <string name="donate_me_playstore">\nNota bene: Accetto donazioni sia con PayPal oppure tramite SmartPack Donation Package dal PlayStore.\n</string>
-    <string name="donate_me_summary">Vuoi apprezzare il mio lavoro con una donazione? Clicca qua</string>
-    <string name="donate_nope">Non ora</string>
-    <string name="executing">Eseguendo</string>
     <string name="file_size_limit">Nota bene: Per motivi di sicurezza, i file di dimensioni superiori a 100 non possono essere flashati.</string>
     <string name="flasher">Flasher</string>
+    <string name="flasher_summary">Clicca il pulsante per selezionare e flashare il file zip senza riavviare nella modalità recovery. Le modifiche verranno applicate dopo il riavvio.</string>
     <string name="flashing">Flashando</string>
     <string name="kernel">Kernel</string>
-    <string name="licence">Licenza</string>
-    <string name="more">Di più</string>
     <string name="ok">OK</string>
-    <string name="options">Opzioni</string>
-    <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">Permesso per scrivere sull\'archivio negato!</string>
     <string name="playstore">Play Store</string>
     <string name="playstore_summary">Visita la pagina Smart Flasher sul PlayStore</string>
@@ -32,8 +23,6 @@
     <string name="source_code_summary">Visualizza codice sorgente su GitHub</string>
     <string name="support">Supporto</string>
     <string name="support_summary">Visita la pagina di supporto su xda-developers.com</string>
-    <string name="sure_message">Sei sicuro di flashare %s?</string>
     <string name="sure_question">Sei sicuro?</string>
-    <string name="turn_off">Spegni</string>
     <string name="version">Versionw</string>
 </resources>

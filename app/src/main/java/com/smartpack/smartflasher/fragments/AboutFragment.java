@@ -20,248 +20,153 @@
 
 package com.smartpack.smartflasher.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textview.MaterialTextView;
 import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.utils.UpdateCheck;
+import com.smartpack.smartflasher.activities.BillingActivity;
+import com.smartpack.smartflasher.activities.ChangeLogActivity;
+import com.smartpack.smartflasher.activities.CreditsActivity;
+import com.smartpack.smartflasher.utils.RecycleViewItem;
 import com.smartpack.smartflasher.utils.Utils;
-import com.smartpack.smartflasher.views.dialog.Dialog;
-import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
-import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
-import com.smartpack.smartflasher.views.recyclerview.TitleView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.ArrayList;
 
 /*
- * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
+ * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 19, 2020
  */
 
-public class AboutFragment extends RecyclerViewFragment {
+public class AboutFragment extends Fragment {
 
-    private static final LinkedHashMap<String, String> sCredits = new LinkedHashMap<>();
+    private ArrayList <RecycleViewItem> mData = new ArrayList<>();
 
-    static {
-        sCredits.put("Kernel Adiutor,Grarak", "https://github.com/Grarak");
-        sCredits.put("libsu,topjohnwu", "https://github.com/topjohnwu");
-        sCredits.put("Auto Flashing,osm0sis", "https://github.com/osm0sis");
-        sCredits.put("Code contributions,Lennoard", "https://github.com/Lennoard");
-        sCredits.put("App Icon,Toxinpiper", "https://t.me/toxinpiper");
-        sCredits.put("Russian Translations,andrey167", "https://github.com/andrey167");
-        sCredits.put("Chinese (rCN & rTW) Translations,jason5545", "https://github.com/jason5545");
-        sCredits.put("Portuguese (rBr) Translations,DanGLES3", "https://github.com/DanGLES3");
-        sCredits.put("French Translations,tom4tot", "https://github.com/tom4tot");
-        sCredits.put("Italian Translations,IKAR0S", "https://github.com/IKAR0S");
-        sCredits.put("Korean Translations,SmgKhOaRn", "https://github.com/SmgKhOaRn");
-        sCredits.put("Amharic Translations,Mikesew1320", "https://github.com/Mikesew1320");
-        sCredits.put("Greek Translations,tsiflimagas", "https://github.com/tsiflimagas");
-    }
-
+    @SuppressLint("UseCompatLoadingForDrawables")
+    @Nullable
     @Override
-    protected void init() {
-        super.init();
-    }
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View mRootView = inflater.inflate(R.layout.fragment_about, container, false);
 
-    @Override
-    public int getSpanCount() {
-        return super.getSpanCount() + 1;
-    }
+        mData.clear();
+        mData.add(new RecycleViewItem(getString(R.string.version), "v" + BuildConfig.VERSION_NAME, getResources().getDrawable(R.drawable.ic_info), null));
+        mData.add(new RecycleViewItem(getString(R.string.change_logs), getString(R.string.change_logs_summary), getResources().getDrawable(R.drawable.ic_eye), null));
+        mData.add(new RecycleViewItem(getString(R.string.support), getString(R.string.support_summary), getResources().getDrawable(R.drawable.ic_support), "https://t.me/smartpack_kmanager"));
+        mData.add(new RecycleViewItem(getString(R.string.source_code), getString(R.string.source_code_summary), getResources().getDrawable(R.drawable.ic_github), "https://github.com/SmartPack/SmartFlasher"));
+        mData.add(new RecycleViewItem(getString(R.string.playstore), getString(R.string.playstore_summary), getResources().getDrawable(R.drawable.ic_playstore), "https://play.google.com/store/apps/details?id=com.smartpack.smartflasher"));
+        mData.add(new RecycleViewItem(getString(R.string.donations), getString(R.string.donations_message), getResources().getDrawable(R.drawable.ic_donate), null));
+        mData.add(new RecycleViewItem(getString(R.string.share), getString(R.string.share_app), getResources().getDrawable(R.drawable.ic_share), null));
+        mData.add(new RecycleViewItem(getString(R.string.credits), getString(R.string.credits_summary), getResources().getDrawable(R.drawable.ic_contributors), null));
 
-    @Override
-    protected void addItems(List<RecyclerViewItem> items) {
-        aboutInit(items);
-        creditsInit(items);
-    }
+        RecyclerView mRecyclerView = mRootView.findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), Utils.getSpanCount(requireActivity())));
+        RecycleViewAdapter mRecycleViewAdapter = new RecycleViewAdapter(mData);
+        mRecyclerView.setAdapter(mRecycleViewAdapter);
 
-    private void aboutInit(List<RecyclerViewItem> items) {
-        TitleView about = new TitleView();
-        about.setText(getString(R.string.app_name));
-        items.add(about);
-
-        DescriptionView versioninfo = new DescriptionView();
-        versioninfo.setDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
-        versioninfo.setTitle(getString(R.string.version));
-        versioninfo.setSummary("v" + BuildConfig.VERSION_NAME);
-
-        items.add(versioninfo);
-
-        DescriptionView changelogs = new DescriptionView();
-        changelogs.setDrawable(getResources().getDrawable(R.drawable.ic_changelog));
-        changelogs.setTitle(getString(R.string.change_logs));
-        changelogs.setSummary(getString(R.string.change_logs_summary));
-        changelogs.setOnItemClickListener(item -> {
-            String change_log = null;
-            try {
-                change_log = new JSONObject(Objects.requireNonNull(Utils.readAssetFile(
-                        requireActivity(), "version.json"))).getString("fullChanges");
-            } catch (JSONException ignored) {
+        mRecycleViewAdapter.setOnItemClickListener((position, v) -> {
+            if (mData.get(position).getURL() != null) {
+                Utils.launchUrl(mRootView, (mData.get(position).getURL()), requireActivity());
+            } else if (position == 0) {
+                Intent settings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
+                settings.setData(uri);
+                startActivity(settings);
+            } else if (position == 1) {
+                Intent changelog = new Intent(getActivity(), ChangeLogActivity.class);
+                startActivity(changelog);
+            } else if (position == 5) {
+                Intent billing = new Intent(getActivity(), BillingActivity.class);
+                startActivity(billing);
+            } else if (position == 6) {
+                Intent shareapp = new Intent();
+                shareapp.setAction(Intent.ACTION_SEND);
+                shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
+                shareapp.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(shareapp, null);
+                startActivity(shareIntent);
+            } else {
+                Intent credits = new Intent(getActivity(), CreditsActivity.class);
+                startActivity(credits);
             }
-            Utils.mTitle.setText(getString(R.string.change_logs));
-            Utils.mText.setText(change_log);
-            Utils.mForegroundActive = true;
-            Utils.mBackButton.setVisibility(View.VISIBLE);
-            Utils.mTitle.setVisibility(View.VISIBLE);
-            Utils.mAppIcon.setVisibility(View.VISIBLE);
-            Utils.mAppName.setVisibility(View.VISIBLE);
-            Utils.mTabLayout.setVisibility(View.GONE);
-            Utils.mForegroundCard.setVisibility(View.VISIBLE);
         });
 
-        items.add(changelogs);
+        return mRootView;
+    }
 
-        DescriptionView support = new DescriptionView();
-        support.setDrawable(getResources().getDrawable(R.drawable.ic_support));
-        support.setTitle(getString(R.string.support));
-        support.setSummary(getString(R.string.support_summary));
-        support.setOnItemClickListener(item ->
-                Utils.launchUrl("https://t.me/smartpack_kmanager", getActivity())
-        );
+    private static class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
-        items.add(support);
+        private ArrayList<RecycleViewItem> data;
 
-        DescriptionView sourcecode = new DescriptionView();
-        sourcecode.setDrawable(getResources().getDrawable(R.drawable.ic_source));
-        sourcecode.setTitle(getString(R.string.source_code));
-        sourcecode.setSummary(getString(R.string.source_code_summary));
-        sourcecode.setOnItemClickListener(item ->
-                Utils.launchUrl("https://github.com/SmartPack/SmartFlasher", requireActivity())
-        );
+        private static RecycleViewAdapter.ClickListener clickListener;
 
-        items.add(sourcecode);
-
-        if (UpdateCheck.isPlayStoreInstalled(requireActivity())) {
-            DescriptionView playstore = new DescriptionView();
-            playstore.setDrawable(getResources().getDrawable(R.drawable.ic_playstore));
-            playstore.setTitle(getString(R.string.playstore));
-            playstore.setSummary(getString(R.string.playstore_summary));
-            playstore.setOnItemClickListener(item ->
-                    Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.smartflasher", requireActivity())
-            );
-
-            items.add(playstore);
-        } else {
-            DescriptionView updateCheck = new DescriptionView();
-            updateCheck.setDrawable(getResources().getDrawable(R.drawable.ic_update));
-            updateCheck.setTitle(getString(R.string.update_check));
-            updateCheck.setSummary(getString(R.string.update_check_summary));
-            updateCheck.setOnItemClickListener(item -> {
-                if (Utils.networkUnavailable(requireActivity())) {
-                    Utils.snackbar(getRootView(), getString(R.string.no_internet));
-                    return;
-                }
-                UpdateCheck.updateCheck(getActivity());
-            });
-
-            items.add(updateCheck);
+        public RecycleViewAdapter(ArrayList<RecycleViewItem> data) {
+            this.data = data;
         }
 
-        DescriptionView donatetome = new DescriptionView();
-        donatetome.setDrawable(getResources().getDrawable(R.drawable.ic_donate));
-        donatetome.setTitle(getString(R.string.donate_me));
-        donatetome.setSummary(getString(R.string.donate_me_summary));
-        donatetome.setOnItemClickListener(item -> {
-            Dialog donate_to_me = new Dialog(requireActivity());
-            donate_to_me.setIcon(R.mipmap.ic_launcher);
-            donate_to_me.setTitle(getString(R.string.donate_me));
-            if (Utils.isDonated(requireActivity())) {
-                donate_to_me.setMessage(getString(R.string.donate_me_message));
-            } else {
-                donate_to_me.setMessage(getString(R.string.donate_me_message) + getString(R.string.donate_me_playstore));
-                donate_to_me.setNegativeButton(getString(R.string.purchase_app), (dialogInterface, i) -> {
-                    Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.donate", getActivity());
-                });
+        @NonNull
+        @Override
+        public RecycleViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view_about, parent, false);
+            return new RecycleViewAdapter.ViewHolder(rowItem);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder holder, int position) {
+            try {
+                holder.mTitle.setText(this.data.get(position).getTitle());
+                if (Utils.isDarkTheme(holder.mTitle.getContext())) {
+                    holder.mTitle.setTextColor(Utils.getThemeAccentColor(holder.mTitle.getContext()));
+                }
+                holder.mDescription.setText(this.data.get(position).getDescription());
+                holder.mIcon.setImageDrawable(this.data.get(position).getIcon());
+            } catch (ArrayIndexOutOfBoundsException ignored) {
             }
-            donate_to_me.setNeutralButton(getString(R.string.donate_nope), (dialogInterface, i) -> {
-            });
-            donate_to_me.setPositiveButton(getString(R.string.paypal_donation), (dialog1, id1) -> {
-                Utils.launchUrl("https://www.paypal.me/menacherry", getActivity());
-            });
-            donate_to_me.show();
-        });
+        }
 
-        items.add(donatetome);
+        @Override
+        public int getItemCount() {
+            return this.data.size();
+        }
 
-        DescriptionView share = new DescriptionView();
-        share.setDrawable(getResources().getDrawable(R.drawable.ic_share));
-        share.setTitle(getString(R.string.share_app));
-        share.setSummary(getString(R.string.share_app_summary));
-        share.setOnItemClickListener(item -> {
-            Intent shareapp = new Intent();
-            shareapp.setAction(Intent.ACTION_SEND);
-            shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-            shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
-            shareapp.setType("text/plain");
-            Intent shareIntent = Intent.createChooser(shareapp, null);
-            startActivity(shareIntent);
-        });
+        public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            private AppCompatImageButton mIcon;
+            private MaterialTextView mTitle;
+            private MaterialTextView mDescription;
 
-        items.add(share);
-    }
-
-    private void creditsInit(List<RecyclerViewItem> items) {
-
-        TitleView credits = new TitleView();
-        credits.setText(getString(R.string.credits));
-        items.add(credits);
-
-        for (final String lib : sCredits.keySet()) {
-            String title = lib.split(",")[1];
-            String summary = lib.split(",")[0];
-            DescriptionView descriptionView = new DescriptionView();
-            switch (title) {
-                case "Grarak":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_grarak));
-                    break;
-                case "topjohnwu":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_topjohnwu));
-                    break;
-                case "osm0sis":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_osm0sis));
-                    break;
-                case "Lennoard":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_lennoard));
-                    break;
-                case "Toxinpiper":
-                    descriptionView.setDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
-                    break;
-                case "jason5545":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_jason5545));
-                    break;
-                case "andrey167":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_andrey167));
-                    break;
-                case "tom4tot":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_tom4tot));
-                    break;
-                case "DanGLES3":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_dangles3));
-                    break;
-                case "IKAR0S":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_ikar0s));
-                    break;
-                case "SmgKhOaRn":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_smgkhoarn));
-                    break;
-                case "Mikesew1320":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_mikesew));
-                    break;
-                case "tsiflimagas":
-                    descriptionView.setDrawable(getResources().getDrawable(R.drawable.ic_tsiflimagas));
-                    break;
+            public ViewHolder(View view) {
+                super(view);
+                view.setOnClickListener(this);
+                this.mIcon = view.findViewById(R.id.icon);
+                this.mTitle = view.findViewById(R.id.title);
+                this.mDescription = view.findViewById(R.id.description);
             }
-            descriptionView.setTitle(title);
-            descriptionView.setSummary(summary);
-            descriptionView.setOnItemClickListener(item ->
-                    Utils.launchUrl(sCredits.get(lib), getActivity())
-            );
+            @Override
+            public void onClick(View view) {
+                clickListener.onItemClick(getAdapterPosition(), view);
+            }
+        }
 
-            items.add(descriptionView);
+        public void setOnItemClickListener(ClickListener clickListener) {
+            RecycleViewAdapter.clickListener = clickListener;
+        }
+
+        public interface ClickListener {
+            void onItemClick(int position, View v);
         }
     }
 

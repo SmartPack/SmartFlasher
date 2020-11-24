@@ -6,21 +6,12 @@
     <string name="change_logs">Nouveautés</string>
     <string name="change_logs_summary">Afficher les nouveautés</string>
     <string name="credits">Crédits</string>
-    <string name="donate_me">Donation</string>
-    <string name="donate_me_message">\nSi vous appréciez mon travail, pensez à me faire une donation s\'il vous plaît. Cela m\'aide à maintenir mes projets actifs, mais ce n\'est absolument pas nécessaire.\n</string>
-    <string name="donate_me_playstore">\nNotez que vous pouvez me faire des donations soit via PayPal, soit en achetant l\'application "Smartpack Donation Package" sur le PlayStore.\n</string>
-    <string name="donate_me_summary">Souhaitez-vous être reconnaissant de mon travail avec une donation ? Cliquez ici</string>
-    <string name="donate_nope">Pas maintenant</string>
-    <string name="executing">En cours d\'exécution</string>
     <string name="file_size_limit">Notez que pour des raisons de sécurité, les fichiers de plus de 100 Mo ne pourront être flashés.</string>
     <string name="flasher">Flasher</string>
+    <string name="flasher_summary"> Cliquer sur le bouton Flash pour sélectionner et flasher un fichier ZIP, pouvant être flashé dans un recovery, sans redémarrer dans le recovery.</string>
     <string name="flashing">Flash en cours</string>
     <string name="kernel">Kernel</string>
-    <string name="licence">Licence</string>
-    <string name="more">Plus</string>
     <string name="ok">OK</string>
-    <string name="options">Options</string>
-    <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">Accès au stockage de l\'appareil refusé !</string>
     <string name="playstore">PlayStore</string>
     <string name="playstore_summary">Visiter la page Smart Flasher sur le PlayStore</string>
@@ -33,6 +24,5 @@
     <string name="support">Assistance</string>
     <string name="support_summary">Visiter la page d\'assistance sur xda-developers.com</string>
     <string name="sure_question">Êtes-vous sûr ?</string>
-    <string name="turn_off">Éteindre</string>
     <string name="version">Version</string>
 </resources>

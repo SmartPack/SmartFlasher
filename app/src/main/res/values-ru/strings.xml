@@ -7,6 +7,7 @@
     <string name="already_exists">%s уже существует!</string>
     <string name="backup">Резервное копирование</string>
     <string name="backup_message">Резервное копирование%s вашего устройства в</string>
+    <string name="backup_summary">Детали уже зарезервированных разделов перечислены на этой странице.</string>
     <string name="boot_img">Boot IMG</string>
     <string name="boot_partition">Раздел Boot</string>
     <string name="boot_partition_unknown">Не удалось получить идентификатор  раздела Boot</string>
@@ -14,29 +15,17 @@
     <string name="change_logs">История изменений</string><string name="change_logs_summary">Посмотреть историю изменений</string>
     <string name="credits">Кредиты</string>
     <string name="delete">Удалить</string>
-    <string name="donate_me">Пожертвовать мне</string>
-    <string name="donate_me_message">\nЕсли вам нравится моя работа, рассмотрите возможность пожертвования для меня, так как полезно продолжать мои проекты более активно, хотя в этом нет необходимости. \n</string>
-    <string name="donate_me_playstore">\nОбратите внимание: я могу принимать пожертвования через PayPal или через пакет пожертвований SmartPack в PlayStore. \n</string>
-    <string name="donate_me_summary">Хотите оценить мою работу с пожертвованием? кликните сюда</string>
-    <string name="donate_nope">Я не попадусь на эту аферу!</string>
-    <string name="executing">Выполнение</string>
     <string name="file_size_limit">Обратите внимание: по соображениям безопасности файлы восстановления размером более 100 МБ не могут быть прошиты</string>
     <string name="flasher">Прошивальшик</string>
+    <string name="flasher_summary">Нажмите кнопку прошивки, чтобы выбрать и прошить файл восстановления ZIP без перезагрузки в пользовательское восстановление. Изменения вступят в силу после перезагрузки.</string>
     <string name="flashing">Прошивка в процессе</string>
     <string name="flash_img_warning">\n\nПредупреждение: перепрошивка неправильного файла \'img\' может привести к поломке вашего устройства. Пожалуйста, будьте осторожны.\n</string>
     <string name="flash">Flash</string>
-    <string name="flasher_warning">\n\nПредупреждение: эта функция все еще очень новая и находится в стадии разработки. Он может не иметь полной совместимости со многими флеш-архивами. Если вы считаете, что процесс перепрошивки в любом случае не удался из-за вышеупомянутых несовместимостей, пожалуйста, перезапустите приложение, прежде чем что-либо предпринимать. \n\n *** ИСПОЛЬЗУЙТЕ НА СВОЙ СТРАХ И РИСК *** \n</string>
-    <string name="get_it">Возьми</string>
     <string name="kernel">Ядро</string>
-    <string name="licence">Лицензия</string>
-    <string name="more">Больше</string>
     <string name="name_empty">Имя пусто!</string>
     <string name="no_internet">Пожалуйста, проверьте ваше интернет-соединение!</string>
     <string name="no_root">Нет корневого доступа</string>
-    <string name="nothing_found">Ничего не найдено!</string>
     <string name="ok">Ок</string>
-    <string name="options">Опции</string>
-    <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">Отказано в разрешении на запись в память устройства!</string>
     <string name="playstore">PlayStore</string>
     <string name="playstore_summary">Посетить страницу Smart Flasher в PlayStore</string>
@@ -51,20 +40,13 @@
     <string name="rebooting">Rebooting</string>
     <string name="restore">Восстановить</string>
     <string name="share_app">Поделиться приложением</string>
-    <string name="share_app_summary">Поделитесь Smart Flasher со своими друзьями</string>
     <string name="share_app_message">Загрузите смарт-флешер %s из\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">Исходный код</string>
     <string name="source_code_summary">Посмотреть исзодный код на GitHub</string>
     <string name="support">Поддержка</string>
     <string name="support_summary">Посетить страницу поддержки на xda-developers.com</string>
-    <string name="sure_message">Вы уверены, что прошить %s?</string>
     <string name="sure_question">Вы уверены?</string>
-    <string name="turn_off">Выключен</string>
     <string name="update_check">Проверить обновления</string>
-    <string name="update_check_failed">Не удалось получить информацию о последней версии!</string>
-    <string name="update_check_summary">Проверьте наличие новых версий Smart Flasher</string>
-    <string name="update_available">Доступно новое обновление! Пожалуйста, загрузите и обновите приложение вручную.</string>
-    <string name="uptodate_message">Congrats! You are up-to-date.</string>
     <string name="version">Версия</string>
     <string name="wrong_extension">Пожалуйста, выберите файл с расширением %s</string>
 </resources>

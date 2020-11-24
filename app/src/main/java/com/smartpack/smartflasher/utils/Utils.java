@@ -20,81 +20,207 @@
 
 package com.smartpack.smartflasher.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import androidx.annotation.StringRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.AppCompatEditText;
 
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textview.MaterialTextView;
+import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.utils.root.RootFile;
-import com.smartpack.smartflasher.utils.root.RootUtils;
+import com.topjohnwu.superuser.Shell;
+import com.topjohnwu.superuser.ShellUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.math.BigInteger;
+import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 /*
- * Created by sunilpaulmathew <sunil.kde@gmail.com> on May 24, 2019
- * Based on the original implementation on Kernel Adiutor by
- * Willi Ye <williye97@gmail.com>
+ * Created by sunilpaulmathew <sunil.kde@gmail.com> on January 07, 2020
  */
 
 public class Utils {
 
-    public static AppCompatImageButton mBackButton;
+    static {
+        Shell.Config.verboseLogging(BuildConfig.DEBUG);
+        Shell.Config.setTimeout(10);
+    }
 
-    public static AppCompatImageView mAppIcon;
+    /*
+     * The following code is partly taken from https://github.com/SmartPack/SmartPack-Kernel-Manager
+     * Ref: https://github.com/SmartPack/SmartPack-Kernel-Manager/blob/beta/app/src/main/java/com/smartpack/kernelmanager/utils/root/RootUtils.java
+     */
+    public static boolean rootAccess() {
+        return Shell.rootAccess();
+    }
 
-    public static AppCompatTextView mTitle;
-    public static AppCompatTextView mAppName;
-    public static AppCompatTextView mText;
+    public static void runCommand(String command) {
+        Shell.su(command).exec();
+    }
 
-    public static boolean mForegroundActive = false;
+    @NonNull
+    public static String runAndGetOutput(String command) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            List<String> outputs = Shell.su(command).exec().getOut();
+            if (ShellUtils.isValidOutput(outputs)) {
+                for (String output : outputs) {
+                    sb.append(output).append("\n");
+                }
+            }
+            return removeSuffix(sb.toString()).trim();
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
-    public static CardView mForegroundCard;
+    @NonNull
+    public static String runAndGetError(String command) {
+        StringBuilder sb = new StringBuilder();
+        List<String> outputs = new ArrayList<>();
+        List<String> stderr = new ArrayList<>();
+        try {
+            Shell.su(command).to(outputs, stderr).exec();
+            outputs.addAll(stderr);
+            if (ShellUtils.isValidOutput(outputs)) {
+                for (String output : outputs) {
+                    sb.append(output).append("\n");
+                }
+            }
+            return removeSuffix(sb.toString()).trim();
+        } catch (Exception e) {
+            return "";
+        }
+    }
 
-    private static final String TAG = Utils.class.getSimpleName();
+    private static String removeSuffix(@Nullable String s) {
+        if (s != null && s.endsWith("\n")) {
+            return s.substring(0, s.length() - "\n".length());
+        }
+        return s;
+    }
 
-    public static TabLayout mTabLayout;
+    /*
+     * The following code is partly taken from https://github.com/Grarak/KernelAdiutor
+     * Ref: https://github.com/Grarak/KernelAdiutor/blob/master/app/src/main/java/com/grarak/kerneladiutor/utils/ViewUtils.java
+     */
+
+    public static int getThemeAccentColor(Context context) {
+        return context.getResources().getColor(R.color.ColorBlue);
+    }
+
+    public interface OnDialogEditTextListener {
+        void onClick(String text);
+    }
+
+    public static MaterialAlertDialogBuilder dialogEditText(String text, final DialogInterface.OnClickListener negativeListener,
+                                                            final OnDialogEditTextListener onDialogEditTextListener,
+                                                            Context context) {
+        return dialogEditText(text, negativeListener, onDialogEditTextListener, -1, context);
+    }
+
+    public static MaterialAlertDialogBuilder dialogEditText(String text, final DialogInterface.OnClickListener negativeListener,
+                                                            final OnDialogEditTextListener onDialogEditTextListener, int inputType,
+                                                            Context context) {
+        LinearLayout layout = new LinearLayout(context);
+        layout.setPadding(75, 75, 75, 75);
+
+        final AppCompatEditText editText = new AppCompatEditText(context);
+        editText.setGravity(Gravity.CENTER);
+        editText.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (text != null) {
+            editText.append(text);
+        }
+        editText.setSingleLine(true);
+        if (inputType >= 0) {
+            editText.setInputType(inputType);
+        }
+
+        layout.addView(editText);
+
+        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(context).setView(layout);
+        if (negativeListener != null) {
+            dialog.setNegativeButton(context.getString(R.string.cancel), negativeListener);
+        }
+        if (onDialogEditTextListener != null) {
+            dialog.setPositiveButton(context.getString(R.string.ok), (dialog1, which)
+                    -> onDialogEditTextListener.onClick(Objects.requireNonNull(editText.getText()).toString()))
+                    .setOnDismissListener(dialog1 -> {
+                        if (negativeListener != null) {
+                            negativeListener.onClick(dialog1, 0);
+                        }
+                    });
+        }
+        return dialog;
+    }
+
+    /*
+     * The following code is partly taken from https://github.com/Grarak/KernelAdiutor
+     * Ref: https://github.com/Grarak/KernelAdiutor/blob/master/app/src/main/java/com/grarak/kerneladiutor/utils/Prefs.java
+     */
+    public static boolean getBoolean(String name, boolean defaults, Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(name, defaults);
+    }
+
+    public static void saveBoolean(String name, boolean value, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(name, value).apply();
+    }
+
+    /*
+     * The following code is partly taken from https://github.com/Grarak/KernelAdiutor
+     * Ref: https://github.com/Grarak/KernelAdiutor/blob/master/app/src/main/java/com/grarak/kerneladiutor/utils/Utils.java
+     */
+
+    public static boolean isDarkTheme(Context context) {
+        int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    public static void initializeAppTheme(Context context) {
+        if (isDarkTheme(context)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    public static String getInternalDataStorage() {
+        return Environment.getExternalStorageDirectory().toString() + "/Smart_Flasher";
+    }
 
     public static boolean isPackageInstalled(String id, Context context) {
         try {
@@ -109,159 +235,26 @@ public class Utils {
         return isPackageInstalled("com.smartpack.donate", context);
     }
 
-    public static void initializeAppTheme(Context context) {
-        if (Prefs.getBoolean("dark_theme", true, context)) {
-            AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_NO);
-        }
+    public static String read(String file) {
+        return runAndGetOutput("cat '" + file + "'");
     }
 
-    public static void initializeGoogleAds(Context context) {
-        MobileAds.initialize(context, "ca-app-pub-7791710838910455~6603969352");
+    public static boolean exist(String file) {
+        String output = runAndGetOutput("[ -e " + file + " ] && echo true");
+        return !output.isEmpty() && output.equals("true");
     }
 
-    public static Drawable getColoredIcon(int icon, Context context) {
-        TypedValue value = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-        Drawable drawable = context.getResources().getDrawable(icon);
-        drawable.setTint(value.data);
-        return drawable;
+    public static String mount(String command, String mountPoint) {
+        return runAndGetError("mount -o remount," + command + " " + mountPoint);
     }
 
-    public static boolean isTv(Context context) {
-        return ((UiModeManager) Objects.requireNonNull(context.getSystemService(Context.UI_MODE_SERVICE)))
-                .getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
-    }
-
-    public static String getInternalDataStorage() {
-        return Environment.getExternalStorageDirectory().toString() + "/Smart_Flasher";
-    }
-
-    public static void prepareInternalDataStorage() {
-        File file = new File(getInternalDataStorage());
-        if (file.exists() && file.isFile()) {
-            file.delete();
-        }
-        file.mkdirs();
-    }
-
-    // MD5 code from
-    // https://github.com/CyanogenMod/android_packages_apps_CMUpdater/blob/cm-12.1/src/com/cyanogenmod/updater/utils/MD5.java
-    public static boolean checkMD5(String md5, File updateFile) {
-        if (md5 == null || updateFile == null || md5.isEmpty()) {
-            Log.e(TAG, "MD5 string empty or updateFile null");
-            return false;
-        }
-
-        String calculatedDigest = calculateMD5(updateFile);
-        if (calculatedDigest == null) {
-            Log.e(TAG, "calculatedDigest null");
-            return false;
-        }
-
-        return calculatedDigest.equalsIgnoreCase(md5);
-    }
-
-    private static String calculateMD5(File updateFile) {
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "Exception while getting digest", e);
-            return null;
-        }
-
-        InputStream is;
-        try {
-            is = new FileInputStream(updateFile);
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Exception while getting FileInputStream", e);
-            return null;
-        }
-
-        byte[] buffer = new byte[8192];
-        int read;
-        try {
-            while ((read = is.read(buffer)) > 0) {
-                digest.update(buffer, 0, read);
-            }
-            byte[] md5sum = digest.digest();
-            BigInteger bigInt = new BigInteger(1, md5sum);
-            String output = bigInt.toString(16);
-            // Fill to 32 chars
-            output = String.format("%32s", output).replace(' ', '0');
-            return output;
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to process file for MD5", e);
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Exception on closing MD5 input stream", e);
-            }
-        }
-    }
-
-    public static boolean isTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
-
-    public static void toast(String message, Context context) {
-        toast(message, context, Toast.LENGTH_SHORT);
-    }
-
-    public static void toast(@StringRes int id, Context context) {
-        toast(context.getString(id), context);
-    }
-
-    private static void toast(String message, Context context, int duration) {
-        Toast.makeText(context, message, duration).show();
-    }
-
-    public static void snackbar(View view, String message) {
-        Snackbar snackbar;
-        snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        snackbar.show();
-    }
-
-    public static void launchUrl(String url, Context context) {
-        if (Utils.networkUnavailable(context)) {
-            Utils.toast(R.string.no_internet, context);
-            return;
-        }
-        try {
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            context.startActivity(i);
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static int getOrientation(Activity activity) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && activity.isInMultiWindowMode() ?
-                Configuration.ORIENTATION_PORTRAIT : activity.getResources().getConfiguration().orientation;
-    }
-
-    public static int strToInt(String text) {
-        try {
-            return Integer.parseInt(text);
-        } catch (NumberFormatException ignored) {
-            return 0;
-        }
-    }
-
-    public static boolean isDownloadBinaries() {
-        return Utils.existFile("/system/bin/curl") || Utils.existFile("/system/bin/wget");
-    }
-
-    public static void downloadFile(String path, String url) {
-        if (isDownloadBinaries()) {
-            RootUtils.runCommand((Utils.existFile("/system/bin/curl") ?
+    public static void download(String path, String url) {
+        if (isMagiskBinaryExist("wget")) {
+            runCommand(magiskBusyBox() + " wget -O " + path + " " + url);
+        } else if (isMagiskBinaryExist("curl")) {
+            runCommand(magiskBusyBox() + " curl -L -o " + path + " " + url);
+        } else if (Utils.exist("/system/bin/curl") || Utils.exist("/system/bin/wget")) {
+            runCommand((Utils.exist("/system/bin/curl") ?
                     "curl -L -o " : "wget -O ") + path + " " + url);
         } else {
             /*
@@ -280,65 +273,85 @@ public class Utils {
         }
     }
 
-    public static String getChecksum(String path) {
-        return RootUtils.runAndGetOutput("sha1sum " + path);
+    public static boolean isMagiskBinaryExist(String command) {
+        return magiskBusyBox() != null && !runAndGetError("/data/adb/magisk/busybox " + command).contains("applet not found");
     }
 
-    public static String readFile(String file) {
-        return readFile(file, true);
-    }
-
-
-    private static String readFile(String file, boolean root) {
-        if (root) {
-            return new RootFile(file).readFile();
+    public static String magiskBusyBox() {
+        if (Utils.exist("/data/adb/magisk/busybox")) {
+            return "/data/adb/magisk/busybox";
+        } else {
+            return null;
         }
+    }
 
-        BufferedReader buf = null;
-        try {
-            buf = new BufferedReader(new FileReader(file));
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = buf.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
-            }
-
-            return stringBuilder.toString().trim();
-        } catch (IOException ignored) {
-        } finally {
+    public static void create(String text, String path) {
+        if (!path.startsWith("/storage/")) {
+            runCommand("echo '" + text + "' > " + path);
+        } else {
             try {
-                if (buf != null) buf.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                File logFile = new File(path);
+                logFile.createNewFile();
+                FileOutputStream fOut = new FileOutputStream(logFile);
+                OutputStreamWriter myOutWriter =
+                        new OutputStreamWriter(fOut);
+                myOutWriter.append(text);
+                myOutWriter.close();
+                fOut.close();
+            } catch (Exception ignored) {
             }
         }
-        return null;
-    }
-
-    public static boolean existFile(String file) {
-        return existFile(file, true);
-    }
-
-    private static boolean existFile(String file, boolean root) {
-        return !root ? new File(file).exists() : new RootFile(file).exists();
-    }
-
-    static void create(String text, String path) {
-        RootUtils.runCommand("echo '" + text + "' > " + path);
     }
 
     public static void delete(String path) {
-        if (Utils.existFile(path)) {
-            RootUtils.runCommand("rm -r " + path);
+        if (exist(path)) {
+            runCommand(magiskBusyBox() + " rm -r " + path);
         }
     }
 
-    static void mount(String command, String source, String dest) {
-        RootUtils.runCommand("mount " + command + " " + source + " " + dest);
+    public static String getChecksum(String path) {
+        return runAndGetOutput("sha1sum " + path);
     }
 
-    public static boolean networkUnavailable(Context context) {
+    public static void copy(String source, String dest) {
+        Utils.runCommand("cp " + source + " " + dest);
+    }
+
+    public static void snackbar(View view, String message) {
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.dismiss, v -> snackbar.dismiss());
+        snackbar.show();
+    }
+
+    public static void launchUrl(View view, String url, Context context) {
+        if (isNetworkUnavailable(context)) {
+            snackbar(view, context.getString(R.string.no_internet));
+        } else {
+            try {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                context.startActivity(i);
+            } catch (ActivityNotFoundException ignored) {
+            }
+        }
+    }
+
+    public static int getOrientation(Activity activity) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && activity.isInMultiWindowMode() ?
+                Configuration.ORIENTATION_PORTRAIT : activity.getResources().getConfiguration().orientation;
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static int getSpanCount(Activity activity) {
+        return isTablet(activity) ? getOrientation(activity) == Configuration.ORIENTATION_LANDSCAPE ?
+                4 : 3 : getOrientation(activity) == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
+    }
+
+    public static boolean isNetworkUnavailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return (cm.getActiveNetworkInfo() == null) || !cm.getActiveNetworkInfo().isConnectedOrConnecting();
@@ -366,48 +379,14 @@ public class Utils {
         if (path.contains("file%3A%2F%2F%2F")) {
             path = path.replace("file%3A%2F%2F%2F", "").replace("%2F", "/");
         }
+        if (path.contains("%2520")) {
+            path = path.replace("%2520", " ");
+        }
         return path;
     }
 
     public static boolean isDocumentsUI(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    public static String prepareReboot() {
-        String prepareReboot = "am broadcast android.intent.action.ACTION_SHUTDOWN " + "&&" +
-                " sync " + "&&" +
-                " echo 3 > /proc/sys/vm/drop_caches " + "&&" +
-                " sync " + "&&" +
-                " sleep 1 " + "&&" +
-                " reboot";
-        return prepareReboot;
-    }
-
-    public static void rebootCommand(Context context) {
-        new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog mProgressDialog;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(context);
-                mProgressDialog.setMessage(context.getString(R.string.rebooting) + ("..."));
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-            @Override
-            protected Void doInBackground(Void... voids) {
-                RootUtils.runCommand(prepareReboot());
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-            }
-        }.execute();
     }
 
     /*
@@ -445,44 +424,67 @@ public class Utils {
         return null;
     }
 
-    /**
-     * Taken and used almost as such from the following stackoverflow discussion
-     * https://stackoverflow.com/questions/3571223/how-do-i-get-the-file-extension-of-a-file-in-java
-     */
-    public static String getExtension(String string) {
-        return android.webkit.MimeTypeMap.getFileExtensionFromUrl(string);
+    private static String rebootCommand() {
+        return "am broadcast android.intent.action.ACTION_SHUTDOWN " + "&&" +
+                " sync " + "&&" +
+                " echo 3 > /proc/sys/vm/drop_caches " + "&&" +
+                " sync " + "&&" +
+                " sleep 3 " + "&&" +
+                " reboot";
+    }
+
+    public static void reboot(String string, LinearLayout linearLayout, MaterialTextView textView, Context context) {
+        new AsyncTask<Void, Void, Void>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                linearLayout.setVisibility(View.VISIBLE);
+                textView.setText(context.getString(R.string.rebooting) + "...");
+            }
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Utils.runCommand(rebootCommand() + string);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                linearLayout.setVisibility(View.GONE);
+            }
+        }.execute();
     }
 
     public static boolean languageDefault(Context context) {
-        return !Prefs.getBoolean("use_en", false, context)
-                && !Prefs.getBoolean("use_ko", false, context)
-                && !Prefs.getBoolean("use_am", false, context)
-                && !Prefs.getBoolean("use_fr", false, context)
-                && !Prefs.getBoolean("use_ru", false, context)
-                && !Prefs.getBoolean("use_it", false, context)
-                && !Prefs.getBoolean("use_pt", false, context)
-                && !Prefs.getBoolean("use_ch", false, context)
-                && !Prefs.getBoolean("use_el", false, context);
+        return !getBoolean("use_en", false, context)
+                && !getBoolean("use_ko", false, context)
+                && !getBoolean("use_am", false, context)
+                && !getBoolean("use_fr", false, context)
+                && !getBoolean("use_ru", false, context)
+                && !getBoolean("use_it", false, context)
+                && !getBoolean("use_pt", false, context)
+                && !getBoolean("use_ch", false, context)
+                && !getBoolean("use_el", false, context);
     }
 
     public static String getLanguage(Context context) {
-        if (Prefs.getBoolean("use_en", false, context)) {
+        if (getBoolean("use_en", false, context)) {
             return "en_US";
-        } else if (Prefs.getBoolean("use_ko", false, context)) {
+        } else if (getBoolean("use_ko", false, context)) {
             return "ko";
-        } else if (Prefs.getBoolean("use_am", false, context)) {
+        } else if (getBoolean("use_am", false, context)) {
             return "am";
-        } else if (Prefs.getBoolean("use_fr", false, context)) {
+        } else if (getBoolean("use_fr", false, context)) {
             return "fr";
-        } else if (Prefs.getBoolean("use_ru", false, context)) {
+        } else if (getBoolean("use_ru", false, context)) {
             return "ru";
-        } else if (Prefs.getBoolean("use_it", false, context)) {
+        } else if (getBoolean("use_it", false, context)) {
             return "it";
-        } else if (Prefs.getBoolean("use_pt", false, context)) {
+        } else if (getBoolean("use_pt", false, context)) {
             return "pt";
-        } else if (Prefs.getBoolean("use_ch", false, context)) {
+        } else if (getBoolean("use_ch", false, context)) {
             return "zh";
-        } else if (Prefs.getBoolean("use_el", false, context)) {
+        } else if (getBoolean("use_el", false, context)) {
             return "el";
         } else {
             return java.util.Locale.getDefault().getLanguage();

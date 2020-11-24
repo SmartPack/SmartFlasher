@@ -7,6 +7,7 @@
     <string name="already_exists">％s已經存在！</string>
     <string name="backup">備份</string>
     <string name="backup_message">將裝置的％s備份到</string>
+    <string name="backup_summary">此頁面上列出了已備份分割區的詳細資訊。</string>
     <string name="boot_img">Boot 映像</string>
     <string name="boot_partition">Boot 分割區</string>
     <string name="boot_partition_unknown">無法識別 Boot 分割區</string>
@@ -14,27 +15,16 @@
     <string name="change_logs">變更日誌</string><string name="change_logs_summary">檢視變更日誌</string>
     <string name="credits">致謝名單</string>
     <string name="delete">刪除</string>
-    <string name="donate_me">捐款</string>
-    <string name="donate_me_message">\n如果您想欣賞我的工作，請考慮捐款給我，因為這對繼續我的項目更加積極有幫助，儘管這完全沒有必要。\n</string>
-    <string name="donate_me_playstore">\n請注意：我可以透過PayPal或PlayStore中的SmartPack捐贈包接受捐贈。\n</string>
-    <string name="donate_me_summary">想透過捐贈來感謝我的工作嗎？點選這裡</string>
-    <string name="donate_nope">現在不要</string>
-    <string name="executing">執行中</string>
     <string name="file_size_limit">％s的大小大於100 MB。\n\n請注意：出於安全原因，超過100 MB的復原檔案將不允許刷入。</string>
     <string name="flasher">刷入器</string>
+    <string name="flasher_summary">按一下刷入按鈕選擇並刷入可用於復原模式的 zip 檔案, 而無需重新開機到第三方復原模式。變更將在重新開機後套用。</string>
     <string name="flashing">刷入</string>
     <string name="flash_img_warning">\n\n警告: 刷入錯誤的「.img」 檔案可能會損壞您的裝置。請小心。\n</string>
     <string name="flash">刷入</string>
-    <string name="flasher_warning">\n\n警告：此功能仍是非常新的功能，正在開發中。它可能與許多可用於復原模式的 zip 檔案不完全相容。如果您認為由於上述不相容而導致刷入過程在任何情況下均失敗，請在執行任何操作之前立即重新啟動應用程式。\n\n ***風險自負***\n</string>
     <string name="kernel">核心</string>
-    <string name="licence">授權協議</string>
-    <string name="more">更多</string>
     <string name="name_empty">名稱為空！</string>
     <string name="no_internet">請檢查您的網際網路連線！</string>
-    <string name="nothing_found">找不到！</string>
     <string name="ok">好</string>
-    <string name="options">選項</string>
-    <string name="paypal_donation">PayPal</string>
     <string name="permission_denied_write_storage">不允許寫入儲存空間！</string>
     <string name="playstore">Play 商店</string>
     <string name="playstore_summary">造訪 Play 商店中的 Smart Flasher 頁面 </string>
@@ -51,9 +41,7 @@
     <string name="source_code_summary">在GitHub上檢視原始碼</string>
     <string name="support">支援</string>
     <string name="support_summary">造訪 xda-developers.com 的支援頁面</string>
-    <string name="sure_message">您確定要刷入％s嗎？</string>
     <string name="sure_question">你確定嗎？</string>
-    <string name="turn_off">關機</string>
     <string name="version">版本</string>
     <string name="wrong_extension">請選擇副檔名為％s的檔案。</string>
 </resources>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/ColorBlack"
+        android:gravity="center_vertical"
+        android:padding="10dp" >
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@color/ColorBlack"
+            android:tint="@color/ColorBlue"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_back" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="@string/flasher_log"
+            android:gravity="center_vertical"
+            android:textColor="@color/ColorBlue"
+            android:textIsSelectable="true"
+            android:textStyle="bold"
+            android:textSize="17sp" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/save"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@color/ColorBlack"
+            android:tint="@color/ColorBlue"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_save"
+            android:layout_gravity="end" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50sp"
+        android:layout_gravity="start"
+        android:background="?android:attr/colorBackground"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical" >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/flasher_log"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:gravity="start"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textIsSelectable="true"
+                    app:cardCornerRadius="25dp"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="bottom"
+        android:text="@string/cancel"
+        android:textStyle="bold"
+        android:background="@color/ColorBlack"
+        android:textColor="?android:attr/colorAccent"
+        android:textSize="18sp"
+        android:padding="10dp" />
+</com.google.android.material.card.MaterialCardView>

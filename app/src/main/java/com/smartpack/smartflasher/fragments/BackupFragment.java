@@ -23,140 +23,215 @@ package com.smartpack.smartflasher.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.OpenableColumns;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.SubMenu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.utils.Flasher;
+import com.smartpack.smartflasher.utils.Backup;
 import com.smartpack.smartflasher.utils.Utils;
-import com.smartpack.smartflasher.utils.ViewUtils;
-import com.smartpack.smartflasher.utils.root.RootUtils;
-import com.smartpack.smartflasher.views.dialog.Dialog;
-import com.smartpack.smartflasher.views.recyclerview.DescriptionView;
-import com.smartpack.smartflasher.views.recyclerview.RecyclerViewItem;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /*
- * Created by sunilpaulmathew <sunil.kde@gmail.com> on December 12, 2019
+ * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 19, 2020
  */
 
-public class BackupFragment extends RecyclerViewFragment {
+public class BackupFragment extends Fragment {
 
-    private AsyncTask<Void, Void, List<RecyclerViewItem>> mLoader;
-
-    private Dialog mItemOptionsDialog;
-    private Dialog mSelectionMenu;
-    private Dialog mDeleteDialog;
-
+    private AsyncTask<Void, Void, List<String>> mLoader;
+    private Handler mHandler = new Handler();
+    private LinearLayout mProgressLayout;
+    private MaterialTextView mProgressText;
+    private RecyclerView mRecyclerView;
+    private RecycleViewAdapter mRecycleViewAdapter;
+    private View mRootView;
     private String mPath;
 
+    @Nullable
     @Override
-    protected boolean showBottomFab() {
-        return true;
-    }
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.fragment_backup, container, false);
 
-    @Override
-    protected Drawable getBottomFabDrawable() {
-        return getResources().getDrawable(R.drawable.ic_backup);
-    }
+        mProgressLayout = mRootView.findViewById(R.id.progress_layout);
+        mProgressText = mRootView.findViewById(R.id.progress_text);
+        FloatingActionButton mFAB = mRootView.findViewById(R.id.fab);
+        mRecyclerView = mRootView.findViewById(R.id.recycler_view);
 
-    @Override
-    public int getSpanCount() {
-        int span = Utils.isTablet(requireActivity()) ? Utils.getOrientation(getActivity()) ==
-                Configuration.ORIENTATION_LANDSCAPE ? 4 : 3 : Utils.getOrientation(getActivity()) ==
-                Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
-        if (itemsSize() != 0 && span > itemsSize()) {
-            span = itemsSize();
+        if (Utils.isDarkTheme(requireActivity())) {
+            mProgressText.setTextColor(Utils.getThemeAccentColor(requireActivity()));
         }
-        return span;
-    }
 
-    @Override
-    protected void init() {
-        super.init();
+        mFAB.setOnClickListener(v -> {
+            if (Utils.checkWriteStoragePermission(requireActivity())) {
+                PopupMenu popupMenu = new PopupMenu(requireActivity(), mFAB);
+                Menu menu = popupMenu.getMenu();
+                SubMenu backup = menu.addSubMenu(Menu.NONE, 0, Menu.NONE, getString(R.string.backup));
+                backup.add(Menu.NONE, 1, Menu.NONE, getString(R.string.boot_partition));
+                backup.add(Menu.NONE, 2, Menu.NONE, getString(R.string.recovery_partition));
+                SubMenu flash = menu.addSubMenu(Menu.NONE, 0, Menu.NONE, getString(R.string.flash));
+                flash.add(Menu.NONE, 3, Menu.NONE, getString(R.string.boot_img));
+                flash.add(Menu.NONE, 4, Menu.NONE, getString(R.string.recovery_img));
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case 0:
+                            break;
+                        case 1:
+                            if (!Backup.hasBootPartitionInfo()) {
+                                Utils.snackbar(mRootView, getString(R.string.boot_partition_unknown));
+                            } else {
+                                backup_boot_partition();
+                            }
+                            break;
+                        case 2:
+                            if (Backup.isABDevice()) {
+                                Utils.snackbar(mRootView, getString(R.string.ab_message));
+                            } else if (!Backup.hasRecoveryPartitionInfo()) {
+                                Utils.snackbar(mRootView, getString(R.string.recovery_partition_unknown));
+                            } else {
+                                backup_recovery_partition();
+                            }
+                            break;
+                        case 3:
+                            if (!Backup.hasBootPartitionInfo()) {
+                                Utils.snackbar(mRootView, getString(R.string.boot_partition_unknown));
+                            } else {
+                                Intent boot_img = new Intent(Intent.ACTION_GET_CONTENT);
+                                boot_img.setType("*/*");
+                                startActivityForResult(boot_img, 0);
+                            }
+                            break;
+                        case 4:
+                            if (Backup.isABDevice()) {
+                                Utils.snackbar(mRootView, getString(R.string.ab_message));
+                            } else if (!Backup.hasRecoveryPartitionInfo()) {
+                                Utils.snackbar(mRootView, getString(R.string.recovery_partition_unknown));
+                            } else {
+                                Intent rec_img = new Intent(Intent.ACTION_GET_CONTENT);
+                                rec_img.setType("*/*");
+                                startActivityForResult(rec_img, 1);
+                            }
+                            break;
+                    }
+                    return false;
+                });
+                popupMenu.show();
+            } else {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                Utils.snackbar(mRootView, getString(R.string.permission_denied_write_storage));
+            }
+        });
 
+        mRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), Utils.getSpanCount(requireActivity())));
+        mRecycleViewAdapter = new RecycleViewAdapter(Backup.getData());
         if (Utils.checkWriteStoragePermission(requireActivity())) {
-            if (!Flasher.hasBootPartitionInfo()) {
-                Flasher.exportBootPartitionInfo();
-            }
-            if (!Flasher.hasRecoveryPartitionInfo()) {
-                Flasher.exportRecoveryPartitionInfo();
-            }
+            mRecyclerView.setAdapter(mRecycleViewAdapter);
         } else {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
-        if (mItemOptionsDialog != null) {
-            mItemOptionsDialog.show();
-        }
-        if (mDeleteDialog != null) {
-            mDeleteDialog.show();
-        }
-    }
 
-    @Override
-    protected void addItems(List<RecyclerViewItem> items) {
-        if (Utils.checkWriteStoragePermission(requireActivity())) {
-            reload();
-        }
+        mRecycleViewAdapter.setOnItemClickListener((position, v) -> {
+            PopupMenu popupMenu = new PopupMenu(requireActivity(), mRecyclerView);
+            Menu menu = popupMenu.getMenu();
+            SubMenu backup = menu.addSubMenu(Menu.NONE, 0, Menu.NONE, getString(R.string.restore));
+            backup.add(Menu.NONE, 1, Menu.NONE, getString(R.string.boot_partition));
+            backup.add(Menu.NONE, 2, Menu.NONE, getString(R.string.recovery_partition));
+            menu.add(Menu.NONE, 3, Menu.NONE, getString(R.string.delete));
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case 0:
+                        break;
+                    case 1:
+                        if (!Backup.hasBootPartitionInfo()) {
+                            Utils.snackbar(mRootView, getString(R.string.boot_partition_unknown));
+                        } else {
+                            flash_boot_partition(new File(mRecycleViewAdapter.getData(position)));
+                        }
+                        break;
+                    case 2:
+                        if (Backup.isABDevice()) {
+                            Utils.snackbar(mRootView, getString(R.string.ab_message));
+                        } else if (!Backup.hasRecoveryPartitionInfo()) {
+                            Utils.snackbar(mRootView, getString(R.string.recovery_partition_unknown));
+                        } else {
+                            flash_recovery_partition(new File(mRecycleViewAdapter.getData(position)));
+                        }
+                        break;
+                    case 3:
+                        new MaterialAlertDialogBuilder(requireActivity())
+                                .setMessage(R.string.sure_question)
+                                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+                                })
+                                .setPositiveButton(R.string.delete, (dialogInterface, i) -> {
+                                    Utils.delete(mRecycleViewAdapter.getData(position));
+                                    reload();
+                                }).show();
+                        break;
+                }
+                return false;
+            });
+            popupMenu.show();
+        });
+
+        return mRootView;
     }
 
     private void reload() {
         if (mLoader == null) {
-            getHandler().postDelayed(new Runnable() {
+            mHandler.postDelayed(new Runnable() {
                 @SuppressLint("StaticFieldLeak")
                 @Override
                 public void run() {
-                    clearItems();
-                    mLoader = new AsyncTask<Void, Void, List<RecyclerViewItem>>() {
-
+                    mLoader = new AsyncTask<Void, Void, List<String>>() {
                         @Override
                         protected void onPreExecute() {
                             super.onPreExecute();
-                            showProgress();
+                            mProgressLayout.setVisibility(View.VISIBLE);
+                            mProgressText.setText(null);
+                            mRecyclerView.setVisibility(View.GONE);
+                            mRecyclerView.removeAllViews();
                         }
 
                         @Override
-                        protected List<RecyclerViewItem> doInBackground(Void... voids) {
-                            List<RecyclerViewItem> items = new ArrayList<>();
-                            if (Flasher.BootPartitionInfo() && !Flasher.emptyBootPartitionInfo() || Flasher.RecoveryPartitionInfo() && !Flasher.emptyRecoveryPartitionInfo()) {
-                                List<RecyclerViewItem> backupPartitions = new ArrayList<>();
-                                itemInit(backupPartitions);
-                                if (backupPartitions.size() > 0) {
-                                    items.addAll(backupPartitions);
-                                } else {
-                                    DescriptionView backup = new DescriptionView();
-                                    backup.setDrawable(Utils.getColoredIcon(R.drawable.ic_info, requireActivity()));
-                                    backup.setTitle(getString(R.string.nothing_found));
-                                    backup.setSummary(getString(R.string.nothing_found_summary, Utils.getInternalDataStorage() + "/backup"));
-                                    backup.setOnItemClickListener(item -> BackupOptions());
-
-                                    items.add(backup);
-                                }
-                            }
-                            return items;
+                        protected List<String> doInBackground(Void... voids) {
+                            mRecycleViewAdapter = new RecycleViewAdapter(Backup.getData());
+                            return null;
                         }
 
                         @Override
-                        protected void onPostExecute(List<RecyclerViewItem> items) {
-                            super.onPostExecute(items);
-                            for (RecyclerViewItem item : items) {
-                                addItem(item);
-                            }
-                            hideProgress();
+                        protected void onPostExecute(List<String> recyclerViewItems) {
+                            super.onPostExecute(recyclerViewItems);
+                            mRecyclerView.setAdapter(mRecycleViewAdapter);
+                            mRecycleViewAdapter.notifyDataSetChanged();
+                            mProgressLayout.setVisibility(View.GONE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
                             mLoader = null;
                         }
                     };
@@ -166,175 +241,15 @@ public class BackupFragment extends RecyclerViewFragment {
         }
     }
 
-    private void itemInit(List<RecyclerViewItem> items) {
-        File file = new File(Flasher.getPath());
-        if (file.exists()) {
-            for (final String backup : Flasher.backupItems()) {
-                final File image = new File(Flasher.backupPath() + "/" + backup);
-                if (image.isFile()) {
-                    DescriptionView descriptionView = new DescriptionView();
-                    descriptionView.setDrawable(Utils.getColoredIcon(R.drawable.ic_img, requireActivity()));
-                    descriptionView.setTitle(image.getName().replace(".img", ""));
-                    descriptionView.setSummary((image.length() / 1024L / 1024L) + " MB");
-                    descriptionView.setOnItemClickListener(item -> {
-                        mItemOptionsDialog = new Dialog(requireActivity())
-                                .setItems(getResources().getStringArray(R.array.backup_item_options),
-                                        (dialogInterface, i) -> {
-                                            switch (i) {
-                                                case 0:
-                                                    restoreOptions(image);
-                                                    break;
-                                                case 1:
-                                                    delete(image);
-                                                    break;
-                                            }
-                                        })
-                                .setOnDismissListener(dialogInterface -> mItemOptionsDialog = null);
-                        mItemOptionsDialog.show();
-                    });
-
-                    items.add(descriptionView);
-                }
-            }
-        }
-    }
-
-    private void delete(final File file) {
-        mDeleteDialog = ViewUtils.dialogBuilder(getString(R.string.sure_question),
-                (dialogInterface, i) -> {
-                }, (dialogInterface, i) -> {
-                    file.delete();
-                    reload();
-                }, dialogInterface -> mDeleteDialog = null, getActivity());
-        mDeleteDialog.show();
-    }
-
-    private void restoreOptions(final File file) {
-        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
-                R.array.backup_items), (dialog, i) -> {
-                    switch (i) {
-                        case 0:
-                            if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                                Utils.snackbar(getRootView(), getString(R.string.boot_partition_unknown));
-                            } else {
-                                flash_boot_partition(file);
-                            }
-                            break;
-                        case 1:
-                            if (Flasher.isABDevice()) {
-                                Utils.snackbar(getRootView(), getString(R.string.ab_message));
-                            } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                                Utils.snackbar(getRootView(), getString(R.string.recovery_partition_unknown));
-                            } else {
-                                flash_recovery_partition(file);
-                            }
-                            break;
-                    }
-                }).setOnDismissListener(dialog -> mSelectionMenu = null);
-        mSelectionMenu.show();
-    }
-
-    @Override
-    protected void postInit() {
-        super.postInit();
-    }
-
-    @Override
-    protected void onBottomFabClick() {
-        super.onBottomFabClick();
-
-        if (Utils.checkWriteStoragePermission(requireActivity())) {
-            if (!Flasher.hasBootPartitionInfo()) {
-                Flasher.exportBootPartitionInfo();
-            }
-            if (!Flasher.hasRecoveryPartitionInfo()) {
-                Flasher.exportRecoveryPartitionInfo();
-            }
-            reload();
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-            Utils.snackbar(getRootView(), getString(R.string.permission_denied_write_storage));
-            return;
-        }
-
-        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
-                R.array.flasher), (dialogInterface, i) -> {
-                    switch (i) {
-                        case 0:
-                            BackupOptions();
-                            break;
-                        case 1:
-                            FlashOptions();
-                            break;
-                    }
-                }).setOnDismissListener(dialogInterface -> mSelectionMenu = null);
-        mSelectionMenu.show();
-    }
-
-    private void BackupOptions() {
-        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
-                R.array.backup_items), (dialog, i) -> {
-                    switch (i) {
-                        case 0:
-                            if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                                Utils.snackbar(getRootView(), getString(R.string.boot_partition_unknown));
-                            } else {
-                                backup_boot_partition();
-                            }
-                            break;
-                        case 1:
-                            if (Flasher.isABDevice()) {
-                                Utils.snackbar(getRootView(), getString(R.string.ab_message));
-                            } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                                Utils.snackbar(getRootView(), getString(R.string.recovery_partition_unknown));
-                            } else {
-                                backup_recovery_partition();
-                            }
-                            break;
-                    }
-                }).setOnDismissListener(dialog -> mSelectionMenu = null);
-        mSelectionMenu.show();
-    }
-
-    private void FlashOptions() {
-        mSelectionMenu = new Dialog(requireActivity()).setItems(getResources().getStringArray(
-                R.array.flasher_items), (dialog, i) -> {
-                    switch (i) {
-                        case 0:
-                            if (Flasher.emptyBootPartitionInfo() || !Flasher.BootPartitionInfo()) {
-                                Utils.snackbar(getRootView(), getString(R.string.boot_partition_unknown));
-                            } else {
-                                Intent boot_img = new Intent(Intent.ACTION_GET_CONTENT);
-                                boot_img.setType("*/*");
-                                startActivityForResult(boot_img, 0);
-                            }
-                            break;
-                        case 1:
-                            if (Flasher.isABDevice()) {
-                                Utils.snackbar(getRootView(), getString(R.string.ab_message));
-                            } else if (Flasher.emptyRecoveryPartitionInfo() || !Flasher.RecoveryPartitionInfo()) {
-                                Utils.snackbar(getRootView(), getString(R.string.recovery_partition_unknown));
-                            } else {
-                                Intent rec_img = new Intent(Intent.ACTION_GET_CONTENT);
-                                rec_img.setType("*/*");
-                                startActivityForResult(rec_img, 1);
-                            }
-                            break;
-                    }
-                }).setOnDismissListener(dialog -> mSelectionMenu = null);
-        mSelectionMenu.show();
-    }
-
     private void backup_boot_partition() {
-        ViewUtils.dialogEditText(RootUtils.runAndGetOutput("uname -r"),
+        Utils.dialogEditText(Utils.runAndGetOutput("uname -r"),
                 (dialogInterface, i) -> {
-                }, new ViewUtils.OnDialogEditTextListener() {
-                    @SuppressLint({"StaticFieldLeak", "StringFormatInvalid"})
+                }, new Utils.OnDialogEditTextListener() {
+                    @SuppressLint({"StringFormatInvalid", "StaticFieldLeak"})
                     @Override
                     public void onClick(String text) {
                         if (text.isEmpty()) {
-                            Utils.snackbar(getRootView(), getString(R.string.name_empty));
+                            Utils.snackbar(mRootView, getString(R.string.name_empty));
                             return;
                         }
                         if (!text.endsWith(".img")) {
@@ -343,52 +258,49 @@ public class BackupFragment extends RecyclerViewFragment {
                         if (text.contains(" ")) {
                             text = text.replace(" ", "_");
                         }
-                        if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
-                            Utils.snackbar(getRootView(), getString(R.string.already_exists, text));
+                        if (Utils.exist(Utils.getInternalDataStorage() + "/backup/" + text)) {
+                            Utils.snackbar(mRootView, getString(R.string.already_exists, text));
                             return;
                         }
                         final String path = text;
                         new AsyncTask<Void, Void, Void>() {
-                            private ProgressDialog mProgressDialog;
+                            @SuppressLint("SetTextI18n")
                             @Override
                             protected void onPreExecute() {
                                 super.onPreExecute();
-                                mProgressDialog = new ProgressDialog(getActivity());
-                                mProgressDialog.setMessage(getString(R.string.backup_message, (Flasher.isABDevice() ?
+                                mRecyclerView.setVisibility(View.GONE);
+                                mProgressText.setText(getString(R.string.backup_message, (Backup.isABDevice() ?
                                         getString(R.string.ab_partition) : getString(R.string.boot_partition))) +
-                                        (" ") + Utils.getInternalDataStorage() + "/backup/");
-                                mProgressDialog.setCancelable(false);
-                                mProgressDialog.show();
+                                        " " + Utils.getInternalDataStorage() + "/backup/");
+                                mProgressLayout.setVisibility(View.VISIBLE);
                             }
                             @Override
                             protected Void doInBackground(Void... voids) {
-                                Flasher.backupBootPartition(path);
+                                Backup.backupBootPartition(path);
                                 return null;
                             }
                             @Override
                             protected void onPostExecute(Void aVoid) {
                                 super.onPostExecute(aVoid);
-                                try {
-                                    mProgressDialog.dismiss();
-                                } catch (IllegalArgumentException ignored) {
-                                }
+                                mProgressLayout.setVisibility(View.GONE);
+                                mRecyclerView.setVisibility(View.VISIBLE);
                                 reload();
                             }
                         }.execute();
                     }
                 }, getActivity()).setOnDismissListener(dialogInterface -> {
-                }).show();
+        }).show();
     }
 
     private void backup_recovery_partition() {
-        ViewUtils.dialogEditText("Recovery",
+        Utils.dialogEditText("Recovery",
                 (dialogInterface, i) -> {
-                }, new ViewUtils.OnDialogEditTextListener() {
+                }, new Utils.OnDialogEditTextListener() {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(String text) {
                         if (text.isEmpty()) {
-                            Utils.snackbar(getRootView(), getString(R.string.name_empty));
+                            Utils.snackbar(mRootView, getString(R.string.name_empty));
                             return;
                         }
                         if (!text.endsWith(".img")) {
@@ -397,67 +309,61 @@ public class BackupFragment extends RecyclerViewFragment {
                         if (text.contains(" ")) {
                             text = text.replace(" ", "_");
                         }
-                        if (Utils.existFile(Utils.getInternalDataStorage() + "/backup/" + text)) {
-                            Utils.snackbar(getRootView(), getString(R.string.already_exists, text));
+                        if (Utils.exist(Utils.getInternalDataStorage() + "/backup/" + text)) {
+                            Utils.snackbar(mRootView, getString(R.string.already_exists, text));
                             return;
                         }
                         final String path = text;
                         new AsyncTask<Void, Void, Void>() {
-                            private ProgressDialog mProgressDialog;
+                            @SuppressLint("SetTextI18n")
                             @Override
                             protected void onPreExecute() {
                                 super.onPreExecute();
-                                mProgressDialog = new ProgressDialog(getActivity());
-                                mProgressDialog.setMessage(getString(R.string.backup_message, getString(R.string.recovery_partition)) +
-                                        (" ") + Utils.getInternalDataStorage() + "/backup/");
-                                mProgressDialog.setCancelable(false);
-                                mProgressDialog.show();
+                                mRecyclerView.setVisibility(View.GONE);
+                                mProgressText.setText(getString(R.string.backup_message, getString(R.string.recovery_partition)) +
+                                        " " + Utils.getInternalDataStorage() + "/backup/");
+                                mProgressLayout.setVisibility(View.VISIBLE);
                             }
                             @Override
                             protected Void doInBackground(Void... voids) {
-                                Flasher.backupRecoveryPartition(path);
+                                Backup.backupRecoveryPartition(path);
                                 return null;
                             }
                             @Override
                             protected void onPostExecute(Void aVoid) {
                                 super.onPostExecute(aVoid);
-                                try {
-                                    mProgressDialog.dismiss();
-                                } catch (IllegalArgumentException ignored) {
-                                }
+                                mProgressLayout.setVisibility(View.GONE);
+                                mRecyclerView.setVisibility(View.VISIBLE);
                                 reload();
                             }
                         }.execute();
                     }
                 }, getActivity()).setOnDismissListener(dialogInterface -> {
-                }).show();
+        }).show();
     }
 
     @SuppressLint("StaticFieldLeak")
     private void flash_boot_partition(final File file) {
         new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog mProgressDialog;
+            @SuppressLint("SetTextI18n")
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mProgressDialog = new ProgressDialog(getActivity());
-                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
+                mRecyclerView.setVisibility(View.GONE);
+                mProgressText.setText(getString(R.string.flashing) + " " + file.getName());
+                mProgressLayout.setVisibility(View.VISIBLE);
             }
             @Override
             protected Void doInBackground(Void... voids) {
-                Flasher.flashBootPartition(file);
+                Backup.flashBootPartition(file);
                 return null;
             }
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                ViewUtils.rebootDialog(getActivity());
+                mProgressLayout.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                rebootDialog();
             }
         }.execute();
     }
@@ -465,30 +371,38 @@ public class BackupFragment extends RecyclerViewFragment {
     @SuppressLint("StaticFieldLeak")
     private void flash_recovery_partition(final File file) {
         new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog mProgressDialog;
+            @SuppressLint("SetTextI18n")
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mProgressDialog = new ProgressDialog(getActivity());
-                mProgressDialog.setMessage(getString(R.string.flashing) + (" ") + file.getName());
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
+                mRecyclerView.setVisibility(View.GONE);
+                mProgressText.setText(getString(R.string.flashing) + " " + file.getName());
+                mProgressLayout.setVisibility(View.VISIBLE);
             }
             @Override
             protected Void doInBackground(Void... voids) {
-                Flasher.flashRecoveryPartition(file);
+                Backup.flashRecoveryPartition(file);
                 return null;
             }
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                ViewUtils.rebootDialog(getActivity());
+                mProgressLayout.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                rebootDialog();
             }
         }.execute();
+    }
+
+    private void rebootDialog() {
+        new MaterialAlertDialogBuilder(requireActivity())
+                .setMessage(getString(R.string.reboot_dialog))
+                .setCancelable(false)
+                .setNegativeButton(getString(R.string.cancel), (dialog1, id1) -> {
+                })
+                .setPositiveButton(getString(R.string.reboot), (dialog1, id1) -> {
+                    Utils.reboot("", mProgressLayout, mProgressText, requireActivity());
+                }).show();
     }
 
     @SuppressLint("StringFormatInvalid")
@@ -508,34 +422,87 @@ public class BackupFragment extends RecyclerViewFragment {
                 }
             } else {
                 mPath = Utils.getPath(file);
-                if (!Utils.getExtension(mPath).equals("img")) {
-                    Utils.snackbar(getRootView(), getString(R.string.wrong_extension, ".img"));
+                if (!mPath.endsWith(".img")) {
+                    Utils.snackbar(mRootView, getString(R.string.wrong_extension, ".img"));
                     return;
                 }
             }
-            Dialog flashimg = new Dialog(requireActivity());
-            flashimg.setIcon(R.mipmap.ic_launcher);
-            flashimg.setTitle(getString(R.string.flasher));
-            flashimg.setMessage(getString(R.string.sure_message, new File(mPath).getName()) + getString(R.string.flash_img_warning));
-            flashimg.setNeutralButton(getString(R.string.cancel), (dialogInterface, i) -> {
-            });
-            flashimg.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                if (requestCode == 0) {
-                    flash_boot_partition(new File(mPath));
-                } else if (requestCode == 1) {
-                    flash_recovery_partition(new File(mPath));
-                }
-            });
-            flashimg.show();
+            new MaterialAlertDialogBuilder(requireActivity())
+                    .setMessage(getString(R.string.flash_question, new File(mPath).getName()) + getString(R.string.flash_img_warning))
+                    .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    })
+                    .setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
+                        if (requestCode == 0) {
+                            flash_boot_partition(new File(mPath));
+                        } else if (requestCode == 1) {
+                            flash_recovery_partition(new File(mPath));
+                        }
+                    }).show();
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mLoader != null) {
-            mLoader.cancel(true);
+    private static class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
+
+        private List<String> data;
+
+        private static ClickListener clickListener;
+
+        public RecycleViewAdapter (List<String> data){
+            this.data = data;
+        }
+
+        @NonNull
+        @Override
+        public RecycleViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View rowItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view_backup, parent, false);
+            return new RecycleViewAdapter.ViewHolder(rowItem);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder holder, int position) {
+            try {
+                holder.mName.setText(new File(this.data.get(position)).getName().replace(".img", ""));
+                if (Utils.isDarkTheme(holder.mName.getContext())) {
+                    holder.mName.setTextColor(Utils.getThemeAccentColor(holder.mName.getContext()));
+                    holder.mIcon.setColorFilter(Utils.getThemeAccentColor(holder.mIcon.getContext()));
+                }
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return this.data.size();
+        }
+
+        public String getData(int position) {
+            return data.get(position);
+        }
+
+        public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            private AppCompatImageButton mIcon;
+            private MaterialTextView mName;
+
+            public ViewHolder(View view) {
+                super(view);
+                view.setOnClickListener(this);
+                this.mIcon = view.findViewById(R.id.icon);
+                this.mName = view.findViewById(R.id.name);
+            }
+
+            @Override
+            public void onClick(View view) {
+                clickListener.onItemClick(getAdapterPosition(), view);
+            }
+        }
+
+        public void setOnItemClickListener(ClickListener clickListener) {
+            RecycleViewAdapter.clickListener = clickListener;
+        }
+
+        public interface ClickListener {
+            void onItemClick(int position, View v);
         }
     }
-    
+
 }

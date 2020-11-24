@@ -3,7 +3,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:textAlignment">gravity</item>
         <item name="android:textDirection">locale</item>
+        <item name="android:statusBarColor">@color/ColorBlack</item>
         <item name="colorPrimary">?android:attr/colorAccent</item>
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="colorSecondary">@color/ColorBlue</item>
+        <item name="colorOnPrimary">?android:attr/textColorPrimary</item>
     </style>
 </resources>

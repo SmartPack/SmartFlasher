@@ -28,7 +28,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on December 13, 2018
  */
 

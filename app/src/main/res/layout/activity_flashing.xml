@@ -1,102 +1,165 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="end|center_vertical"
-        tools:ignore="UselessParent">
+        android:orientation="vertical" >
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorPrimary"
-            android:gravity="end|center_vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/flashing_title"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginEnd="50dp"
-                android:gravity="center_vertical"
-                android:layout_gravity="start"
-                android:text="@string/flashing"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/white" />
+            android:layout_height="wrap_content"
+            android:background="@color/ColorBlack"
+            android:gravity="center_vertical"
+            android:padding="10dp" >
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/save_button"
+                android:id="@+id/back"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:background="@color/ColorBlack"
+                android:tint="@color/ColorBlue"
                 android:gravity="center_vertical"
-                android:layout_gravity="end"
+                android:src="@drawable/ic_back" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:textColor="@color/ColorBlue"
+                android:textIsSelectable="true"
+                android:textSize="17sp" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/save"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@color/ColorBlack"
+                android:tint="@color/ColorBlue"
+                android:gravity="center_vertical"
                 android:src="@drawable/ic_save"
-                android:visibility="gone"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/white"/>
+                android:layout_gravity="end"
+                android:visibility="gone" />
         </FrameLayout>
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:isScrollContainer="true"
-            android:layout_marginTop="50sp"
-            android:layout_marginBottom="50sp"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            tools:ignore="UselessParent">
+            android:paddingRight="16dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/output_text"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/output"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:paddingTop="16dp"
-                android:textColor="?attr/colorAccent"
-                android:textIsSelectable="true"
-                android:textSize="13sp" />
-        </ScrollView>
+                android:layout_marginTop="15dp"
+                android:gravity="start"
+                android:textColor="?android:attr/textColorPrimary" />
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/ColorBlue"
+            android:layout_marginEnd="50dp"
+            app:cardCornerRadius="15dp"
+            android:visibility="gone" >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ColorBlack"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:text="@string/cancel"
+                android:textSize="17sp"
+                android:padding="15dp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/ColorBlue"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            app:cardCornerRadius="15dp"
+            android:visibility="gone" >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ColorBlack"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:text="@string/full_log"
+                android:textSize="17sp"
+                android:padding="15dp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/reboot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/ColorBlue"
+            android:layout_marginStart="50dp"
+            app:cardCornerRadius="15dp"
+            android:visibility="gone" >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ColorBlack"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:text="@string/reboot"
+                android:textSize="17sp"
+                android:padding="15dp" />
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/flashing_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="15dp"
+        android:alpha="0.75" >
+
+        <ProgressBar
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressBackgroundTint="?android:attr/colorAccent"
+            android:layout_gravity="center" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/progress_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            android:baselineAligned="false"
-            app:elevation="@dimen/app_bar_elevation"
-            tools:ignore="UselessParent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:layout_gravity="bottom"
-                android:text="@string/cancel"
-                android:visibility="gone"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/reboot_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_gravity="bottom"
-                android:text="@string/reboot"
-                android:visibility="gone"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+            android:textStyle="bold|italic"
+            android:textColor="?android:attr/colorAccent"
+            android:textSize="15sp"
+            android:padding="10dp" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,94 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="90dp"
-            android:id="@+id/viewPagerID" />
-    </FrameLayout>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@color/black"
-        android:orientation="vertical"
-        android:padding="10dp" >
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:orientation="vertical" >
 
-        <com.google.android.material.tabs.TabLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            android:background="@color/black"
-            app:tabTextColor="@color/description"
-            app:tabSelectedTextColor="?attr/colorAccent"
-            android:id="@+id/tabLayoutID" />
+            android:background="@color/ColorBlack" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <FrameLayout
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end|center_vertical"
-                tools:ignore="UselessParent">
+                android:layout_marginEnd="40dp"
+                android:background="@color/ColorBlack"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/ColorWhite"
+                app:tabSelectedTextColor="?attr/colorAccent" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/app_icon"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_gravity="start"
-                    android:src="@mipmap/ic_launcher_round" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/settings_menu"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_settings"
+                android:layout_gravity="end|center"
+                android:background="@color/ColorBlack"
+                android:tint="@color/ColorWhite" />
+        </FrameLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="65dp"
-                    android:layout_marginEnd="45dp"
-                    android:text="@string/about_me"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:layout_gravity="start|center"
-                    android:textStyle="italic|bold"
-                    android:textSize="15sp" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/settings_menu"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_settings"
-                    android:layout_gravity="end|center"
-                    android:background="@color/black"
-                    android:tint="@color/white" />
-            </FrameLayout>
-        </LinearLayout>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        ads:adSize="SMART_BANNER"
-        android:layout_alignParentBottom="true"
-        android:background="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        ads:adUnitId="ca-app-pub-7791710838910455/3977806012">
-    </com.google.android.gms.ads.AdView>
-
-    <include layout="@layout/rv_changelog_view" />
-</RelativeLayout>
+    <include layout="@layout/progress_view_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

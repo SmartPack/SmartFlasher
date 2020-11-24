@@ -20,165 +20,127 @@
 
 package com.smartpack.smartflasher.utils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
-
-import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.utils.root.RootUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 
-/**
+/*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on January 21, 2020
  */
 
 public class KernelUpdater {
 
-    private static final String UPDATE_CHANNEL = Utils.getInternalDataStorage() + "/update_channel";
-    private static final String UPDATE_INFO = Utils.getInternalDataStorage() + "/update_info";
-
-    private static void updateChannel(String value) {
-        Utils.create(value, UPDATE_CHANNEL);
+    public static void updateChannel(String value, Context context) {
+        Utils.create(value, updateChannelInfo(context));
     }
 
-    public static void updateInfo(String value) {
-        Flasher.makeInternalStorageFolder(Utils.getInternalDataStorage());
-        Utils.downloadFile(UPDATE_INFO, value);
+    public static void updateInfo(String value, Context context) {
+        Flasher.prepareFolder(Utils.getInternalDataStorage());
+        Utils.download(updateInfo(context), value);
     }
 
-    public static void clearUpdateInfo() {
-        Utils.delete(UPDATE_CHANNEL);
-        Utils.delete(UPDATE_INFO);
-    }
-
-    private static String getKernelInfo() {
+    private static String getKernelInfo(Context context) {
         try {
-            JSONObject obj = new JSONObject(Utils.readFile(UPDATE_INFO));
+            JSONObject obj = new JSONObject(Utils.read(updateInfo(context)));
             return (obj.getString("kernel"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    private static String getSupportInfo() {
+    private static String getSupportInfo(Context context) {
         try {
-            JSONObject obj = new JSONObject(Utils.readFile(UPDATE_INFO));
+            JSONObject obj = new JSONObject(Utils.read(updateInfo(context)));
             return (obj.getString("support"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getUpdateChannel() {
-        if (Utils.existFile(UPDATE_CHANNEL)) {
-            return Utils.readFile(UPDATE_CHANNEL);
+    public static String getUpdateChannel(Context context) {
+        if (Utils.exist(updateChannelInfo(context))) {
+            return Utils.read(updateChannelInfo(context));
         } else {
             return "Unavailable";
         }
     }
 
-    public static void acquireUpdateInfo(String value, Context context) {
-        new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog mProgressDialog;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mProgressDialog = new ProgressDialog(context);
-                mProgressDialog.setMessage(context.getString(R.string.acquiring));
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-            }
-            @Override
-            protected Void doInBackground(Void... voids) {
-                clearUpdateInfo();
-                updateInfo(value);
-                updateChannel(value);
-                RootUtils.runCommand("sleep 1");
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                try {
-                    mProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignored) {
-                }
-                if (getKernelName().equals("Unavailable")) {
-                    Utils.toast(R.string.update_channel_invalid, context);
-                }
-            }
-        }.execute();
-    }
-
-    public static String getKernelName() {
+    public static String getKernelName(Context context) {
         try {
-            JSONObject obj = new JSONObject(getKernelInfo());
+            JSONObject obj = new JSONObject(getKernelInfo(context));
             return (obj.getString("name"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getLatestVersion() {
+    public static String getLatestVersion(Context context) {
         try {
-            JSONObject obj = new JSONObject(getKernelInfo());
+            JSONObject obj = new JSONObject(getKernelInfo(context));
             return (obj.getString("version"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getUrl() {
+    public static String getUrl(Context context) {
         try {
-            JSONObject obj = new JSONObject(getKernelInfo());
+            JSONObject obj = new JSONObject(getKernelInfo(context));
             return (obj.getString("link"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getChecksum() {
+    public static String getChecksum(Context context) {
         try {
-            JSONObject obj = new JSONObject(getKernelInfo());
+            JSONObject obj = new JSONObject(getKernelInfo(context));
             return (obj.getString("sha1"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getChangeLog() {
+    public static String getChangeLog(Context context) {
         try {
-            JSONObject obj = new JSONObject(getKernelInfo());
+            JSONObject obj = new JSONObject(getKernelInfo(context));
             return (obj.getString("changelog_url"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getSupport() {
+    public static String getSupport(Context context) {
         try {
-            JSONObject obj = new JSONObject(getSupportInfo());
+            JSONObject obj = new JSONObject(getSupportInfo(context));
             return (obj.getString("link"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static String getDonationLink() {
+    public static String getDonationLink(Context context) {
         try {
-            JSONObject obj = new JSONObject(getSupportInfo());
+            JSONObject obj = new JSONObject(getSupportInfo(context));
             return (obj.getString("donation"));
         } catch (JSONException e) {
             return "Unavailable";
         }
     }
 
-    public static long lastModified() {
-        return new File(UPDATE_INFO).lastModified();
+    public static String updateInfo(Context context) {
+        return context.getFilesDir().getPath() + "/update_info";
+    }
+
+    public static String updateChannelInfo(Context context) {
+        return context.getFilesDir().getPath() + "/updatechannel";
+    }
+
+    public static long lastModified(Context context) {
+        return new File(updateInfo(context)).lastModified();
     }
 
 }
