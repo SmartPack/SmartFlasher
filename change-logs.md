@@ -1,5 +1,9 @@
 # Change-logs
 
+## 40. November 24, 2020
+*Release-tag: v5.0*<br>
+Re-built from (nearly) scratch. Brand NEw app UI. App is now completely Ad-free. Miscellaneous changes.
+
 ## 39. September 16, 2020
 *Release-tag: v4.8*<br>
 Introduced new page to explain no root status. Miscellaneous changes.
