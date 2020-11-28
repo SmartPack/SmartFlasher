@@ -48,7 +48,7 @@ public class LogViewActivity extends AppCompatActivity {
         AppCompatImageButton mSave = findViewById(R.id.save);
         MaterialTextView mLogView = findViewById(R.id.flasher_log);
         MaterialTextView mCancel = findViewById(R.id.cancel_button);
-        mLogView.setText(Utils.read(getFilesDir().getPath() + "/flasher_log"));
+        mLogView.setText(Flasher.mFlashingResult.toString());
         mBack.setOnClickListener(v -> onBackPressed());
         mSave.setOnClickListener(v -> {
             Utils.create(Flasher.mFlashingResult.toString(), Utils.getInternalDataStorage() + "/flasher_log-" +

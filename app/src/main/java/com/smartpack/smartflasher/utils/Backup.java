@@ -127,7 +127,7 @@ public class Backup {
         }
         try {
             return mBootPartitionInfo.split("\\r?\\n")[0];
-        } catch (StringIndexOutOfBoundsException ignored) {}
+        } catch (StringIndexOutOfBoundsException | NullPointerException ignored) {}
         return null;
     }
 
@@ -137,7 +137,7 @@ public class Backup {
         }
         try {
             return mRecoveryPartitionInfo.split("\\r?\\n")[0];
-        } catch (StringIndexOutOfBoundsException ignored) {}
+        } catch (StringIndexOutOfBoundsException | NullPointerException ignored) {}
         return null;
     }
 

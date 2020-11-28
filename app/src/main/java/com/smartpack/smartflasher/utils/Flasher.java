@@ -23,7 +23,8 @@ package com.smartpack.smartflasher.utils;
 import android.content.Context;
 
 import java.io.File;
-import java.io.FileDescriptor;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 29, 2018
@@ -31,14 +32,13 @@ import java.io.FileDescriptor;
 
 public class Flasher {
 
-    private static final String ZIPFILE_EXTRACTED = Utils.getInternalDataStorage() + "/flash/META-INF/com/google/android/update-binary";
-    private static final String FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash";
-    private static final String CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'";
-    public static String mZipName, mFlashingOutput;
+    public static String mZipName;
 
     public static StringBuilder mFlashingResult = null;
 
-    public static boolean mFlashing, mWritableRoot = true;
+    public static List<String> mFlashingOutput;
+
+    public static boolean mFlashing, mMagiskModule = false, mWritableRoot = true;
 
     public static void prepareFolder(String path) {
         File file = new File(path);
@@ -56,55 +56,76 @@ public class Flasher {
         return file.length();
     }
 
+    public static String getOutput() {
+        List<String> mData = new ArrayList<>();
+        for (String line : Flasher.mFlashingOutput.toString().substring(1, Flasher.mFlashingOutput.toString().length()-1).replace(", ","\n").replace("ui_print","").split("\\r?\\n")) {
+            if (!line.startsWith("progress")) {
+                mData.add(line);
+            }
+        }
+        return mData.toString().substring(1, mData.toString().length()-1).replace(", ","\n").replaceAll("(?m)^[ \t]*\r?\n", "");
+    }
+
     public static void manualFlash(Context context) {
         /*
-         * Flashing recovery zip without rebooting to custom recovery
-         * Credits to osm0sis @ xda-developers.com
+         * Flashing recovery zip without rebooting to custom recovery (Credits to osm0sis @ xda-developers.com)
+         * Also include code from https://github.com/topjohnwu/Magisk/
+         * Ref: https://github.com/topjohnwu/Magisk/blob/a848f10bba4f840248ecf314f7c9d55511d05a0f/app/src/main/java/com/topjohnwu/magisk/core/tasks/FlashZip.kt#L47
          */
-        FileDescriptor fd = new FileDescriptor();
-        int RECOVERY_API = 3;
-        String path = "/data/local/tmp/flash.zip";
-        String flashingCommand = "sh '" + ZIPFILE_EXTRACTED + "' '" + RECOVERY_API + "' '" +
-                fd + "' '" + path + "'";
+        String mScriptPath = Utils.getInternalDataStorage() + "/flash/META-INF/com/google/android/update-binary",
+                FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash",
+                CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'",
+                mZipPath = context.getCacheDir() + "/flash.zip";
+        String flashingCommand = "BOOTMODE=true sh " + mScriptPath + " dummy 1 " + mZipPath + " && echo success";;
         if (Utils.exist(FLASH_FOLDER)) {
             Utils.runCommand(CLEANING_COMMAND);
         } else {
             prepareFolder(FLASH_FOLDER);
         }
         mFlashingResult.append("** Extracting ").append(mZipName).append(" into working folder: ");
-        Utils.runAndGetError(Utils.magiskBusyBox() + " unzip " + path + " -d '" + FLASH_FOLDER + "'");
-        if (Utils.exist(ZIPFILE_EXTRACTED)) {
+        Utils.runAndGetError(Utils.magiskBusyBox() + " unzip " + mZipPath + " -d '" + FLASH_FOLDER + "'");
+        if (Utils.exist(mScriptPath)) {
             mFlashingResult.append(" Done *\n\n");
+            mFlashingResult.append("** Checking recovery zip file: ");
+            if (Utils.read(mScriptPath.replace("update-binary","updater-script")).equals("#MAGISK")) {
+                mFlashingResult.append(" Magisk Module *\n\n");
+                mMagiskModule = true;
+            } else if (Utils.exist(Utils.getInternalDataStorage() + "/flash/anykernel.sh")) {
+                mFlashingResult.append(" AnyKernel *\n\n");
+            } else {
+                mFlashingResult.append(" Unknown *\n\n");
+            }
             mFlashingResult.append("** Preparing a recovery-like environment for flashing...\n\n");
             Utils.runCommand("cd '" + FLASH_FOLDER + "'");
-            mFlashingResult.append("** Mounting Root filesystem: ");
-            if (!isWritableRoot()) {
-                mWritableRoot = false;
-                mFlashingResult.append("Failed *\nPlease Note: Flashing may not work properly on this device!\n\n");
-            } else {
-                mFlashingResult.append("Done *\n\n");
-                mFlashingResult.append(Utils.runAndGetError(Utils.isMagiskBinaryExist("mkdir") ? Utils.magiskBusyBox() + " mkdir /tmp" : "mkdir /tmp")).append(" \n");
-                mFlashingResult.append(Utils.runAndGetError(Utils.isMagiskBinaryExist("mke2fs") ? Utils.magiskBusyBox() + " mke2fs -F tmp.ext4 500000" : "mke2fs -F tmp.ext4 500000")).append(" \n");
-                mFlashingResult.append(Utils.runAndGetError(Utils.isMagiskBinaryExist("mount") ? Utils.magiskBusyBox() + " mount -o loop tmp.ext4 /tmp/" : "mount -o loop tmp.ext4 /tmp/")).append(" \n\n");
+            if (!mMagiskModule) {
+                mFlashingResult.append("** Mounting Root filesystem: ");
+                if (!isWritableRoot()) {
+                    mWritableRoot = false;
+                    mFlashingResult.append("Failed *\nPlease Note: Flashing may not work properly on this device!\n\n");
+                } else {
+                    mFlashingResult.append("Done *\n\n");
+                    mFlashingResult.append(Utils.runAndGetError(Utils.isMagiskBinaryExist("mkdir") ? Utils.magiskBusyBox() + " mkdir /tmp" : "mkdir /tmp")).append(" \n");
+                    mFlashingResult.append(Utils.runAndGetError(Utils.isMagiskBinaryExist("mke2fs") ? Utils.magiskBusyBox() + " mke2fs -F tmp.ext4 500000" : "mke2fs -F tmp.ext4 500000")).append(" \n");
+                    mFlashingResult.append(Utils.runAndGetError(Utils.isMagiskBinaryExist("mount") ? Utils.magiskBusyBox() + " mount -o loop tmp.ext4 /tmp/" : "mount -o loop tmp.ext4 /tmp/")).append(" \n\n");
+                }
             }
-            // Remove latest log file
-            Utils.delete(context.getFilesDir().getPath() + "/flasher_log");
             mFlashingResult.append("** Flashing ").append(mZipName).append(" ...\n\n");
-            mFlashingOutput = Utils.runAndGetOutput(flashingCommand);
-            mFlashingResult.append(mFlashingOutput.isEmpty() ? "Unfortunately, flashing " + mZipName + " failed due to some unknown reasons!" : mFlashingOutput);
+            Utils.runAndGetLiveOutput(flashingCommand, mFlashingOutput);
+            mFlashingResult.append(mFlashingOutput.isEmpty() ? "Unfortunately, flashing " + mZipName + " failed due to some unknown reasons!" : getOutput().replace("\nsuccess",""));
         } else {
             mFlashingResult.append(" Failed *\n\n");
             mFlashingResult.append("** Flashing Failed *");
         }
         Utils.runCommand(CLEANING_COMMAND);
-        Utils.delete("/data/local/tmp/flash.zip");
-        if (mWritableRoot) {
+        Utils.delete(context.getCacheDir() + "/flash.zip");
+        if (!mMagiskModule && mWritableRoot) {
             mFlashingResult.append("\n\n** Unmount Root filesystem: ");
             mFlashingResult.append(Utils.mount("ro", "/"));
             mFlashingResult.append(" Done *");
         }
-        // Save latest log file
-        Utils.create(Flasher.mFlashingResult.toString(), context.getFilesDir().getPath() + "/flasher_log");
+        if (mMagiskModule) {
+            mMagiskModule = false;
+        }
     }
 
 }

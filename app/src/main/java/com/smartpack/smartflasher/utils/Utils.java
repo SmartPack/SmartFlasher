@@ -91,6 +91,10 @@ public class Utils {
         Shell.su(command).exec();
     }
 
+    public static void runAndGetLiveOutput(String command, List<String> output) {
+        Shell.su(command).to(output).exec();
+    }
+
     @NonNull
     public static String runAndGetOutput(String command) {
         StringBuilder sb = new StringBuilder();

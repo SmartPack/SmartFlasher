@@ -23,12 +23,14 @@ package com.smartpack.smartflasher.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -49,6 +51,7 @@ public class FlashingActivity extends AppCompatActivity {
     private MaterialCardView mReboot;
     private MaterialTextView mFlashingOutput;
     private MaterialTextView mTitle;
+    private NestedScrollView mScrollView;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -64,6 +67,7 @@ public class FlashingActivity extends AppCompatActivity {
         mLog = findViewById(R.id.log);
         mReboot = findViewById(R.id.reboot);
         mProgressLayout = findViewById(R.id.flashing_progress);
+        mScrollView = findViewById(R.id.scroll_view);
         MaterialTextView mProgressText = findViewById(R.id.progress_text);
         mProgressText.setText(getString(R.string.flashing) + "...");
         refreshStatus();
@@ -88,32 +92,37 @@ public class FlashingActivity extends AppCompatActivity {
 
     public void refreshStatus() {
         new Thread() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void run() {
                 try {
                     while (!isInterrupted()) {
                         Thread.sleep(100);
                         runOnUiThread(() -> {
-                            if (!Flasher.mFlashing) {
+                            if (Flasher.mFlashing) {
+                                mScrollView.fullScroll(NestedScrollView.FOCUS_DOWN);
+                            } else {
                                 mProgressLayout.setVisibility(View.GONE);
-                                mSave.setVisibility(View.VISIBLE);
+                                mSave.setVisibility(Flasher.getOutput().endsWith("\nsuccess") ? View.VISIBLE : View.GONE);
+                                mReboot.setVisibility(Flasher.getOutput().endsWith("\nsuccess") ? View.VISIBLE : View.GONE);
+                                mCancel.setVisibility(View.VISIBLE);
+                                mLog.setVisibility(View.VISIBLE);
                             }
-                            mTitle.setText(Flasher.mFlashing ? getString(R.string.flashing) + "..." :
-                                    Flasher.mFlashingOutput != null && !Flasher.mFlashingOutput.isEmpty() ?
-                                            getString(R.string.flashing_finished) : getString(R.string.flashing_failed));
-                            mFlashingOutput.setText(Flasher.mFlashing ? "" : Flasher.mFlashingOutput != null && !Flasher.mFlashingOutput.isEmpty() ?
-                                    Flasher.mFlashingOutput : getString(R.string.flashing_failed));
-                            mCancel.setVisibility(Flasher.mFlashingOutput != null && !Flasher.mFlashingOutput.isEmpty() ? View.VISIBLE : View.GONE);
-                            if (Utils.exist(getFilesDir().getPath() + "/flasher_log")) {
-                                mLog.setVisibility(Flasher.mFlashingOutput != null && !Flasher.mFlashingOutput.isEmpty() ? View.VISIBLE : View.GONE);
-                            }
-                            mReboot.setVisibility(Flasher.mFlashingOutput != null && !Flasher.mFlashingOutput.isEmpty() ? View.VISIBLE : View.GONE);
+                            mTitle.setText(Flasher.mFlashing ? getString(R.string.flashing) + "..." : Flasher.getOutput().endsWith("\nsuccess") ?
+                                    getString(R.string.flashing_finished) : getString(R.string.flashing_failed));
+                            mFlashingOutput.setText(!Flasher.getOutput().isEmpty() ? Flasher.getOutput()
+                                    .replace("\nsuccess","") : Flasher.mFlashing ? "" : Flasher.mFlashingResult);
                         });
                     }
                 } catch (InterruptedException ignored) {
                 }
             }
         }.start();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return true;
     }
 
     @Override

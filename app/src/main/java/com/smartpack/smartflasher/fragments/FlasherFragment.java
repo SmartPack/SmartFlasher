@@ -380,22 +380,19 @@ public class FlasherFragment extends Fragment {
                 super.onPreExecute();
                 Flasher.mFlashing = true;
                 Flasher.mZipName = file.getName();
-                if (Flasher.mFlashingResult == null) {
-                    Flasher.mFlashingResult = new StringBuilder();
-                } else {
-                    Flasher.mFlashingResult.setLength(0);
-                }
+                Flasher.mFlashingResult = new StringBuilder();
+                Flasher.mFlashingOutput = new ArrayList<>();
                 Flasher.mFlashingResult.append("** Preparing to flash ").append(file.getName()).append("...\n\n");
                 Flasher.mFlashingResult.append("** Path: '").append(file.toString()).append("'\n\n");
-                Utils.delete("/data/local/tmp/flash.zip");
-                Flasher.mFlashingResult.append("** Copying '").append(file.getName()).append("' into temporary folder: ");
-                Flasher.mFlashingResult.append(Utils.runAndGetError("cp '" + file.toString() + "' /data/local/tmp/flash.zip"));
-                Flasher.mFlashingResult.append(Utils.exist("/data/local/tmp/flash.zip") ? "Done *\n\n" : "\n\n");
+                Utils.delete(requireActivity().getCacheDir() + "/flash.zip");
                 Intent flashingIntent = new Intent(getActivity(), FlashingActivity.class);
                 startActivity(flashingIntent);
             }
             @Override
             protected Void doInBackground(Void... voids) {
+                Flasher.mFlashingResult.append("** Copying '").append(file.getName()).append("' into temporary folder: ");
+                Flasher.mFlashingResult.append(Utils.runAndGetError("cp '" + file.toString() + "' " + requireActivity().getCacheDir() + "/flash.zip"));
+                Flasher.mFlashingResult.append(Utils.exist(requireActivity().getCacheDir() + "/flash.zip") ? "Done *\n\n" : "\n\n");
                 Flasher.manualFlash(requireActivity());
                 return null;
             }
