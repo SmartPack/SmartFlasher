@@ -1,5 +1,9 @@
 # Change-logs
 
+## 41. November 28, 2020
+*Release-tag: v5.1*<br>
+Largely improved auto-flashing. Flasher will now catch live output. Fixed crashing on some devices. Miscellaneous changes.
+
 ## 40. November 24, 2020
 *Release-tag: v5.0*<br>
 Re-built from (nearly) scratch. Brand NEw app UI. App is now completely Ad-free. Miscellaneous changes.
