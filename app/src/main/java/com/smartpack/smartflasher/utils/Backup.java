@@ -32,16 +32,10 @@ import java.util.List;
 
 public class Backup {
 
-    private static final String BOOT_PARTITION_INFO = Environment.getDataDirectory() + "/.boot_partition_info";
-    private static final String RECOVERY_PARTITION_INFO = Environment.getDataDirectory() + "/.recovery_partition_info";
     private static final String BACKUP_FOLDER = Utils.getInternalDataStorage() + "/backup";
 
     public static String mBootPartitionInfo = null;
     public static String mRecoveryPartitionInfo = null;
-
-    private static String mountRootFS(String command) {
-        return "mount -o remount," + command + " /";
-    }
 
     public static boolean hasBootPartitionInfo() {
         return mBootPartitionInfo != null && mBootPartitionInfo.contains("boot");
@@ -57,10 +51,6 @@ public class Backup {
             file.delete();
         }
         file.mkdirs();
-    }
-
-    public static File backupPath() {
-        return new File(BACKUP_FOLDER);
     }
 
     public static List<String> backupItems() {
@@ -124,20 +114,23 @@ public class Backup {
          */
         if (!hasBootPartitionInfo()) {
             mBootPartitionInfo = Utils.runAndGetOutput("find /dev/block/ -type l -iname boot$(getprop ro.boot.slot_suffix)") + " Created by Smart Flasher";
+        } else {
+            try {
+                return mBootPartitionInfo.split("\\r?\\n")[0];
+            } catch (StringIndexOutOfBoundsException | NullPointerException ignored) {
+            }
         }
-        try {
-            return mBootPartitionInfo.split("\\r?\\n")[0];
-        } catch (StringIndexOutOfBoundsException | NullPointerException ignored) {}
         return null;
     }
 
     public static String findRecoveryPartition() {
         if (!isABDevice() && !hasRecoveryPartitionInfo()) {
             mRecoveryPartitionInfo = Utils.runAndGetOutput("find /dev/block/ -type l -iname recovery") + " Created by Smart Flasher";
+        } else {
+            try {
+                return mRecoveryPartitionInfo.split("\\r?\\n")[0];
+            } catch (StringIndexOutOfBoundsException | NullPointerException ignored) {}
         }
-        try {
-            return mRecoveryPartitionInfo.split("\\r?\\n")[0];
-        } catch (StringIndexOutOfBoundsException | NullPointerException ignored) {}
         return null;
     }
 
