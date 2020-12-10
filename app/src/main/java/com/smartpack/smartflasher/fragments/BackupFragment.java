@@ -47,8 +47,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Backup;
@@ -80,16 +80,16 @@ public class BackupFragment extends Fragment {
 
         mProgressLayout = mRootView.findViewById(R.id.progress_layout);
         mProgressText = mRootView.findViewById(R.id.progress_text);
-        FloatingActionButton mFAB = mRootView.findViewById(R.id.fab);
+        MaterialCardView mBackup = mRootView.findViewById(R.id.backup);
         mRecyclerView = mRootView.findViewById(R.id.recycler_view);
 
         if (Utils.isDarkTheme(requireActivity())) {
             mProgressText.setTextColor(Utils.getThemeAccentColor(requireActivity()));
         }
 
-        mFAB.setOnClickListener(v -> {
+        mBackup.setOnClickListener(v -> {
             if (Utils.checkWriteStoragePermission(requireActivity())) {
-                PopupMenu popupMenu = new PopupMenu(requireActivity(), mFAB);
+                PopupMenu popupMenu = new PopupMenu(requireActivity(), mBackup);
                 Menu menu = popupMenu.getMenu();
                 SubMenu backup = menu.addSubMenu(Menu.NONE, 0, Menu.NONE, getString(R.string.backup));
                 backup.add(Menu.NONE, 1, Menu.NONE, getString(R.string.boot_partition));

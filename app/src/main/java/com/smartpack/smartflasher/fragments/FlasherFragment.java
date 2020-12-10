@@ -48,7 +48,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.activities.FlashingActivity;
@@ -90,7 +89,7 @@ public class FlasherFragment extends Fragment {
         mUpdateChannelMenu = mRootView.findViewById(R.id.icon);
         AppCompatImageButton mInfoIcon = mRootView.findViewById(R.id.info_icon);
         AppCompatImageButton mMenuIcon = mRootView.findViewById(R.id.menu_icon);
-        FloatingActionButton mFAB = mRootView.findViewById(R.id.fab);
+        MaterialCardView mFlash = mRootView.findViewById(R.id.flash);
         mFrameInfo = mRootView.findViewById(R.id.frame_info);
         mRecyclerViewCard = mRootView.findViewById(R.id.recycler_view_card);
         LinearLayout mUpdateChannelURL = mRootView.findViewById(R.id.update_channel_layout);
@@ -211,7 +210,7 @@ public class FlasherFragment extends Fragment {
             }).show();
         });
 
-        mFAB.setOnClickListener(v -> {
+        mFlash.setOnClickListener(v -> {
             if (!Utils.checkWriteStoragePermission(requireActivity())) {
                 ActivityCompat.requestPermissions(requireActivity(), new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},1);

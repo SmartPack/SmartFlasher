@@ -180,16 +180,45 @@
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/flash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="?android:attr/colorAccent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"
         android:layout_marginEnd="25dp"
-        android:src="@drawable/ic_flash"
-        tools:ignore="MissingConstraints" />
+        app:cardCornerRadius="15dp" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp" >
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/ColorBlack"
+                android:src="@drawable/ic_flash"
+                android:background="@null"
+                android:clickable="false" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ColorBlack"
+                android:text="@string/flash"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="5dp"
+                android:textStyle="bold|italic"
+                android:clickable="false"
+                android:textSize="17sp" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <include layout="@layout/progress_view_layout" />
 </RelativeLayout>

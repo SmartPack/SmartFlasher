@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,16 +28,45 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/backup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="?android:attr/colorAccent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"
         android:layout_marginEnd="25dp"
-        android:src="@drawable/ic_backup"
-        tools:ignore="MissingConstraints" />
+        app:cardCornerRadius="15dp" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp" >
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/ColorBlack"
+                android:src="@drawable/ic_backup"
+                android:background="@null"
+                android:clickable="false" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ColorBlack"
+                android:text="@string/backup"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="5dp"
+                android:textStyle="bold|italic"
+                android:clickable="false"
+                android:textSize="17sp" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <include layout="@layout/progress_view_layout" />
 </RelativeLayout>
