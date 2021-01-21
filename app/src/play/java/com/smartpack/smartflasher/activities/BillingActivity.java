@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
+ * Copyright (C) 2021-2022 sunilpaulmathew <sunil.kde@gmail.com>
  *
  * This file is part of Smart Flasher, which is a simple app aimed to make flashing
  * recovery zip files much easier. Significant amount of code for this app has been from
@@ -56,7 +56,6 @@ import java.util.List;
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 14, 2020
  */
-
 public class BillingActivity extends AppCompatActivity {
 
     private ArrayList <RecycleViewItem> mData = new ArrayList<>();
@@ -131,7 +130,7 @@ public class BillingActivity extends AppCompatActivity {
             Utils.snackbar(findViewById(android.R.id.content), getString(R.string.support_already_received_message));
             return;
         }
-        Utils.launchUrl(findViewById(android.R.id.content), "https://play.google.com/store/apps/details?id=com.smartpack.donate",this);
+        Utils.launchUrl("https://play.google.com/store/apps/details?id=com.smartpack.donate",this);
     }
 
     private void buyMeACoffee() {

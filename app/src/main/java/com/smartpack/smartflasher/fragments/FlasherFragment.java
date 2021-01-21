@@ -166,7 +166,7 @@ public class FlasherFragment extends Fragment {
                         startActivity(createUpdateChannel);
                         break;
                     case 1:
-                        Utils.launchUrl(mRootView, "https://smartpack.github.io/kerneldownloads/", getActivity());
+                        Utils.launchUrl("https://smartpack.github.io/kerneldownloads/", getActivity());
                         break;
                 }
                 return false;
@@ -239,7 +239,7 @@ public class FlasherFragment extends Fragment {
             if (position == 1) {
                 if (KernelUpdater.getChangeLog(requireActivity()).contains("https://") ||
                         KernelUpdater.getChangeLog(requireActivity()).contains("http://")) {
-                    Utils.launchUrl(mRootView, KernelUpdater.getChangeLog(requireActivity()), getActivity());
+                    Utils.launchUrl(KernelUpdater.getChangeLog(requireActivity()), getActivity());
                 } else {
                     new MaterialAlertDialogBuilder(requireActivity())
                             .setTitle(KernelUpdater.getKernelName(requireActivity()) + " " + KernelUpdater.getLatestVersion(requireActivity()))
@@ -265,13 +265,13 @@ public class FlasherFragment extends Fragment {
                     Utils.snackbar(mRootView, getString(R.string.support_group_unknown));
                     return;
                 }
-                Utils.launchUrl(mRootView, KernelUpdater.getSupport(requireActivity()), getActivity());
+                Utils.launchUrl(KernelUpdater.getSupport(requireActivity()), getActivity());
             } else if (position == 4) {
                 if (KernelUpdater.getDonationLink(requireActivity()).equals("Unavailable") || KernelUpdater.getDonationLink(requireActivity()).equals("")) {
                     Utils.snackbar(mRootView, getString(R.string.donations_unknown));
                     return;
                 }
-                Utils.launchUrl(mRootView, KernelUpdater.getDonationLink(requireActivity()), getActivity());
+                Utils.launchUrl(KernelUpdater.getDonationLink(requireActivity()), getActivity());
             }
         });
 

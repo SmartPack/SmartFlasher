@@ -75,7 +75,7 @@ public class CreditsFragment extends Fragment {
         mRecyclerView.setAdapter(mRecycleViewAdapter);
 
         mRecycleViewAdapter.setOnItemClickListener((position, v) -> {
-            Utils.launchUrl(mRootView, (mData.get(position).getURL()), requireActivity());
+            Utils.launchUrl(mData.get(position).getURL(), requireActivity());
         });
 
         return mRootView;

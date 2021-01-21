@@ -39,9 +39,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
-import com.smartpack.smartflasher.activities.BillingActivity;
 import com.smartpack.smartflasher.activities.ChangeLogActivity;
 import com.smartpack.smartflasher.activities.CreditsActivity;
+import com.smartpack.smartflasher.utils.Billing;
 import com.smartpack.smartflasher.utils.RecycleViewItem;
 import com.smartpack.smartflasher.utils.Utils;
 
@@ -78,7 +78,7 @@ public class AboutFragment extends Fragment {
 
         mRecycleViewAdapter.setOnItemClickListener((position, v) -> {
             if (mData.get(position).getURL() != null) {
-                Utils.launchUrl(mRootView, (mData.get(position).getURL()), requireActivity());
+                Utils.launchUrl(mData.get(position).getURL(), requireActivity());
             } else if (position == 0) {
                 Intent settings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -89,8 +89,7 @@ public class AboutFragment extends Fragment {
                 Intent changelog = new Intent(getActivity(), ChangeLogActivity.class);
                 startActivity(changelog);
             } else if (position == 5) {
-                Intent billing = new Intent(getActivity(), BillingActivity.class);
-                startActivity(billing);
+                Billing.showDonateOption(requireActivity());
             } else if (position == 6) {
                 Intent shareapp = new Intent();
                 shareapp.setAction(Intent.ACTION_SEND);
