@@ -1,0 +1,21 @@
+<i>Smart Flasher</i> is a simple tool mainly aimed to make flashing recovery zips much easier.
+
+<b>WARNING: I Am NOT Responsible for any Damages on Your Device!</b>
+
+This app requires <b>ROOT</b> Access.
+
+<b>Features</b>
+
+<b><i>Smart Flasher</i> is a simple and very basic app, with a elegant dark/light UI (depends on system theme), which can do the following things</b>
+* Flashing recovery zip files (such as a custom kernel, a magisk module, etc.) while running Android OS, without rebooting into custom recovery.
+* Show a recovery-like flashing log in real-time.
+* Download and auto-flash various custom kernels directly from app (<a href='https://smartpack.github.io/kerneldownloads/'>Documentation</a>).
+* Help kernel developers to create own up-date channel within the app.
+* Back-up boot/recovery partitions on a supported device.
+* Flash a boot/recovery partition '.img' on a supported device.
+* Do basic tasks such as Turning off & Rebooting (Normal, Recovery & Boot-loader) your device.
+* A lot more.
+
+<b>Translations</b>
+
+Please help me to translate this app - Original language string in English is available at <a href='https://github.com/SmartPack/SmartFlasher/blob/master/app/src/main/res/values/strings.xml'>GitHub</a>.
