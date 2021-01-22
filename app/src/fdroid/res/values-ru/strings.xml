@@ -1,0 +1,6 @@
+﻿<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: andrey167 <andrey_167@bk.ru>-->
+
+    <string name="app_store_summary">Посетить страницу Smart Flasher в F-Droid</string>
+    <string name="share_app_message">Загрузите смарт-флешер %s из F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+</resources>

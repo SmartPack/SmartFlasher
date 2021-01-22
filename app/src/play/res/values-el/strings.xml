@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: kopsomanas <kgstradviolin@outlook.com>-->
+
+    <string name="app_store">PlayStore</string>
+    <string name="app_store_summary">Επισκεφθείτε τη σελίδα του Smart Flasher στο PlayStore</string>
+    <string name="share_app_message">Αποκτήστε το Smart Flasher %s από PlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+    <string name="share_channel_message">Για να ρυθμίσετε αυτό το κανάλι ενημέρωσης, απλώς εισάγετε \'%s\' στο SmartFlasher -> Κανάλι Ενημέρωσης Url.\n\nΑποκτήστε το Smart Flasher από PlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+</resources>

@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: SmgKhOaRn <smgkhoarn@gmail.com>-->
+
+    <string name="app_store">플레이 스토어</string>
+    <string name="app_store_summary">플레이 스토어에 있는 Smart Flasher 페이지를 방문하세요.</string>
+    <string name="share_app_message">Smart Flasher %s은(는) 아래에서 다운받을 수 있습니다 플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+    <string name="share_channel_message">이 업데이트 채널을 구성하려면, \'%s\' 을(를)  Smart Flasher에 입력하고 -> 채널 URL을 업데이트하세요.\n\nSmart Flasher을 아래에서 다운받으세요 플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+</resources>

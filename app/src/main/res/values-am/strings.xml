@@ -44,8 +44,6 @@
     <string name="no_root">ስልክዎ ሩት አልተደረገም!</string>
     <string name="ok">እሺ</string>
     <string name="permission_denied_write_storage">ማከማቻ ላይ የመፃፍ ፍቃድ ተከልክሏል!</string>
-    <string name="playstore">ፕሌይስቶር</string>
-    <string name="playstore_summary">የስማርት ፍላሸርን የጎግል ፕሌይስቶር ገፅ ይጎብኙ።</string>
     <string name="press_back">ለመዉጣት ከፈለጉ ወደኋላ መመለሻ ቁልፉን ደግመው ይጫኑ!</string>
     <string name="purchase_app">የግዥ መተግበሪያ</string>
     <string name="reboot">እንደገና አስጀምር</string>
@@ -62,8 +60,6 @@
     <string name="restore">እንደገና መልስ</string>
     <string name="share">አጋራ</string>
     <string name="share_app">መተግበሪያዉን አጋራ</string>
-    <string name="share_app_message">ስማርት ፍላሸርን አግኝ %s ከ\nፕሌይስቶር: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nጂትሀብ: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
-    <string name="share_channel_message">የከርነል ማሳደጊያ ቻናሉን ለማዋቀር በቀላሉ \'%s\' በ ስማርት ፍላሸር -> የማሳደጊያ ቻናል Url.\n\nስማርት ፍላሸርን\nከ ፕሌይስቶር: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nጂትሀብ: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">መሰረተ-ኮድ</string>
     <string name="source_code_summary">የመተግበሪያዉን መሰረተ-ኮድ ጂትሀብ ላይ ይመልከቱ።</string>
     <string name="support">እርዳታ</string>

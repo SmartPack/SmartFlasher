@@ -41,7 +41,7 @@ import com.smartpack.smartflasher.BuildConfig;
 import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.activities.ChangeLogActivity;
 import com.smartpack.smartflasher.activities.CreditsActivity;
-import com.smartpack.smartflasher.utils.Billing;
+import com.smartpack.smartflasher.utils.Flavour;
 import com.smartpack.smartflasher.utils.RecycleViewItem;
 import com.smartpack.smartflasher.utils.Utils;
 
@@ -66,7 +66,7 @@ public class AboutFragment extends Fragment {
         mData.add(new RecycleViewItem(getString(R.string.change_logs), getString(R.string.change_logs_summary), getResources().getDrawable(R.drawable.ic_eye), null));
         mData.add(new RecycleViewItem(getString(R.string.support), getString(R.string.support_summary), getResources().getDrawable(R.drawable.ic_support), "https://t.me/smartpack_kmanager"));
         mData.add(new RecycleViewItem(getString(R.string.source_code), getString(R.string.source_code_summary), getResources().getDrawable(R.drawable.ic_github), "https://github.com/SmartPack/SmartFlasher"));
-        mData.add(new RecycleViewItem(getString(R.string.playstore), getString(R.string.playstore_summary), getResources().getDrawable(R.drawable.ic_playstore), "https://play.google.com/store/apps/details?id=com.smartpack.smartflasher"));
+        Flavour.launchAppStore(mData, requireActivity());
         mData.add(new RecycleViewItem(getString(R.string.donations), getString(R.string.donations_message), getResources().getDrawable(R.drawable.ic_donate), null));
         mData.add(new RecycleViewItem(getString(R.string.share), getString(R.string.share_app), getResources().getDrawable(R.drawable.ic_share), null));
         mData.add(new RecycleViewItem(getString(R.string.credits), getString(R.string.credits_summary), getResources().getDrawable(R.drawable.ic_contributors), null));
@@ -89,7 +89,7 @@ public class AboutFragment extends Fragment {
                 Intent changelog = new Intent(getActivity(), ChangeLogActivity.class);
                 startActivity(changelog);
             } else if (position == 5) {
-                Billing.showDonateOption(requireActivity());
+                Flavour.showDonateOption(requireActivity());
             } else if (position == 6) {
                 Intent shareapp = new Intent();
                 shareapp.setAction(Intent.ACTION_SEND);

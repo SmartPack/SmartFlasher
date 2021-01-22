@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: kopsomanas <kgstradviolin@outlook.com>-->
+
+    <string name="app_store">F-Droid</string>
+    <string name="app_store_summary">Επισκεφθείτε τη σελίδα του Smart Flasher στο F-Droid</string>
+    <string name="share_app_message">Αποκτήστε το Smart Flasher %s από F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+    <string name="share_channel_message">Για να ρυθμίσετε αυτό το κανάλι ενημέρωσης, απλώς εισάγετε \'%s\' στο SmartFlasher -> Κανάλι Ενημέρωσης Url.\n\nΑποκτήστε το Smart Flasher από F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+</resources>

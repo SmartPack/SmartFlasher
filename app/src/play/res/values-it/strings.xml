@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: IKAR0S <usakha123@gmail.com>-->
+
+    <string name="app_store">Play Store</string>
+    <string name="app_store_summary">Visita la pagina Smart Flasher sul PlayStore</string>
+</resources>

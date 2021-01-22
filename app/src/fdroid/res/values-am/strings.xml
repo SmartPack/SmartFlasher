@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: Mikesew1320 <mikesew1320@gmail.com>-->
+
+    <string name="share_app_message">ስማርት ፍላሸርን አግኝ %s ከ F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+    <string name="share_channel_message">የከርነል ማሳደጊያ ቻናሉን ለማዋቀር በቀላሉ \'%s\' በ ስማርት ፍላሸር -> የማሳደጊያ ቻናል Url.\n\nስማርት ፍላሸርን F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+</resources>

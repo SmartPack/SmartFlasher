@@ -1,0 +1,6 @@
+﻿<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: andrey167 <andrey_167@bk.ru>-->
+
+    <string name="app_store_summary">Посетить страницу Smart Flasher в PlayStore</string>
+    <string name="share_app_message">Загрузите смарт-флешер %s из PlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+</resources>

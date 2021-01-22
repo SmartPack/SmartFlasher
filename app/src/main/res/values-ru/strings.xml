@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Author: andrey167 <andrey_167@bk.ru>-->
-<resources>
+﻿<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: DanGLES3 <switchtegra@gmail.com>-->
+
     <string name="ab_partition">A/B Partition</string>
     <string name="ab_message">Вам это больше не нужно, поскольку образ для восстановления встроен в раздел A/B.</string>
     <string name="about">О приложении</string>
@@ -27,8 +27,6 @@
     <string name="no_root">Нет корневого доступа</string>
     <string name="ok">Ок</string>
     <string name="permission_denied_write_storage">Отказано в разрешении на запись в память устройства!</string>
-    <string name="playstore">PlayStore</string>
-    <string name="playstore_summary">Посетить страницу Smart Flasher в PlayStore</string>
     <string name="purchase_app">Приложение для пожертвований</string>
     <string name="reboot">Перезагрузить</string>
     <string name="reboot_bootloader">Перезагрузить в загрузчик</string>
@@ -40,7 +38,6 @@
     <string name="rebooting">Rebooting</string>
     <string name="restore">Восстановить</string>
     <string name="share_app">Поделиться приложением</string>
-    <string name="share_app_message">Загрузите смарт-флешер %s из\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">Исходный код</string>
     <string name="source_code_summary">Посмотреть исзодный код на GitHub</string>
     <string name="support">Поддержка</string>

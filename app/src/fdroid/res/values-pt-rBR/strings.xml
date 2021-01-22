@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: DanGLES3 <switchtegra@gmail.com>-->
+
+    <string name="app_store">F-Droid</string>
+    <string name="app_store_summary">Visite a página do Smart Flasher na F-Droid</string>
+    <string name="share_app_message">Baixe o Smart Flasher %s na F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+    <string name="share_channel_message">Para configurar esse canal de atualização, basta digitar \'%s\' em SmartFlasher ->URL do Canal de Atualizações.\n\nBaixe o Smart Flasher na F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+</resources>

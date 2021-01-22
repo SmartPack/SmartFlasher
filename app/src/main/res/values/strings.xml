@@ -69,8 +69,6 @@
     <string name="no_root_message"><b>Why this issue happened?</b>\n\nYour device is either not rooted, or the root permission is declined for Smart Flasher by you!\n\n\n<b>Why root permission needed?</b>\n\nIn order to flash a recovery zip file, or  backup a partition image, Smart Flasher need to reach some top-level system partitions, and is impossible without root!\n\n\n<b>How can I root my device?</b>\n\nA simple google search will help to find many guides to achieve root on your device. Please have a look at it!\n\n\n<b>Is rooting a device safe?</b>\n\nRooting poses some security risk, but it\'s generally safe to do!</string>
     <string name="ok">OK</string>
     <string name="permission_denied_write_storage">Permission denied for writing to storage!</string>
-    <string name="playstore">PlayStore</string>
-    <string name="playstore_summary">Visit Smart Flasher page on PlayStore</string>
     <string name="press_back">Press back again to exit</string>
     <string name="purchase_app">Buy Donation App</string>
     <string name="reboot">Reboot</string>
@@ -89,8 +87,6 @@
     <string name="sha1">Secure Hash Algorithm</string>
     <string name="share">Share</string>
     <string name="share_app">Share App</string>
-    <string name="share_app_message">Get Smart Flasher %s from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
-    <string name="share_channel_message">To configure this update channel, simply input \'%s\' on SmartFlasher -> Update Channel Url.\n\nGet Smart Flasher from\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">Source Code</string>
     <string name="source_code_summary">View source code at GitHub</string>
     <string name="support">Support</string>

@@ -20,19 +20,27 @@
 
 package com.smartpack.smartflasher.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 
-import com.smartpack.smartflasher.activities.BillingActivity;
+import com.smartpack.smartflasher.R;
+
+import java.util.ArrayList;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on January 21, 2021
  */
-public class Billing {
+public class Flavour {
 
     public static void showDonateOption(Activity activity) {
-        Intent donations = new Intent(activity, BillingActivity.class);
-        activity.startActivity(donations);
+        Utils.launchUrl("https://smartpack.github.io/donation/", activity);
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public static void launchAppStore(ArrayList<RecycleViewItem> mData, Context context) {
+        mData.add(new RecycleViewItem(context.getString(R.string.app_store), context.getString(R.string.app_store_summary),
+                context.getResources().getDrawable(R.drawable.ic_app_store), "https://f-droid.org/packages/com.smartpack.smartflasher/"));
     }
 
 }

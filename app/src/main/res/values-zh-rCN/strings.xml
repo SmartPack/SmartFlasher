@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--Author: jason5545 <jason5545@gmail.com>-->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: jason5545 <jason5545@gmail.com>-->
+
     <string name="ab_partition">A/B分区</string>
     <string name="ab_message">您不再需要它了，因为复原映像是内建在A / B分区中的。</string>
     <string name="about">关于</string>
@@ -26,8 +26,6 @@
     <string name="no_internet">请检查您的互联网连接！</string>
     <string name="ok">好</string>
     <string name="permission_denied_write_storage">不允许写入储存空间！</string>
-    <string name="playstore">Play 商店</string>
-    <string name="playstore_summary">訪問 Play 商店中的 Smart Flasher 页面 </string>
     <string name="purchase_app">购买应用程序</string>
     <string name="reboot">重启</string>
     <string name="reboot_bootloader">重启至 Bootloader</string>

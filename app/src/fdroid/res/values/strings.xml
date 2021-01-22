@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_store">F-Droid</string>
+    <string name="app_store_summary">Visit Smart Flasher page on F-Droid</string>
+    <string name="share_app_message">Get Smart Flasher %s from F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+    <string name="share_channel_message">To configure this update channel, simply input \'%s\' on SmartFlasher -> Update Channel Url.\n\nGet Smart Flasher from F-Droid: https://f-droid.org/packages/com.smartpack.smartflasher/</string>
+</resources>

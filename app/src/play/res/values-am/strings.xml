@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: Mikesew1320 <mikesew1320@gmail.com>-->
+
+    <string name="app_store">ፕሌይስቶር</string>
+    <string name="app_store_summary">የስማርት ፍላሸርን የጎግል ፕሌይስቶር ገፅ ይጎብኙ።</string>
+    <string name="share_app_message">ስማርት ፍላሸርን አግኝ %s ከ ፕሌይስቶር: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+    <string name="share_channel_message">የከርነል ማሳደጊያ ቻናሉን ለማዋቀር በቀላሉ \'%s\' በ ስማርት ፍላሸር -> የማሳደጊያ ቻናል Url.\n\nስማርት ፍላሸርን ከ ፕሌይስቶር: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher</string>
+</resources>

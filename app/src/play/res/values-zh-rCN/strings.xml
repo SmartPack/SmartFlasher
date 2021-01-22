@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: jason5545 <jason5545@gmail.com>-->
+
+    <string name="app_store">Play 商店</string>
+    <string name="app_store_summary">訪問 Play 商店中的 Smart Flasher 页面 </string>
+</resources>

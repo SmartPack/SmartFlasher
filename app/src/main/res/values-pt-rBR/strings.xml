@@ -1,5 +1,5 @@
-<!--Author: DanGLES3 <switchtegra@gmail.com>-->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--Author: DanGLES3 <switchtegra@gmail.com>-->
 
     <string name="about">Sobre</string>
     <string name="backup_message">Fazendo backup de %s do seu dispositivo para</string>
@@ -16,8 +16,6 @@
     <string name="name_empty">Nome esta vazio!</string>
     <string name="ok">OK</string>
     <string name="permission_denied_write_storage">Permissão pra acessar o armazenamento negada!</string>
-    <string name="playstore">PlayStore</string>
-    <string name="playstore_summary">Visite a página do Smart Flasher na PlayStore</string>
     <string name="purchase_app">App de Doação</string>
     <string name="reboot">Reiniciar</string>
     <string name="reboot_bootloader">Reiniciar pro Bootloader</string>
@@ -75,8 +73,6 @@
     <string name="save_log_message">O registro do flasher foi exportado como %s!</string>
     <string name="share">Compartilhar</string>
     <string name="share_app">Compartilhar o App</string>
-    <string name="share_app_message">Baixe o Smart Flasher %s na\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher ou\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
-    <string name="share_channel_message">Para configurar esse canal de atualização, basta digitar \'%s\' em SmartFlasher ->URL do Canal de Atualizações.\n\nBaixe o Smart Flasher na\nPlayStore: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher ou\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="update_check">Procurar por atualizações</string>
     <string name="flash_img_warning">\n\nAviso: é possível que flashear um arquivo \'img\' errado poderá brickar o dispositivo. Por favor, seja cuidadoso.</string>
     <string name="update_check_message">Smart Flasher procurará uma nova versão do %s uma vez por dia!</string>

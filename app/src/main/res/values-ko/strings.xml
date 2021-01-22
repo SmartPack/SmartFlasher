@@ -48,8 +48,6 @@
     <string name="no_root">루트 권한이 발견되지 않았습니다!</string>
     <string name="ok">확인</string>
     <string name="permission_denied_write_storage">저장공간 쓰기 권한이 거부되었습니다!</string>
-    <string name="playstore">플레이 스토어</string>
-    <string name="playstore_summary">플레이 스토어에 있는 Smart Flasher 페이지를 방문하세요.</string>
     <string name="press_back">나가려면 뒤로가기를 다시 누르세요</string>
     <string name="purchase_app">기부 앱</string>
     <string name="reboot">다시 시작</string>
@@ -66,8 +64,6 @@
     <string name="restore">복구</string>
     <string name="share">공유</string>
     <string name="share_app">앱 공유</string>
-    <string name="share_app_message">Smart Flasher %s은(는) 아래에서 다운받을 수 있습니다 \n플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\nGitHub: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
-    <string name="share_channel_message">이 업데이트 채널을 구성하려면, \'%s\' 을(를)  Smart Flasher에 입력하고 -> 채널 URL을 업데이트하세요.\n\nSmart Flasher을 아래에서 다운받으세요\n플레이 스토어: https://play.google.com/store/apps/details?id=com.smartpack.smartflasher\n깃허브: https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true</string>
     <string name="source_code">소스 코드</string>
     <string name="source_code_summary">깃허브에서 소스 코드를 확인하세요.</string>
     <string name="support">지원 받기</string>

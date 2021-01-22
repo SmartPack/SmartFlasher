@@ -13,8 +13,6 @@
     <string name="kernel">Kernel</string>
     <string name="ok">OK</string>
     <string name="permission_denied_write_storage">Permesso per scrivere sull\'archivio negato!</string>
-    <string name="playstore">Play Store</string>
-    <string name="playstore_summary">Visita la pagina Smart Flasher sul PlayStore</string>
     <string name="purchase_app">Donation App</string>
     <string name="reboot">Riavvia</string>
     <string name="reboot_bootloader">Riavvia in Bootloader</string>
