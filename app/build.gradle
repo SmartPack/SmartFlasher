@@ -19,7 +19,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 42
-        versionName "5.1"
+        versionName "v5.1"
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "$applicationId-v$versionName"
         signingConfig signingConfigs.release

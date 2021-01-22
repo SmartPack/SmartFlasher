@@ -62,7 +62,7 @@ public class AboutFragment extends Fragment {
         View mRootView = inflater.inflate(R.layout.fragment_about, container, false);
 
         mData.clear();
-        mData.add(new RecycleViewItem(getString(R.string.version), "v" + BuildConfig.VERSION_NAME, getResources().getDrawable(R.drawable.ic_info), null));
+        mData.add(new RecycleViewItem(getString(R.string.version), BuildConfig.VERSION_NAME, getResources().getDrawable(R.drawable.ic_info), null));
         mData.add(new RecycleViewItem(getString(R.string.change_logs), getString(R.string.change_logs_summary), getResources().getDrawable(R.drawable.ic_eye), null));
         mData.add(new RecycleViewItem(getString(R.string.support), getString(R.string.support_summary), getResources().getDrawable(R.drawable.ic_support), "https://t.me/smartpack_kmanager"));
         mData.add(new RecycleViewItem(getString(R.string.source_code), getString(R.string.source_code_summary), getResources().getDrawable(R.drawable.ic_github), "https://github.com/SmartPack/SmartFlasher"));
@@ -94,7 +94,7 @@ public class AboutFragment extends Fragment {
                 Intent shareapp = new Intent();
                 shareapp.setAction(Intent.ACTION_SEND);
                 shareapp.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, "v" + BuildConfig.VERSION_NAME));
+                shareapp.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message, BuildConfig.VERSION_NAME));
                 shareapp.setType("text/plain");
                 Intent shareIntent = Intent.createChooser(shareapp, null);
                 startActivity(shareIntent);
