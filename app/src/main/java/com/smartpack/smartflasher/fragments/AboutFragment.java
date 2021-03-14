@@ -22,6 +22,7 @@ package com.smartpack.smartflasher.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -70,6 +71,7 @@ public class AboutFragment extends Fragment {
         mData.add(new RecycleViewItem(getString(R.string.donations), getString(R.string.donations_message), getResources().getDrawable(R.drawable.ic_donate), null));
         mData.add(new RecycleViewItem(getString(R.string.share), getString(R.string.share_app), getResources().getDrawable(R.drawable.ic_share), null));
         mData.add(new RecycleViewItem(getString(R.string.credits), getString(R.string.credits_summary), getResources().getDrawable(R.drawable.ic_contributors), null));
+        mData.add(new RecycleViewItem(getString(R.string.translations), getString(R.string.translations_summary), getResources().getDrawable(R.drawable.ic_translate), "https://poeditor.com/join/project?hash=FfSoHUrmwQ"));
 
         RecyclerView mRecyclerView = mRootView.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), Utils.getSpanCount(requireActivity())));
@@ -133,6 +135,9 @@ public class AboutFragment extends Fragment {
                 }
                 holder.mDescription.setText(this.data.get(position).getDescription());
                 holder.mIcon.setImageDrawable(this.data.get(position).getIcon());
+                if (position != 8 && !this.data.get(position).getTitle().equals("F-Droid")) {
+                    holder.mIcon.setColorFilter(Utils.isDarkTheme(holder.mIcon.getContext()) ? Color.WHITE : Color.BLACK);
+                }
             } catch (ArrayIndexOutOfBoundsException ignored) {
             }
         }

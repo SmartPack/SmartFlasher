@@ -103,6 +103,8 @@
     <string name="support_retry_message">Please try purchasing again!</string>
     <string name="support_summary">Visit support group</string>
     <string name="sure_question">Are you sure?</string>
+    <string name="translations">Translations</string>
+    <string name="translations_summary">Help me to translate this app!</string>
     <string name="update_check">Check for update</string>
     <string name="update_check_message">Smart Flasher will check for a new version of %s once in a day!</string>
     <string name="update_channel">Update Channel Url</string>
