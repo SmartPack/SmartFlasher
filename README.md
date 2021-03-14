@@ -1,6 +1,6 @@
 # Smart Flasher
 
-[![](https://img.shields.io/badge/Smart%20Flasher-v5.1-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
+[![](https://img.shields.io/badge/Smart%20Flasher-v5.2-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
 ![](https://img.shields.io/github/contributors/smartpack/SmartFlasher)
 ![](https://img.shields.io/github/license/smartpack/SmartFlasher)
 
@@ -12,9 +12,9 @@
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
      alt=""
      height="80">](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
-[<img src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png"
-     alt=""
-     height="80">](https://github.com/SmartPack/SmartFlasher/blob/master/release/com.smartpack.smartflasher.apk?raw=true)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+          alt=""
+          height="80">](https://f-droid.org/packages/com.smartpack.smartflasher)
 
 ## Requirements
 1. ROOT Access
@@ -44,6 +44,9 @@ If you like to appreciate my work, please consider donating to me (either via [P
 [<img src="https://raw.githubusercontent.com/SmartPack/SmartPack.github.io/master/asset/pic010.png"
      alt=""
      height="80">](https://ko-fi.com/sunilpaulmathew/)
+
+## Translations
+Please help me to translate this application via [POEditor](https://poeditor.com/join/project?hash=FfSoHUrmwQ). You may also translate after downloading the original language string available [here](app/src/main/res/values/strings.xml).
 
 ## Credits
 * [Grarak](https://github.com/Grarak/), Kernel Adiutor, from where I took a lot of code

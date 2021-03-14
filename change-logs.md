@@ -1,5 +1,9 @@
 # Change-logs
 
+## 42. March 14, 2020
+*Release-tag: v5.2*<br>
+Set target SDK to 29 to fix issues on Android 11. Updated Chinese traditional translations. Added links to POEditor translation page. Updated build tools. Miscellaneous changes.
+
 ## 41. November 28, 2020
 *Release-tag: v5.1*<br>
 Largely improved auto-flashing. Flasher will now catch live output. Fixed crashing on some devices. Miscellaneous changes.

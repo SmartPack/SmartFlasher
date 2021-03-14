@@ -1,0 +1,5 @@
+* Set target SDK to 29 to fix issues on Android 11.
+* Updated Chinese traditional translations.
+* Added links to POEditor translation page.
+* Updated build tools.
+* Miscellaneous changes.
