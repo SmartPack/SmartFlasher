@@ -61,8 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:gravity="start"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:gravity="start" />
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
@@ -140,7 +139,6 @@
         android:id="@+id/flashing_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/colorBackground"
         android:orientation="vertical"
         android:gravity="center"
         android:padding="15dp"
@@ -159,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textStyle="bold|italic"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?attr/colorAccent"
                 android:textSize="17sp"
                 android:padding="10dp" />
         </com.google.android.material.card.MaterialCardView>

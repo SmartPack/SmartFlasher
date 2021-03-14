@@ -11,7 +11,6 @@
             android:layout_height="25dp"
             android:scaleType="fitCenter"
             android:layout_gravity="center_vertical"
-            android:tint="?android:attr/textColorPrimary"
             android:src="@drawable/ic_img"
             android:background="@null" />
 
@@ -24,6 +23,5 @@
             android:focusable="false"
             android:textStyle="bold"
             android:textSize="17sp"
-            android:text="@string/app_name"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:text="@string/app_name" />
 </FrameLayout>

@@ -25,6 +25,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -85,6 +86,9 @@ public class BackupFragment extends Fragment {
 
         if (Utils.isDarkTheme(requireActivity())) {
             mProgressText.setTextColor(Utils.getThemeAccentColor(requireActivity()));
+            mProgressLayout.setBackgroundColor(Color.BLACK);
+        } else {
+            mProgressLayout.setBackgroundColor(Color.WHITE);
         }
 
         mBackup.setOnClickListener(v -> {
@@ -465,6 +469,8 @@ public class BackupFragment extends Fragment {
                 if (Utils.isDarkTheme(holder.mName.getContext())) {
                     holder.mName.setTextColor(Utils.getThemeAccentColor(holder.mName.getContext()));
                     holder.mIcon.setColorFilter(Utils.getThemeAccentColor(holder.mIcon.getContext()));
+                } else {
+                    holder.mIcon.setColorFilter(Color.BLACK);
                 }
             } catch (ArrayIndexOutOfBoundsException ignored) {
             }

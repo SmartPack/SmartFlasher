@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/colorBackground"
         android:orientation="vertical" >
 
         <com.google.android.material.textview.MaterialTextView
@@ -20,7 +19,7 @@
             android:gravity="center"
             android:text="@string/flasher_summary"
             android:background="@color/ColorBlack"
-            android:textColor="?android:attr/colorAccent" />
+            android:textColor="?attr/colorAccent" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -60,8 +59,7 @@
                                 android:focusable="false"
                                 android:textStyle="bold"
                                 android:text="@string/kernel"
-                                android:textSize="15sp"
-                                android:textColor="?android:attr/textColorPrimary" />
+                                android:textSize="15sp" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/kernel_version_summary"
@@ -91,8 +89,7 @@
                                     android:focusable="false"
                                     android:textStyle="bold"
                                     android:text="@string/update_channel"
-                                    android:textSize="15sp"
-                                    android:textColor="?android:attr/textColorPrimary" />
+                                    android:textSize="15sp" />
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/update_channel_summary"
@@ -109,7 +106,6 @@
                                 android:layout_height="25dp"
                                 android:scaleType="fitCenter"
                                 android:layout_gravity="end|center_vertical"
-                                android:tint="?android:attr/textColorPrimary"
                                 android:src="@drawable/ic_dots"
                                 android:background="@null" />
                         </FrameLayout>
@@ -136,7 +132,6 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_info"
                             android:layout_gravity="start|center_vertical"
-                            android:tint="?android:attr/textColorPrimary"
                             android:background="@null" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -149,8 +144,7 @@
                             android:layout_marginEnd="30dp"
                             android:padding="5dp"
                             android:textStyle="bold"
-                            android:textSize="15sp"
-                            android:textColor="?android:attr/textColorPrimary" />
+                            android:textSize="15sp" />
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/menu_icon"
@@ -159,7 +153,6 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_dots"
                             android:layout_gravity="end|center_vertical"
-                            android:tint="?android:attr/textColorPrimary"
                             android:background="@null" />
                     </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -184,7 +177,7 @@
         android:id="@+id/flash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="?android:attr/colorAccent"
+        app:cardBackgroundColor="?attr/colorAccent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"

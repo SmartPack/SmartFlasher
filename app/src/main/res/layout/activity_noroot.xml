@@ -25,7 +25,7 @@
                 android:layout_gravity="start"
                 android:src="@drawable/ic_back"
                 android:background="@color/ColorBlack"
-                android:tint="?android:attr/colorAccent"/>
+                android:tint="?attr/colorAccent"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_info"
                     android:background="@null"
-                    android:tint="?android:attr/colorAccent"/>
+                    android:tint="?attr/colorAccent"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -70,7 +70,6 @@
                     android:padding="10dp"
                     android:gravity="start"
                     android:text="@string/no_root_message"
-                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="17sp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

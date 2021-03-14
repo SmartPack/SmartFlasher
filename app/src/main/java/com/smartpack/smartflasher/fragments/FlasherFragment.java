@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -101,9 +102,17 @@ public class FlasherFragment extends Fragment {
 
         if (Utils.isDarkTheme(requireActivity())) {
             mKernel.setTextColor(Utils.getThemeAccentColor(requireActivity()));
+            mProgressLayout.setBackgroundColor(Color.BLACK);
             mProgressText.setTextColor(Utils.getThemeAccentColor(requireActivity()));
             mUpdateChannel.setTextColor(Utils.getThemeAccentColor(requireActivity()));
+            mUpdateChannelMenu.setColorFilter(Utils.getThemeAccentColor(requireActivity()));
             mInfoIcon.setColorFilter(Utils.getThemeAccentColor(requireActivity()));
+            mMenuIcon.setColorFilter(Utils.getThemeAccentColor(requireActivity()));
+        } else {
+            mProgressLayout.setBackgroundColor(Color.WHITE);
+            mUpdateChannelMenu.setColorFilter(Color.BLACK);
+            mInfoIcon.setColorFilter(Color.BLACK);
+            mMenuIcon.setColorFilter(Color.BLACK);
         }
 
         mRecyclerViewCard.setVisibility(KernelUpdater.getKernelName(requireActivity()).equals("Unavailable") ? View.GONE : View.VISIBLE);
@@ -301,6 +310,7 @@ public class FlasherFragment extends Fragment {
             }
             @Override
             protected Void doInBackground(Void... voids) {
+                Utils.runCommand("sleep 5");
                 KernelUpdater.updateInfo(value, context);
                 KernelUpdater.updateChannel(value, context);
                 return null;
