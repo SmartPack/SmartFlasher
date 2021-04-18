@@ -25,13 +25,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -60,7 +57,9 @@ import com.smartpack.smartflasher.utils.Utils;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
+
+import in.sunilpaulmathew.rootfilepicker.activities.FilePickerActivity;
+import in.sunilpaulmathew.rootfilepicker.utils.FilePicker;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 19, 2020
@@ -69,14 +68,13 @@ import java.util.Objects;
 public class FlasherFragment extends Fragment {
 
     private AppCompatImageButton mUpdateChannelMenu;
-    private ArrayList <RecycleViewItem> mData = new ArrayList<>();
+    private final ArrayList <RecycleViewItem> mData = new ArrayList<>();
     private MaterialCardView mFrameInfo;
     private LinearLayout mProgressLayout;
     private MaterialCardView mRecyclerViewCard;
     private MaterialTextView mProgressText;
     private MaterialTextView mUpdateChannelSummary;
     private RecyclerView mRecyclerView;
-    private String mPath;
     private View mRootView;
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -186,7 +184,7 @@ public class FlasherFragment extends Fragment {
         mKernelSummary.setText(Utils.runAndGetOutput("uname -a"));
         mUpdateChannelSummary.setText(KernelUpdater.getKernelName(requireActivity()).equals("Unavailable") ?
                 getString(R.string.update_channel_summary) : KernelUpdater.getUpdateChannel(requireActivity()));
-        mInfo.setText(getString(R.string.update_channel_info, Utils.getInternalDataStorage()));
+        mInfo.setText(getString(R.string.update_channel_info, Utils.getStorageDir(requireActivity()).getAbsolutePath()));
 
         mUpdateChannelURL.setOnClickListener(v -> {
             if (!Utils.checkWriteStoragePermission(requireActivity())) {
@@ -227,9 +225,10 @@ public class FlasherFragment extends Fragment {
                 return;
             }
 
-            Intent manualflash = new Intent(Intent.ACTION_GET_CONTENT);
-            manualflash.setType("application/*");
-            startActivityForResult(manualflash, 0);
+            Intent intent = new Intent(requireActivity(), FilePickerActivity.class);
+            FilePicker.setExtension(".zip");
+            FilePicker.setPath(Environment.getExternalStorageDirectory().toString());
+            startActivityForResult(intent, 0);
         });
 
         mData.clear();
@@ -338,7 +337,7 @@ public class FlasherFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private void downloadKernel() {
         new AsyncTask<Void, Void, Void>() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "StringFormatInvalid"})
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -348,8 +347,8 @@ public class FlasherFragment extends Fragment {
             }
             @Override
             protected Void doInBackground(Void... voids) {
-                Flasher.prepareFolder(Utils.getInternalDataStorage());
-                Utils.download(Utils.getInternalDataStorage() + "/Kernel.zip", KernelUpdater.getUrl(requireActivity()));
+                Flasher.prepareFolder(Utils.getStorageDir(requireActivity()).getAbsolutePath());
+                Utils.download(new File(Utils.getStorageDir(requireActivity()), "Kernel.zip").getAbsolutePath(), KernelUpdater.getUrl(requireActivity()));
                 return null;
             }
             @Override
@@ -358,7 +357,7 @@ public class FlasherFragment extends Fragment {
                 mProgressLayout.setVisibility(View.GONE);
                 mRecyclerViewCard.setVisibility(View.VISIBLE);
                 if (KernelUpdater.getChecksum(requireActivity()).equals("Unavailable") || !KernelUpdater.getChecksum(requireActivity()).equals("Unavailable") &&
-                        Utils.getChecksum(Utils.getInternalDataStorage() + "/Kernel.zip").contains(KernelUpdater.getChecksum(requireActivity()))) {
+                        Utils.getChecksum(new File(Utils.getStorageDir(requireActivity()), "Kernel.zip").getAbsolutePath()).contains(KernelUpdater.getChecksum(requireActivity()))) {
                     new MaterialAlertDialogBuilder(requireActivity())
                             .setMessage(getString(R.string.download_completed,
                                     KernelUpdater.getKernelName(requireActivity()) + "-" + KernelUpdater.getLatestVersion(requireActivity())))
@@ -366,7 +365,7 @@ public class FlasherFragment extends Fragment {
                             .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
                             })
                             .setPositiveButton(getString(R.string.flash), (dialog, id) -> {
-                                flashingTask(new File(Utils.getInternalDataStorage() + "/Kernel.zip"));
+                                flashingTask(new File(new File(Utils.getStorageDir(requireActivity()), "Kernel.zip").getAbsolutePath()));
                             })
                             .show();
                 } else {
@@ -418,42 +417,29 @@ public class FlasherFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            assert uri != null;
-            File file = new File(Objects.requireNonNull(uri.getPath()));
-            if (Utils.isDocumentsUI(uri)) {
-                @SuppressLint("Recycle") Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    mPath = Environment.getExternalStorageDirectory().toString() + "/Download/" +
-                            cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } else {
-                mPath = Utils.getPath(file);
-            }
-            if (!mPath.endsWith(".zip")) {
+        if (requestCode == 0 && data != null && FilePicker.getSelectedFile().exists()) {
+            File mSelectedFile = FilePicker.getSelectedFile();
+
+            if (!mSelectedFile.getName().endsWith(".zip")) {
                 Utils.snackbar(mRootView, getString(R.string.wrong_extension, ".zip"));
                 return;
             }
-            if (requestCode == 0) {
-                if (Flasher.fileSize(new File(mPath)) >= 100000000) {
-                    Utils.snackbar(mRootView, getString(R.string.file_size_limit, Flasher.fileSize(new File(mPath)) / 1000000));
-                }
-                MaterialAlertDialogBuilder flashzip = new MaterialAlertDialogBuilder(requireActivity());
-                flashzip.setMessage(getString(R.string.flash_question, new File(mPath).getName()));
-                flashzip.setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
-                });
-                flashzip.setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
-                    flashingTask(new File(mPath));
-                });
-                flashzip.show();
+            if (Flasher.fileSize(mSelectedFile) >= 100000000) {
+                Utils.snackbar(mRootView, getString(R.string.file_size_limit, Flasher.fileSize(mSelectedFile) / 1000000));
             }
+            new MaterialAlertDialogBuilder(requireActivity())
+                    .setMessage(getString(R.string.flash_question, mSelectedFile.getName()))
+                    .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    })
+                    .setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
+                        flashingTask(mSelectedFile);
+                    }).show();
         }
     }
 
     private static class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
-        private ArrayList<RecycleViewItem> data;
+        private final ArrayList<RecycleViewItem> data;
 
         private static ClickListener clickListener;
 
@@ -486,8 +472,8 @@ public class FlasherFragment extends Fragment {
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private MaterialTextView mTitle;
-            private MaterialTextView mDescription;
+            private final MaterialTextView mTitle;
+            private final MaterialTextView mDescription;
 
             public ViewHolder(View view) {
                 super(view);
@@ -512,8 +498,8 @@ public class FlasherFragment extends Fragment {
     }
 
     private static class RecycleViewItem implements Serializable {
-        private String mTitle;
-        private String mDescription;
+        private final String mTitle;
+        private final String mDescription;
 
         public RecycleViewItem(String title, String description) {
             this.mTitle = title;

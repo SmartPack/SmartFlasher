@@ -20,7 +20,7 @@
 
 package com.smartpack.smartflasher.utils;
 
-import android.os.Environment;
+import android.content.Context;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,8 +31,6 @@ import java.util.List;
  */
 
 public class Backup {
-
-    private static final String BACKUP_FOLDER = Utils.getInternalDataStorage() + "/backup";
 
     public static String mBootPartitionInfo = null;
     public static String mRecoveryPartitionInfo = null;
@@ -53,16 +51,16 @@ public class Backup {
         file.mkdirs();
     }
 
-    public static List<String> backupItems() {
-        if (!Utils.exist(BACKUP_FOLDER)) {
-            prepareFolder(BACKUP_FOLDER);
+    public static List<String> backupItems(Context context) {
+        if (!Utils.exist(new File(Utils.getStorageDir(context), "backup").getAbsolutePath())) {
+            prepareFolder(new File(Utils.getStorageDir(context), "backup").getAbsolutePath());
         }
         List<String> list = new ArrayList<>();
-        String files = Utils.runAndGetOutput("ls '" + BACKUP_FOLDER + "/'");
+        String files = Utils.runAndGetOutput("ls '" + new File(Utils.getStorageDir(context), "backup").getAbsolutePath() + "/'");
         if (!files.isEmpty()) {
             // Make sure the files exists
             for (String file : files.split("\\r?\\n")) {
-                if (file != null && !file.isEmpty() && Utils.exist(BACKUP_FOLDER + "/" + file)) {
+                if (file != null && !file.isEmpty() && Utils.exist(new File(Utils.getStorageDir(context), "backup/" + file).getAbsolutePath())) {
                     list.add(file);
                 }
             }
@@ -70,11 +68,11 @@ public class Backup {
         return list;
     }
 
-    public static List<String> getData() {
+    public static List<String> getData(Context context) {
         List<String> mData = new ArrayList<>();
-        if (Utils.exist(BACKUP_FOLDER)) {
-            for (final String backupItem : backupItems()) {
-                File mBackup = new File(BACKUP_FOLDER + "/" + backupItem);
+        if (Utils.exist(new File(Utils.getStorageDir(context), "backup").getAbsolutePath())) {
+            for (final String backupItem : backupItems(context)) {
+                File mBackup = new File(Utils.getStorageDir(context), "backup/" + backupItem);
                 if (mBackup.getName().endsWith(".img")) {
                     mData.add(mBackup.getAbsolutePath());
                 }
@@ -83,16 +81,16 @@ public class Backup {
         return mData;
     }
 
-    public static void backupBootPartition(String name) {
-        prepareFolder(BACKUP_FOLDER);
-        String bootPartition = Utils.getInternalDataStorage() + "/backup/" + name;
+    public static void backupBootPartition(String name, Context context) {
+        prepareFolder(new File(Utils.getStorageDir(context), "backup").getAbsolutePath());
+        String bootPartition = new File(Utils.getStorageDir(context), "backup/"  + name).getAbsolutePath();
         String command = "dd if=" + findBootPartition() + " of=" + bootPartition;
         Utils.runCommand(command);
     }
 
-    public static void backupRecoveryPartition(String name) {
-        prepareFolder(BACKUP_FOLDER);
-        String recoveryPartition = Utils.getInternalDataStorage() + "/backup/" + name;
+    public static void backupRecoveryPartition(String name, Context context) {
+        prepareFolder(new File(Utils.getStorageDir(context), "backup").getAbsolutePath());
+        String recoveryPartition = new File(Utils.getStorageDir(context), "backup/"  + name).getAbsolutePath();
         String command = "dd if=" + findRecoveryPartition() + " of=" + recoveryPartition;
         Utils.runCommand(command);
     }
@@ -138,8 +136,8 @@ public class Backup {
         return mBootPartitionInfo.contains("boot_a") || mBootPartitionInfo.contains("boot_b");
     }
 
-    public static String getPath() {
-        File file = new File(Utils.getInternalDataStorage() + "/backup/");
+    public static String getPath(Context context) {
+        File file = new File(Utils.getStorageDir(context), "backup");
         if (file.exists() && file.isFile()) {
             file.delete();
         }

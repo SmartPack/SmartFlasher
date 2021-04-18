@@ -22,16 +22,12 @@ package com.smartpack.smartflasher.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.SubMenu;
@@ -57,7 +53,9 @@ import com.smartpack.smartflasher.utils.Utils;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
+
+import in.sunilpaulmathew.rootfilepicker.activities.FilePickerActivity;
+import in.sunilpaulmathew.rootfilepicker.utils.FilePicker;
 
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 19, 2020
@@ -66,13 +64,12 @@ import java.util.Objects;
 public class BackupFragment extends Fragment {
 
     private AsyncTask<Void, Void, List<String>> mLoader;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private LinearLayout mProgressLayout;
     private MaterialTextView mProgressText;
     private RecyclerView mRecyclerView;
     private RecycleViewAdapter mRecycleViewAdapter;
     private View mRootView;
-    private String mPath;
 
     @Nullable
     @Override
@@ -125,9 +122,10 @@ public class BackupFragment extends Fragment {
                             if (!Backup.hasBootPartitionInfo()) {
                                 Utils.snackbar(mRootView, getString(R.string.boot_partition_unknown));
                             } else {
-                                Intent boot_img = new Intent(Intent.ACTION_GET_CONTENT);
-                                boot_img.setType("*/*");
-                                startActivityForResult(boot_img, 0);
+                                Intent intent = new Intent(requireActivity(), FilePickerActivity.class);
+                                FilePicker.setExtension(".img");
+                                FilePicker.setPath(Environment.getExternalStorageDirectory().toString());
+                                startActivityForResult(intent, 0);
                             }
                             break;
                         case 4:
@@ -136,9 +134,10 @@ public class BackupFragment extends Fragment {
                             } else if (!Backup.hasRecoveryPartitionInfo()) {
                                 Utils.snackbar(mRootView, getString(R.string.recovery_partition_unknown));
                             } else {
-                                Intent rec_img = new Intent(Intent.ACTION_GET_CONTENT);
-                                rec_img.setType("*/*");
-                                startActivityForResult(rec_img, 1);
+                                Intent intent = new Intent(requireActivity(), FilePickerActivity.class);
+                                FilePicker.setExtension(".img");
+                                FilePicker.setPath(Environment.getExternalStorageDirectory().toString());
+                                startActivityForResult(intent, 1);
                             }
                             break;
                     }
@@ -153,7 +152,7 @@ public class BackupFragment extends Fragment {
         });
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), Utils.getSpanCount(requireActivity())));
-        mRecycleViewAdapter = new RecycleViewAdapter(Backup.getData());
+        mRecycleViewAdapter = new RecycleViewAdapter(Backup.getData(requireActivity()));
         if (Utils.checkWriteStoragePermission(requireActivity())) {
             mRecyclerView.setAdapter(mRecycleViewAdapter);
         } else {
@@ -225,7 +224,7 @@ public class BackupFragment extends Fragment {
 
                         @Override
                         protected List<String> doInBackground(Void... voids) {
-                            mRecycleViewAdapter = new RecycleViewAdapter(Backup.getData());
+                            mRecycleViewAdapter = new RecycleViewAdapter(Backup.getData(requireActivity()));
                             return null;
                         }
 
@@ -262,7 +261,7 @@ public class BackupFragment extends Fragment {
                         if (text.contains(" ")) {
                             text = text.replace(" ", "_");
                         }
-                        if (Utils.exist(Utils.getInternalDataStorage() + "/backup/" + text)) {
+                        if (Utils.exist(new File(Utils.getStorageDir(requireActivity()), "/backup/" + text).getAbsolutePath())) {
                             Utils.snackbar(mRootView, getString(R.string.already_exists, text));
                             return;
                         }
@@ -275,12 +274,12 @@ public class BackupFragment extends Fragment {
                                 mRecyclerView.setVisibility(View.GONE);
                                 mProgressText.setText(getString(R.string.backup_message, (Backup.isABDevice() ?
                                         getString(R.string.ab_partition) : getString(R.string.boot_partition))) +
-                                        " " + Utils.getInternalDataStorage() + "/backup/");
+                                        " " + new File(Utils.getStorageDir(requireActivity()), "/backup").getAbsolutePath());
                                 mProgressLayout.setVisibility(View.VISIBLE);
                             }
                             @Override
                             protected Void doInBackground(Void... voids) {
-                                Backup.backupBootPartition(path);
+                                Backup.backupBootPartition(path, requireActivity());
                                 return null;
                             }
                             @Override
@@ -313,7 +312,7 @@ public class BackupFragment extends Fragment {
                         if (text.contains(" ")) {
                             text = text.replace(" ", "_");
                         }
-                        if (Utils.exist(Utils.getInternalDataStorage() + "/backup/" + text)) {
+                        if (Utils.exist(new File(Utils.getStorageDir(requireActivity()), "/backup/" + text).getAbsolutePath())) {
                             Utils.snackbar(mRootView, getString(R.string.already_exists, text));
                             return;
                         }
@@ -325,12 +324,12 @@ public class BackupFragment extends Fragment {
                                 super.onPreExecute();
                                 mRecyclerView.setVisibility(View.GONE);
                                 mProgressText.setText(getString(R.string.backup_message, getString(R.string.recovery_partition)) +
-                                        " " + Utils.getInternalDataStorage() + "/backup/");
+                                        " " + new File(Utils.getStorageDir(requireActivity()), "/backup").getAbsolutePath());
                                 mProgressLayout.setVisibility(View.VISIBLE);
                             }
                             @Override
                             protected Void doInBackground(Void... voids) {
-                                Backup.backupRecoveryPartition(path);
+                                Backup.backupRecoveryPartition(path, requireActivity());
                                 return null;
                             }
                             @Override
@@ -414,32 +413,21 @@ public class BackupFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            assert uri != null;
-            File file = new File(Objects.requireNonNull(uri.getPath()));
-            if (Utils.isDocumentsUI(uri)) {
-                @SuppressLint("Recycle") Cursor cursor = requireActivity().getContentResolver().query(uri, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    mPath = Environment.getExternalStorageDirectory().toString() + "/Download/" +
-                            cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } else {
-                mPath = Utils.getPath(file);
-                if (!mPath.endsWith(".img")) {
-                    Utils.snackbar(mRootView, getString(R.string.wrong_extension, ".img"));
-                    return;
-                }
+        if (data != null && FilePicker.getSelectedFile().exists()) {
+            File mSelectedFile = FilePicker.getSelectedFile();
+            if (!mSelectedFile.getName().endsWith(".img")) {
+                Utils.snackbar(mRootView, getString(R.string.wrong_extension, ".img"));
+                return;
             }
             new MaterialAlertDialogBuilder(requireActivity())
-                    .setMessage(getString(R.string.flash_question, new File(mPath).getName()) + getString(R.string.flash_img_warning))
+                    .setMessage(getString(R.string.flash_question, mSelectedFile.getName()) + getString(R.string.flash_img_warning))
                     .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
                     })
                     .setPositiveButton(getString(R.string.flash), (dialogInterface, i) -> {
                         if (requestCode == 0) {
-                            flash_boot_partition(new File(mPath));
+                            flash_boot_partition(mSelectedFile);
                         } else if (requestCode == 1) {
-                            flash_recovery_partition(new File(mPath));
+                            flash_recovery_partition(mSelectedFile);
                         }
                     }).show();
         }
@@ -447,7 +435,7 @@ public class BackupFragment extends Fragment {
 
     private static class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
-        private List<String> data;
+        private final List<String> data;
 
         private static ClickListener clickListener;
 
@@ -486,8 +474,8 @@ public class BackupFragment extends Fragment {
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private AppCompatImageButton mIcon;
-            private MaterialTextView mName;
+            private final AppCompatImageButton mIcon;
+            private final MaterialTextView mName;
 
             public ViewHolder(View view) {
                 super(view);

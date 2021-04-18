@@ -38,7 +38,7 @@ public class KernelUpdater {
     }
 
     public static void updateInfo(String value, Context context) {
-        Flasher.prepareFolder(Utils.getInternalDataStorage());
+        Flasher.prepareFolder(Utils.getStorageDir(context).getAbsolutePath());
         Utils.download(updateInfo(context), value);
     }
 

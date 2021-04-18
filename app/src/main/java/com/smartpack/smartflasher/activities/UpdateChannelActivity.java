@@ -40,6 +40,7 @@ import com.smartpack.smartflasher.utils.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.Objects;
 
 /*
@@ -129,7 +130,7 @@ public class UpdateChannelActivity extends AppCompatActivity {
                     if (text.contains(" ")) {
                         text = text.replace(" ", "_");
                     }
-                    if (Utils.exist(Utils.getInternalDataStorage() + "/" + text)) {
+                    if (Utils.exist(new File(Utils.getStorageDir(this), text).getAbsolutePath())) {
                         Utils.snackbar(mCardView, getString(R.string.already_exists, text));
                         return;
                     }
@@ -146,10 +147,10 @@ public class UpdateChannelActivity extends AppCompatActivity {
                         support.put("link", mSupportHint.getText());
                         support.put("donation", mDonationHint.getText());
                         obj.put("support", support);
-                        Flasher.prepareFolder(Utils.getInternalDataStorage() + "/flash");
-                        Utils.create(obj.toString(), Utils.getInternalDataStorage() + "/" + text);
+                        Flasher.prepareFolder(Utils.getStorageDir(this).getAbsolutePath());
+                        Utils.create(obj.toString(), new File(Utils.getStorageDir(this), text).getAbsolutePath());
                         Utils.snackbar(mCardView, getString(R.string.update_channel_create_success,
-                                Utils.getInternalDataStorage() + "/" + text));
+                                new File(Utils.getStorageDir(this), text).getAbsolutePath()));
                     } catch (JSONException ignored) {
                     }
                 }, this).setOnDismissListener(dialogInterface -> {

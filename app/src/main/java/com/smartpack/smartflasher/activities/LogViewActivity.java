@@ -32,6 +32,8 @@ import com.smartpack.smartflasher.R;
 import com.smartpack.smartflasher.utils.Flasher;
 import com.smartpack.smartflasher.utils.Utils;
 
+import java.io.File;
+
 /*
  * Created by sunilpaulmathew <sunil.kde@gmail.com> on November 21, 2020
  */
@@ -51,10 +53,10 @@ public class LogViewActivity extends AppCompatActivity {
         mLogView.setText(Flasher.mFlashingResult.toString());
         mBack.setOnClickListener(v -> onBackPressed());
         mSave.setOnClickListener(v -> {
-            Utils.create(Flasher.mFlashingResult.toString(), Utils.getInternalDataStorage() + "/flasher_log-" +
-                    Flasher.mZipName.replace(".zip", ""));
-            Utils.snackbar(mSave, getString(R.string.save_log_message, Utils.getInternalDataStorage() + "/flasher_log-" +
-                    Flasher.mZipName.replace(".zip", "")));
+            Utils.create(Flasher.mFlashingResult.toString(), new File(Utils.getStorageDir(this), "/flasher_log-" +
+                    Flasher.mZipName.replace(".zip", "")).getAbsolutePath());
+            Utils.snackbar(mSave, getString(R.string.save_log_message, new File(Utils.getStorageDir(this), "/flasher_log-" +
+                    Flasher.mZipName.replace(".zip", "")).getAbsolutePath()));
         });
         mCancel.setOnClickListener(v -> onBackPressed());
     }

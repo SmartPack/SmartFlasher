@@ -72,8 +72,8 @@ public class Flasher {
          * Also include code from https://github.com/topjohnwu/Magisk/
          * Ref: https://github.com/topjohnwu/Magisk/blob/a848f10bba4f840248ecf314f7c9d55511d05a0f/app/src/main/java/com/topjohnwu/magisk/core/tasks/FlashZip.kt#L47
          */
-        String mScriptPath = Utils.getInternalDataStorage() + "/flash/META-INF/com/google/android/update-binary",
-                FLASH_FOLDER = Utils.getInternalDataStorage() + "/flash",
+        String mScriptPath = new File(Utils.getStorageDir(context), "flash/META-INF/com/google/android/update-binary").getAbsolutePath(),
+                FLASH_FOLDER = new File(Utils.getStorageDir(context), "flash").getAbsolutePath(),
                 CLEANING_COMMAND = "rm -r '" + FLASH_FOLDER + "'",
                 mZipPath = context.getCacheDir() + "/flash.zip";
         String flashingCommand = "BOOTMODE=true sh " + mScriptPath + " dummy 1 " + mZipPath + " && echo success";;
@@ -90,7 +90,7 @@ public class Flasher {
             if (Utils.read(mScriptPath.replace("update-binary","updater-script")).equals("#MAGISK")) {
                 mFlashingResult.append(" Magisk Module *\n\n");
                 mMagiskModule = true;
-            } else if (Utils.exist(Utils.getInternalDataStorage() + "/flash/anykernel.sh")) {
+            } else if (Utils.exist(new File(Utils.getStorageDir(context), "/flash/anykernel.sh").getAbsolutePath())) {
                 mFlashingResult.append(" AnyKernel *\n\n");
             } else {
                 mFlashingResult.append(" Unknown *\n\n");
