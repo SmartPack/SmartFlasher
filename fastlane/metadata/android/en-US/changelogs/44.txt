@@ -1,0 +1,4 @@
+* Implement own file picker to handle zip/img file picking tasks.
+* Updated gradle plugin and build tools.
+* Now targeting latest Android SDK.
+* Miscellaneous changes.

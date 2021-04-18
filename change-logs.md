@@ -1,6 +1,10 @@
 # Change-logs
 
-## 42. March 14, 2020
+## 43. April 18, 2021
+*Release-tag: v5.3*<br>
+Implement own file picker to handle zip/img file picking tasks. Updated gradle plugin and build tools. Now targeting latest Android SDK. Miscellaneous changes.
+
+## 42. March 14, 2021
 *Release-tag: v5.2*<br>
 Set target SDK to 29 to fix issues on Android 11. Updated Chinese traditional translations. Added links to POEditor translation page. Updated build tools. Miscellaneous changes.
 
