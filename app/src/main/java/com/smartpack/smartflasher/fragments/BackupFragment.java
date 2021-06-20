@@ -123,7 +123,7 @@ public class BackupFragment extends Fragment {
                                 Utils.snackbar(mRootView, getString(R.string.boot_partition_unknown));
                             } else {
                                 Intent intent = new Intent(requireActivity(), FilePickerActivity.class);
-                                FilePicker.setExtension(".img");
+                                FilePicker.setExtension("img");
                                 FilePicker.setPath(Environment.getExternalStorageDirectory().toString());
                                 startActivityForResult(intent, 0);
                             }
@@ -135,7 +135,7 @@ public class BackupFragment extends Fragment {
                                 Utils.snackbar(mRootView, getString(R.string.recovery_partition_unknown));
                             } else {
                                 Intent intent = new Intent(requireActivity(), FilePickerActivity.class);
-                                FilePicker.setExtension(".img");
+                                FilePicker.setExtension("img");
                                 FilePicker.setPath(Environment.getExternalStorageDirectory().toString());
                                 startActivityForResult(intent, 1);
                             }

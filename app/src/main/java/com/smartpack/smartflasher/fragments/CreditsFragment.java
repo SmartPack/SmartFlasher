@@ -46,7 +46,7 @@ import java.util.ArrayList;
 
 public class CreditsFragment extends Fragment {
 
-    private ArrayList <RecycleViewItem> mData = new ArrayList<>();
+    private final ArrayList <RecycleViewItem> mData = new ArrayList<>();
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
@@ -62,7 +62,7 @@ public class CreditsFragment extends Fragment {
         mData.add(new RecycleViewItem("App Icon","Toxinpiper", getResources().getDrawable(R.mipmap.ic_launcher_round),"https://t.me/toxinpiper"));
         mData.add(new RecycleViewItem("Russian Translations","andrey167", getResources().getDrawable(R.drawable.ic_andrey167),"https://github.com/andrey167"));
         mData.add(new RecycleViewItem("Chinese (rCN & rTW) Translations","jason5545", getResources().getDrawable(R.drawable.ic_jason5545),"https://github.com/jason5545"));
-        mData.add(new RecycleViewItem("Portuguese (rBr) Translations","DanGLES3", getResources().getDrawable(R.drawable.ic_dangles3),"https://github.com/DanGLES3"));
+        mData.add(new RecycleViewItem("Portuguese (rBr) Translations","DanGLES3 & Andreaugustoqueiroz999", getResources().getDrawable(R.drawable.ic_dangles3),"https://github.com/DanGLES3"));
         mData.add(new RecycleViewItem("French Translations","tom4tot", getResources().getDrawable(R.drawable.ic_tom4tot),"https://github.com/tom4tot"));
         mData.add(new RecycleViewItem("Italian Translations","IKAR0S", getResources().getDrawable(R.drawable.ic_ikar0s),"https://github.com/IKAR0S"));
         mData.add(new RecycleViewItem("Korean Translations","FiestaLake", getResources().getDrawable(R.drawable.ic_fiestalake),"https://github.com/FiestaLake"));
@@ -83,7 +83,7 @@ public class CreditsFragment extends Fragment {
 
     private static class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
-        private ArrayList<RecycleViewItem> data;
+        private final ArrayList<RecycleViewItem> data;
 
         private static RecycleViewAdapter.ClickListener clickListener;
 
@@ -117,9 +117,9 @@ public class CreditsFragment extends Fragment {
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private AppCompatImageView mIcon;
-            private MaterialTextView mTitle;
-            private MaterialTextView mDescription;
+            private final AppCompatImageView mIcon;
+            private final MaterialTextView mTitle;
+            private final MaterialTextView mDescription;
 
             public ViewHolder(View view) {
                 super(view);

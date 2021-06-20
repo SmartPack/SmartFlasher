@@ -29,10 +29,11 @@ import java.io.Serializable;
  */
 
 public class RecycleViewItem implements Serializable {
-    private String mTitle;
-    private String mDescription;
-    private Drawable mIcon;
-    private String mURL;
+
+    private final Drawable mIcon;
+    private final String mDescription;
+    private final String mTitle;
+    private final String mURL;
 
     public RecycleViewItem(String title, String description, Drawable icon, String url) {
         this.mTitle = title;

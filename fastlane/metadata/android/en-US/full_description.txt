@@ -1,4 +1,5 @@
-<i>Smart Flasher</i> is a simple tool mainly aimed to make flashing recovery zips much easier.
+<b>Smart Flasher</b> is a simple tool mainly aimed to make flashing recovery zips much easier.
+<i>Important Notice: The development of this project is abandoned.</i>
 
 <b>WARNING: I Am NOT Responsible for any Damages on Your Device!</b>
 
@@ -15,7 +16,3 @@ This app requires <b>ROOT</b> Access.
 * Flash a boot/recovery partition '.img' on a supported device.
 * Do basic tasks such as Turning off & Rebooting (Normal, Recovery & Boot-loader) your device.
 * A lot more.
-
-<b>Translations</b>
-
-Please help me to translate this app - Original language string in English is available at <a href='https://github.com/SmartPack/SmartFlasher/blob/master/app/src/main/res/values/strings.xml'>GitHub</a>.

@@ -54,7 +54,7 @@ import java.util.ArrayList;
 
 public class AboutFragment extends Fragment {
 
-    private ArrayList <RecycleViewItem> mData = new ArrayList<>();
+    private final ArrayList <RecycleViewItem> mData = new ArrayList<>();
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
@@ -71,7 +71,6 @@ public class AboutFragment extends Fragment {
         mData.add(new RecycleViewItem(getString(R.string.donations), getString(R.string.donations_message), getResources().getDrawable(R.drawable.ic_donate), null));
         mData.add(new RecycleViewItem(getString(R.string.share), getString(R.string.share_app), getResources().getDrawable(R.drawable.ic_share), null));
         mData.add(new RecycleViewItem(getString(R.string.credits), getString(R.string.credits_summary), getResources().getDrawable(R.drawable.ic_contributors), null));
-        mData.add(new RecycleViewItem(getString(R.string.translations), getString(R.string.translations_summary), getResources().getDrawable(R.drawable.ic_translate), "https://poeditor.com/join/project?hash=FfSoHUrmwQ"));
 
         RecyclerView mRecyclerView = mRootView.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(requireActivity(), Utils.getSpanCount(requireActivity())));
@@ -111,7 +110,7 @@ public class AboutFragment extends Fragment {
 
     private static class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
 
-        private ArrayList<RecycleViewItem> data;
+        private final ArrayList<RecycleViewItem> data;
 
         private static RecycleViewAdapter.ClickListener clickListener;
 
@@ -148,9 +147,9 @@ public class AboutFragment extends Fragment {
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private AppCompatImageButton mIcon;
-            private MaterialTextView mTitle;
-            private MaterialTextView mDescription;
+            private final AppCompatImageButton mIcon;
+            private final MaterialTextView mTitle;
+            private final MaterialTextView mDescription;
 
             public ViewHolder(View view) {
                 super(view);

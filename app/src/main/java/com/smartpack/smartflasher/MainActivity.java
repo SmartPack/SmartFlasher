@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.smartpack.smartflasher.activities.NoRootActivity;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppCompatImageButton mSettings;
     private boolean mExit;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private LinearLayout mProgressLayout;
     private MaterialTextView mProgressText;
     private ViewPager mViewPager;
@@ -50,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(noRoot);
             finish();
             return;
+        }
+
+        if (!Utils.getBoolean("depreciation_message", false, this)) {
+            new MaterialAlertDialogBuilder(this)
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setTitle("Notice")
+                    .setMessage("Please Note: The development of this project is abandoned. Thank you very much to all of you for supporting this project to date.")
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> Utils.saveBoolean("depreciation_message", true, this)).show();
         }
 
         mProgressLayout = findViewById(R.id.progress_layout);

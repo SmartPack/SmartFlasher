@@ -226,7 +226,7 @@ public class FlasherFragment extends Fragment {
             }
 
             Intent intent = new Intent(requireActivity(), FilePickerActivity.class);
-            FilePicker.setExtension(".zip");
+            FilePicker.setExtension("zip");
             FilePicker.setPath(Environment.getExternalStorageDirectory().toString());
             startActivityForResult(intent, 0);
         });
