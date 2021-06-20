@@ -1,0 +1,3 @@
+* Final update + depreciation notice.
+* Updated Portuguese (Brazilian) translations.
+* Miscellaneous changes.

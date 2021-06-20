@@ -18,8 +18,8 @@ android {
         applicationId "com.smartpack.smartflasher"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 44
-        versionName "v5.3"
+        versionCode 45
+        versionName "v5.4"
         vectorDrawables.useSupportLibrary = true
         archivesBaseName = "$applicationId-v$versionName"
         signingConfig signingConfigs.release
@@ -60,8 +60,8 @@ repositories {
 }
 
 dependencies {
-    playImplementation 'com.android.billingclient:billing:3.0.3'
-    implementation 'com.github.sunilpaulmathew:RootFilePicker:v0.4'
+    playImplementation 'com.android.billingclient:billing:4.0.0'
+    implementation 'com.github.sunilpaulmathew:RootFilePicker:v0.5'
     implementation "com.github.topjohnwu.libsu:core:3.1.2"
-    implementation 'com.google.android.material:material:1.4.0-alpha02'
+    implementation 'com.google.android.material:material:1.4.0-rc01'
 }

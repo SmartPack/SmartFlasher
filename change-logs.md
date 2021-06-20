@@ -1,5 +1,9 @@
 # Change-logs
 
+## 44. June 20, 2021
+*Release-tag: v5.4*<br>
+Final update + depreciation notice. Updated Portuguese (Brazilian) translations. Miscellaneous changes.
+
 ## 43. April 18, 2021
 *Release-tag: v5.3*<br>
 Implement own file picker to handle zip/img file picking tasks. Updated gradle plugin and build tools. Now targeting latest Android SDK. Miscellaneous changes.

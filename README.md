@@ -1,12 +1,13 @@
 # Smart Flasher
 
-[![](https://img.shields.io/badge/Smart%20Flasher-v5.3-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
+[![](https://img.shields.io/badge/Smart%20Flasher-v5.4-green)](https://play.google.com/store/apps/details?id=com.smartpack.smartflasher)
 ![](https://img.shields.io/github/contributors/smartpack/SmartFlasher)
 ![](https://img.shields.io/github/license/smartpack/SmartFlasher)
 
 ![Smart Flasher](https://github.com/SmartPack/SmartFlasher/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
 
 ### Smart Flasher is a simple tool mainly aimed to make flashing recovery zips much easier.
+_Important Notice: The development of this project is abandoned._
 
 ## Download
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
@@ -45,9 +46,6 @@ If you like to appreciate my work, please consider donating to me (either via [P
      alt=""
      height="80">](https://ko-fi.com/sunilpaulmathew/)
 
-## Translations
-Please help me to translate this application via [POEditor](https://poeditor.com/join/project?hash=FfSoHUrmwQ). You may also translate after downloading the original language string available [here](app/src/main/res/values/strings.xml).
-
 ## Credits
 * [Grarak](https://github.com/Grarak/), Kernel Adiutor, from where I took a lot of code
 * [topjohnwu](https://github.com/topjohnwu/), libsu
@@ -57,7 +55,7 @@ Please help me to translate this application via [POEditor](https://poeditor.com
 * [jason5545](https://github.com/jason5545/), Chinese (Simplified & Traditional) Translations
 * [Andrey](https://github.com/andrey167/), Russian Translations
 * [tom4tot](https://github.com/tom4tot/), French Translations
-* [DanGLES3](https://github.com/DanGLES3/) & [Lennoard](https://github.com/Lennoard/), Portuguese (Brazilian) Translations
+* [DanGLES3](https://github.com/DanGLES3/), [Lennoard](https://github.com/Lennoard/) & Andreaugustoqueiroz999, Portuguese (Brazilian) Translations
 * [IKAR0S](https://github.com/IKAR0S/), Italian Translations
 * [Mikesew1320](https://github.com/Mikesew1320), Amharic Translations
 * [tsiflimagas](https://github.com/tsiflimagas), Greek Translations
@@ -69,7 +67,7 @@ You can report a bug or request a feature by [opening an issue](https://github.c
 
 ## License
 
-    Copyright (C) 2020-2021 sunilpaulmathew <sunil.kde@gmail.com>
+    Copyright (C) 2021-2022 sunilpaulmathew <sunil.kde@gmail.com>
 
     Smart Flasher is a free softwares: you can redistribute it and/or
     modify it under the terms of the GNU General Public License as published
